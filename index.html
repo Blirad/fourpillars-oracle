@@ -1,1470 +1,1339 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Four Pillars Oracle</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg-primary: #1a1a2e;
-  --bg-secondary: #16213e;
-  --bg-card: #0f3460;
-  --accent-gold: #C9A84C;
-  --accent-gold-light: #e8c97a;
-  --text-primary: #f5f0e8;
-  --text-muted: #8a8a9a;
-  --wood: #4ade80;
-  --fire: #f87171;
-  --earth: #d97706;
-  --metal: #e2e8f0;
-  --water: #60a5fa;
-}
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: 'Noto Sans KR', sans-serif;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
-  line-height: 1.6;
-}
-/* HEADER */
-.site-header {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(26,26,46,0.85);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(201,168,76,0.15);
-  padding: 10px 16px;
-  display: flex; align-items: center; justify-content: space-between;
-}
-.logo-area { display: flex; align-items: center; gap: 8px; }
-.logo-area span.icon { font-size: 22px; }
-.logo-area span.title { font-size: 15px; font-weight: 700; color: var(--accent-gold); }
-.lang-toggle { display: flex; gap: 4px; }
-.lang-toggle button {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-muted);
-  font-size: 11px; padding: 4px 8px;
-  border-radius: 6px; cursor: pointer;
-  transition: all 0.2s;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.lang-toggle button.active {
-  background: rgba(201,168,76,0.2);
-  border-color: var(--accent-gold);
-  color: var(--accent-gold);
-}
-/* HERO */
-.hero {
-  text-align: center;
-  padding: 48px 20px 32px;
-}
-.hero h1 {
-  font-size: 28px; font-weight: 700;
-  background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-light), var(--accent-gold));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 8px;
-}
-.hero p { color: var(--text-muted); font-size: 14px; }
-/* FORM */
-.form-section {
-  max-width: 480px; margin: 0 auto; padding: 0 16px 32px;
-}
-.form-card {
-  background: rgba(15,52,96,0.5);
-  border: 1px solid rgba(201,168,76,0.15);
-  border-radius: 16px; padding: 24px;
-}
-.form-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
-  margin-bottom: 12px;
-}
-.form-grid-2 {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-  margin-bottom: 16px;
-}
-.form-group label {
-  display: block; font-size: 12px; color: var(--text-muted);
-  margin-bottom: 6px;
-}
-.form-group input, .form-group select {
-  width: 100%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 10px; padding: 10px 12px;
-  color: var(--text-primary); font-size: 15px;
-  font-family: 'Noto Sans KR', sans-serif;
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-}
-.form-group input:focus, .form-group select:focus {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
-}
-.form-group select option { background: var(--bg-secondary); }
-.btn-calc {
-  width: 100%; padding: 14px;
-  background: linear-gradient(135deg, var(--accent-gold), #b8943f);
-  border: none; border-radius: 12px;
-  color: #1a1a2e; font-size: 16px; font-weight: 700;
-  cursor: pointer; transition: all 0.25s;
-  font-family: 'Noto Sans KR', sans-serif;
-  letter-spacing: 1px;
-}
-.btn-calc:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(201,168,76,0.4); }
-/* CHART SECTION */
-#chartSection { display: none; max-width: 720px; margin: 0 auto; padding: 0 16px 32px; }
-#chartSection.show { display: block; }
-/* PILLAR GRID */
-.pillar-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 10px; margin-bottom: 24px;
-}
-.pillar-col {
-  background: rgba(15,52,96,0.6);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 14px; padding: 16px 8px;
-  text-align: center;
-  opacity: 0; transform: translateY(-20px);
-  animation: dropIn 0.4s ease forwards;
-}
-.pillar-col:nth-child(1) { animation-delay: 0ms; }
-.pillar-col:nth-child(2) { animation-delay: 200ms; }
-.pillar-col:nth-child(3) { animation-delay: 400ms; }
-.pillar-col:nth-child(4) { animation-delay: 600ms; }
-@keyframes dropIn {
-  to { opacity: 1; transform: translateY(0); }
-}
-.pillar-col.day-pillar {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 0 2px var(--accent-gold), inset 0 0 20px rgba(201,168,76,0.08);
-}
-.pillar-label { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; letter-spacing: 1px; }
-.stem-char {
-  font-size: 2.5rem; font-weight: 700; line-height: 1;
-  text-shadow: 0 0 12px currentColor;
-}
-.elem-badge {
-  font-size: 11px; margin: 4px 0;
-  display: inline-block; padding: 2px 8px;
-  border-radius: 8px; background: rgba(255,255,255,0.06);
-}
-.branch-char { font-size: 2.5rem; font-weight: 700; line-height: 1; margin: 4px 0; }
-.elem-emoji { font-size: 18px; margin: 4px 0; }
-.yinyang-label { font-size: 11px; color: var(--text-muted); }
-.shishen-label { font-size: 11px; color: var(--accent-gold); margin-top: 6px; cursor: pointer; }
-.shishen-label:hover { text-decoration: underline; }
-/* RADAR */
-.radar-section {
-  text-align: center; margin-bottom: 24px;
-  background: rgba(15,52,96,0.4);
-  border-radius: 16px; padding: 20px;
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.radar-section h3 { font-size: 14px; color: var(--text-muted); margin-bottom: 12px; }
-/* DAY MASTER */
-.daymaster-card {
-  background: linear-gradient(135deg, rgba(15,52,96,0.7), rgba(201,168,76,0.08));
-  border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 16px; padding: 20px; margin-bottom: 24px;
-}
-.daymaster-card h3 { color: var(--accent-gold); font-size: 16px; margin-bottom: 8px; }
-.daymaster-card p { font-size: 14px; color: var(--text-primary); line-height: 1.8; }
-/* UNLOCK BANNER */
-.unlock-banner {
-  background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.08));
-  border: 1px solid var(--accent-gold);
-  border-radius: 16px; padding: 20px; margin-bottom: 24px;
-  text-align: center;
-  animation: bannerPulse 2s ease-in-out infinite;
-  cursor: pointer;
-}
-@keyframes bannerPulse {
-  0%,100% { box-shadow: 0 0 0 0 rgba(201,168,76,0.3); }
-  50% { box-shadow: 0 0 20px 4px rgba(201,168,76,0.15); }
-}
-.unlock-banner h3 { color: var(--accent-gold); font-size: 16px; margin-bottom: 6px; }
-.unlock-banner p { color: var(--text-muted); font-size: 13px; margin-bottom: 12px; }
-.unlock-banner .btn-group { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-.btn-apikey, .btn-premium {
-  padding: 10px 20px; border-radius: 10px; font-size: 13px; font-weight: 700;
-  cursor: pointer; border: none; font-family: 'Noto Sans KR', sans-serif;
-  transition: all 0.2s;
-}
-.btn-apikey {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid var(--accent-gold);
-  color: var(--accent-gold);
-}
-.btn-apikey:hover { background: rgba(201,168,76,0.15); }
-.btn-premium {
-  background: linear-gradient(135deg, var(--accent-gold), #b8943f);
-  color: #1a1a2e;
-}
-.btn-premium:hover { transform: translateY(-1px); }
-/* TABS */
-.tabs-bar {
-  display: flex; gap: 0; margin-bottom: 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  overflow-x: auto;
-}
-.tab-btn {
-  flex: 1; min-width: 0;
-  padding: 10px 8px; font-size: 12px; font-weight: 700;
-  background: none; border: none; border-bottom: 2px solid transparent;
-  color: var(--text-muted); cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-  white-space: nowrap; transition: all 0.2s;
-}
-.tab-btn.active {
-  color: var(--accent-gold);
-  border-bottom-color: var(--accent-gold);
-}
-.tab-panel { display: none; }
-.tab-panel.active { display: block; }
-/* DAEUN TIMELINE */
-.daeun-timeline {
-  display: flex; gap: 10px; overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 12px;
-  -webkit-overflow-scrolling: touch;
-}
-.daeun-timeline::-webkit-scrollbar { height: 4px; }
-.daeun-timeline::-webkit-scrollbar-thumb { background: rgba(201,168,76,0.3); border-radius: 4px; }
-.daeun-block {
-  min-width: 90px; flex-shrink: 0;
-  scroll-snap-align: start;
-  background: rgba(15,52,96,0.5);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; padding: 12px 10px;
-  text-align: center;
-}
-.daeun-block.current {
-  border-color: var(--accent-gold);
-  background: rgba(201,168,76,0.1);
-}
-.daeun-block .age { font-size: 11px; color: var(--text-muted); }
-.daeun-block .chars { font-size: 20px; font-weight: 700; margin: 6px 0; }
-.daeun-block .label-current { font-size: 10px; color: var(--accent-gold); font-weight: 700; }
-/* LOCKED ITEMS */
-.locked-item {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px; padding: 14px;
-  text-align: center; margin-top: 12px;
-  cursor: pointer; transition: all 0.2s;
-}
-.locked-item:hover { border-color: var(--accent-gold); }
-.locked-item p { color: var(--accent-gold); font-size: 13px; }
-/* AI SECTION */
-.ai-section {
-  background: rgba(15,52,96,0.4);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 16px; padding: 20px; margin-bottom: 24px;
-  position: relative; overflow: hidden;
-}
-.ai-section.locked .ai-content {
-  filter: blur(6px); pointer-events: none; user-select: none;
-}
-.ai-section .lock-overlay {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  background: rgba(26,26,46,0.7);
-  z-index: 2;
-}
-.ai-section .lock-overlay .lock-icon { font-size: 36px; margin-bottom: 12px; }
-.ai-section .lock-overlay h4 { color: var(--accent-gold); font-size: 15px; margin-bottom: 6px; }
-.ai-section .lock-overlay p { color: var(--text-muted); font-size: 12px; text-align: center; max-width: 260px; margin-bottom: 14px; }
-.ai-content h4 { color: var(--accent-gold); margin-bottom: 8px; }
-.ai-content p { font-size: 14px; line-height: 1.8; margin-bottom: 10px; }
-.ai-content .strengths, .ai-content .challenges { margin: 8px 0; padding-left: 18px; }
-.ai-content li { font-size: 13px; margin-bottom: 4px; }
-/* MODALS */
-.modal-overlay {
-  display: none; position: fixed; inset: 0;
-  background: rgba(0,0,0,0.7);
-  z-index: 100; align-items: center; justify-content: center;
-  padding: 16px;
-}
-.modal-overlay.show { display: flex; }
-.modal-box {
-  background: var(--bg-secondary);
-  border: 1px solid rgba(201,168,76,0.2);
-  border-radius: 16px; padding: 24px;
-  max-width: 400px; width: 100%;
-}
-.modal-box h3 { color: var(--accent-gold); font-size: 16px; margin-bottom: 6px; }
-.modal-box p.desc { color: var(--text-muted); font-size: 12px; margin-bottom: 16px; }
-.modal-box input {
-  width: 100%; padding: 10px 12px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 10px; color: var(--text-primary);
-  font-size: 14px; outline: none; margin-bottom: 12px;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.modal-box input:focus { border-color: var(--accent-gold); }
-.modal-btns { display: flex; gap: 8px; }
-.modal-btns button {
-  flex: 1; padding: 10px; border-radius: 10px;
-  font-size: 13px; font-weight: 700; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-  border: none; transition: all 0.2s;
-}
-.modal-btns .btn-save {
-  background: var(--accent-gold); color: #1a1a2e;
-}
-.modal-btns .btn-cancel {
-  background: rgba(255,255,255,0.08); color: var(--text-muted);
-  border: 1px solid rgba(255,255,255,0.1);
-}
-/* SHISHEN TABLE */
-.shishen-table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-.shishen-table th, .shishen-table td {
-  padding: 8px; text-align: center; font-size: 13px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-.shishen-table th { color: var(--text-muted); font-size: 11px; }
-/* FOOTER */
-.site-footer {
-  text-align: center; padding: 24px 16px 40px;
-  color: var(--text-muted); font-size: 12px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  max-width: 720px; margin: 0 auto;
-}
-.site-footer .footer-btns { display: flex; gap: 12px; justify-content: center; margin-bottom: 12px; }
-.site-footer button {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-muted); font-size: 12px;
-  padding: 6px 14px; border-radius: 8px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.btn-back {
-  display: inline-block; margin-bottom: 20px;
-  background: none; border: 1px solid rgba(255,255,255,0.1);
-  color: var(--text-muted); padding: 8px 16px;
-  border-radius: 10px; font-size: 13px; cursor: pointer;
-  font-family: 'Noto Sans KR', sans-serif;
-}
-.btn-back:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
-/* COMPAT */
-.compat-form { margin-top: 12px; }
-.compat-form .form-grid { margin-bottom: 8px; }
-.compat-result { margin-top: 16px; text-align: center; }
-.compat-score-circle {
-  width: 100px; height: 100px; border-radius: 50%;
-  border: 3px solid var(--accent-gold);
-  display: inline-flex; align-items: center; justify-content: center;
-  font-size: 28px; font-weight: 700; color: var(--accent-gold);
-  margin-bottom: 8px;
-}
-/* RESPONSIVE */
-@media (min-width: 768px) {
-  .hero h1 { font-size: 36px; }
-  .pillar-grid { gap: 16px; }
-  .stem-char, .branch-char { font-size: 3rem; }
-  .form-section { max-width: 520px; }
-}
-/* TYPEWRITER */
-.typewriter-cursor::after {
-  content: '|'; color: var(--accent-gold); animation: blink 1s step-end infinite;
-}
-@keyframes blink { 50% { opacity: 0; } }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Momentor — Your destiny, decoded.</title>
+  <meta name="description" content="518,400 possible destinies. Decode your Korean Four Pillars birth chart. 1,500 years of wisdom.">
+  <meta property="og:title" content="Momentor — Your destiny, decoded.">
+  <meta property="og:description" content="518,400 possible destinies. This one is yours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(145deg, #0d0b1e 0%, #130d2e 40%, #1a0d2e 70%, #0f1526 100%);
+      --card-bg: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --card-hover: rgba(255,255,255,0.07);
+      --gold: #e8c547; --gold-soft: #c9a84c;
+      --violet: #9b7fd4; --rose: #e8748a;
+      --glow-gold: rgba(232,197,71,0.15);
+      --wood: #5de8a0; --fire: #ff7eb3;
+      --earth: #f0b860; --metal: #c8d8f0; --water: #60b4fa;
+      --text-primary: #f0eefc; --text-secondary: #a8a0c8; --text-muted: #6b6488;
+      --font-serif: 'Cormorant Garamond','Noto Serif KR',Georgia,serif;
+      --font-sans: 'Noto Sans KR',-apple-system,sans-serif;
+      --hero-title: clamp(28px,7vw,58px);
+      --radius-sm:8px; --radius-md:16px; --radius-lg:24px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{
+      font-family:var(--font-sans);
+      background:var(--bg-gradient);
+      min-height:100vh; color:var(--text-primary);
+      overflow-x:hidden; line-height:1.7; font-size:15px;
+    }
+    body::before{
+      content:''; position:fixed; inset:0; z-index:0;
+      background-image:
+        radial-gradient(1px 1px at 5% 8%,rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 12% 22%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 20% 5%,rgba(255,255,255,.35) 0%,transparent 100%),
+        radial-gradient(1px 1px at 28% 45%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1px 1px at 35% 15%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 42% 68%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(1px 1px at 50% 30%,rgba(255,255,255,.35) 0%,transparent 100%),
+        radial-gradient(1px 1px at 57% 85%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 63% 12%,rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 70% 55%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(1px 1px at 77% 38%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 83% 72%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1px 1px at 88% 20%,rgba(255,255,255,.35) 0%,transparent 100%),
+        radial-gradient(1px 1px at 93% 48%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(1px 1px at 97% 88%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 15% 90%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 48% 95%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(1px 1px at 75% 92%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1px 1px at 3% 60%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 92% 8%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(2px 2px at 33% 33%,rgba(232,197,71,.15) 0%,transparent 100%),
+        radial-gradient(2px 2px at 66% 66%,rgba(155,127,212,.12) 0%,transparent 100%),
+        radial-gradient(1px 1px at 18% 75%,rgba(255,255,255,.2) 0%,transparent 100%),
+        radial-gradient(1px 1px at 82% 42%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 55% 58%,rgba(255,255,255,.15) 0%,transparent 100%);
+      pointer-events:none;
+    }
+    #app{position:relative;z-index:1;}
+
+    /* HEADER */
+    .site-header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(13,11,30,.88);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      padding:10px 16px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    .logo-area{display:flex;align-items:center;gap:8px;text-decoration:none;}
+    .logo-mark{font-size:20px;}
+    .logo-name{
+      font-family:var(--font-serif);
+      font-size:18px;font-weight:600;
+      color:var(--gold);letter-spacing:.04em;
+    }
+    .logo-sub{font-size:10px;color:var(--text-muted);letter-spacing:.08em;margin-top:-2px;}
+    .header-right{display:flex;align-items:center;gap:8px;}
+    .lang-tabs{display:flex;gap:2px;background:rgba(255,255,255,.04);border-radius:8px;padding:2px;}
+    .lang-btn{
+      padding:5px 9px;border:none;border-radius:6px;
+      background:transparent;color:var(--text-muted);
+      font-size:11px;font-weight:700;cursor:pointer;
+      transition:all .2s;font-family:var(--font-sans);
+      letter-spacing:.04em;
+    }
+    .lang-btn.active{background:rgba(232,197,71,.18);color:var(--gold);}
+    .lang-btn:hover:not(.active){color:var(--text-secondary);background:rgba(255,255,255,.05);}
+
+    /* HERO */
+    .hero{
+      text-align:center;padding:60px 20px 40px;
+      max-width:600px;margin:0 auto;
+    }
+    .hero-eyebrow{
+      font-size:10px;letter-spacing:.2em;color:var(--text-muted);
+      text-transform:uppercase;margin-bottom:20px;
+      display:flex;align-items:center;justify-content:center;gap:8px;
+    }
+    .hero-eyebrow::before,.hero-eyebrow::after{
+      content:'';display:block;width:32px;height:1px;
+      background:linear-gradient(90deg,transparent,var(--text-muted),transparent);
+    }
+    .hero-headline{
+      font-family:var(--font-serif);
+      font-size:var(--hero-title);
+      font-weight:300;line-height:1.2;
+      color:var(--text-primary);margin-bottom:20px;
+    }
+    .hero-headline em{font-style:italic;color:var(--gold);}
+    .hero-sub{
+      font-size:14px;color:var(--text-secondary);
+      line-height:1.8;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;
+    }
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:8px;
+      background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      color:#1a1020;font-weight:700;
+      border:none;border-radius:14px;
+      padding:15px 32px;font-size:15px;
+      box-shadow:0 4px 20px rgba(232,197,71,.3);
+      cursor:pointer;transition:all .2s;
+      font-family:var(--font-sans);
+      text-decoration:none;
+    }
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(232,197,71,.4);}
+    .btn-ghost{
+      display:inline-flex;align-items:center;gap:8px;
+      background:transparent;
+      border:1px solid rgba(232,197,71,.4);
+      color:var(--gold);
+      border-radius:14px;padding:13px 28px;font-size:14px;
+      cursor:pointer;transition:all .2s;font-family:var(--font-sans);font-weight:600;
+    }
+    .btn-ghost:hover{background:rgba(232,197,71,.08);border-color:var(--gold);}
+    .btn-sm{padding:10px 20px;font-size:13px;border-radius:10px;}
+
+    /* USP CARDS */
+    .usp-row{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:12px;padding:0 16px 40px;max-width:900px;margin:0 auto;
+    }
+    @media(max-width:640px){.usp-row{grid-template-columns:1fr;}}
+    .usp-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius-md);
+      backdrop-filter:blur(20px);
+      padding:20px;
+    }
+    .usp-icon{font-size:24px;margin-bottom:10px;}
+    .usp-title{font-family:var(--font-serif);font-size:16px;font-weight:600;color:var(--gold);margin-bottom:8px;}
+    .usp-body{font-size:13px;color:var(--text-secondary);line-height:1.7;}
+
+    /* FORM */
+    .form-section{
+      max-width:520px;margin:0 auto;
+      padding:0 16px 60px;
+    }
+    .form-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius-lg);
+      backdrop-filter:blur(20px);
+      padding:28px 24px;
+    }
+    .form-title{
+      font-family:var(--font-serif);
+      font-size:20px;font-weight:600;
+      color:var(--text-primary);margin-bottom:4px;
+    }
+    .form-subtitle{font-size:13px;color:var(--text-muted);margin-bottom:24px;}
+    .form-group{margin-bottom:18px;}
+    .form-label{
+      display:block;font-size:12px;font-weight:700;
+      color:var(--text-secondary);letter-spacing:.06em;
+      text-transform:uppercase;margin-bottom:7px;
+    }
+    .form-control{
+      width:100%;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:10px;
+      color:var(--text-primary);
+      font-size:15px;padding:12px 14px;
+      font-family:var(--font-sans);
+      transition:border-color .2s;
+      -webkit-appearance:none;appearance:none;
+    }
+    .form-control:focus{outline:none;border-color:rgba(232,197,71,.5);}
+    .form-control.error{border-color:rgba(239,68,68,.6);}
+    .form-control option{background:#1a1030;color:var(--text-primary);}
+    .form-row{display:grid;gap:10px;}
+    .form-row-3{grid-template-columns:repeat(3,1fr);}
+    .form-row-2{grid-template-columns:repeat(2,1fr);}
+    .form-error{font-size:11px;color:#f87171;margin-top:5px;display:none;}
+    .form-error.show{display:block;}
+    .toggle-row{
+      display:flex;align-items:center;gap:12px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:10px;padding:12px 14px;
+      cursor:pointer;
+    }
+    .toggle-row input[type=checkbox]{
+      width:18px;height:18px;cursor:pointer;
+      accent-color:var(--gold);
+    }
+    .toggle-label{font-size:13px;color:var(--text-secondary);cursor:pointer;}
+    .gender-row{display:flex;gap:10px;}
+    .gender-btn{
+      flex:1;padding:11px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+      color:var(--text-secondary);font-size:14px;
+      cursor:pointer;transition:all .2s;font-family:var(--font-sans);
+      text-align:center;
+    }
+    .gender-btn.active{
+      border-color:rgba(232,197,71,.5);
+      background:rgba(232,197,71,.1);
+      color:var(--gold);font-weight:700;
+    }
+    .form-cta{margin-top:24px;text-align:center;}
+    .form-cta .btn-primary{width:100%;justify-content:center;font-size:16px;padding:16px;}
+    .time-disabled{opacity:.4;pointer-events:none;}
+
+    /* RESULTS */
+    #section-results{display:none;padding:0 16px 40px;max-width:900px;margin:0 auto;}
+    #section-results.visible{display:block;}
+    .results-top{
+      text-align:center;padding:32px 0 24px;
+    }
+    .results-name{
+      font-family:var(--font-serif);font-size:13px;
+      color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;
+      margin-bottom:6px;
+    }
+    .results-date{font-size:15px;color:var(--text-secondary);}
+
+    /* PILLAR GRID */
+    .pillar-section{margin-bottom:32px;}
+    .section-label{
+      font-size:11px;letter-spacing:.14em;color:var(--text-muted);
+      text-transform:uppercase;margin-bottom:14px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .section-label::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);}
+    .pillar-grid{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+    }
+    @media(max-width:480px){
+      .pillar-grid{grid-template-columns:repeat(2,1fr);}
+    }
+    .pillar-card{
+      background:var(--card-bg);
+      border:1px solid var(--card-border);
+      border-radius:var(--radius-md);
+      backdrop-filter:blur(20px);
+      padding:18px 12px;text-align:center;
+      position:relative;overflow:hidden;
+      transition:transform .25s,box-shadow .25s;
+      cursor:default;
+    }
+    .pillar-card:hover{transform:translateY(-4px);}
+    .pillar-card.day-pillar{
+      border-color:rgba(232,197,71,.4);
+      box-shadow:0 0 24px rgba(232,197,71,.12);
+    }
+    .pillar-glow{
+      position:absolute;inset:0;
+      border-radius:inherit;
+      pointer-events:none;
+      opacity:.7;
+    }
+    .pillar-label{
+      font-size:9px;letter-spacing:.12em;
+      color:var(--text-muted);text-transform:uppercase;
+      margin-bottom:10px;
+    }
+    .you-badge{
+      display:inline-block;
+      background:rgba(232,197,71,.2);
+      color:var(--gold);font-size:8px;font-weight:700;
+      letter-spacing:.1em;padding:2px 6px;border-radius:4px;
+      position:absolute;top:8px;right:8px;
+    }
+    .pillar-stem{
+      font-family:var(--font-serif);
+      font-size:3.2rem;font-weight:300;line-height:1;
+      margin-bottom:4px;
+    }
+    .pillar-stem-name{font-size:11px;color:var(--text-secondary);margin-bottom:12px;}
+    .pillar-branch{
+      font-family:var(--font-serif);
+      font-size:2rem;font-weight:300;line-height:1;
+      margin-bottom:4px;
+    }
+    .pillar-branch-name{font-size:11px;color:var(--text-muted);}
+    .pillar-ten-god{
+      display:inline-block;margin-top:8px;
+      font-size:9px;padding:3px 7px;border-radius:4px;
+      background:rgba(255,255,255,.06);color:var(--text-muted);
+      letter-spacing:.04em;
+    }
+
+    /* ELEMENT RADAR */
+    .elements-section{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-lg);backdrop-filter:blur(20px);
+      padding:24px;margin-bottom:24px;
+    }
+    .elements-section-title{
+      font-family:var(--font-serif);font-size:18px;font-weight:600;
+      color:var(--text-primary);margin-bottom:16px;
+    }
+    .elements-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center;}
+    @media(max-width:480px){.elements-grid{grid-template-columns:1fr;}}
+    .element-bars{display:flex;flex-direction:column;gap:12px;}
+    .el-bar-row{display:flex;align-items:center;gap:10px;}
+    .el-bar-name{width:32px;font-size:12px;color:var(--text-secondary);}
+    .el-bar-track{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+    .el-bar-fill{height:100%;border-radius:3px;transition:width .8s ease;}
+    .el-bar-pct{font-size:11px;color:var(--text-muted);width:32px;text-align:right;}
+    #elements-svg{width:100%;max-width:220px;display:block;margin:0 auto;}
+
+    /* DAY MASTER CARD */
+    .day-master-card{
+      position:relative;overflow:hidden;
+      border-radius:var(--radius-lg);
+      border:1px solid rgba(232,197,71,.3);
+      padding:36px 28px;margin-bottom:24px;
+      backdrop-filter:blur(20px);
+      opacity:0;transform:translateY(30px) scale(.97);
+      transition:opacity .6s,transform .6s;
+    }
+    .day-master-card.revealed{opacity:1;transform:translateY(0) scale(1);}
+    .dm-bg-char{
+      position:absolute;right:-10px;top:50%;transform:translateY(-50%);
+      font-family:var(--font-serif);font-size:12rem;font-weight:300;
+      opacity:.06;line-height:1;pointer-events:none;
+      color:var(--gold);
+    }
+    .dm-eyebrow{
+      font-size:9px;letter-spacing:.2em;color:var(--text-muted);
+      text-transform:uppercase;margin-bottom:14px;
+    }
+    .dm-char-row{display:flex;align-items:center;gap:20px;margin-bottom:16px;}
+    .dm-char{
+      font-family:var(--font-serif);font-size:5rem;font-weight:300;
+      line-height:1;
+    }
+    .dm-char-info{}
+    .dm-element-name{
+      font-family:var(--font-serif);font-size:22px;font-weight:600;
+      color:var(--text-primary);margin-bottom:4px;
+    }
+    .dm-title{
+      font-size:11px;letter-spacing:.12em;color:var(--text-muted);
+      text-transform:uppercase;
+    }
+    .dm-oneliner{
+      font-family:var(--font-serif);font-size:17px;
+      font-style:italic;color:var(--text-secondary);
+      line-height:1.6;margin-bottom:20px;
+    }
+    .dm-body{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:20px;}
+    .dm-body p{margin-bottom:12px;}
+    .dm-body p:last-child{margin-bottom:0;}
+    .dm-strengths-shadows{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+    @media(max-width:480px){.dm-strengths-shadows{grid-template-columns:1fr;}}
+    .dm-ss-card{
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      border-radius:12px;padding:16px;
+    }
+    .dm-ss-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;}
+    .dm-ss-list{list-style:none;}
+    .dm-ss-list li{font-size:13px;color:var(--text-secondary);line-height:1.6;padding:4px 0;padding-left:16px;position:relative;}
+    .dm-ss-list li::before{content:'✦';position:absolute;left:0;font-size:9px;top:7px;}
+    .dm-keywords{display:flex;flex-wrap:wrap;gap:8px;}
+    .dm-keyword{
+      font-size:10px;font-weight:700;letter-spacing:.1em;
+      padding:5px 12px;border-radius:20px;
+      border:1px solid rgba(255,255,255,.12);
+      color:var(--text-muted);text-transform:uppercase;
+    }
+
+    /* PERSONALITY + FORTUNE */
+    .analysis-card{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-lg);backdrop-filter:blur(20px);
+      padding:24px;margin-bottom:16px;
+    }
+    .analysis-title{
+      font-family:var(--font-serif);font-size:20px;font-weight:600;
+      color:var(--text-primary);margin-bottom:16px;
+      display:flex;align-items:center;gap:10px;
+    }
+    .free-badge{
+      font-size:9px;font-weight:700;letter-spacing:.1em;
+      padding:3px 8px;border-radius:4px;
+      background:rgba(93,232,160,.15);color:var(--wood);
+      text-transform:uppercase;
+    }
+    .analysis-body{font-size:14px;color:var(--text-secondary);line-height:1.9;}
+    .analysis-body p{margin-bottom:12px;}
+    .fortune-day-type{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:4px 12px;border-radius:20px;
+      font-size:11px;font-weight:700;letter-spacing:.08em;
+      margin-bottom:14px;text-transform:uppercase;
+    }
+    .fortune-day-type.high{background:rgba(93,232,160,.15);color:var(--wood);}
+    .fortune-day-type.neutral{background:rgba(200,216,240,.1);color:var(--metal);}
+    .fortune-day-type.challenging{background:rgba(255,126,179,.1);color:var(--fire);}
+    .fortune-luckies{
+      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;
+    }
+    .lucky-item{
+      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+      border-radius:10px;padding:10px;text-align:center;
+    }
+    .lucky-label{font-size:10px;color:var(--text-muted);margin-bottom:4px;}
+    .lucky-val{font-size:14px;font-weight:700;color:var(--text-secondary);}
+
+    /* DAEUN TIMELINE */
+    .daeun-section{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-lg);backdrop-filter:blur(20px);
+      padding:24px;margin-bottom:16px;overflow:hidden;
+    }
+    .daeun-track{
+      display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;
+      scroll-snap-type:x mandatory;
+      -webkit-overflow-scrolling:touch;
+    }
+    .daeun-track::-webkit-scrollbar{height:3px;}
+    .daeun-track::-webkit-scrollbar-track{background:rgba(255,255,255,.05);}
+    .daeun-track::-webkit-scrollbar-thumb{background:rgba(232,197,71,.3);border-radius:2px;}
+    .daeun-item{
+      flex:0 0 100px;scroll-snap-align:start;
+      background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+      border-radius:12px;padding:14px 10px;text-align:center;
+      transition:all .2s;
+    }
+    .daeun-item.current{
+      border-color:rgba(232,197,71,.4);
+      background:rgba(232,197,71,.07);
+      box-shadow:0 0 20px rgba(232,197,71,.12);
+    }
+    .daeun-stem{font-family:var(--font-serif);font-size:1.8rem;font-weight:300;line-height:1;}
+    .daeun-branch{font-family:var(--font-serif);font-size:1.2rem;font-weight:300;color:var(--text-secondary);}
+    .daeun-age{font-size:10px;color:var(--text-muted);margin-top:6px;}
+    .daeun-current-badge{
+      font-size:8px;font-weight:700;letter-spacing:.08em;
+      color:var(--gold);text-transform:uppercase;
+      margin-top:4px;
+    }
+
+    /* PAID / LOCKED SECTIONS */
+    .paid-section{
+      position:relative;border-radius:var(--radius-lg);
+      border:1px solid var(--card-border);
+      backdrop-filter:blur(20px);
+      background:var(--card-bg);
+      margin-bottom:16px;overflow:hidden;
+    }
+    .paid-preview{
+      padding:24px;filter:blur(6px);
+      pointer-events:none;user-select:none;
+      brightness:.6;
+      -webkit-filter:blur(6px) brightness(.6);
+      filter:blur(6px) brightness(.6);
+    }
+    .paid-preview-text{font-size:14px;color:var(--text-secondary);line-height:1.9;}
+    .paid-lock{
+      position:absolute;inset:0;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      padding:24px;text-align:center;
+      background:linear-gradient(180deg,rgba(13,11,30,0) 0%,rgba(13,11,30,.85) 30%,rgba(13,11,30,.95) 100%);
+    }
+    .lock-icon{font-size:28px;margin-bottom:10px;}
+    .lock-hook{
+      font-family:var(--font-serif);
+      font-size:clamp(16px,4vw,20px);
+      font-weight:600;color:var(--text-primary);
+      line-height:1.4;margin-bottom:8px;
+    }
+    .lock-sub{font-size:13px;color:var(--text-secondary);margin-bottom:18px;line-height:1.6;}
+    .lock-price{font-size:12px;color:var(--text-muted);margin-bottom:14px;}
+
+    /* MODAL */
+    #modal-overlay{
+      display:none;position:fixed;inset:0;z-index:200;
+      background:rgba(0,0,0,.75);backdrop-filter:blur(8px);
+      align-items:center;justify-content:center;padding:20px;
+    }
+    #modal-overlay.open{display:flex;}
+    .modal-box{
+      background:linear-gradient(145deg,#1a1030 0%,#130d2e 100%);
+      border:1px solid rgba(232,197,71,.25);
+      border-radius:var(--radius-lg);
+      padding:32px 28px;
+      max-width:420px;width:100%;
+      max-height:90vh;overflow-y:auto;
+      position:relative;
+    }
+    .modal-close{
+      position:absolute;top:14px;right:16px;
+      background:rgba(255,255,255,.08);border:none;
+      color:var(--text-muted);width:30px;height:30px;
+      border-radius:8px;cursor:pointer;font-size:16px;
+      display:flex;align-items:center;justify-content:center;
+      transition:all .2s;
+    }
+    .modal-close:hover{background:rgba(255,255,255,.12);color:var(--text-primary);}
+    .modal-eyebrow{
+      font-size:10px;letter-spacing:.15em;color:var(--gold);
+      text-transform:uppercase;margin-bottom:12px;
+    }
+    .modal-title{
+      font-family:var(--font-serif);font-size:24px;font-weight:600;
+      color:var(--text-primary);margin-bottom:8px;line-height:1.3;
+    }
+    .modal-sub{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px;}
+    .modal-features{list-style:none;margin-bottom:24px;}
+    .modal-features li{
+      display:flex;align-items:flex-start;gap:10px;
+      font-size:14px;color:var(--text-secondary);
+      padding:6px 0;line-height:1.5;
+    }
+    .modal-features li::before{
+      content:'✦';color:var(--gold);
+      font-size:10px;margin-top:4px;flex-shrink:0;
+    }
+    .modal-price-tag{
+      text-align:center;
+      font-family:var(--font-serif);font-size:28px;
+      color:var(--gold);font-weight:600;
+      margin-bottom:8px;
+    }
+    .modal-price-sub{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:20px;}
+    .modal-divider{height:1px;background:rgba(255,255,255,.08);margin:20px 0;}
+    .modal-waitlist-title{font-size:14px;color:var(--text-secondary);margin-bottom:12px;}
+    .modal-input-row{display:flex;gap:8px;}
+    .modal-input{
+      flex:1;background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px;color:var(--text-primary);
+      font-size:14px;padding:11px 14px;
+      font-family:var(--font-sans);
+    }
+    .modal-input:focus{outline:none;border-color:rgba(232,197,71,.4);}
+    .modal-note{font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center;}
+
+    /* TOAST */
+    #toast-container{
+      position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+      z-index:300;display:flex;flex-direction:column-reverse;gap:8px;
+      pointer-events:none;width:calc(100% - 40px);max-width:360px;
+    }
+    .toast{
+      background:rgba(20,18,40,.96);
+      backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:12px;padding:12px 16px;
+      display:flex;align-items:center;gap:10px;
+      font-size:14px;color:var(--text-primary);
+      pointer-events:auto;
+      transform:translateY(16px);opacity:0;
+      animation:toastIn .3s ease forwards;
+      box-shadow:0 8px 30px rgba(0,0,0,.4);
+    }
+    .toast.fade-out{animation:toastOut .3s ease forwards;}
+    .toast-icon{font-size:16px;flex-shrink:0;}
+    .toast.success{border-color:rgba(93,232,160,.3);}
+    .toast.error{border-color:rgba(248,113,113,.3);}
+    .toast.info{border-color:rgba(155,127,212,.3);}
+    @keyframes toastIn{from{transform:translateY(16px);opacity:0}to{transform:translateY(0);opacity:1}}
+    @keyframes toastOut{from{transform:translateY(0);opacity:1}to{transform:translateY(8px);opacity:0}}
+
+    /* ANIMATIONS */
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+    .anim-fadeup{animation:fadeUp .5s ease forwards;}
+    .anim-scale{animation:scaleIn .4s ease forwards;}
+    .stagger-1{animation-delay:.1s;opacity:0;}
+    .stagger-2{animation-delay:.2s;opacity:0;}
+    .stagger-3{animation-delay:.3s;opacity:0;}
+    .stagger-4{animation-delay:.4s;opacity:0;}
+
+    /* SOCIAL PROOF */
+    .social-section{
+      max-width:900px;margin:0 auto;
+      padding:0 16px 40px;
+    }
+    .testimonials{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+    @media(max-width:640px){.testimonials{grid-template-columns:1fr;}}
+    .testimonial{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-md);backdrop-filter:blur(20px);
+      padding:18px;
+    }
+    .testimonial-text{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:10px;font-style:italic;}
+    .testimonial-author{font-size:11px;color:var(--text-muted);}
+    .social-count{
+      text-align:center;margin-top:24px;
+      font-family:var(--font-serif);font-size:16px;
+      color:var(--text-secondary);
+    }
+    .social-count strong{color:var(--gold);}
+
+    /* FOOTER */
+    footer{
+      text-align:center;padding:24px 16px 40px;
+      border-top:1px solid rgba(255,255,255,.05);
+      font-size:12px;color:var(--text-muted);
+    }
+    footer a{color:var(--text-muted);text-decoration:none;}
+
+    /* UTIL */
+    .text-center{text-align:center;}
+    .mt-8{margin-top:8px;} .mt-16{margin-top:16px;} .mt-24{margin-top:24px;}
+    .mb-0{margin-bottom:0;} .hidden{display:none;}
+    .section-divider{
+      display:flex;align-items:center;gap:12px;
+      padding:0 0 16px;
+      font-family:var(--font-serif);font-size:18px;font-weight:600;
+      color:var(--text-primary);
+    }
+    .section-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.07);}
+    .section-divider .badge{
+      font-family:var(--font-sans);font-size:9px;font-weight:700;
+      letter-spacing:.1em;padding:3px 8px;border-radius:4px;
+      text-transform:uppercase;
+    }
+    .badge-free{background:rgba(93,232,160,.15);color:var(--wood);}
+    .badge-paid{background:rgba(232,197,71,.15);color:var(--gold);}
+    .api-key-section{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-md);backdrop-filter:blur(20px);
+      padding:16px;margin-bottom:16px;
+    }
+    .api-key-row{display:flex;gap:8px;margin-top:10px;}
+    .api-key-title{font-size:13px;color:var(--text-secondary);}
+    .nav-back{
+      display:inline-flex;align-items:center;gap:6px;
+      font-size:13px;color:var(--text-muted);
+      background:none;border:none;cursor:pointer;
+      padding:8px 0;margin-bottom:16px;
+      font-family:var(--font-sans);
+    }
+    .nav-back:hover{color:var(--text-secondary);}
+
+    /* Element-specific glow backgrounds */
+    [data-element="Wood"] .pillar-glow{background:radial-gradient(circle at center,rgba(93,232,160,.1) 0%,transparent 70%);}
+    [data-element="Fire"] .pillar-glow{background:radial-gradient(circle at center,rgba(255,126,179,.12) 0%,transparent 70%);}
+    [data-element="Earth"] .pillar-glow{background:radial-gradient(circle at center,rgba(240,184,96,.1) 0%,transparent 70%);}
+    [data-element="Metal"] .pillar-glow{background:radial-gradient(circle at center,rgba(200,216,240,.08) 0%,transparent 70%);}
+    [data-element="Water"] .pillar-glow{background:radial-gradient(circle at center,rgba(96,180,250,.1) 0%,transparent 70%);}
+    [data-element="Wood"] .pillar-stem{color:var(--wood);text-shadow:0 0 24px rgba(93,232,160,.4);}
+    [data-element="Fire"] .pillar-stem{color:var(--fire);text-shadow:0 0 24px rgba(255,126,179,.4);}
+    [data-element="Earth"] .pillar-stem{color:var(--earth);text-shadow:0 0 24px rgba(240,184,96,.4);}
+    [data-element="Metal"] .pillar-stem{color:var(--metal);text-shadow:0 0 24px rgba(200,216,240,.35);}
+    [data-element="Water"] .pillar-stem{color:var(--water);text-shadow:0 0 24px rgba(96,180,250,.4);}
+    [data-element="Wood"] .pillar-branch{color:rgba(93,232,160,.8);}
+    [data-element="Fire"] .pillar-branch{color:rgba(255,126,179,.8);}
+    [data-element="Earth"] .pillar-branch{color:rgba(240,184,96,.8);}
+    [data-element="Metal"] .pillar-branch{color:rgba(200,216,240,.8);}
+    [data-element="Water"] .pillar-branch{color:rgba(96,180,250,.8);}
+
+    @media(max-width:375px){
+      .pillar-stem{font-size:2.6rem;}
+      .pillar-branch{font-size:1.6rem;}
+      .form-card{padding:20px 16px;}
+      .modal-box{padding:24px 18px;}
+    }
+  </style>
 </head>
 <body>
+<div id="toast-container"></div>
+<div id="app">
 
 <!-- HEADER -->
 <header class="site-header">
-  <div class="logo-area">
-    <span class="icon">&#9788;</span>
-    <span class="title" data-i18n="appTitle">&#49324;&#51452;&#54036;&#51088; &#50724;&#46972;&#53364;</span>
-  </div>
-  <div class="lang-toggle" id="langToggle">
-    <button data-lang="en">EN</button>
-    <button data-lang="ko" class="active">&#54620;&#44397;&#50612;</button>
-    <button data-lang="ja">&#26085;&#26412;&#35486;</button>
-    <button data-lang="zh">&#20013;&#25991;</button>
+  <a class="logo-area" href="#" onclick="scrollToTop();return false;">
+    <span class="logo-mark">✦</span>
+    <div>
+      <div class="logo-name">Momentor</div>
+      <div class="logo-sub" id="hdr-sub">Your destiny, decoded.</div>
+    </div>
+  </a>
+  <div class="header-right">
+    <div class="lang-tabs">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="ko" onclick="setLang('ko')">한</button>
+      <button class="lang-btn" data-lang="ja" onclick="setLang('ja')">日</button>
+      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中</button>
+    </div>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="heroSection">
-  <h1 data-i18n="heroHeadline">&#45208;&#51032; &#50868;&#47749;&#51012; &#51069;&#45796;</h1>
-  <p data-i18n="heroSubtitle">&#49324;&#51452;&#54036;&#51088;&#47196; &#45817;&#49888;&#51032; &#53440;&#44256;&#45212; &#44592;&#50868;&#51012; &#48156;&#44204;&#54616;&#49464;&#50836;</p>
-</section>
+<!-- MAIN -->
+<main>
 
-<!-- FORM -->
-<section class="form-section" id="formSection">
-  <div class="form-card">
-    <div class="form-grid">
-      <div class="form-group">
-        <label data-i18n="labelYear">&#53468;&#50612;&#45212; &#45380;&#46020;</label>
-        <input type="number" id="inputYear" placeholder="1990" min="1900" max="2030">
+<!-- HERO SECTION -->
+<section id="section-hero">
+  <div class="hero">
+    <div class="hero-eyebrow" id="hero-eyebrow">THE MOMENT YOU WERE BORN</div>
+    <h1 class="hero-headline" id="hero-headline"><em>518,400</em> possible destinies.<br>This one is yours.</h1>
+    <p class="hero-sub" id="hero-sub">Momentor decodes your Korean Four Pillars (사주팔자) birth chart — the 1,500-year-old system consulted by millions across East Asia. Discover your Day Master, your elemental nature, and the 10-year destiny cycles that shape your life.</p>
+    <button class="btn-primary" id="hero-cta" onclick="smoothScrollTo('section-input')">Reveal My Destiny →</button>
+  </div>
+
+  <!-- USP CARDS -->
+  <div class="usp-row">
+    <div class="usp-card anim-fadeup stagger-1">
+      <div class="usp-icon">🌟</div>
+      <div class="usp-title" id="usp1-title">Not 1 in 12. 1 in 518,400.</div>
+      <div class="usp-body" id="usp1-body">Western horoscopes divide humanity into twelve signs. Saju uses your birth year, month, day, AND hour — making your chart a fingerprint, not a category.</div>
+    </div>
+    <div class="usp-card anim-fadeup stagger-2">
+      <div class="usp-icon">🔮</div>
+      <div class="usp-title" id="usp2-title">1,400 Years of Wisdom</div>
+      <div class="usp-body" id="usp2-body">Consulted by Korean presidents, Japanese executives, and Chinese families making million-dollar decisions. Now available in your language.</div>
+    </div>
+    <div class="usp-card anim-fadeup stagger-3">
+      <div class="usp-icon">⚡</div>
+      <div class="usp-title" id="usp3-title">Your Life Runs in Seasons</div>
+      <div class="usp-body" id="usp3-body">大運 (Daeun) reveals the elemental energy of each 10-year chapter of your life. Some decades are harvest. Some are storm. Know which one you're in now.</div>
+    </div>
+  </div>
+
+  <!-- SOCIAL PROOF -->
+  <div class="social-section">
+    <div class="testimonials">
+      <div class="testimonial anim-fadeup stagger-1">
+        <div class="testimonial-text" id="t1-text">"I've used Co-Star for three years. Momentor told me something in five minutes that I've spent two years in therapy figuring out."</div>
+        <div class="testimonial-author" id="t1-author">— Sarah K., New York</div>
       </div>
-      <div class="form-group">
-        <label data-i18n="labelMonth">&#50900;</label>
-        <input type="number" id="inputMonth" placeholder="1" min="1" max="12">
+      <div class="testimonial anim-fadeup stagger-2">
+        <div class="testimonial-text" id="t2-text">"As a Korean-American, I grew up hearing about saju but never had access to it in English. This is the first app that gets it right."</div>
+        <div class="testimonial-author" id="t2-author">— Jenny L., Los Angeles</div>
       </div>
-      <div class="form-group">
-        <label data-i18n="labelDay">&#51068;</label>
-        <input type="number" id="inputDay" placeholder="21" min="1" max="31">
+      <div class="testimonial anim-fadeup stagger-3">
+        <div class="testimonial-text" id="t3-text">"The 10-year luck cycle analysis literally made me rethink my career timeline. I didn't expect to cry at an astrology app."</div>
+        <div class="testimonial-author" id="t3-author">— Marcus T., London</div>
       </div>
     </div>
-    <div class="form-grid-2">
-      <div class="form-group">
-        <label data-i18n="labelHour">&#49884;&#44036; (0-23&#49884;)</label>
-        <input type="number" id="inputHour" placeholder="21" min="0" max="23">
-      </div>
-      <div class="form-group">
-        <label data-i18n="labelGender">&#49457;&#48324;</label>
-        <select id="inputGender">
-          <option value="male" data-i18n-val="male">&#45224;&#49457;</option>
-          <option value="female" data-i18n-val="female">&#50668;&#49457;</option>
-        </select>
-      </div>
-    </div>
-    <button class="btn-calc" id="btnCalc" data-i18n="calculate">&#49324;&#51452; &#48516;&#49437;&#54616;&#44592;</button>
+    <div class="social-count mt-16"><strong id="social-count-text">✦ Join 12,000+ users who've met their Day Master</strong></div>
   </div>
 </section>
 
-<!-- CHART SECTION -->
-<section id="chartSection">
-  <button class="btn-back" id="btnBack" data-i18n="back">&#8592; &#45796;&#49884; &#48516;&#49437;</button>
-  <div id="pillarGrid" class="pillar-grid"></div>
-  <div class="radar-section">
-    <h3 data-i18n="fiveElements">&#50724;&#54665;</h3>
-    <div id="radarChart"></div>
+<!-- INPUT FORM SECTION -->
+<section id="section-input">
+  <div class="form-section">
+    <div class="form-card">
+      <div class="form-title" id="form-title">Enter Your Birth Information</div>
+      <div class="form-subtitle" id="form-subtitle">All fields are required for your complete Four Pillars chart</div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label class="form-label" for="inp-name" id="lbl-name">YOUR NAME</label>
+        <input type="text" id="inp-name" class="form-control" placeholder="e.g. 지수, Maya, 花子" autocomplete="given-name">
+        <div class="form-error" id="err-name"></div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label class="form-label" id="lbl-gender">GENDER</label>
+        <div class="gender-row">
+          <button type="button" class="gender-btn active" id="btn-male" data-gender="M" onclick="selectGender('M')" id="btn-male">♂ Male</button>
+          <button type="button" class="gender-btn" id="btn-female" data-gender="F" onclick="selectGender('F')" id="btn-female">♀ Female</button>
+        </div>
+        <div class="form-error" id="err-gender"></div>
+      </div>
+
+      <!-- Birth Date -->
+      <div class="form-group">
+        <label class="form-label" id="lbl-birthdate">DATE OF BIRTH</label>
+        <div class="form-row form-row-3">
+          <select id="inp-year" class="form-control">
+            <option value="">Year</option>
+          </select>
+          <select id="inp-month" class="form-control">
+            <option value="">Month</option>
+          </select>
+          <select id="inp-day" class="form-control">
+            <option value="">Day</option>
+          </select>
+        </div>
+        <div class="form-error" id="err-date"></div>
+      </div>
+
+      <!-- Birth Time -->
+      <div class="form-group" id="time-group">
+        <label class="form-label" id="lbl-birthtime">BIRTH TIME</label>
+        <div class="form-row form-row-2" id="time-inputs">
+          <select id="inp-hour" class="form-control">
+            <option value="">Hour (0–23)</option>
+          </select>
+          <select id="inp-minute" class="form-control">
+            <option value="">Minute (0–59)</option>
+          </select>
+        </div>
+        <div class="form-error" id="err-time"></div>
+      </div>
+
+      <!-- Unknown time toggle -->
+      <div class="form-group">
+        <label class="toggle-row" for="chk-notime">
+          <input type="checkbox" id="chk-notime" onchange="toggleUnknownTime(this.checked)">
+          <span class="toggle-label" id="lbl-notime">I don't know my birth time</span>
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <div class="form-cta">
+        <button class="btn-primary" id="btn-calculate" onclick="calculateChart()">
+          <span id="btn-calc-text">내 사주 보기</span>
+        </button>
+      </div>
+    </div>
   </div>
-  <div id="dayMasterCard" class="daymaster-card"></div>
-  <div id="unlockBanner"></div>
-  <div class="tabs-bar" id="tabsBar">
-    <button class="tab-btn active" data-tab="shiShen" data-i18n="tabShiShen">&#49901;&#49888; &#21313;&#31070;</button>
-    <button class="tab-btn" data-tab="daeun" data-i18n="tabDaeun">&#45824;&#50868; &#22823;&#36939;</button>
-    <button class="tab-btn" data-tab="saeun" data-i18n="tabSaeun">&#49464;&#50868; &#27506;&#36939;</button>
-    <button class="tab-btn" data-tab="gunghap" data-i18n="tabGunghap">&#44417;&#54633; &#23470;&#21512;</button>
-  </div>
-  <div id="tabContent"></div>
-  <div id="aiSection"></div>
 </section>
+
+<!-- RESULTS SECTION -->
+<section id="section-results">
+  <button class="nav-back" onclick="showHero()" id="btn-back">← Back / 다시 입력</button>
+
+  <div class="results-top">
+    <div class="results-name" id="results-name-display"></div>
+    <div class="results-date" id="results-date-display"></div>
+  </div>
+
+  <!-- 4 PILLAR CHART -->
+  <div class="pillar-section">
+    <div class="section-label" id="lbl-pillars">FOUR PILLARS · 사주 원국</div>
+    <div class="pillar-grid" id="pillar-grid"></div>
+  </div>
+
+  <!-- FIVE ELEMENTS -->
+  <div class="elements-section">
+    <div class="section-divider" id="lbl-elements">오행 분석 <span class="badge badge-free" id="badge-free1">FREE</span></div>
+    <div class="elements-grid">
+      <div class="element-bars" id="element-bars"></div>
+      <svg id="elements-svg" viewBox="0 0 220 220"></svg>
+    </div>
+  </div>
+
+  <!-- DAY MASTER REVEAL -->
+  <div id="day-master-card" class="day-master-card">
+    <div class="dm-bg-char" id="dm-bg-char"></div>
+    <div class="dm-eyebrow" id="dm-eyebrow">YOUR DAY MASTER · 일간</div>
+    <div class="dm-char-row">
+      <div class="dm-char" id="dm-char"></div>
+      <div class="dm-char-info">
+        <div class="dm-element-name" id="dm-element-name"></div>
+        <div class="dm-title" id="dm-title-text"></div>
+      </div>
+    </div>
+    <div class="dm-oneliner" id="dm-oneliner"></div>
+    <div class="dm-body" id="dm-body"></div>
+    <div class="dm-strengths-shadows">
+      <div class="dm-ss-card">
+        <div class="dm-ss-title" id="lbl-strengths" style="color:var(--wood)">✦ STRENGTHS</div>
+        <ul class="dm-ss-list" id="dm-strengths"></ul>
+      </div>
+      <div class="dm-ss-card">
+        <div class="dm-ss-title" id="lbl-shadows" style="color:var(--fire)">↯ SHADOW TRAITS</div>
+        <ul class="dm-ss-list" id="dm-shadows"></ul>
+      </div>
+    </div>
+    <div class="dm-keywords" id="dm-keywords"></div>
+  </div>
+
+  <!-- PERSONALITY ANALYSIS (FREE) -->
+  <div class="section-divider" id="lbl-personality">성격 분석 <span class="badge badge-free" id="badge-free2">FREE</span></div>
+  <div class="analysis-card">
+    <div class="analysis-title" id="personality-title">Personality Analysis</div>
+    <div class="analysis-body" id="personality-body"></div>
+  </div>
+
+  <!-- TODAY'S FORTUNE (FREE) -->
+  <div class="section-divider" id="lbl-fortune">오늘의 운세 <span class="badge badge-free" id="badge-free3">FREE</span></div>
+  <div class="analysis-card">
+    <div id="fortune-type-badge"></div>
+    <div class="analysis-title" id="fortune-title">Today's Fortune</div>
+    <div class="analysis-body" id="fortune-body"></div>
+    <div class="fortune-luckies" id="fortune-luckies"></div>
+  </div>
+
+  <!-- DAEUN TIMELINE (FREE) -->
+  <div class="section-divider" id="lbl-daeun">대운 흐름 <span class="badge badge-free" id="badge-free4">FREE</span></div>
+  <div class="daeun-section">
+    <div class="analysis-title" id="daeun-title">Your 10-Year Luck Cycles</div>
+    <p id="daeun-intro" style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;"></p>
+    <div class="daeun-track" id="daeun-track"></div>
+  </div>
+
+  <!-- PAID SECTION HEADER -->
+  <div class="section-divider mt-24" id="lbl-paid">심층 분석 <span class="badge badge-paid" id="badge-paid">FULL READING</span></div>
+
+  <!-- PAID 1: LIFE PATH -->
+  <div class="paid-section" id="paid-lifepath">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid1-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🔮</div>
+      <div class="lock-hook" id="paid1-hook"></div>
+      <div class="lock-sub" id="paid1-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('lifepath')" id="paid1-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 2: WEALTH & CAREER -->
+  <div class="paid-section" id="paid-wealth">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid2-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">💰</div>
+      <div class="lock-hook" id="paid2-hook"></div>
+      <div class="lock-sub" id="paid2-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('wealth')" id="paid2-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 3: LOVE & RELATIONSHIPS -->
+  <div class="paid-section" id="paid-love">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid3-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">💫</div>
+      <div class="lock-hook" id="paid3-hook"></div>
+      <div class="lock-sub" id="paid3-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('love')" id="paid3-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 4: FAMILY & HEALTH -->
+  <div class="paid-section" id="paid-family">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid4-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🌿</div>
+      <div class="lock-hook" id="paid4-hook"></div>
+      <div class="lock-sub" id="paid4-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('family')" id="paid4-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 5: 10-YEAR LUCK CYCLES DEEP DIVE -->
+  <div class="paid-section" id="paid-daeun">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid5-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🌀</div>
+      <div class="lock-hook" id="paid5-hook"></div>
+      <div class="lock-sub" id="paid5-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('daeun')" id="paid5-btn">10년 대운 보기 · $4.99</button>
+    </div>
+  </div>
+
+</section><!-- /results -->
+
+</main>
 
 <!-- FOOTER -->
-<footer class="site-footer" id="siteFooter">
-  <div class="footer-btns">
-    <button id="btnShare" data-i18n="shareChart">&#44277;&#50976;&#54616;&#44592;</button>
-    <button id="btnAbout" data-i18n="about">&#49548;&#44060;</button>
-  </div>
-  <p data-i18n="footer">&#49324;&#51452;&#54036;&#51088; &#50724;&#46972;&#53364; &middot; &#52380;&#45380;&#51032; &#51648;&#54812;&#47484; &#54788;&#45824;&#50640;</p>
+<footer>
+  <div id="footer-text">Momentor · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
+  <div style="margin-top:8px;opacity:.5">✦ 1,500 years of wisdom · momentor.app</div>
 </footer>
 
-<!-- API KEY MODAL -->
-<div class="modal-overlay" id="apiKeyModal">
+</div><!-- /app -->
+
+<!-- UNLOCK MODAL -->
+<div id="modal-overlay" onclick="closeModalIfOverlay(event)">
   <div class="modal-box">
-    <h3 data-i18n="enterApiKeyTitle">Anthropic API &#53412; &#51077;&#47141;</h3>
-    <p class="desc" data-i18n="enterApiKeyDesc">&#53412;&#45716; &#48652;&#46972;&#50864;&#51200;&#50640;&#47564; &#51200;&#51109;&#46104;&#47728; &#50808;&#48512;&#47196; &#51204;&#49569;&#46104;&#51648; &#50506;&#49845;&#45768;&#45796;</p>
-    <input type="password" id="apiKeyInput" placeholder="sk-ant-...">
-    <div class="modal-btns">
-      <button class="btn-cancel" id="apiKeyCancel" data-i18n="cancel">&#52712;&#49548;</button>
-      <button class="btn-save" id="apiKeySave" data-i18n="save">&#51200;&#51109; &#48143; &#54876;&#49457;&#54868;</button>
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-eyebrow" id="modal-eyebrow">✦ EARLY ACCESS ✦</div>
+    <div class="modal-title" id="modal-title">The reading that knows what you've been wondering.</div>
+    <div class="modal-sub" id="modal-sub">You've seen your pillars. You've met your Day Master. Now go deeper.</div>
+    <ul class="modal-features" id="modal-features"></ul>
+    <div class="modal-price-tag" id="modal-price">$4.99</div>
+    <div class="modal-price-sub" id="modal-price-sub">Less than one coffee. A reading that lasts a lifetime.</div>
+    <button class="btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="handlePayment()" id="modal-pay-btn">Unlock Full Reading →</button>
+    <div class="modal-divider"></div>
+    <div class="modal-waitlist-title" id="modal-waitlist-title">Not ready yet? Be first to know — and get a discount.</div>
+    <div class="modal-input-row">
+      <input type="email" id="modal-email" class="modal-input" placeholder="your@email.com">
+      <button class="btn-primary btn-sm" onclick="joinWaitlist()" id="modal-notify-btn">Notify →</button>
     </div>
+    <div class="modal-note" id="modal-note">✓ No spam. No noise. Just your reading, ready.</div>
   </div>
 </div>
 
-<!-- SHARE MODAL -->
-<div class="modal-overlay" id="shareModal">
-  <div class="modal-box">
-    <h3>Share</h3>
-    <p class="desc">Copy the link below to share your chart.</p>
-    <input type="text" id="shareUrl" readonly>
-    <div class="modal-btns">
-      <button class="btn-cancel" id="shareClose">Close</button>
-      <button class="btn-save" id="shareCopy">Copy</button>
-    </div>
-  </div>
-</div>
+<script>
+'use strict';
 
-<script type="module">
-// === SECTION A: CONSTANTS ===
-const STEMS = ['\u7532','\u4E59','\u4E19','\u4E01','\u620A','\u5DF1','\u5E9A','\u8F9B','\u58EC','\u7678'];
-const BRANCHES = ['\u5B50','\u4E11','\u5BC5','\u536F','\u8FB0','\u5DF3','\u5348','\u672A','\u7533','\u9149','\u620C','\u4EA5'];
-const STEMS_KO = ['\uAC11','\uC744','\uBCD1','\uC815','\uBB34','\uAE30','\uACBD','\uC2E0','\uC784','\uACC4'];
-const BRANCHES_KO = ['\uC790','\uCD95','\uC778','\uBBD8','\uC9C4','\uC0AC','\uC624','\uBBF8','\uC2E0','\uC720','\uC220','\uD574'];
-const ANIMALS_EN = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
-const ANIMALS_KO = ['\uC950','\uC18C','\uD638\uB791\uC774','\uD1A0\uB07C','\uC6A9','\uBC40','\uB9D0','\uC591','\uC6D0\uC22D\uC774','\uB2ED','\uAC1C','\uB3FC\uC9C0'];
-const ANIMALS_JA = ['\u9F20','\u725B','\u864E','\u5154','\u9F8D','\u86C7','\u99AC','\u7F8A','\u733F','\u9D8F','\u72AC','\u732A'];
-const ANIMALS_ZH = ['\u9F20','\u725B','\u864E','\u5154','\u9F99','\u86C7','\u9A6C','\u7F8A','\u7334','\u9E21','\u72D7','\u732A'];
-const STEM_ELEMENT = [0,0,1,1,2,2,3,3,4,4];
-const STEM_YIN = [0,1,0,1,0,1,0,1,0,1];
-const BRANCH_ELEM = [4,2,0,0,2,1,1,2,3,3,2,4];
-const ELEM_COLORS = ['#4ade80','#f87171','#d97706','#e2e8f0','#60a5fa'];
-const ELEM_EMOJIS = ['\uD83C\uDF3F','\uD83D\uDD25','\u26F0\uFE0F','\u2699\uFE0F','\uD83D\uDCA7'];
-const ELEM_NAMES = {
-  en: ['Wood','Fire','Earth','Metal','Water'],
-  ko: ['\uBAA9 \u6728','\uD654 \u706B','\uD1A0 \u571F','\uAE08 \u91D1','\uC218 \u6C34'],
-  ja: ['\u6728','\u706B','\u571F','\u91D1','\u6C34'],
-  zh: ['\u6728','\u706B','\u571F','\u91D1','\u6C34']
-};
-const ELEM_GENERATES = [1,2,3,4,0];
-const ELEM_CONTROLS = [2,3,4,0,1];
+// ═══════════════════════════════════════════════
+// SECTION A: CORE CONSTANTS
+// ═══════════════════════════════════════════════
+const STEMS = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+const BRANCHES = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+const STEM_ELEMENTS = ['Wood','Wood','Fire','Fire','Earth','Earth','Metal','Metal','Water','Water'];
+const STEM_POLARITIES = ['Yang','Yin','Yang','Yin','Yang','Yin','Yang','Yin','Yang','Yin'];
+const BRANCH_ELEMENTS = ['Water','Earth','Wood','Wood','Earth','Fire','Fire','Earth','Metal','Metal','Earth','Water'];
+const BRANCH_POLARITY = ['Yang','Yin','Yang','Yin','Yang','Yin','Yang','Yin','Yang','Yin','Yang','Yin'];
+const STEM_KR = ['갑','을','병','정','무','기','경','신','임','계'];
+const BRANCH_KR = ['자','축','인','묘','진','사','오','미','신','유','술','해'];
+const BRANCH_ANIMALS = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
+const BRANCH_ANIMALS_KR = ['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'];
+const ELEMENT_COLORS = {Wood:'#5de8a0',Fire:'#ff7eb3',Earth:'#f0b860',Metal:'#c8d8f0',Water:'#60b4fa'};
+const ELEMENT_KR = {Wood:'목(木)',Fire:'화(火)',Earth:'토(土)',Metal:'금(金)',Water:'수(水)'};
+const ELEMENT_JA = {Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+const ELEMENT_ZH = {Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+const ELEM_ORDER = ['Wood','Fire','Earth','Metal','Water'];
+const LUCKY_COLORS = {Wood:'Emerald Green',Fire:'Ruby Red',Earth:'Golden Amber',Metal:'Pearl White',Water:'Deep Blue'};
+const LUCKY_COLORS_KR = {Wood:'에메랄드 그린',Fire:'루비 레드',Earth:'황금 앰버',Metal:'진주 화이트',Water:'딥 블루'};
+const LUCKY_DIRS = {Wood:'East',Fire:'South',Earth:'Center',Metal:'West',Water:'North'};
+const LUCKY_DIRS_KR = {Wood:'동쪽',Fire:'남쪽',Earth:'중앙',Metal:'서쪽',Water:'북쪽'};
+const LUCKY_NUMS = {Wood:[3,4],Fire:[7,2],Earth:[5,10],Metal:[8,9],Water:[1,6]};
 
-const JIEQI_NODES = [
-  { lng: 285, branch: 1,  offset: 11, name: '\uC18C\uD55C' },
-  { lng: 315, branch: 2,  offset: 0,  name: '\uC785\uCD98' },
-  { lng: 345, branch: 3,  offset: 1,  name: '\uACBD\uCE69' },
-  { lng: 15,  branch: 4,  offset: 2,  name: '\uCCAD\uBA85' },
-  { lng: 45,  branch: 5,  offset: 3,  name: '\uC785\uD558' },
-  { lng: 75,  branch: 6,  offset: 4,  name: '\uB9DD\uC885' },
-  { lng: 105, branch: 7,  offset: 5,  name: '\uC18C\uC11C' },
-  { lng: 135, branch: 8,  offset: 6,  name: '\uC785\uCD94' },
-  { lng: 165, branch: 9,  offset: 7,  name: '\uBC31\uB85C' },
-  { lng: 195, branch: 10, offset: 8,  name: '\uD55C\uB85C' },
-  { lng: 225, branch: 11, offset: 9,  name: '\uC785\uB3D9' },
-  { lng: 255, branch: 0,  offset: 10, name: '\uB300\uC124' },
-];
+// Production cycle: Wood→Fire→Earth→Metal→Water→Wood
+// Control cycle: Wood→Earth, Earth→Water, Water→Fire, Fire→Metal, Metal→Wood
+const PRODUCES = {Wood:'Fire',Fire:'Earth',Earth:'Metal',Metal:'Water',Water:'Wood'};
+const CONTROLS = {Wood:'Earth',Earth:'Water',Water:'Fire',Fire:'Metal',Metal:'Wood'};
 
-const MONTH_STEM_BASES = [2, 4, 6, 8, 0, 2, 4, 6, 8, 0];
+// Solar term base constants (major 節 terms, 0=Jan/小寒, 1=Feb/立春, ...)
+const ST_BASE_20 = [5.4055,3.8724,5.6324,4.8693,5.7133,6.0893,6.9693,7.2688,7.8543,7.9921,6.6193,7.0433];
+const ST_BASE_19 = [6.11,4.6295,6.3826,5.1526,6.0942,5.6982,7.108,7.5928,8.2443,8.4102,7.8820,7.9];
 
+// ═══════════════════════════════════════════════
+// SECTION B: I18N DICTIONARY
+// ═══════════════════════════════════════════════
 const I18N = {
-  en: {
-    appTitle: 'Four Pillars Oracle',
-    appSubtitle: 'Ancient Wisdom \u00B7 Modern Insight',
-    heroHeadline: 'Discover Your Destiny',
-    heroSubtitle: 'Unlock the secrets of your Four Pillars chart',
-    labelYear: 'Birth Year',
-    labelMonth: 'Month',
-    labelDay: 'Day',
-    labelHour: 'Hour (0-23)',
-    labelGender: 'Gender',
-    male: 'Male',
-    female: 'Female',
-    calculate: 'Calculate My Chart',
-    yearPillar: 'Year',
-    monthPillar: 'Month',
-    dayPillar: 'Day',
-    hourPillar: 'Hour',
-    elementWood: 'Wood', elementFire: 'Fire', elementEarth: 'Earth', elementMetal: 'Metal', elementWater: 'Water',
-    tabShiShen: '10 Gods',
-    tabDaeun: 'Luck Cycles',
-    tabSaeun: 'This Year',
-    tabGunghap: 'Compatibility',
-    unlockBanner: '\u2728 Unlock Full AI Reading',
-    unlockDesc: 'Get your personalized narrative analysis powered by Claude AI',
-    enterApiKey: 'Use My API Key',
-    getPremium: 'Get Full Reading \u00B7 $4.99',
-    aiLocked: 'AI Analysis Locked',
-    aiLockedDesc: 'Enter your API key or purchase a full reading to unlock personalized AI analysis',
-    demoMode: 'Demo Mode',
-    aiMode: 'AI Analysis',
-    currentDaeun: 'Current',
-    ageLabel: 'Age',
-    compatScore: 'Compatibility Score',
-    shareChart: 'Share Chart',
-    about: 'About',
-    footer: 'Four Pillars Oracle \u00B7 Ancient wisdom for modern life',
-    heavenlyStem: 'Heavenly Stem',
-    earthlyBranch: 'Earthly Branch',
-    dayMaster: 'Day Master',
-    fiveElements: 'Five Elements',
-    enterApiKeyTitle: 'Enter Anthropic API Key',
-    enterApiKeyDesc: 'Your key is stored locally and never sent to our servers',
-    apiKeyPlaceholder: 'sk-ant-...',
-    save: 'Save & Activate',
-    cancel: 'Cancel',
-    back: '\u2190 New Chart',
-    newChart: 'New Chart',
-    yang: 'Yang', yin: 'Yin',
-    whatMeans: 'What does this mean for you? \u2192 Unlock',
-    decadeMeaning: 'What does this decade mean? \u2192 Unlock',
-    fiveYearForecast: 'Unlock 5-year forecast \u2192',
-    detailedNarrative: 'Get detailed narrative \u2192 Unlock',
-    comingSoon: 'Coming soon!',
-    dayMasterDesc: 'Your Day Master represents your core self.',
-    shiShenPillar: 'Pillar', shiShenStem: 'Stem', shiShenBranch: 'Branch', shiShenRelation: 'Relation',
-    thisYearPillar: 'This Year\'s Pillar',
-    briefOutlook: 'Brief Outlook',
-    partner: 'Partner',
-    calculate2: 'Check',
-  },
-  ko: {
-    appTitle: '\uC0AC\uC8FC\uD314\uC790 \uC624\uB77C\uD074',
-    appSubtitle: '\uCC9C\uB144\uC758 \uC9C0\uD61C \u00B7 \uD604\uB300\uC758 \uD1B5\uCC30',
-    heroHeadline: '\uB098\uC758 \uC6B4\uBA85\uC744 \uC77D\uB2E4',
-    heroSubtitle: '\uC0AC\uC8FC\uD314\uC790\uB85C \uB2F9\uC2E0\uC758 \uD0C0\uACE0\uB09C \uAE30\uC6B4\uC744 \uBC1C\uACAC\uD558\uC138\uC694',
-    labelYear: '\uD0DC\uC5B4\uB09C \uB144\uB3C4',
-    labelMonth: '\uC6D4',
-    labelDay: '\uC77C',
-    labelHour: '\uC2DC\uAC04 (0-23\uC2DC)',
-    labelGender: '\uC131\uBCC4',
-    male: '\uB0A8\uC131',
-    female: '\uC5EC\uC131',
-    calculate: '\uC0AC\uC8FC \uBD84\uC11D\uD558\uAE30',
-    yearPillar: '\uB144\uC8FC \u5E74\u67F1',
-    monthPillar: '\uC6D4\uC8FC \u6708\u67F1',
-    dayPillar: '\uC77C\uC8FC \u65E5\u67F1',
-    hourPillar: '\uC2DC\uC8FC \u6642\u67F1',
-    elementWood: '\uBAA9 \u6728', elementFire: '\uD654 \u706B', elementEarth: '\uD1A0 \u571F', elementMetal: '\uAE08 \u91D1', elementWater: '\uC218 \u6C34',
-    tabShiShen: '\uC2ED\uC2E0 \u5341\u795E',
-    tabDaeun: '\uB300\uC6B4 \u5927\u904B',
-    tabSaeun: '\uC138\uC6B4 \u6B72\u904B',
-    tabGunghap: '\uAD81\uD569 \u5BAE\u5408',
-    unlockBanner: '\u2728 \uD480 \uB9AC\uB529 \uC7A0\uAE08 \uD574\uC81C',
-    unlockDesc: 'Claude AI\uAC00 \uB2F9\uC2E0\uC758 \uC0AC\uC8FC\uB97C \uAE4A\uC774 \uC788\uAC8C \uD574\uC11D\uD574 \uB4DC\uB9BD\uB2C8\uB2E4',
-    enterApiKey: 'API \uD0A4\uB85C \uC0AC\uC6A9\uD558\uAE30',
-    getPremium: '\uD480 \uB9AC\uB529 \uAD6C\uB9E4 \u00B7 $4.99',
-    aiLocked: 'AI \uBD84\uC11D \uC7A0\uAE08',
-    aiLockedDesc: 'API \uD0A4\uB97C \uC785\uB825\uD558\uAC70\uB098 \uD480 \uB9AC\uB529\uC744 \uAD6C\uB9E4\uD558\uBA74 AI \uBD84\uC11D\uC774 \uD65C\uC131\uD654\uB429\uB2C8\uB2E4',
-    demoMode: '\uB370\uBAA8 \uBAA8\uB4DC',
-    aiMode: 'AI \uBD84\uC11D',
-    currentDaeun: '\uD604\uC7AC',
-    ageLabel: '\uC138',
-    compatScore: '\uAD81\uD569 \uC810\uC218',
-    shareChart: '\uACF5\uC720\uD558\uAE30',
-    about: '\uC18C\uAC1C',
-    footer: '\uC0AC\uC8FC\uD314\uC790 \uC624\uB77C\uD074 \u00B7 \uCC9C\uB144\uC758 \uC9C0\uD61C\uB97C \uD604\uB300\uC5D0',
-    heavenlyStem: '\uCC9C\uAC04',
-    earthlyBranch: '\uC9C0\uC9C0',
-    dayMaster: '\uC77C\uAC04',
-    fiveElements: '\uC624\uD589',
-    enterApiKeyTitle: 'Anthropic API \uD0A4 \uC785\uB825',
-    enterApiKeyDesc: '\uD0A4\uB294 \uBE0C\uB77C\uC6B0\uC800\uC5D0\uB9CC \uC800\uC7A5\uB418\uBA70 \uC678\uBD80\uB85C \uC804\uC1A1\uB418\uC9C0 \uC54A\uC2B5\uB2C8\uB2E4',
-    apiKeyPlaceholder: 'sk-ant-...',
-    save: '\uC800\uC7A5 \uBC0F \uD65C\uC131\uD654',
-    cancel: '\uCDE8\uC18C',
-    back: '\u2190 \uB2E4\uC2DC \uBD84\uC11D',
-    newChart: '\uC0C8\uB85C \uBD84\uC11D',
-    yang: '\uC591', yin: '\uC74C',
-    whatMeans: '\uC774\uAC83\uC774 \uB098\uC5D0\uAC8C \uBB34\uC2A8 \uC758\uBBF8\uC77C\uAE4C\uC694? \u2192 \uC7A0\uAE08\uD574\uC81C',
-    decadeMeaning: '\uC774 10\uB144\uC758 \uC758\uBBF8\uB294? \u2192 \uC7A0\uAE08\uD574\uC81C',
-    fiveYearForecast: '5\uB144 \uC608\uCE21 \uC7A0\uAE08\uD574\uC81C \u2192',
-    detailedNarrative: '\uC0C1\uC138 \uBD84\uC11D \uC7A0\uAE08\uD574\uC81C \u2192',
-    comingSoon: '\uACE7 \uC624\uD508\uB429\uB2C8\uB2E4!',
-    dayMasterDesc: '\uC77C\uAC04\uC740 \uB2F9\uC2E0 \uC790\uC2E0\uC744 \uB098\uD0C0\uB0C5\uB2C8\uB2E4.',
-    shiShenPillar: '\uAE30\uB465', shiShenStem: '\uCC9C\uAC04', shiShenBranch: '\uC9C0\uC9C0', shiShenRelation: '\uAD00\uACC4',
-    thisYearPillar: '\uC62C\uD574\uC758 \uAE30\uB465',
-    briefOutlook: '\uAC04\uB7B5 \uC804\uB9DD',
-    partner: '\uC0C1\uB300\uBC29',
-    calculate2: '\uD655\uC778',
-  },
-  ja: {
-    appTitle: '\u56DB\u67F1\u63A8\u547D\u30AA\u30E9\u30AF\u30EB',
-    appSubtitle: '\u5343\u5E74\u306E\u77E5\u6075\u30FB\u73FE\u4EE3\u306E\u6D1E\u5BDF',
-    heroHeadline: '\u904B\u547D\u3092\u8AAD\u307F\u89E3\u304F',
-    heroSubtitle: '\u56DB\u67F1\u63A8\u547D\u3067\u3042\u306A\u305F\u306E\u751F\u307E\u308C\u6301\u3063\u305F\u6C17\u3092\u767A\u898B\u3059\u308B',
-    labelYear: '\u751F\u5E74', labelMonth: '\u6708', labelDay: '\u65E5',
-    labelHour: '\u6642\u9593 (0-23\u6642)', labelGender: '\u6027\u5225',
-    male: '\u7537\u6027', female: '\u5973\u6027',
-    calculate: '\u547D\u5F0F\u3092\u8A08\u7B97\u3059\u308B',
-    yearPillar: '\u5E74\u67F1', monthPillar: '\u6708\u67F1', dayPillar: '\u65E5\u67F1', hourPillar: '\u6642\u67F1',
-    tabShiShen: '\u5341\u795E', tabDaeun: '\u5927\u904B', tabSaeun: '\u4ECA\u5E74\u306E\u904B', tabGunghap: '\u76F8\u6027',
-    unlockBanner: '\u2728 \u30D5\u30EB\u9451\u5B9A\u3092\u89E3\u653E',
-    unlockDesc: 'Claude AI\u304C\u3042\u306A\u305F\u306E\u56DB\u67F1\u3092\u8A73\u3057\u304F\u9451\u5B9A\u3057\u307E\u3059',
-    enterApiKey: 'API\u30AD\u30FC\u3067\u4F7F\u7528', getPremium: '\u30D5\u30EB\u9451\u5B9A \u00B7 $4.99',
-    aiLocked: 'AI\u5206\u6790\u30ED\u30C3\u30AF\u4E2D',
-    aiLockedDesc: 'API\u30AD\u30FC\u3092\u5165\u529B\u3059\u308B\u304B\u30D5\u30EB\u9451\u5B9A\u3092\u8CFC\u5165\u3057\u3066AI\u5206\u6790\u3092\u89E3\u653E\u3057\u3066\u304F\u3060\u3055\u3044',
-    demoMode: '\u30C7\u30E2\u30E2\u30FC\u30C9', aiMode: 'AI\u5206\u6790',
-    currentDaeun: '\u73FE\u5728', ageLabel: '\u6B73',
-    compatScore: '\u76F8\u6027\u30B9\u30B3\u30A2', shareChart: '\u30B7\u30A7\u30A2', about: '\u306B\u3064\u3044\u3066',
-    footer: '\u56DB\u67F1\u63A8\u547D\u30AA\u30E9\u30AF\u30EB \u00B7 \u5343\u5E74\u306E\u77E5\u6075\u3092\u73FE\u4EE3\u306B',
-    heavenlyStem: '\u5929\u5E72', earthlyBranch: '\u5730\u652F', dayMaster: '\u65E5\u5E72', fiveElements: '\u4E94\u884C',
-    enterApiKeyTitle: 'Anthropic API\u30AD\u30FC\u5165\u529B',
-    enterApiKeyDesc: '\u30AD\u30FC\u306F\u30D6\u30E9\u30A6\u30B6\u306B\u306E\u307F\u4FDD\u5B58\u3055\u308C\u3001\u5916\u90E8\u306B\u9001\u4FE1\u3055\u308C\u307E\u305B\u3093',
-    save: '\u4FDD\u5B58\u3057\u3066\u6709\u52B9\u5316', cancel: '\u30AD\u30E3\u30F3\u30BB\u30EB',
-    back: '\u2190 \u518D\u8A08\u7B97', newChart: '\u65B0\u3057\u3044\u547D\u5F0F',
-    yang: '\u967D', yin: '\u9670',
-    whatMeans: '\u3053\u308C\u306F\u3042\u306A\u305F\u306B\u3068\u3063\u3066\u4F55\u3092\u610F\u5473\u3057\u307E\u3059\u304B\uFF1F \u2192 \u89E3\u653E',
-    decadeMeaning: '\u3053\u306E10\u5E74\u306E\u610F\u5473\u306F\uFF1F \u2192 \u89E3\u653E',
-    fiveYearForecast: '5\u5E74\u4E88\u6E2C\u3092\u89E3\u653E \u2192',
-    detailedNarrative: '\u8A73\u7D30\u5206\u6790\u3092\u89E3\u653E \u2192',
-    comingSoon: '\u8FD1\u65E5\u516C\u958B\uFF01',
-    dayMasterDesc: '\u65E5\u5E72\u306F\u3042\u306A\u305F\u81EA\u8EAB\u3092\u8868\u3057\u307E\u3059\u3002',
-    shiShenPillar: '\u67F1', shiShenStem: '\u5929\u5E72', shiShenBranch: '\u5730\u652F', shiShenRelation: '\u95A2\u4FC2',
-    thisYearPillar: '\u4ECA\u5E74\u306E\u67F1', briefOutlook: '\u7C21\u6F54\u306A\u5C55\u671B',
-    partner: '\u76F8\u624B', calculate2: '\u78BA\u8A8D',
-  },
-  zh: {
-    appTitle: '\u56DB\u67F1\u516B\u5B57\u795E\u7B97',
-    appSubtitle: '\u5343\u5E74\u667A\u6167\u00B7\u73B0\u4EE3\u6D1E\u5BDF',
-    heroHeadline: '\u63A2\u7D22\u547D\u8FD0\u5BC6\u7801',
-    heroSubtitle: '\u7528\u56DB\u67F1\u516B\u5B57\u53D1\u73B0\u60A8\u4E0E\u751F\u4FF1\u6765\u7684\u80FD\u91CF',
-    labelYear: '\u51FA\u751F\u5E74\u4EFD', labelMonth: '\u6708', labelDay: '\u65E5',
-    labelHour: '\u65F6\u8FB0 (0-23\u65F6)', labelGender: '\u6027\u522B',
-    male: '\u7537\u6027', female: '\u5973\u6027',
-    calculate: '\u6392\u76D8\u5206\u6790',
-    yearPillar: '\u5E74\u67F1', monthPillar: '\u6708\u67F1', dayPillar: '\u65E5\u67F1', hourPillar: '\u65F6\u67F1',
-    tabShiShen: '\u5341\u795E', tabDaeun: '\u5927\u8FD0', tabSaeun: '\u6D41\u5E74', tabGunghap: '\u5408\u5A5A',
-    unlockBanner: '\u2728 \u89E3\u9501\u5B8C\u6574\u89E3\u8BFB',
-    unlockDesc: 'Claude AI\u4E3A\u60A8\u6DF1\u5EA6\u89E3\u8BFB\u56DB\u67F1\u547D\u76D8',
-    enterApiKey: '\u4F7F\u7528API\u5BC6\u94A5', getPremium: '\u5B8C\u6574\u89E3\u8BFB \u00B7 $4.99',
-    aiLocked: 'AI\u5206\u6790\u5DF2\u9501\u5B9A',
-    aiLockedDesc: '\u8F93\u5165API\u5BC6\u94A5\u6216\u8D2D\u4E70\u5B8C\u6574\u89E3\u8BFB\u4EE5\u89E3\u9501AI\u5206\u6790',
-    demoMode: '\u6F14\u793A\u6A21\u5F0F', aiMode: 'AI\u5206\u6790',
-    currentDaeun: '\u5F53\u524D', ageLabel: '\u5C81',
-    compatScore: '\u5408\u5A5A\u5206\u6570', shareChart: '\u5206\u4EAB', about: '\u5173\u4E8E',
-    footer: '\u56DB\u67F1\u516B\u5B57\u795E\u7B97 \u00B7 \u4EE5\u5343\u5E74\u667A\u6167\u6307\u5F15\u73B0\u4EE3\u4EBA\u751F',
-    heavenlyStem: '\u5929\u5E72', earthlyBranch: '\u5730\u652F', dayMaster: '\u65E5\u4E3B', fiveElements: '\u4E94\u884C',
-    enterApiKeyTitle: '\u8F93\u5165Anthropic API\u5BC6\u94A5',
-    enterApiKeyDesc: '\u5BC6\u94A5\u4EC5\u5B58\u50A8\u5728\u6D4F\u89C8\u5668\u4E2D\uFF0C\u4E0D\u4F1A\u53D1\u9001\u5230\u5916\u90E8',
-    save: '\u4FDD\u5B58\u5E76\u6FC0\u6D3B', cancel: '\u53D6\u6D88',
-    back: '\u2190 \u91CD\u65B0\u5206\u6790', newChart: '\u65B0\u547D\u76D8',
-    yang: '\u9633', yin: '\u9634',
-    whatMeans: '\u8FD9\u5BF9\u60A8\u610F\u5473\u7740\u4EC0\u4E48\uFF1F \u2192 \u89E3\u9501',
-    decadeMeaning: '\u8FD9\u5341\u5E74\u7684\u610F\u4E49\uFF1F \u2192 \u89E3\u9501',
-    fiveYearForecast: '\u89E3\u9501\u4E94\u5E74\u9884\u6D4B \u2192',
-    detailedNarrative: '\u89E3\u9501\u8BE6\u7EC6\u5206\u6790 \u2192',
-    comingSoon: '\u5373\u5C06\u5F00\u653E\uFF01',
-    dayMasterDesc: '\u65E5\u4E3B\u4EE3\u8868\u60A8\u81EA\u5DF1\u3002',
-    shiShenPillar: '\u67F1', shiShenStem: '\u5929\u5E72', shiShenBranch: '\u5730\u652F', shiShenRelation: '\u5173\u7CFB',
-    thisYearPillar: '\u4ECA\u5E74\u7684\u67F1', briefOutlook: '\u7B80\u8981\u5C55\u671B',
-    partner: '\u5BF9\u65B9', calculate2: '\u67E5\u770B',
-  }
+en: {
+  app_tagline:'Your destiny, decoded.',
+  hero_eyebrow:'THE MOMENT YOU WERE BORN',
+  hero_headline:'<em>518,400</em> possible destinies.<br>This one is yours.',
+  hero_sub:'Momentor decodes your Korean Four Pillars (사주팔자) birth chart — the 1,500-year-old system consulted by millions across East Asia. Discover your Day Master, your elemental nature, and the 10-year destiny cycles that shape your life.',
+  hero_cta:'Reveal My Destiny →',
+  usp1_title:'Not 1 in 12. 1 in 518,400.',
+  usp1_body:'Western horoscopes divide humanity into twelve signs. Saju uses your birth year, month, day, AND hour — making your chart a fingerprint, not a category.',
+  usp2_title:'1,400 Years of Wisdom',
+  usp2_body:'Consulted by Korean presidents, Japanese executives, and Chinese families making million-dollar decisions. Now available in your language.',
+  usp3_title:'Your Life Runs in Seasons',
+  usp3_body:'大運 (Daeun) reveals the elemental energy of each 10-year chapter of your life. Some decades are harvest. Some are storm. Know which one you\'re in now.',
+  t1_text:'"I\'ve used Co-Star for three years. Momentor told me something in five minutes that I\'ve spent two years in therapy figuring out."',
+  t1_author:'— Sarah K., New York',
+  t2_text:'"As a Korean-American, I grew up hearing about saju but never had access to it in English. This is the first app that gets it right."',
+  t2_author:'— Jenny L., Los Angeles',
+  t3_text:'"The 10-year luck cycle analysis literally made me rethink my career timeline. I didn\'t expect to cry at an astrology app."',
+  t3_author:'— Marcus T., London',
+  social_count:'✦ Join 12,000+ users who\'ve met their Day Master',
+  form_title:'Enter Your Birth Information',
+  form_subtitle:'All fields required for your complete Four Pillars chart',
+  lbl_name:'YOUR NAME',
+  lbl_gender:'GENDER',
+  gender_male:'♂ Male',
+  gender_female:'♀ Female',
+  lbl_birthdate:'DATE OF BIRTH',
+  lbl_birthtime:'BIRTH TIME',
+  lbl_notime:'I don\'t know my birth time',
+  btn_calculate:'Reveal My Chart →',
+  lbl_pillars:'FOUR PILLARS · 사주 원국',
+  lbl_elements:'Five Elements Analysis',
+  lbl_personality:'Personality Analysis',
+  lbl_fortune:'Today\'s Fortune',
+  lbl_daeun:'10-Year Luck Cycles',
+  lbl_paid:'Deep Analysis',
+  badge_free:'FREE',
+  badge_paid:'FULL READING',
+  dm_eyebrow:'YOUR DAY MASTER · 일간',
+  lbl_strengths:'✦ STRENGTHS',
+  lbl_shadows:'↯ SHADOW TRAITS',
+  fortune_high:'⚡ HIGH RESONANCE',
+  fortune_neutral:'◯ STEADY CURRENT',
+  fortune_low:'⚠ RESISTANCE',
+  lucky_color:'Lucky Color',
+  lucky_dir:'Lucky Direction',
+  lucky_num:'Lucky Number',
+  daeun_title:'Your 10-Year Luck Cycles',
+  daeun_intro:'Each 10-year cycle brings a different elemental energy — different strengths, different pressures, different windows that open and close. Your current cycle is highlighted.',
+  daeun_current:'CURRENT',
+  personality_title:'Personality Analysis',
+  fortune_title:'Today\'s Fortune',
+  paid1_hook:'So, [NAME] — let\'s look at the story your chart is trying to tell.',
+  paid1_sub:'Your four pillars contain a pattern underneath the pattern. Most people never see it.',
+  paid1_btn:'Full Life Path Reading · $4.99',
+  paid2_hook:'[NAME], your relationship with money is not what most people think it is.',
+  paid2_sub:'Your Wealth Star sits in an unusual position. The way your financial energy activates in your current decade...',
+  paid2_btn:'Full Wealth & Career Analysis · $4.99',
+  paid3_hook:'Love is where your Day Master gets complicated.',
+  paid3_sub:'Your Relationship Star tells a specific story. The kind of partner who actually reaches you is not what most people would predict.',
+  paid3_btn:'Full Love & Relationship Analysis · $4.99',
+  paid4_hook:'The pillars you were born into shaped you before you had words for it.',
+  paid4_sub:'Your year and month pillars carry the energy of your family of origin. Your elemental balance tells a story about where your body holds stress.',
+  paid4_btn:'Full Family & Health Analysis · $4.99',
+  paid5_hook:'This is the feature that has no equivalent in Western astrology.',
+  paid5_sub:'Your life runs in 10-year chapters. The next decade begins in a few years. What it holds for you is something almost no one can see coming.',
+  paid5_btn:'Unlock My Decade Reading · $4.99',
+  modal_eyebrow:'✦ EARLY ACCESS ✦',
+  modal_title:'The reading that knows what you\'ve been wondering.',
+  modal_sub:'You\'ve seen your pillars. You\'ve met your Day Master. Now go deeper.',
+  modal_features:['Full Life Path narrative','Wealth & Career blueprint','Love & Relationship deep-dive','Family & Health analysis','10-Year Luck Cycle — your personal seasons, decoded','5-year annual fortune forecast'],
+  modal_price:'$4.99',
+  modal_price_sub:'Less than one coffee. A reading that lasts a lifetime.',
+  modal_pay_btn:'Unlock Full Reading →',
+  modal_waitlist_title:'Not ready yet? Be first to know — and get a discount.',
+  modal_notify_btn:'Notify →',
+  modal_note:'✓ No spam. No noise. Just your reading, ready.',
+  err_name:'Please enter your name.',
+  err_name_short:'Name must be at least 2 characters.',
+  err_date:'Birth date is required.',
+  err_date_future:'Your birth date can\'t be in the future.',
+  err_date_old:'We support birth years from 1900 onwards.',
+  err_gender:'Please select your gender.',
+  err_time:'Birth time is needed for the hour pillar.',
+  toast_waitlist_ok:'✓ You\'re on the list. We\'ll notify you first.',
+  toast_waitlist_dup:'You\'re already on the list! We\'ll reach you soon.',
+  toast_email_invalid:'Please enter a valid email address.',
+  toast_payment_info:'Payment integration coming soon. Join the waitlist for early access!',
+  toast_calc_ok:'✓ Your chart is ready.',
+  toast_copy_ok:'✓ Link copied — share your chart!',
+  ten_god:{bigyeon:'Parallel',geopjae:'Rob Wealth',sikshin:'Eating God',sanggwan:'Hurting Officer',pyeonginjae:'Partial Wealth',jeongjae:'Direct Wealth',pyeonggwan:'Partial Officer',jeonggwan:'Direct Officer',pyeongin:'Partial Resource',jeongin:'Direct Resource'},
+  year_p:'Year Pillar',month_p:'Month Pillar',day_p:'Day Master',hour_p:'Hour Pillar',
+  back_btn:'← Back',
+  footer_text:'Momentor · Privacy · Terms',
+  word_you:'you',
+},
+ko: {
+  app_tagline:'당신의 운명, 해독됩니다.',
+  hero_eyebrow:'당신이 태어난 그 순간',
+  hero_headline:'<em>518,400</em>가지 가능한 운명 중,<br>이것이 바로 당신의 것입니다.',
+  hero_sub:'모멘터는 당신의 사주팔자를 해독합니다 — 동아시아 수천만 명이 의지해온 1,500년의 지혜. 일간, 오행의 본성, 그리고 당신의 삶을 형성하는 10년 단위의 대운을 발견하세요.',
+  hero_cta:'내 운명 보기 →',
+  usp1_title:'12분의 1이 아닌, 518,400분의 1.',
+  usp1_body:'서양 별자리는 전 인류를 열두 가지로 나눕니다. 사주는 생년·생월·생일·생시까지 사용해 오직 당신만의 차트를 만들어냅니다. 당신의 차트는 카테고리가 아닙니다. 지문입니다.',
+  usp2_title:'1,400년 검증된 지혜',
+  usp2_body:'한국 대통령, 일본 기업가, 중국 가문이 수백만 달러의 결정에 의지해온 지혜. 이제 당신의 언어로.',
+  usp3_title:'삶은 10년 단위 계절로 흐릅니다',
+  usp3_body:'대운(大運)은 삶의 각 10년을 지배하는 오행 에너지를 드러냅니다. 어떤 10년은 수확이고, 어떤 10년은 폭풍입니다. 지금 당신이 어떤 계절에 있는지 아세요.',
+  t1_text:'"코스타를 3년 동안 사용했습니다. 모멘터는 5분 만에 제가 2년간 상담을 통해 깨달은 것을 말해주었습니다."',
+  t1_author:'— 사라 K., 뉴욕',
+  t2_text:'"재미교포로 자라면서 사주에 대해 들어왔지만, 영어로 된 제대로 된 앱이 없었습니다. 이 앱이 처음으로 제대로 된 사주를 선사해줬어요."',
+  t2_author:'— 제니 L., 로스앤젤레스',
+  t3_text:'"대운 분석 때문에 커리어 계획을 다시 생각하게 됐어요. 별자리 앱에서 눈물을 흘릴 줄은 몰랐습니다."',
+  t3_author:'— 마커스 T., 런던',
+  social_count:'✦ 이미 12,000명 이상이 자신의 일간을 만났습니다',
+  form_title:'생년월일시를 입력하세요',
+  form_subtitle:'완전한 사주 차트를 위해 모든 항목이 필요합니다',
+  lbl_name:'이름',
+  lbl_gender:'성별',
+  gender_male:'♂ 남성',
+  gender_female:'♀ 여성',
+  lbl_birthdate:'생년월일',
+  lbl_birthtime:'태어난 시각',
+  lbl_notime:'출생 시간을 모릅니다',
+  btn_calculate:'내 사주 보기',
+  lbl_pillars:'사주 원국 · FOUR PILLARS',
+  lbl_elements:'오행 분석',
+  lbl_personality:'성격 분석',
+  lbl_fortune:'오늘의 운세',
+  lbl_daeun:'대운 흐름',
+  lbl_paid:'심층 분석',
+  badge_free:'무료',
+  badge_paid:'전체 감명',
+  dm_eyebrow:'일간 · DAY MASTER',
+  lbl_strengths:'✦ 강점',
+  lbl_shadows:'↯ 그림자',
+  fortune_high:'⚡ 에너지 상승',
+  fortune_neutral:'◯ 안정된 흐름',
+  fortune_low:'⚠ 저항',
+  lucky_color:'행운의 색',
+  lucky_dir:'행운의 방향',
+  lucky_num:'행운의 숫자',
+  daeun_title:'대운 흐름 (10년 주기)',
+  daeun_intro:'각 대운은 서로 다른 오행 에너지를 담고 있습니다 — 다른 강점, 다른 압박, 열리고 닫히는 다른 창문. 현재 대운이 강조 표시됩니다.',
+  daeun_current:'현재',
+  personality_title:'성격 분석',
+  fortune_title:'오늘의 운세',
+  paid1_hook:'자, 이제 [NAME]님의 인생 전반 흐름을 살펴볼까요?',
+  paid1_sub:'모든 사주에는 패턴 아래의 패턴이 있습니다. 대부분의 사람들은 결코 보지 못합니다.',
+  paid1_btn:'인생 전반 전체 분석 보기 · ₩6,900',
+  paid2_hook:'자, 이제 [NAME]님의 재물운과 성공운을 살펴볼까요?',
+  paid2_sub:'당신 차트 안의 재성(財星)은 특이한 위치에 있습니다. 현재 대운에서 재물 에너지가 활성화되는 방식은...',
+  paid2_btn:'재물운 & 성공운 전체 분석 보기 · ₩6,900',
+  paid3_hook:'자, 이제 [NAME]님의 연애운과 결혼운을 살펴볼까요?',
+  paid3_sub:'당신 차트의 관성(官星)이 특별한 이야기를 합니다. 실제로 당신에게 닿는 파트너의 유형은 대부분의 예측과 다릅니다.',
+  paid3_btn:'연애운 & 결혼운 전체 분석 보기 · ₩6,900',
+  paid4_hook:'자, 이제 [NAME]님의 가족운과 건강운을 살펴볼까요?',
+  paid4_sub:'년주와 월주는 원가족의 에너지를 담고 있습니다. 당신의 오행 균형은 몸이 스트레스를 어디에 담는지 이야기합니다.',
+  paid4_btn:'가족운 & 건강운 전체 분석 보기 · ₩6,900',
+  paid5_hook:'자, 이제 [NAME]님의 대운 분석을 살펴볼까요?',
+  paid5_sub:'당신의 삶은 10년 단위 챕터로 흐릅니다. 다음 대운이 당신에게 담고 있는 것은 거의 아무도 예측하지 못합니다.',
+  paid5_btn:'10년 대운 전체 보기 · ₩6,900',
+  modal_eyebrow:'✦ 얼리 액세스 ✦',
+  modal_title:'당신이 궁금해했던 것을 아는 감명.',
+  modal_sub:'이미 기둥들을 보셨습니다. 일간을 만나셨습니다. 이제 더 깊이 들어가세요.',
+  modal_features:['인생 전반 흐름 내러티브','재물운 & 성공운 청사진','연애운 & 결혼운 심층 분석','가족운 & 건강운 분석','10년 대운 — 당신만의 인생 계절, 완전 해독','5년 세운 예측'],
+  modal_price:'₩6,900',
+  modal_price_sub:'커피 한 잔보다 저렴합니다. 평생 이어지는 감명.',
+  modal_pay_btn:'전체 감명 열기 →',
+  modal_waitlist_title:'아직 결제가 준비되지 않으셨나요? 할인 혜택과 함께 가장 먼저 알려드릴게요.',
+  modal_notify_btn:'알림 받기 →',
+  modal_note:'✓ 스팸 없음. 소음 없음. 감명이 준비되면 바로 알려드립니다.',
+  err_name:'이름을 입력해주세요.',
+  err_name_short:'이름은 최소 2자 이상이어야 합니다.',
+  err_date:'생년월일을 입력해주세요.',
+  err_date_future:'생년월일은 미래일 수 없습니다.',
+  err_date_old:'1900년 이후 생년월일만 지원됩니다.',
+  err_gender:'대운 방향 계산을 위해 성별을 선택해주세요.',
+  err_time:'시주 계산을 위해 태어난 시각을 입력해주세요.',
+  toast_waitlist_ok:'✓ 등록되었습니다. 가장 먼저 알려드리겠습니다.',
+  toast_waitlist_dup:'이미 등록되어 있습니다! 곧 연락드리겠습니다.',
+  toast_email_invalid:'올바른 이메일 주소를 입력해주세요.',
+  toast_payment_info:'결제 기능이 곧 오픈됩니다. 웨이트리스트에 등록하세요!',
+  toast_calc_ok:'✓ 사주가 완성되었습니다.',
+  toast_copy_ok:'✓ 링크가 복사되었습니다 — 차트를 공유하세요!',
+  ten_god:{bigyeon:'비견',geopjae:'겁재',sikshin:'식신',sanggwan:'상관',pyeonginjae:'편재',jeongjae:'정재',pyeonggwan:'편관',jeonggwan:'정관',pyeongin:'편인',jeongin:'정인'},
+  year_p:'년주',month_p:'월주',day_p:'일간',hour_p:'시주',
+  back_btn:'← 다시 입력',
+  footer_text:'Momentor · 개인정보 · 이용약관',
+  word_you:'당신',
+},
+ja: {
+  app_tagline:'あなたの運命、解読します。',
+  hero_eyebrow:'あなたが生まれたその瞬間',
+  hero_headline:'<em>518,400</em>通りの運命の中で、<br>これがあなただけのもの。',
+  hero_sub:'Momentorはあなたの四柱推命を解読します — 東アジアで何百万人もの人々が信頼してきた1,500年の知恵。日主、五行のバランス、そして人生を形づくる10年ごとの大運を発見してください。',
+  hero_cta:'私の運命を見る →',
+  usp1_title:'12分の1ではなく、518,400分の1。',
+  usp1_body:'西洋占星術は全人類を12の星座に分類します。四柱推命はあなたの生年・生月・生日・さらに生時まで使い、あなただけのチャートを構築します。指紋のように。',
+  usp2_title:'1,400年の知恵',
+  usp2_body:'韓国大統領、日本の経営者、中国の大家族が重大な決断に使ってきた知恵。今、あなたの言語で。',
+  usp3_title:'人生は10年ごとの季節で流れる',
+  usp3_body:'大運はあなたの人生の各10年を支配する五行エネルギーを明かします。ある10年は収穫、ある10年は嵐。今どの季節にいるか知ってください。',
+  t1_text:'「3年間Co-Starを使い続けました。Momentorは5分で、2年間のカウンセリングで気づいたことを教えてくれました。」',
+  t1_author:'— サラ K.、ニューヨーク',
+  t2_text:'「在日コリアンとして育ち、四柱推命は知っていましたが、英語で使えるちゃんとしたアプリがありませんでした。」',
+  t2_author:'— ジェニー L.、ロサンゼルス',
+  t3_text:'「大運の分析で、キャリアの計画を見直すことになりました。占いアプリで泣くとは思っていませんでした。」',
+  t3_author:'— マーカス T.、ロンドン',
+  social_count:'✦ すでに12,000人以上が自分の日主と出会っています',
+  form_title:'生年月日時を入力してください',
+  form_subtitle:'完全な四柱推命のチャートには全項目が必要です',
+  lbl_name:'お名前',lbl_gender:'性別',gender_male:'♂ 男性',gender_female:'♀ 女性',
+  lbl_birthdate:'生年月日',lbl_birthtime:'生まれた時刻',lbl_notime:'生まれた時刻がわかりません',
+  btn_calculate:'私の命式を見る →',
+  lbl_pillars:'四柱 · FOUR PILLARS',lbl_elements:'五行分析',
+  lbl_personality:'性格分析',lbl_fortune:'今日の運勢',lbl_daeun:'大運の流れ',lbl_paid:'深層分析',
+  badge_free:'無料',badge_paid:'フル鑑定',
+  dm_eyebrow:'日主 · DAY MASTER',lbl_strengths:'✦ 強み',lbl_shadows:'↯ 影の特性',
+  fortune_high:'⚡ 高共鳴',fortune_neutral:'◯ 安定した流れ',fortune_low:'⚠ 抵抗',
+  lucky_color:'ラッキーカラー',lucky_dir:'ラッキー方位',lucky_num:'ラッキーナンバー',
+  daeun_title:'大運の流れ（10年周期）',
+  daeun_intro:'各大運は異なる五行エネルギーをもたらします。現在の大運がハイライトされています。',
+  daeun_current:'現在',personality_title:'性格分析',fortune_title:'今日の運勢',
+  paid1_hook:'では、[NAME]さんの人生の大きな流れを見てみましょう。',paid1_sub:'すべての命式にはパターンの奥にあるパターンがあります。',paid1_btn:'人生の流れ 全分析を見る · ¥750',
+  paid2_hook:'[NAME]さん、お金とのあなたの関係は、ほとんどの人が考えるものとは異なります。',paid2_sub:'あなたの命式の中の財星は珍しい位置にあります。',paid2_btn:'財運・成功運 全分析を見る · ¥750',
+  paid3_hook:'恋愛はあなたの日主が複雑になる領域です。',paid3_sub:'あなたの命式の官星が特別なストーリーを語っています。',paid3_btn:'恋愛運・結婚運 全分析を見る · ¥750',
+  paid4_hook:'あなたが生まれた柱はあなたが言葉を持つ前にあなたを形作りました。',paid4_sub:'年柱と月柱は原家族のエネルギーを担っています。',paid4_btn:'家族運・健康運 全分析を見る · ¥750',
+  paid5_hook:'これは西洋占星術にはない機能です。',paid5_sub:'あなたの人生は10年ごとの章で流れています。次の大運があなたにもたらすものは...',paid5_btn:'10年大運 全分析を見る · ¥750',
+  modal_eyebrow:'✦ アーリーアクセス ✦',modal_title:'あなたが気になっていたことを知っている鑑定。',modal_sub:'すでに四柱を見ました。日主と出会いました。今、より深く入りましょう。',
+  modal_features:['人生の流れ全体のナラティブ','財運・成功運のブループリント','恋愛運・結婚運の深い分析','家族運・健康運の分析','10年大運 — あなただけの人生の季節、完全解読','5年間の年間運勢予測'],
+  modal_price:'¥750',modal_price_sub:'コーヒー一杯より安い。一生続く鑑定。',modal_pay_btn:'フル鑑定を解放 →',
+  modal_waitlist_title:'まだ決済の準備ができていませんか？最初にお知らせします。',modal_notify_btn:'通知を受け取る →',modal_note:'✓ スパムなし。ノイズなし。鑑定が準備できたらすぐにお知らせ。',
+  err_name:'お名前を入力してください。',err_name_short:'名前は2文字以上にしてください。',err_date:'生年月日を入力してください。',err_date_future:'生年月日は未来の日付にできません。',err_date_old:'1900年以降の生年月日のみ対応しています。',err_gender:'大運の方向計算のために性別を選択してください。',err_time:'時柱の計算に生まれた時刻が必要です。',
+  toast_waitlist_ok:'✓ リストに登録されました。最初にお知らせします。',toast_waitlist_dup:'すでにリストに登録されています！まもなくご連絡します。',toast_email_invalid:'有効なメールアドレスを入力してください。',toast_payment_info:'決済機能は近日公開予定。ウェイトリストに登録してください！',toast_calc_ok:'✓ 命式が完成しました。',toast_copy_ok:'✓ リンクがコピーされました — チャートをシェアしましょう！',
+  ten_god:{bigyeon:'比肩',geopjae:'劫財',sikshin:'食神',sanggwan:'傷官',pyeonginjae:'偏財',jeongjae:'正財',pyeonggwan:'偏官',jeonggwan:'正官',pyeongin:'偏印',jeongin:'正印'},
+  year_p:'年柱',month_p:'月柱',day_p:'日主',hour_p:'時柱',back_btn:'← 戻る',footer_text:'Momentor · プライバシー · 利用規約',word_you:'あなた',
+},
+zh: {
+  app_tagline:'您的命运，即将解读。',
+  hero_eyebrow:'您出生的那一刻',
+  hero_headline:'<em>518,400</em>种可能的命运。<br>这一个，是你的。',
+  hero_sub:'Momentor解读您的四柱八字 — 这是在整个东亚被数千万人信赖的1,500年古老智慧体系。探索您的日干、五行本质，以及塑造您人生的十年大运。',
+  hero_cta:'揭示我的命运 →',
+  usp1_title:'不是12分之1，而是518,400分之1。',
+  usp1_body:'西方星座将全人类分为十二个太阳星座。四柱八字使用您的出生年、月、日，乃至出生时辰，构建出属于您的独特命盘。指纹，而非类别。',
+  usp2_title:'1,400年的智慧',
+  usp2_body:'韩国总统、日本高管和中国家族做出百万美元决策时所依赖的智慧。现在以您的语言呈现。',
+  usp3_title:'您的人生以十年为周期运行',
+  usp3_body:'大运揭示您人生每个十年的五行能量。某些十年是收获，某些十年是风暴。了解您现在身处哪个季节。',
+  t1_text:'「我使用Co-Star已有三年。Momentor在五分钟内告诉了我，我花了两年心理咨询才弄明白的事情。」',
+  t1_author:'—— Sarah K.，纽约',
+  t2_text:'「作为一个在美国长大的韩裔，我从小就听说过四柱，但从未有过英文版的好应用。这是第一个做对了的应用。」',
+  t2_author:'—— Jenny L.，洛杉矶',
+  t3_text:'「大运分析让我重新思考了职业规划。我没想到会在一个命理应用上哭出来。」',
+  t3_author:'—— Marcus T.，伦敦',
+  social_count:'✦ 已有12,000+用户遇见了自己的日干',
+  form_title:'请输入您的出生信息',form_subtitle:'完整的四柱命盘需要所有项目',
+  lbl_name:'您的姓名',lbl_gender:'性别',gender_male:'♂ 男',gender_female:'♀ 女',
+  lbl_birthdate:'出生日期',lbl_birthtime:'出生时辰',lbl_notime:'不知道出生时辰',
+  btn_calculate:'查看我的八字 →',
+  lbl_pillars:'四柱 · FOUR PILLARS',lbl_elements:'五行分析',
+  lbl_personality:'性格分析',lbl_fortune:'今日运势',lbl_daeun:'大运流势',lbl_paid:'深度解析',
+  badge_free:'免费',badge_paid:'完整解读',
+  dm_eyebrow:'日干 · DAY MASTER',lbl_strengths:'✦ 优势',lbl_shadows:'↯ 暗面特质',
+  fortune_high:'⚡ 强力共鸣',fortune_neutral:'◯ 平稳运行',fortune_low:'⚠ 阻力',
+  lucky_color:'幸运色',lucky_dir:'幸运方位',lucky_num:'幸运数字',
+  daeun_title:'大运流势（十年周期）',
+  daeun_intro:'每个大运带来不同的五行能量。当前大运已高亮显示。',
+  daeun_current:'当前',personality_title:'性格分析',fortune_title:'今日运势',
+  paid1_hook:'那么，让我们来看看[NAME]的人生整体脉络。',paid1_sub:'每一张命盘都包含模式背后的模式。大多数人从未看见。',paid1_btn:'人生整体脉络全文解读 · ¥36',
+  paid2_hook:'[NAME]，您与金钱的关系并非大多数人所认为的那样。',paid2_sub:'您命盘中的财星处于一个不寻常的位置...',paid2_btn:'财运与事业运全文解读 · ¥36',
+  paid3_hook:'感情是您的日干变得复杂的领域。',paid3_sub:'您命盘中的官星讲述着一个特别的故事。',paid3_btn:'感情运与婚姻运深度解析 · ¥36',
+  paid4_hook:'您出生时的命柱在您有语言之前就塑造了您。',paid4_sub:'年柱和月柱承载着原生家庭的能量。',paid4_btn:'家庭运与健康运分析 · ¥36',
+  paid5_hook:'这是西方占星术中没有等价物的功能。',paid5_sub:'您的人生以十年为一个章节运行。下一个大运为您准备的，是几乎没有人能预见到的事情。',paid5_btn:'十年大运全文解读 · ¥36',
+  modal_eyebrow:'✦ 早期访问 ✦',modal_title:'一份了解你一直在思考的问题的解读。',modal_sub:'您已经看过四柱了。您已经认识了日干。现在，更深入地探索吧。',
+  modal_features:['人生整体脉络叙述','财运与事业运蓝图','感情运与婚姻运深度解析','家庭运与健康运分析','十年大运——您专属的人生季节，完全解码','五年流年运势预测'],
+  modal_price:'¥36',modal_price_sub:'比一杯咖啡还便宜。一次解读，受益终身。',modal_pay_btn:'解锁完整解读 →',
+  modal_waitlist_title:'还没准备好付款？支付功能上线时我们会第一时间通知您。',modal_notify_btn:'立即订阅通知 →',modal_note:'✓ 无垃圾邮件。无噪音。解读就绪时立即通知。',
+  err_name:'请输入您的姓名。',err_name_short:'姓名至少需要2个字符。',err_date:'请输入出生日期。',err_date_future:'出生日期不能是未来的日期。',err_date_old:'我们支持1900年以后的出生日期。',err_gender:'请选择性别——这会影响大运的运行方向。',err_time:'计算时柱需要出生时辰。',
+  toast_waitlist_ok:'✓ 您已加入等待名单。我们会第一时间通知您。',toast_waitlist_dup:'您已经在名单上了！我们会尽快与您联系。',toast_email_invalid:'请输入有效的电子邮件地址。',toast_payment_info:'支付功能即将上线。加入等待名单获取早期访问！',toast_calc_ok:'✓ 您的命盘已完成。',toast_copy_ok:'✓ 链接已复制——分享您的命盘！',
+  ten_god:{bigyeon:'比肩',geopjae:'劫财',sikshin:'食神',sanggwan:'伤官',pyeonginjae:'偏财',jeongjae:'正财',pyeonggwan:'偏官',jeonggwan:'正官',pyeongin:'偏印',jeongin:'正印'},
+  year_p:'年柱',month_p:'月柱',day_p:'日干',hour_p:'时柱',back_btn:'← 返回',footer_text:'Momentor · 隐私政策 · 服务条款',word_you:'您',
+}
 };
-
-const DAY_MASTER_DESC = {
-  en: [
-    'Jia Wood - You are like a towering tree: principled, steadfast, and naturally authoritative.',
-    'Yi Wood - You are like grass in the wind: flexible, adaptable, and gracefully resilient.',
-    'Bing Fire - You are like the blazing sun: charismatic, warm, and brilliantly expressive.',
-    'Ding Fire - You are like a candle flame: focused, passionate, and quietly intense.',
-    'Wu Earth - You are like a great mountain: stable, reliable, and deeply grounding.',
-    'Ji Earth - You are like fertile soil: nurturing, detail-oriented, and quietly productive.',
-    'Geng Metal - You are like a sword: decisive, principled, and sharp in judgment.',
-    'Xin Metal - You are like a jewel: refined, sensitive, and beautifully perfectionist.',
-    'Ren Water - You are like the ocean: expansive, wise, and endlessly resourceful.',
-    'Gui Water - You are like morning dew: intuitive, empathetic, and subtly powerful.'
-  ],
-  ko: [
-    '\uAC11\uBAA9(甲木) - \uD558\uB298\uC744 \uD5A5\uD574 \uBF4B\uB294 \uAC70\uBAA9\uCC98\uB7FC \uC6D0\uCE59\uC801\uC774\uACE0 \uD754\uB4E4\uB9BC\uC5C6\uB294 \uB9AC\uB354\uC2ED\uC744 \uAC00\uC84C\uC2B5\uB2C8\uB2E4.',
-    '\uC744\uBAA9(乙木) - \uBC14\uB78C\uC5D0 \uD718\uB294 \uD480\uCC98\uB7FC \uC720\uC5F0\uD558\uACE0 \uC801\uC751\uB825\uC774 \uB6F0\uC5B4\uB098\uBA70 \uAC15\uC778\uD55C \uC0DD\uBA85\uB825\uC744 \uC9C0\uB155\uC2B5\uB2C8\uB2E4.',
-    '\uBCD1\uD654(丙火) - \uD0DC\uC591\uCC98\uB7FC \uB530\uB73B\uD558\uACE0 \uD654\uB824\uD558\uBA70 \uC874\uC7AC \uC790\uCCB4\uB85C \uC8FC\uBCC0\uC744 \uBC1D\uD788\uB294 \uCE74\uB9AC\uC2A4\uB9C8\uB97C \uAC00\uC84C\uC2B5\uB2C8\uB2E4.',
-    '\uC815\uD654(丁火) - \uCD0B\uBD88\uCC98\uB7FC \uC870\uC6A9\uD558\uC9C0\uB9CC \uB0B4\uBA74\uC5D0 \uB728\uAC70\uC6B4 \uC5F4\uC815\uACFC \uC2E0\uB150\uC744 \uAC04\uC9C1\uD558\uACE0 \uC788\uC2B5\uB2C8\uB2E4.',
-    '\uBB34\uD1A0(戊土) - \uB300\uC0B0\uCC98\uB7FC \uD754\uB4E4\uB9BC \uC5C6\uACE0 \uC548\uC815\uC801\uC774\uBA70 \uBAA8\uB450\uC758 \uC758\uC9C0\uCC98\uAC00 \uB429\uB2C8\uB2E4.',
-    '\uAE30\uD1A0(己土) - \uBE44\uC625\uD55C \uB300\uC9C0\uCC98\uB7FC \uC138\uC2EC\uD558\uACE0 \uB530\uB73B\uD558\uBA70 \uC0DD\uBA85\uC744 \uD0A4\uC6CC\uB0B4\uB294 \uB3CC\uBD04\uC758 \uB2EC\uC778\uC785\uB2C8\uB2E4.',
-    '\uACBD\uAE08(庚金) - \uAC80\uCC98\uB7FC \uB0A0\uCE74\uB85C\uC6B4 \uACB0\uB2E8\uB825\uACFC \uCD94\uC9C4\uB825\uC744 \uAC00\uC84C\uC73C\uBA70 \uC6D0\uCE59\uC744 \uC911\uC2DC\uD569\uB2C8\uB2E4.',
-    '\uC2E0\uAE08(辛金) - \uBCF4\uC11D\uCC98\uB7FC \uC138\uB828\uB418\uACE0 \uC12C\uC138\uD558\uBA70 \uC644\uBCBD\uC744 \uCD94\uAD6C\uD558\uB294 \uBBF8\uC801 \uAC10\uAC01\uC744 \uC9C0\uB155\uC2B5\uB2C8\uB2E4.',
-    '\uC784\uC218(壬水) - \uBC14\uB2E4\uCC98\uB7FC \uB113\uACE0 \uAE4A\uC73C\uBA70 \uC9C0\uC801 \uD638\uAE30\uC2EC\uACFC \uC801\uC751\uB825\uC774 \uB6F0\uC5B4\uB09C \uD314\uBC29\uBBF8\uC778\uC785\uB2C8\uB2E4.',
-    '\uACC4\uC218(癸水) - \uC774\uC2AC\uBE44\uCC98\uB7FC \uC870\uC6A9\uD788 \uC2A4\uBA70\uB4E4\uC5B4 \uB300\uC9C0\uB97C \uD48D\uC694\uB86D\uAC8C \uB9CC\uB4DC\uB294 \uACF5\uAC10\uC758 \uB2EC\uC778\uC785\uB2C8\uB2E4.'
-  ],
-  ja: [
-    '\u7532\u6728 - \u5927\u6A39\u306E\u3088\u3046\u306B\u539F\u5247\u7684\u3067\u63FA\u308B\u304E\u306A\u3044\u30EA\u30FC\u30C0\u30FC\u30B7\u30C3\u30D7\u3092\u6301\u3063\u3066\u3044\u307E\u3059\u3002',
-    '\u4E59\u6728 - \u98A8\u306B\u63FA\u308C\u308B\u8349\u306E\u3088\u3046\u306B\u67D4\u8EDF\u3067\u9069\u5FDC\u529B\u304C\u3042\u308A\u3001\u5F37\u3044\u751F\u547D\u529B\u3092\u6301\u3063\u3066\u3044\u307E\u3059\u3002',
-    '\u4E19\u706B - \u592A\u967D\u306E\u3088\u3046\u306B\u6E29\u304B\u304F\u83EF\u3084\u304B\u3067\u3001\u5B58\u5728\u305D\u306E\u3082\u306E\u304C\u5468\u56F2\u3092\u7167\u3089\u3057\u307E\u3059\u3002',
-    '\u4E01\u706B - \u30ED\u30A6\u30BD\u30AF\u306E\u3088\u3046\u306B\u9759\u304B\u3067\u3059\u304C\u3001\u5185\u9762\u306B\u71B1\u3044\u60C5\u71B1\u3068\u4FE1\u5FF5\u3092\u79D8\u3081\u3066\u3044\u307E\u3059\u3002',
-    '\u620A\u571F - \u5927\u5C71\u306E\u3088\u3046\u306B\u63FA\u308B\u304E\u306A\u304F\u5B89\u5B9A\u7684\u3067\u3001\u7686\u306E\u62E0\u308A\u6240\u3068\u306A\u308A\u307E\u3059\u3002',
-    '\u5DF1\u571F - \u80A5\u6C83\u306A\u5927\u5730\u306E\u3088\u3046\u306B\u7D30\u3084\u304B\u3067\u6E29\u304B\u304F\u3001\u547D\u3092\u80B2\u3080\u529B\u3092\u6301\u3063\u3066\u3044\u307E\u3059\u3002',
-    '\u5E9A\u91D1 - \u5263\u306E\u3088\u3046\u306B\u92ED\u3044\u6C7A\u65AD\u529B\u3068\u63A8\u9032\u529B\u3092\u6301\u3061\u3001\u539F\u5247\u3092\u91CD\u3093\u3058\u307E\u3059\u3002',
-    '\u8F9B\u91D1 - \u5B9D\u77F3\u306E\u3088\u3046\u306B\u6D17\u7DF4\u3055\u308C\u7E4A\u7D30\u3067\u3001\u5B8C\u74A7\u3092\u8FFD\u6C42\u3059\u308B\u7F8E\u7684\u611F\u899A\u3092\u6301\u3063\u3066\u3044\u307E\u3059\u3002',
-    '\u58EC\u6C34 - \u6D77\u306E\u3088\u3046\u306B\u5E83\u304F\u6DF1\u304F\u3001\u77E5\u7684\u597D\u5947\u5FC3\u3068\u9069\u5FDC\u529B\u306B\u512A\u308C\u305F\u4E07\u80FD\u578B\u3067\u3059\u3002',
-    '\u7678\u6C34 - \u671D\u9732\u306E\u3088\u3046\u306B\u9759\u304B\u306B\u6D78\u307F\u8FBC\u307F\u3001\u5171\u611F\u529B\u306B\u512A\u308C\u305F\u7E4A\u7D30\u306A\u529B\u3092\u6301\u3063\u3066\u3044\u307E\u3059\u3002'
-  ],
-  zh: [
-    '\u7532\u6728 - \u5982\u53C2\u5929\u5927\u6811\uFF0C\u6709\u539F\u5219\u3001\u575A\u5B9A\u4E0D\u79FB\u7684\u9886\u5BFC\u529B\u3002',
-    '\u4E59\u6728 - \u5982\u98CE\u4E2D\u4E4B\u8349\uFF0C\u67D4\u8F6F\u9002\u5E94\uFF0C\u5145\u6EE1\u97E7\u6027\u3002',
-    '\u4E19\u706B - \u5982\u70C8\u65E5\u5F53\u7A7A\uFF0C\u6E29\u6696\u5149\u8292\uFF0C\u9B45\u529B\u56DB\u5C04\u3002',
-    '\u4E01\u706B - \u5982\u70DB\u5149\u6447\u66F3\uFF0C\u5916\u8868\u5B89\u9759\uFF0C\u5185\u5FC3\u706B\u70ED\u3002',
-    '\u620A\u571F - \u5982\u5DE8\u5C71\u78D0\u77F3\uFF0C\u7A33\u5B9A\u53EF\u9760\uFF0C\u662F\u4F17\u4EBA\u7684\u4F9D\u9760\u3002',
-    '\u5DF1\u571F - \u5982\u6C83\u571F\u80A5\u7530\uFF0C\u7EC6\u5FC3\u6E29\u6696\uFF0C\u517B\u80B2\u4E07\u7269\u3002',
-    '\u5E9A\u91D1 - \u5982\u5229\u5251\u51FA\u9798\uFF0C\u679C\u65AD\u575A\u6BC5\uFF0C\u91CD\u89C6\u539F\u5219\u3002',
-    '\u8F9B\u91D1 - \u5982\u7CBE\u7F8E\u73E0\u5B9D\uFF0C\u7CBE\u81F4\u7EC6\u817B\uFF0C\u8FFD\u6C42\u5B8C\u7F8E\u3002',
-    '\u58EC\u6C34 - \u5982\u6C6A\u6D0B\u5927\u6D77\uFF0C\u5BBD\u5E7F\u6DF1\u9083\uFF0C\u667A\u6167\u65E0\u7A77\u3002',
-    '\u7678\u6C34 - \u5982\u6668\u9732\u6DA6\u7269\uFF0C\u6E17\u900F\u65E0\u58F0\uFF0C\u5145\u6EE1\u5171\u60C5\u3002'
-  ]
-};
-
-// === SECTION B: CALCULATOR ===
-function calcSolarTermDate(year, lngTarget) {
-  const dayOfYear = ((lngTarget - 280.46646 + 360) % 360) / 360 * 365.25;
-  let jde = 2451545.0 + (year - 2000) * 365.25 + dayOfYear;
-  for (let i = 0; i < 50; i++) {
-    const T = (jde - 2451545.0) / 36525;
-    const M = ((357.5291092 + 35999.0502909 * T) % 360 + 360) % 360;
-    const Mrad = M * Math.PI / 180;
-    const L0 = 280.46646 + 36000.76983 * T;
-    const C = (1.9146 - 0.004817*T) * Math.sin(Mrad)
-             + 0.019994 * Math.sin(2*Mrad)
-             + 0.00029 * Math.sin(3*Mrad);
-    const sunLng = ((L0 + C) % 360 + 360) % 360;
-    let diff = lngTarget - sunLng;
-    if (diff > 180) diff -= 360;
-    if (diff < -180) diff += 360;
-    if (Math.abs(diff) < 0.0001) break;
-    jde += diff / 360 * 365.25;
-  }
-  const jdKST = jde + 9/24;
-  const z = Math.floor(jdKST + 0.5);
-  const a = z < 2299161 ? z : (()=>{const al=Math.floor((z-1867216.25)/36524.25); return z+1+al-Math.floor(al/4);})();
-  const b = a + 1524;
-  const c = Math.floor((b - 122.1) / 365.25);
-  const d = Math.floor(365.25 * c);
-  const e = Math.floor((b - d) / 30.6001);
-  const day = b - d - Math.floor(30.6001 * e);
-  const month = e < 14 ? e - 1 : e - 13;
-  const yr = month > 2 ? c - 4716 : c - 4715;
-  return { year: yr, month, day };
+function t(key){
+  const lang=AppState.language||'en';
+  return (I18N[lang]&&I18N[lang][key]!=null)?I18N[lang][key]:(I18N.en[key]!=null?I18N.en[key]:key);
 }
 
-function getYearPillar(year) {
-  const h = ((year - 4) % 10 + 10) % 10;
-  const e = ((year - 4) % 12 + 12) % 12;
-  return { h, e };
-}
-
-function getDayPillar(year, month, day) {
-  const d = new Date(Date.UTC(year, month-1, day));
-  const ref = new Date(Date.UTC(1900, 0, 1));
-  const diff = Math.round((d - ref) / 86400000);
-  const h = ((diff % 10) + 10) % 10;
-  const e = (((diff + 10) % 12) + 12) % 12;
-  return { h, e };
-}
-
-function getMonthPillar(year, month, day) {
-  const checkYears = [year - 1, year, year + 1];
-  let foundBranch = 2, foundOffset = 0, foundYear = year;
-  const terms = [];
-  for (const y of checkYears) {
-    for (const node of JIEQI_NODES) {
-      const d = calcSolarTermDate(y, node.lng);
-      terms.push({ ...d, branch: node.branch, offset: node.offset, isSpring: node.lng === 315, solarYear: y });
-    }
-  }
-  terms.sort((a, b) => {
-    if (a.year !== b.year) return a.year - b.year;
-    if (a.month !== b.month) return a.month - b.month;
-    return a.day - b.day;
-  });
-  const targetDate = new Date(Date.UTC(year, month-1, day));
-  for (let i = terms.length - 1; i >= 0; i--) {
-    const t = terms[i];
-    const tDate = new Date(Date.UTC(t.year, t.month-1, t.day));
-    if (tDate <= targetDate) {
-      foundBranch = t.branch;
-      foundOffset = t.offset;
-      for (let j = i; j >= 0; j--) {
-        const tj = terms[j];
-        if (tj.isSpring) {
-          const tjDate = new Date(Date.UTC(tj.year, tj.month-1, tj.day));
-          if (tjDate <= targetDate) {
-            foundYear = tj.solarYear;
-            break;
-          }
-        }
-        if (j === 0) foundYear = terms[0].solarYear - 1;
-      }
-      break;
-    }
-  }
-  const yearStemForMonth = ((foundYear - 4) % 10 + 10) % 10;
-  const base = MONTH_STEM_BASES[yearStemForMonth];
-  const h = (base + foundOffset) % 10;
-  return { h, e: foundBranch };
-}
-
-function getHourPillar(hour, dayStemH) {
-  const e = Math.floor(hour / 2) % 12;
-  const bases = [0, 2, 4, 6, 8, 0, 2, 4, 6, 8];
-  const base = bases[dayStemH];
-  const h = (base + e) % 10;
-  return { h, e };
-}
-
-function getShiShen(dayStemH, stemH) {
-  const dayEl = STEM_ELEMENT[dayStemH];
-  const dayYin = STEM_YIN[dayStemH];
-  const stemEl = STEM_ELEMENT[stemH];
-  const stemYin = STEM_YIN[stemH];
-  const sameYin = dayYin === stemYin;
-  if (stemEl === dayEl) return sameYin ? '\uBE44\uACAC' : '\uACA9\uC7AC';
-  if (ELEM_GENERATES[dayEl] === stemEl) return sameYin ? '\uC2DD\uC2E0' : '\uC0C1\uAD00';
-  if (ELEM_CONTROLS[dayEl] === stemEl) return sameYin ? '\uD3B8\uC7AC' : '\uC815\uC7AC';
-  if (ELEM_GENERATES[stemEl] === dayEl) return sameYin ? '\uD3B8\uC778' : '\uC815\uC778';
-  if (ELEM_CONTROLS[stemEl] === dayEl) return sameYin ? '\uD3B8\uAD00' : '\uC815\uAD00';
-  return '?';
-}
-
-function getShiShenEN(dayStemH, stemH) {
-  const dayEl = STEM_ELEMENT[dayStemH];
-  const dayYin = STEM_YIN[dayStemH];
-  const stemEl = STEM_ELEMENT[stemH];
-  const stemYin = STEM_YIN[stemH];
-  const sameYin = dayYin === stemYin;
-  if (stemEl === dayEl) return sameYin ? 'Friend' : 'Rob Wealth';
-  if (ELEM_GENERATES[dayEl] === stemEl) return sameYin ? 'Eating God' : 'Hurting Officer';
-  if (ELEM_CONTROLS[dayEl] === stemEl) return sameYin ? 'Indirect Wealth' : 'Direct Wealth';
-  if (ELEM_GENERATES[stemEl] === dayEl) return sameYin ? 'Indirect Seal' : 'Direct Seal';
-  if (ELEM_CONTROLS[stemEl] === dayEl) return sameYin ? 'Seven Killings' : 'Direct Officer';
-  return '?';
-}
-
-// Get the main hidden stem of a branch
-function branchMainStem(branchE) {
-  const map = [9,5,0,1,4,2,3,5,6,7,4,8];
-  return map[branchE];
-}
-
-function countElements(pillars) {
-  const cnt = [0,0,0,0,0];
-  for (const p of pillars) {
-    cnt[STEM_ELEMENT[p.h]]++;
-    cnt[BRANCH_ELEM[p.e]]++;
-  }
-  return cnt;
-}
-
-function calcDaeunStartAge(year, month, day, gender) {
-  const yearStemH = ((year - 4) % 10 + 10) % 10;
-  const yangYear = yearStemH % 2 === 0;
-  const forward = (gender === 'male') === yangYear;
-  const birthDate = new Date(Date.UTC(year, month-1, day));
-  let jieqiDates = [];
-  for (const y of [year-1, year, year+1]) {
-    for (const node of JIEQI_NODES) {
-      const d = calcSolarTermDate(y, node.lng);
-      jieqiDates.push(new Date(Date.UTC(d.year, d.month-1, d.day)));
-    }
-  }
-  jieqiDates.sort((a, b) => a - b);
-  let targetDate;
-  if (forward) {
-    targetDate = jieqiDates.find(d => d > birthDate);
-  } else {
-    jieqiDates.reverse();
-    targetDate = jieqiDates.find(d => d < birthDate);
-  }
-  if (!targetDate) return 5;
-  const diffDays = Math.abs(targetDate - birthDate) / 86400000;
-  return Math.round(diffDays / 3);
-}
-
-function getDaeunPillars(monthH, monthE, forward, count) {
-  const pillars = [];
-  let h = monthH, e = monthE;
-  for (let i = 0; i < count; i++) {
-    if (forward) { h = (h + 1) % 10; e = (e + 1) % 12; }
-    else { h = (h - 1 + 10) % 10; e = (e - 1 + 12) % 12; }
-    pillars.push({ h, e });
-  }
-  return pillars;
-}
-
-function calcCompatScore(c1, c2) {
-  let score = 50;
-  const e1 = STEM_ELEMENT[c1.day.h], e2 = STEM_ELEMENT[c2.day.h];
-  if (ELEM_GENERATES[e1] === e2 || ELEM_GENERATES[e2] === e1) score += 20;
-  if (e1 === e2) score += 10;
-  if (ELEM_CONTROLS[e1] === e2 || ELEM_CONTROLS[e2] === e1) score -= 5;
-  const sixHarmony = [[0,1],[2,11],[3,10],[4,9],[5,8],[6,7]];
-  for (const [a,b] of sixHarmony) {
-    if ((c1.day.e===a && c2.day.e===b)||(c1.day.e===b && c2.day.e===a)) score += 15;
-  }
-  if ((c1.year.e + c2.year.e) % 12 === 0 || Math.abs(c1.year.e - c2.year.e) === 6) score -= 8;
-  return Math.max(0, Math.min(100, score));
-}
-
-// === SECTION C: STATE ===
-const AppState = {
-  lang: 'ko',
-  chart: null,
-  apiKey: localStorage.getItem('fp_apikey') || null,
-  aiUnlocked: false,
-  aiResult: null,
-  activeTab: 'shiShen',
-};
-
-function t(key) { return (I18N[AppState.lang] && I18N[AppState.lang][key]) || (I18N.en[key]) || key; }
-
-// === SECTION D: AI ===
-async function callClaude(apiKey, chart) {
-  const langNames = { ko: '\uD55C\uAD6D\uC5B4', en: 'English', ja: '\u65E5\u672C\u8A9E', zh: '\u4E2D\u6587' };
-  const system = `You are a master Four Pillars (\uC0AC\uC8FC\uBA85\uB9AC) consultant with 40 years of experience. Respond in ${langNames[AppState.lang]}.`;
-  const user = `Analyze this Four Pillars chart in detail:
-Year: ${STEMS[chart.year.h]}${BRANCHES[chart.year.e]}
-Month: ${STEMS[chart.month.h]}${BRANCHES[chart.month.e]}
-Day: ${STEMS[chart.day.h]}${BRANCHES[chart.day.e]} (Day Master)
-Hour: ${STEMS[chart.hour.h]}${BRANCHES[chart.hour.e]}
-Gender: ${chart.gender}
-Born: ${chart.birthYear}-${chart.birthMonth}-${chart.birthDay}
-
-Provide analysis in JSON format:
-{
-  "headline": "one-line destiny summary",
-  "dayMaster": "description of day master personality (3-4 sentences)",
-  "analysis": "overall life path analysis (4-5 sentences)",
-  "strengths": ["strength 1", "strength 2", "strength 3"],
-  "challenges": ["challenge 1", "challenge 2"],
-  "currentPeriod": "analysis of current period (3-4 sentences)",
-  "advice": "personal advice (2-3 sentences)"
-}`;
-
-  const resp = await fetch('https://api.anthropic.com/v1/messages', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'anthropic-dangerous-direct-browser-access': 'true'
-    },
-    body: JSON.stringify({
-      model: 'claude-opus-4-6',
-      max_tokens: 1500,
-      system,
-      messages: [{ role: 'user', content: user }]
-    })
-  });
-  if (!resp.ok) throw new Error(`API error: ${resp.status}`);
-  const data = await resp.json();
-  const text = data.content[0].text;
-  const match = text.match(/\{[\s\S]*\}/);
-  return match ? JSON.parse(match[0]) : { headline: text, analysis: text, strengths: [], challenges: [], advice: '' };
-}
-
-// === SECTION E: RENDERERS ===
-function getElemColor(stemH) { return ELEM_COLORS[STEM_ELEMENT[stemH]]; }
-function getAnimalName(branchE) {
-  const m = { en: ANIMALS_EN, ko: ANIMALS_KO, ja: ANIMALS_JA, zh: ANIMALS_ZH };
-  return (m[AppState.lang] || ANIMALS_EN)[branchE];
-}
-
-function renderPillarGrid(chart) {
-  const pillars = [
-    { key: 'yearPillar', p: chart.year },
-    { key: 'monthPillar', p: chart.month },
-    { key: 'dayPillar', p: chart.day },
-    { key: 'hourPillar', p: chart.hour }
-  ];
-  const grid = document.getElementById('pillarGrid');
-  grid.innerHTML = pillars.map((item, idx) => {
-    const p = item.p;
-    const isDayPillar = idx === 2;
-    const stemColor = getElemColor(p.h);
-    const branchColor = ELEM_COLORS[BRANCH_ELEM[p.e]];
-    const elemName = ELEM_NAMES[AppState.lang][STEM_ELEMENT[p.h]];
-    const yy = STEM_YIN[p.h] === 0 ? t('yang') : t('yin');
-    const ss = idx === 2 ? t('dayMaster') : getShiShen(chart.day.h, p.h);
-    return `<div class="pillar-col${isDayPillar ? ' day-pillar' : ''}">
-      <div class="pillar-label">${t(item.key)}</div>
-      <div class="stem-char" style="color:${stemColor}">${STEMS[p.h]}</div>
-      <div class="elem-badge" style="color:${stemColor}">${elemName}</div>
-      <div class="branch-char" style="color:${branchColor}">${BRANCHES[p.e]}</div>
-      <div class="elem-emoji">${ELEM_EMOJIS[BRANCH_ELEM[p.e]]}</div>
-      <div class="yinyang-label">${yy}</div>
-      <div class="shishen-label" onclick="window._openApiModal()">${ss}</div>
-    </div>`;
-  }).join('');
-}
-
-function renderRadarSVG(counts) {
-  const size = 220, cx = size/2, cy = size/2, r = 75;
-  const labels = ELEM_NAMES[AppState.lang];
-  const colors = ELEM_COLORS;
-  const angles = [90, 162, 234, 306, 18].map(d => (d - 90) * Math.PI / 180);
-  const maxVal = Math.max(...counts, 1) * 1.3 || 4;
-
-  function pt(angle, radius) {
-    return [cx + radius * Math.cos(angle), cy + radius * Math.sin(angle)];
-  }
-
-  let svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto;">`;
-
-  // background levels
-  for (let lv = 3; lv >= 1; lv--) {
-    const lr = r * lv / 3;
-    const pts = angles.map(a => pt(a, lr).join(',')).join(' ');
-    svg += `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>`;
-  }
-
-  // axes
-  for (const a of angles) {
-    const [x, y] = pt(a, r);
-    svg += `<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>`;
-  }
-
-  // data polygon
-  const dataPts = counts.map((v, i) => pt(angles[i], (v / maxVal) * r).join(',')).join(' ');
-  svg += `<polygon points="${dataPts}" fill="rgba(201,168,76,0.2)" stroke="var(--accent-gold)" stroke-width="2"/>`;
-
-  // dots and labels
-  counts.forEach((v, i) => {
-    const [dx, dy] = pt(angles[i], (v / maxVal) * r);
-    svg += `<circle cx="${dx}" cy="${dy}" r="4" fill="${colors[i]}" stroke="#fff" stroke-width="1"/>`;
-    const [lx, ly] = pt(angles[i], r + 20);
-    svg += `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="${colors[i]}" font-size="12" font-weight="700">${ELEM_EMOJIS[i]} ${labels[i]} (${v})</text>`;
-  });
-
-  svg += '</svg>';
-  document.getElementById('radarChart').innerHTML = svg;
-}
-
-function renderDayMasterCard(chart) {
-  const desc = DAY_MASTER_DESC[AppState.lang] || DAY_MASTER_DESC.en;
-  const card = document.getElementById('dayMasterCard');
-  const stemColor = getElemColor(chart.day.h);
-  card.innerHTML = `<h3 style="color:${stemColor}">${ELEM_EMOJIS[STEM_ELEMENT[chart.day.h]]} ${t('dayMaster')}: ${STEMS[chart.day.h]} (${STEMS_KO[chart.day.h]})</h3>
-    <p>${desc[chart.day.h]}</p>`;
-}
-
-function renderUnlockBanner() {
-  const el = document.getElementById('unlockBanner');
-  if (AppState.aiUnlocked) { el.innerHTML = ''; return; }
-  el.innerHTML = `<div class="unlock-banner">
-    <h3>${t('unlockBanner')}</h3>
-    <p>${t('unlockDesc')}</p>
-    <div class="btn-group">
-      <button class="btn-apikey" onclick="window._openApiModal()">${t('enterApiKey')}</button>
-      <button class="btn-premium" onclick="alert('${t('comingSoon')}')">${t('getPremium')}</button>
-    </div>
-  </div>`;
-}
-
-function renderShiShenTab(chart) {
-  const pillars = [
-    { label: t('yearPillar'), p: chart.year },
-    { label: t('monthPillar'), p: chart.month },
-    { label: t('dayPillar'), p: chart.day },
-    { label: t('hourPillar'), p: chart.hour }
-  ];
-  let html = `<table class="shishen-table"><tr>
-    <th>${t('shiShenPillar')}</th><th>${t('shiShenStem')}</th><th>${t('shiShenBranch')}</th><th>${t('shiShenRelation')}</th></tr>`;
-  for (const item of pillars) {
-    const ss = item.p === chart.day ? t('dayMaster') : getShiShen(chart.day.h, item.p.h);
-    const bStem = branchMainStem(item.p.e);
-    const bss = item.p === chart.day ? '-' : getShiShen(chart.day.h, bStem);
-    html += `<tr>
-      <td>${item.label}</td>
-      <td style="color:${getElemColor(item.p.h)}">${STEMS[item.p.h]} ${ss}</td>
-      <td style="color:${ELEM_COLORS[BRANCH_ELEM[item.p.e]]}">${BRANCHES[item.p.e]} ${bss}</td>
-      <td>${ELEM_EMOJIS[STEM_ELEMENT[item.p.h]]}</td>
-    </tr>`;
-  }
-  html += '</table>';
-  // Monetization trigger 2
-  html += `<div class="locked-item" onclick="window._openApiModal()"><p>${t('whatMeans')}</p></div>`;
-  return html;
-}
-
-function renderDaeunTimeline(chart) {
-  const yearStemH = ((chart.birthYear - 4) % 10 + 10) % 10;
-  const yangYear = yearStemH % 2 === 0;
-  const forward = (chart.gender === 'male') === yangYear;
-  const startAge = calcDaeunStartAge(chart.birthYear, chart.birthMonth, chart.birthDay, chart.gender);
-  const pillars = getDaeunPillars(chart.month.h, chart.month.e, forward, 8);
-  const currentAge = 2026 - chart.birthYear;
-
-  let html = '<div class="daeun-timeline">';
-  for (let i = 0; i < pillars.length; i++) {
-    const p = pillars[i];
-    const age = startAge + i * 10;
-    const isCurrent = currentAge >= age && currentAge < age + 10;
-    html += `<div class="daeun-block${isCurrent ? ' current' : ''}">
-      <div class="age">${age}-${age+9} ${t('ageLabel')}</div>
-      <div class="chars" style="color:${getElemColor(p.h)}">${STEMS[p.h]}${BRANCHES[p.e]}</div>
-      ${isCurrent ? `<div class="label-current">${t('currentDaeun')}</div>` : ''}
-    </div>`;
-  }
-  html += '</div>';
-  // Monetization trigger 3
-  html += `<div class="locked-item" onclick="window._openApiModal()"><p>${t('decadeMeaning')}</p></div>`;
-  return html;
-}
-
-function renderSaeunTab(chart) {
-  const yp = getYearPillar(2026);
-  const stemColor = getElemColor(yp.h);
-  const ss = getShiShen(chart.day.h, yp.h);
-  let html = `<div style="text-align:center;margin-bottom:16px;">
-    <div style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">${t('thisYearPillar')} 2026</div>
-    <div style="font-size:2.5rem;font-weight:700;color:${stemColor}">${STEMS[yp.h]}</div>
-    <div style="font-size:2.5rem;font-weight:700;color:${ELEM_COLORS[BRANCH_ELEM[yp.e]]}">${BRANCHES[yp.e]}</div>
-    <div style="font-size:13px;color:var(--accent-gold);margin-top:8px;">${ss} ${ELEM_EMOJIS[STEM_ELEMENT[yp.h]]}</div>
-  </div>`;
-  html += `<p style="font-size:13px;color:var(--text-muted);text-align:center;">${t('briefOutlook')}: ${STEMS[yp.h]}${BRANCHES[yp.e]} (${getAnimalName(yp.e)})</p>`;
-  // Monetization trigger 4
-  html += `<div class="locked-item" onclick="window._openApiModal()"><p>${t('fiveYearForecast')}</p></div>`;
-  return html;
-}
-
-function renderGunghapTab(chart) {
-  let html = `<div class="compat-form">
-    <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px;">${t('partner')}</p>
-    <div class="form-grid">
-      <div class="form-group"><label>${t('labelYear')}</label><input type="number" id="partnerYear" placeholder="1992" min="1900" max="2030"></div>
-      <div class="form-group"><label>${t('labelMonth')}</label><input type="number" id="partnerMonth" placeholder="5" min="1" max="12"></div>
-      <div class="form-group"><label>${t('labelDay')}</label><input type="number" id="partnerDay" placeholder="15" min="1" max="31"></div>
-    </div>
-    <div class="form-grid-2">
-      <div class="form-group"><label>${t('labelHour')}</label><input type="number" id="partnerHour" placeholder="12" min="0" max="23"></div>
-      <div class="form-group"><label>${t('labelGender')}</label><select id="partnerGender"><option value="male">${t('male')}</option><option value="female">${t('female')}</option></select></div>
-    </div>
-    <button class="btn-calc" style="font-size:13px;padding:10px;" onclick="window._calcCompat()">${t('calculate2')}</button>
-    <div id="compatResult" class="compat-result"></div>
-  </div>`;
-  // Monetization trigger 5
-  html += `<div class="locked-item" onclick="window._openApiModal()"><p>${t('detailedNarrative')}</p></div>`;
-  return html;
-}
-
-function renderAISection(chart) {
-  const el = document.getElementById('aiSection');
-  if (AppState.aiUnlocked && AppState.aiResult) {
-    const ai = AppState.aiResult;
-    el.innerHTML = `<div class="ai-section">
-      <div class="ai-content">
-        <h4>${ai.headline || ''}</h4>
-        ${ai.dayMaster ? `<p>${ai.dayMaster}</p>` : ''}
-        ${ai.analysis ? `<p>${ai.analysis}</p>` : ''}
-        ${ai.strengths && ai.strengths.length ? `<ul class="strengths">${ai.strengths.map(s=>`<li style="color:var(--wood)">${s}</li>`).join('')}</ul>` : ''}
-        ${ai.challenges && ai.challenges.length ? `<ul class="challenges">${ai.challenges.map(c=>`<li style="color:var(--fire)">${c}</li>`).join('')}</ul>` : ''}
-        ${ai.currentPeriod ? `<p>${ai.currentPeriod}</p>` : ''}
-        ${ai.advice ? `<p style="color:var(--accent-gold);font-style:italic;">${ai.advice}</p>` : ''}
-      </div>
-    </div>`;
-  } else {
-    const demoText = DAY_MASTER_DESC[AppState.lang][chart.day.h] || 'Your detailed AI reading will appear here...';
-    el.innerHTML = `<div class="ai-section locked">
-      <div class="lock-overlay">
-        <div class="lock-icon">&#128274;</div>
-        <h4>${t('aiLocked')}</h4>
-        <p>${t('aiLockedDesc')}</p>
-        <div class="btn-group" style="display:flex;gap:8px;">
-          <button class="btn-apikey" onclick="window._openApiModal()">${t('enterApiKey')}</button>
-          <button class="btn-premium" onclick="alert('${t('comingSoon')}')">${t('getPremium')}</button>
-        </div>
-      </div>
-      <div class="ai-content">
-        <h4>AI Analysis Preview</h4>
-        <p>${demoText}</p>
-        <p>This is a preview of the detailed analysis that will be generated by Claude AI when you provide your API key. The full analysis includes personality traits, career guidance, relationship insights, health recommendations, and more.</p>
-      </div>
-    </div>`;
-  }
-}
-
-// === SECTION F: UI CONTROLLERS ===
-function applyI18n() {
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    const val = t(key);
-    if (val) el.textContent = val;
-  });
-  // Update select options
-  const genderSelect = document.getElementById('inputGender');
-  if (genderSelect) {
-    genderSelect.options[0].textContent = t('male');
-    genderSelect.options[1].textContent = t('female');
-  }
-  // Re-render chart if present
-  if (AppState.chart) {
-    renderAll();
-  }
-}
-
-function renderAll() {
-  const chart = AppState.chart;
-  if (!chart) return;
-  renderPillarGrid(chart);
-  renderRadarSVG(countElements([chart.year, chart.month, chart.day, chart.hour]));
-  renderDayMasterCard(chart);
-  renderUnlockBanner();
-  renderTabContent();
-  renderAISection(chart);
-}
-
-function renderTabContent() {
-  const chart = AppState.chart;
-  if (!chart) return;
-  const el = document.getElementById('tabContent');
-  switch (AppState.activeTab) {
-    case 'shiShen': el.innerHTML = renderShiShenTab(chart); break;
-    case 'daeun': el.innerHTML = renderDaeunTimeline(chart); break;
-    case 'saeun': el.innerHTML = renderSaeunTab(chart); break;
-    case 'gunghap': el.innerHTML = renderGunghapTab(chart); break;
-  }
-}
-
-function setupLangToggle() {
-  document.getElementById('langToggle').addEventListener('click', (e) => {
-    if (e.target.tagName !== 'BUTTON') return;
-    const lang = e.target.getAttribute('data-lang');
-    if (!lang) return;
-    AppState.lang = lang;
-    document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    applyI18n();
-  });
-}
-
-function setupTabs() {
-  document.getElementById('tabsBar').addEventListener('click', (e) => {
-    if (!e.target.classList.contains('tab-btn')) return;
-    const tab = e.target.getAttribute('data-tab');
-    AppState.activeTab = tab;
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    e.target.classList.add('active');
-    renderTabContent();
-  });
-}
-
-function handleCalculate() {
-  const year = parseInt(document.getElementById('inputYear').value);
-  const month = parseInt(document.getElementById('inputMonth').value);
-  const day = parseInt(document.getElementById('inputDay').value);
-  const hour = parseInt(document.getElementById('inputHour').value);
-  const gender = document.getElementById('inputGender').value;
-
-  if (!year || !month || !day || isNaN(hour)) {
-    alert('Please fill in all fields.');
-    return;
-  }
-
-  const yearP = getYearPillar(year);
-  const monthP = getMonthPillar(year, month, day);
-  const dayP = getDayPillar(year, month, day);
-  const hourP = getHourPillar(hour, dayP.h);
-
-  AppState.chart = {
-    year: yearP, month: monthP, day: dayP, hour: hourP,
-    birthYear: year, birthMonth: month, birthDay: day, birthHour: hour,
-    gender
-  };
-
-  document.getElementById('heroSection').style.display = 'none';
-  document.getElementById('formSection').style.display = 'none';
-  const cs = document.getElementById('chartSection');
-  cs.classList.add('show');
-  cs.scrollIntoView({ behavior: 'smooth' });
-
-  AppState.activeTab = 'shiShen';
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelector('.tab-btn[data-tab="shiShen"]').classList.add('active');
-
-  renderAll();
-}
-
-function handleBack() {
-  document.getElementById('chartSection').classList.remove('show');
-  document.getElementById('heroSection').style.display = '';
-  document.getElementById('formSection').style.display = '';
-  AppState.chart = null;
-  AppState.aiResult = null;
-  AppState.aiUnlocked = false;
-}
-
-// MODALS
-window._openApiModal = function() {
-  const modal = document.getElementById('apiKeyModal');
-  modal.classList.add('show');
-  const existing = AppState.apiKey || '';
-  document.getElementById('apiKeyInput').value = existing;
-};
-
-function closeApiModal() {
-  document.getElementById('apiKeyModal').classList.remove('show');
-}
-
-async function saveApiKey() {
-  const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key) return;
-  AppState.apiKey = key;
-  localStorage.setItem('fp_apikey', key);
-  AppState.aiUnlocked = true;
-  closeApiModal();
-  renderUnlockBanner();
-
-  if (AppState.chart) {
-    const aiEl = document.getElementById('aiSection');
-    aiEl.innerHTML = '<div class="ai-section" style="text-align:center;padding:40px;"><p style="color:var(--accent-gold);">Loading AI analysis...</p></div>';
-    try {
-      const result = await callClaude(key, AppState.chart);
-      AppState.aiResult = result;
-      renderAISection(AppState.chart);
-    } catch (err) {
-      aiEl.innerHTML = `<div class="ai-section" style="text-align:center;padding:20px;"><p style="color:var(--fire);">Error: ${err.message}</p><p style="color:var(--text-muted);font-size:12px;margin-top:8px;">Please check your API key and try again.</p></div>`;
-    }
-  }
-}
-
-// SHARE
-function handleShare() {
-  if (!AppState.chart) return;
-  const c = AppState.chart;
-  const url = `${window.location.origin}${window.location.pathname}?y=${c.birthYear}&m=${c.birthMonth}&d=${c.birthDay}&h=${c.birthHour}&g=${c.gender}`;
-  document.getElementById('shareUrl').value = url;
-  document.getElementById('shareModal').classList.add('show');
-}
-
-function closeShareModal() {
-  document.getElementById('shareModal').classList.remove('show');
-}
-
-function copyShareUrl() {
-  const input = document.getElementById('shareUrl');
-  input.select();
-  document.execCommand('copy');
-  alert('Copied!');
-}
-
-// COMPAT
-window._calcCompat = function() {
-  const y = parseInt(document.getElementById('partnerYear').value);
-  const m = parseInt(document.getElementById('partnerMonth').value);
-  const d = parseInt(document.getElementById('partnerDay').value);
-  const h = parseInt(document.getElementById('partnerHour').value);
-  if (!y || !m || !d || isNaN(h)) { alert('Please fill in all fields.'); return; }
-  const chart2 = {
-    year: getYearPillar(y), month: getMonthPillar(y, m, d),
-    day: getDayPillar(y, m, d), hour: getHourPillar(h, getDayPillar(y, m, d).h)
-  };
-  const score = calcCompatScore(AppState.chart, chart2);
-  const el = document.getElementById('compatResult');
-  el.innerHTML = `<div style="margin-top:16px;">
-    <div class="compat-score-circle">${score}</div>
-    <p style="color:var(--text-muted);font-size:13px;">${t('compatScore')}: ${score}/100</p>
-    <p style="font-size:13px;color:var(--text-primary);margin-top:8px;">
-      ${STEMS[AppState.chart.day.h]}${BRANCHES[AppState.chart.day.e]} + ${STEMS[chart2.day.h]}${BRANCHES[chart2.day.e]}
-    </p>
-  </div>`;
-};
-
-// === SECTION H: BOOTSTRAP ===
-function init() {
-  setupLangToggle();
-  setupTabs();
-
-  document.getElementById('btnCalc').addEventListener('click', handleCalculate);
-  document.getElementById('btnBack').addEventListener('click', handleBack);
-  document.getElementById('apiKeyCancel').addEventListener('click', closeApiModal);
-  document.getElementById('apiKeySave').addEventListener('click', saveApiKey);
-  document.getElementById('btnShare').addEventListener('click', handleShare);
-  document.getElementById('shareClose').addEventListener('click', closeShareModal);
-  document.getElementById('shareCopy').addEventListener('click', copyShareUrl);
-  document.getElementById('btnAbout').addEventListener('click', () => {
-    alert('Four Pillars Oracle - Ancient wisdom for modern life.\nBased on traditional \uC0AC\uC8FC\uBA85\uB9AC (Four Pillars of Destiny).');
-  });
-
-  // Check for existing API key
-  if (AppState.apiKey) {
-    AppState.aiUnlocked = true;
-  }
-
-  // Check URL params
-  const params = new URLSearchParams(window.location.search);
-  if (params.get('y')) {
-    document.getElementById('inputYear').value = params.get('y');
-    document.getElementById('inputMonth').value = params.get('m');
-    document.getElementById('inputDay').value = params.get('d');
-    document.getElementById('inputHour').value = params.get('h');
-    if (params.get('g')) document.getElementById('inputGender').value = params.get('g');
-  }
-
-  applyI18n();
-}
-
-document.addEventListener('DOMContentLoaded', init);
-</script>
-</body>
-</html>
