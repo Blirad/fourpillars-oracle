@@ -1592,17 +1592,21 @@ function calcHourPillar(dayPillar, hour) {
 }
 
 function calcTenGod(dayMasterStem, targetStem) {
-  if (!targetStem || targetStem === '?') return '';
-  const dmEl = STEM_ELEMENTS[STEMS.indexOf(dayMasterStem)];
-  const dmPol = STEM_POLARITIES[STEMS.indexOf(dayMasterStem)];
-  const tgEl = STEM_ELEMENTS[STEMS.indexOf(targetStem)];
-  const tgPol = STEM_POLARITIES[STEMS.indexOf(targetStem)];
+  if (!dayMasterStem || !targetStem || targetStem === '?') return '';
+  const dmIdx = STEMS.indexOf(dayMasterStem);
+  const tgIdx = STEMS.indexOf(targetStem);
+  if (dmIdx < 0 || tgIdx < 0) return '';
+  const dmEl = STEM_ELEMENTS[dmIdx];
+  const dmPol = STEM_POLARITIES[dmIdx];
+  const tgEl = STEM_ELEMENTS[tgIdx];
+  const tgPol = STEM_POLARITIES[tgIdx];
+  if (!dmEl || !tgEl) return '';
   const sameEl = dmEl === tgEl;
   const samePol = dmPol === tgPol;
   if (sameEl) return samePol ? 'bigyeon' : 'geopjae';
   if (PRODUCES[dmEl] === tgEl) return samePol ? 'sikshin' : 'sanggwan';
   if (PRODUCES[tgEl] === dmEl) return samePol ? 'pyeongin' : 'jeongin';
-  if (CONTROLS[dmEl] === tgEl) return samePol ? 'pyeonginjae' : 'jeongjae';
+  if (CONTROLS[dmEl] === tgEl) return samePol ? 'pyeongjae' : 'jeongjae';
   if (CONTROLS[tgEl] === dmEl) return samePol ? 'pyeonggwan' : 'jeonggwan';
   return '';
 }
