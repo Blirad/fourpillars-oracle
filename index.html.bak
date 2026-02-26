@@ -709,6 +709,7 @@
     .pillar-tengod{font-size:10px;color:var(--text-muted);margin-top:1px;}
 
     /* ── FORTUNE ── */
+    .fortune-type-badge{margin-bottom:8px;}
 
     /* ── ANALYSIS CARDS ── */
     .analysis-card{
@@ -778,7 +779,17 @@
     .identity-label{font-size:15px;font-weight:600;color:#f0e8d0;margin-bottom:4px;}
     .identity-sub{font-size:11px;color:rgba(255,255,255,0.4);}
 
-
+    /* ── SCORE CARD ── */
+    .today-score-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px;backdrop-filter:blur(10px);
+      padding:20px;margin:0 0 20px;text-align:center;
+    }
+    .score-number{font-size:64px;font-weight:700;color:#f0b860;line-height:1;font-family:var(--font-serif);}
+    .score-bar-wrap{background:rgba(255,255,255,0.1);border-radius:4px;height:6px;margin:12px 0;}
+    .score-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#f0b860,#ff7eb3);transition:width 0.8s ease;}
+    .score-label{font-size:14px;color:var(--text-secondary);margin-bottom:4px;}
+    .score-date{font-size:11px;color:rgba(255,255,255,0.3);}
 
     /* ── NEW PILLAR CARD INTERNALS ── */
     .pillar-tengod-label{font-size:11px;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:6px;min-height:16px;}
@@ -812,68 +823,6 @@
     .topic-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;}
     .topic-badge.free-badge{background:rgba(93,232,160,0.2);color:#5de8a0;}
     .topic-badge.lock-badge{background:rgba(200,216,240,0.1);color:#c8d8f0;}
-
-    /* ── PERSONALITY SECTION ── */
-    .personality-section .element-dist-summary{margin-bottom:20px;}
-    .personality-section .element-dist-summary h3{font-family:var(--font-serif);font-size:16px;color:var(--text-secondary);margin-bottom:12px;}
-    .personality-section .elem-bars{display:flex;flex-direction:column;gap:8px;}
-    .personality-section .elem-summary-text{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-top:12px;font-style:italic;}
-    .born-nature-block{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:14px 16px;margin-bottom:20px;}
-    .born-nature-badge{font-size:15px;font-weight:700;color:#f0b860;margin-bottom:6px;}
-    .born-nature-desc{font-size:13px;color:var(--text-secondary);line-height:1.6;}
-    .personality-body-block{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:20px;}
-    .personality-body-block p{margin-bottom:12px;}
-    .pros-cons{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:4px;}
-    @media(max-width:480px){.pros-cons{grid-template-columns:1fr;}}
-    .pros-block,.cons-block{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;}
-    .pros-block h4{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--wood);margin-bottom:10px;}
-    .cons-block h4{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--fire);margin-bottom:10px;}
-    #personality-strengths,#personality-shadows{list-style:none;padding:0;}
-    #personality-strengths li,#personality-shadows li{font-size:13px;color:var(--text-secondary);padding:4px 0 4px 14px;position:relative;line-height:1.5;}
-    #personality-strengths li::before{content:"·";position:absolute;left:0;color:var(--wood);}
-    #personality-shadows li::before{content:"·";position:absolute;left:0;color:var(--fire);}
-    /* ── DAILY FLOW ── */
-    .daily-flow-card{padding:20px;}
-    .daily-flow-header{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
-    .daily-flow-title{font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-primary);}
-    .daily-flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .flow-item{display:flex;flex-direction:column;gap:4px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 10px;}
-    .flow-icon{font-size:18px;}
-    .flow-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);}
-    .flow-text{font-size:13px;color:var(--text-secondary);line-height:1.5;}
-    /* ── DAEUN SIMPLE ── */
-    .daeun-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-    .daeun-header h3{font-family:var(--font-serif);font-size:18px;font-weight:600;color:var(--text-primary);}
-    .daeun-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:16px;}
-    .daeun-current-block{background:rgba(232,197,71,0.07);border:1px solid rgba(232,197,71,0.25);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;}
-    .daeun-current-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);flex-shrink:0;}
-    .daeun-current-pillar{font-family:var(--font-serif);font-size:28px;color:var(--gold);line-height:1;}
-    .daeun-current-age{font-size:12px;color:var(--text-muted);margin-left:auto;}
-    .daeun-highlights{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-    @media(max-width:480px){.daeun-highlights{grid-template-columns:1fr;}}
-    .daeun-peak,.daeun-low{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;}
-    .peak-icon,.low-icon{font-size:20px;margin-bottom:6px;}
-    .peak-label,.low-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
-    .peak-label{color:var(--wood);}.low-label{color:var(--text-muted);}
-    .peak-period,.low-period{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
-    .peak-desc,.low-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
-    /* ── PREMIUM ── */
-    .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.3);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);}
-    .premium-header{margin-bottom:24px;}
-    .premium-lock-icon{font-size:36px;margin-bottom:12px;}
-    .premium-title{font-size:22px;font-weight:700;color:#f0e8d0;margin-bottom:8px;}
-    .premium-subtitle{font-size:14px;color:rgba(255,255,255,0.5);}
-    .premium-features{list-style:none;padding:16px;margin:0 0 24px;text-align:left;background:rgba(255,255,255,0.03);border-radius:12px;}
-    .premium-features li{padding:8px 0;font-size:14px;color:rgba(255,255,255,0.8);border-bottom:1px solid rgba(255,255,255,0.05);}
-    .premium-features li:last-child{border-bottom:none;}
-    .premium-price{font-size:36px;font-weight:700;color:#f0b860;}
-    .premium-price-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;}
-    .premium-cta-block{}
-    .premium-unlock-btn{width:100%;padding:16px;border-radius:12px;background:linear-gradient(135deg,#f0b860,#ff7eb3);color:white;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(240,184,96,0.3);transition:all .2s;}
-    .premium-unlock-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(240,184,96,0.4);}
-    .premium-reassure{font-size:12px;color:rgba(255,255,255,0.3);margin-top:12px;}
-    .section-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;}
-    .free-tag{background:rgba(93,232,160,0.15);color:var(--wood);}
   </style>
 </head>
 <body>
@@ -1051,6 +1000,16 @@
     </div>
   </div>
 
+  <!-- SCORE CARD -->
+  <div class="today-score-card">
+    <div class="score-number" id="score-number">78</div>
+    <div class="score-bar-wrap">
+      <div class="score-bar" id="score-bar" style="width:78%"></div>
+    </div>
+    <div class="score-label" id="score-label">오늘은 강한 날</div>
+    <div class="score-date" id="score-date"></div>
+  </div>
+
   <!-- 4 PILLAR CHART -->
   <div class="pillar-section">
     <div class="section-label" id="lbl-pillars">FOUR PILLARS · 사주 원국</div>
@@ -1094,35 +1053,122 @@
 
   <!-- PERSONALITY ANALYSIS (FREE) -->
   <div class="section-divider" id="lbl-personality">성격 분석 <span class="badge badge-free" id="badge-free2">FREE</span></div>
-  <div class="analysis-card" id="personality-section">
-    <!-- Filled by renderPersonality() -->
+  <div class="analysis-card">
+    <div class="analysis-title" id="personality-title">Personality Analysis</div>
+    <div class="analysis-body" id="personality-body"></div>
   </div>
 
-  <!-- DAILY FLOW -->
-  <div class="daily-flow-card analysis-card" id="daily-flow-section">
-    <div class="daily-flow-header">
-      <span class="badge badge-free" id="badge-free3">FREE</span>
-      <h3 class="daily-flow-title" id="daily-flow-title">오늘의 흐름</h3>
+  <!-- TOPIC GRID -->
+  <div class="topic-grid" id="topic-grid-section">
+    <div class="topic-card free" id="topic-love">
+      <div class="topic-icon">💕</div>
+      <div class="topic-name" id="topic-love-name">연애운</div>
+      <div class="topic-preview" id="topic-love-preview">...</div>
+      <div class="topic-badge free-badge">FREE</div>
     </div>
-    <div class="daily-flow-grid" id="daily-flow-grid">
-      <div class="flow-item"><span class="flow-icon">💕</span><span class="flow-label" id="flow-label-love">연애</span><span class="flow-text" id="flow-love"></span></div>
-      <div class="flow-item"><span class="flow-icon">💰</span><span class="flow-label" id="flow-label-wealth">재물</span><span class="flow-text" id="flow-wealth"></span></div>
-      <div class="flow-item"><span class="flow-icon">💼</span><span class="flow-label" id="flow-label-career">직업</span><span class="flow-text" id="flow-career"></span></div>
-      <div class="flow-item"><span class="flow-icon">❤️</span><span class="flow-label" id="flow-label-health">건강</span><span class="flow-text" id="flow-health"></span></div>
+    <div class="topic-card free" id="topic-wealth">
+      <div class="topic-icon">💰</div>
+      <div class="topic-name" id="topic-wealth-name">재물운</div>
+      <div class="topic-preview" id="topic-wealth-preview">...</div>
+      <div class="topic-badge free-badge">FREE</div>
+    </div>
+    <div class="topic-card locked" id="topic-career">
+      <div class="topic-icon">💼</div>
+      <div class="topic-name" id="topic-career-name">직업운</div>
+      <div class="topic-preview">첫 줄만 공개...</div>
+      <div class="topic-badge lock-badge">🔒</div>
+    </div>
+    <div class="topic-card locked" id="topic-health">
+      <div class="topic-icon">❤️</div>
+      <div class="topic-name" id="topic-health-name">건강운</div>
+      <div class="topic-preview">첫 줄만 공개...</div>
+      <div class="topic-badge lock-badge">🔒</div>
     </div>
   </div>
 
-  <!-- Fortune section removed -->
+  <!-- TODAY'S FORTUNE (FREE) -->
+  <div class="section-divider" id="lbl-fortune">오늘의 운세 <span class="badge badge-free" id="badge-free3">FREE</span></div>
+  <div class="analysis-card">
+    <div id="fortune-type-badge"></div>
+    <div class="analysis-title" id="fortune-title">Today's Fortune</div>
+    <div class="analysis-body" id="fortune-body"></div>
+    <div class="fortune-luckies" id="fortune-luckies"></div>
+  </div>
 
-  <!-- DAEUN SIMPLIFIED -->
+  <!-- DAEUN TIMELINE (FREE) -->
   <div class="section-divider" id="lbl-daeun">대운 흐름 <span class="badge badge-free" id="badge-free4">FREE</span></div>
-  <div class="analysis-card" id="daeun-simple-section">
-    <!-- Filled by renderDaeun() -->
+  <div class="daeun-section">
+    <div class="analysis-title" id="daeun-title">Your 10-Year Luck Cycles</div>
+    <p id="daeun-intro" style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;"></p>
+    <div class="daeun-track" id="daeun-track"></div>
   </div>
 
-  <!-- PREMIUM -->
-  <div class="premium-unlock-section" id="premium-section">
-    <!-- Filled by renderAllPaid() -->
+  <!-- PAID SECTION HEADER -->
+  <div class="section-divider mt-24" id="lbl-paid">심층 분석 <span class="badge badge-paid" id="badge-paid">FULL READING</span></div>
+
+  <!-- PAID 1: LIFE PATH -->
+  <div class="paid-section" id="paid-lifepath">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid1-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🔮</div>
+      <div class="lock-hook" id="paid1-hook"></div>
+      <div class="lock-sub" id="paid1-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('lifepath')" id="paid1-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 2: WEALTH & CAREER -->
+  <div class="paid-section" id="paid-wealth">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid2-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">💰</div>
+      <div class="lock-hook" id="paid2-hook"></div>
+      <div class="lock-sub" id="paid2-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('wealth')" id="paid2-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 3: LOVE & RELATIONSHIPS -->
+  <div class="paid-section" id="paid-love">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid3-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">💫</div>
+      <div class="lock-hook" id="paid3-hook"></div>
+      <div class="lock-sub" id="paid3-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('love')" id="paid3-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 4: FAMILY & HEALTH -->
+  <div class="paid-section" id="paid-family">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid4-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🌿</div>
+      <div class="lock-hook" id="paid4-hook"></div>
+      <div class="lock-sub" id="paid4-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('family')" id="paid4-btn">전체 분석 보기 · $4.99</button>
+    </div>
+  </div>
+
+  <!-- PAID 5: 10-YEAR LUCK CYCLES DEEP DIVE -->
+  <div class="paid-section" id="paid-daeun">
+    <div class="paid-preview">
+      <div class="paid-preview-text" id="paid5-preview"></div>
+    </div>
+    <div class="paid-lock">
+      <div class="lock-icon">🌀</div>
+      <div class="lock-hook" id="paid5-hook"></div>
+      <div class="lock-sub" id="paid5-sub"></div>
+      <button class="btn-primary btn-sm" onclick="openModal('daeun')" id="paid5-btn">10년 대운 보기 · $4.99</button>
+    </div>
   </div>
 
 </section><!-- /results -->
@@ -1194,13 +1240,6 @@ const LUCKY_NUMS = {Wood:[3,4],Fire:[7,2],Earth:[5,10],Metal:[8,9],Water:[1,6]};
 // Control cycle: Wood→Earth, Earth→Water, Water→Fire, Fire→Metal, Metal→Wood
 const PRODUCES = {Wood:'Fire',Fire:'Earth',Earth:'Metal',Metal:'Water',Water:'Wood'};
 const CONTROLS = {Wood:'Earth',Earth:'Water',Water:'Fire',Fire:'Metal',Metal:'Wood'};
-const TENGOD_NATURE_KO = {bigyeon:'비견(比肩) — 독립심이 강하고 자기 주관이 뚜렷한 자수성가형',geopjae:'겁재(劫財) — 승부욕이 넘치고 추진력이 강한 경쟁자형',sikshin:'식신(食神) — 창의적이고 여유로우며 즐기는 것을 아는 예술가형',sanggwan:'상관(傷官) — 표현력이 탁월하고 기존 틀을 깨는 혁신가형',pyeongjae:'편재(偏財) — 사교적이고 기회를 잘 잡는 사업가형',jeongjae:'정재(正財) — 성실하고 원칙을 중시하는 안정 추구형',pyeonggwan:'편관(偏官) — 카리스마 있고 리더십이 강한 지도자형',jeonggwan:'정관(正官) — 책임감 강하고 질서를 중시하는 관리자형',pyeongin:'편인(偏印) — 독창적인 사고와 예리한 직관을 가진 연구자형',jeongin:'정인(正印) — 학구적이고 깊이 있는 사고를 하는 학자형'};
-const TENGOD_NATURE_EN = {bigyeon:'Rob Wealth — Independent, self-made, strong personal convictions',geopjae:'Competitor — Driven by competition, fierce ambition, natural challenger',sikshin:'Eating God — Creative, leisurely, appreciates beauty and pleasure',sanggwan:'Hurting Officer — Expressive innovator who breaks existing rules',pyeongjae:'Indirect Wealth — Sociable, opportunity-seeker, natural entrepreneur',jeongjae:'Direct Wealth — Diligent, principled, seeks stability and security',pyeonggwan:'7 Killings — Charismatic leader with commanding presence',jeonggwan:'Direct Officer — Responsible, disciplined, values order and duty',pyeongin:'Indirect Resource — Original thinker with sharp intuition',jeongin:'Direct Resource — Scholarly, deep thinker, lifelong learner'};
-const DAILY_FLOW_DATA = {'甲':{love_ko:'뿌리 깊은 나무처럼 진심이 통하는 하루',wealth_ko:'꾸준한 성장 에너지 — 오늘 씨앗 뿌린 것이 결실을 맺습니다',career_ko:'당신의 뚝심과 추진력이 가장 빛나는 날',health_ko:'에너지 흐름이 좋습니다 바깥 공기와 함께하세요',love_en:'Deep roots speak louder than words — sincerity connects.',wealth_en:'Steady growth energy — seeds planted today bear fruit.',career_en:'Your persistence and drive are your greatest strengths.',health_en:'Good energy flow. Get some fresh air.'},'乙':{love_ko:'유연함이 매력 상대의 마음을 자연스럽게 당기는 하루',wealth_ko:'기회는 당신 곁에 있습니다 — 놓치지 말고 잡으세요',career_ko:'협력과 소통이 성과를 만드는 날',health_ko:'유연하게 스트레칭이 도움됩니다',love_en:'Flexibility is your charm today — let things flow naturally.',wealth_en:'Opportunity is near. Stay alert and reach for it.',career_en:'Collaboration and communication create results today.',health_en:'Stay flexible — stretching and gentle movement help.'},'丙':{love_ko:'불꽃 같은 매력이 빛나는 날 단 너무 강렬하지 않게',wealth_ko:'태양처럼 당당하게 — 오늘 기회를 잡으세요',career_ko:'당신의 존재감이 가장 큰 무기입니다',health_ko:'에너지가 넘치지만 과소비 주의',love_en:"Your fire draws people in today — just don't burn too bright.",wealth_en:"Like the sun, you don't ask permission to shine.",career_en:'Your presence is your greatest asset today.',health_en:'Energy is high — pace yourself.'},'丁':{love_ko:'섬세한 촛불처럼 진심어린 따뜻함이 상대를 감동시킵니다',wealth_ko:'꾸준한 노력의 결실이 조용히 쌓이는 날',career_ko:'집중력이 최고조 — 깊이 있는 작업에 이상적',health_ko:'몸의 소리에 귀 기울이는 날 충분한 수분 섭취',love_en:'Like a candle, your quiet warmth touches hearts deeply.',wealth_en:'Steady effort quietly accumulates rewards today.',career_en:'Focus is at its peak — ideal for deep, meaningful work.',health_en:'Listen to your body. Stay hydrated.'},'戊':{love_ko:'산처럼 든든한 당신 신뢰가 사랑의 언어인 날',wealth_ko:'안정적인 흐름 장기적 관점으로 투자하세요',career_ko:'묵직한 신뢰감이 주변을 이끄는 날',health_ko:'대지의 에너지로 충전 자연 속 산책 추천',love_en:'Mountain-solid dependability — trust is love today.',wealth_en:'Stable energy. Think long-term in your decisions.',career_en:'Your steady reliability leads others naturally today.',health_en:'Recharge in nature. A walk outdoors works wonders.'},'己':{love_ko:'비옥한 들판처럼 상대의 마음을 피워내는 하루',wealth_ko:'성실함이 가장 확실한 재물의 씨앗',career_ko:'팀을 하나로 묶는 현실적 지혜가 빛납니다',health_ko:'소화와 영양에 신경 쓰는 날',love_en:'Like fertile soil, you nurture what blooms between you.',wealth_en:'Diligence is the most reliable seed of wealth today.',career_en:'Your practical wisdom holds the team together beautifully.',health_en:'Pay attention to digestion and nourishment today.'},'庚':{love_ko:'직접적이고 솔직한 것이 오히려 매력이 되는 날',wealth_ko:'결단력 있게 — 분석이 끝났다면 행동할 때입니다',career_ko:'예리한 판단력으로 핵심을 꿰뚫는 날',health_ko:'폐와 호흡기에 좋은 날 깊은 호흡 연습 추천',love_en:'Directness becomes charm today — honesty attracts.',wealth_en:"Decisive — if you've analyzed enough, it's time to act.",career_en:'Sharp judgment cuts right to the core today.',health_en:'Good day for lung health. Practice deep breathing.'},'辛':{love_ko:'정련된 보석처럼 진정성 있는 모습이 마음을 사로잡습니다',wealth_ko:'세밀한 분석이 빛나는 날 세부사항에서 기회를 발견',career_ko:'품질과 완성도로 승부하는 날',health_ko:'피부와 호흡기 관리 맑은 공기가 최고의 보약',love_en:'Like a cut gem, your authentic self captivates today.',wealth_en:'Precision shines — opportunity hides in the details.',career_en:'Quality and refinement are your winning moves today.',health_en:'Skin and respiratory care. Fresh air is medicine.'},'壬':{love_ko:'깊은 강처럼 진정한 연결을 원하는 하루',wealth_ko:'전략적 시각으로 큰 흐름을 읽는 날',career_ko:'당신의 통찰력이 팀을 올바른 방향으로 이끕니다',health_ko:'수분 보충과 신장 관리에 좋은 날',love_en:'Like a deep river, you seek and create true connection.',wealth_en:'Strategic vision reads the big picture clearly today.',career_en:'Your insight steers the team in the right direction.',health_en:'Good day to hydrate and care for kidney health.'},'癸':{love_ko:'샘처럼 깊은 감성이 상대의 마음에 스며드는 날',wealth_ko:'직관을 믿으세요 — 오늘의 감각이 기회를 알아봅니다',career_ko:'창의적 아이디어가 흘러나오는 날 기록하세요',health_ko:'감정과 몸의 균형 충분한 휴식과 수면',love_en:'Your spring-deep sensitivity seeps into hearts today.',wealth_en:'Trust your intuition — your sense spots opportunity.',career_en:'Creative ideas flow freely today. Write them down.',health_en:'Balance emotions and body. Rest and sleep matter.'}};
-const DM_FAVORABLE = {Wood:'Water',Fire:'Wood',Earth:'Fire',Metal:'Earth',Water:'Metal'};
-const DAEUN_DESC_KO = '대운(大運)은 10년 단위로 바뀌는 인생의 큰 흐름입니다. 어느 시기에 바람이 불고, 어느 시기에 잠잠한지를 보여줍니다.';
-const DAEUN_DESC_EN = 'Da-Un (大運) is the 10-year cycle that shapes the major currents of your life — when the winds favor you, and when stillness is wiser than movement.';
-
 
 // 12운성 calculation
 function calc12Stage(dayStem, branch) {
@@ -1321,11 +1360,6 @@ en: {
   toast_payment_info:'Payment integration coming soon. Join the waitlist for early access!',
   toast_calc_ok:'✓ Your chart is ready.',
   toast_copy_ok:'✓ Link copied — share your chart!',
-  daily_flow_title:"Today's Flow",
-  daeun_peak:'Peak Years',daeun_low:'Challenging Cycle',
-  premium_title:'Read Your Fate, Deeper',premium_sub:'The real story your Four Pillars are telling',
-  premium_price:'₩6,900',premium_price_sub:'Full Reading · Lifetime Access',
-  premium_btn:'Unlock Full Reading →',premium_reassure:'Millennia of wisdom, now your story.',
   ten_god:{bigyeon:'Parallel',geopjae:'Rob Wealth',sikshin:'Eating God',sanggwan:'Hurting Officer',pyeongjae:'Partial Wealth',jeongjae:'Direct Wealth',pyeonggwan:'Partial Officer',jeonggwan:'Direct Officer',pyeongin:'Partial Resource',jeongin:'Direct Resource'},
   year_p:'Year Pillar',month_p:'Month Pillar',day_p:'Day Master',hour_p:'Hour Pillar',
   back_btn:'← Back',
@@ -1428,11 +1462,6 @@ ko: {
   toast_payment_info:'결제 기능이 곧 오픈됩니다. 웨이트리스트에 등록하세요!',
   toast_calc_ok:'✓ 사주가 완성되었습니다.',
   toast_copy_ok:'✓ 링크가 복사되었습니다 — 차트를 공유하세요!',
-  daily_flow_title:'오늘의 흐름',
-  daeun_peak:'인생 전성기',daeun_low:'힘든 시기',
-  premium_title:'당신의 운명, 더 깊이 읽기',premium_sub:'사주팔자가 말하는 당신의 진짜 이야기',
-  premium_price:'₩6,900',premium_price_sub:'전체 감명 • 평생 열람',
-  premium_btn:'전체 감명 열기 →',premium_reassure:'수천 년의 지혜, 지금 당신의 이야기로',
   ten_god:{bigyeon:'비견',geopjae:'겁재',sikshin:'식신',sanggwan:'상관',pyeongjae:'편재',jeongjae:'정재',pyeonggwan:'편관',jeonggwan:'정관',pyeongin:'편인',jeongin:'정인'},
   year_p:'년주',month_p:'월주',day_p:'일간',hour_p:'시주',
   back_btn:'← 다시 입력',
@@ -2213,24 +2242,55 @@ function renderIdentityBar(chart) {
   if (natureSub) natureSub.textContent = isKo ? '타고난 성향' : 'Born Nature';
 }
 
-// renderScoreCard removed
-
-// renderTopicGrid removed
-
-// ═══════════════════════════════════════════════
-
-function renderDailyFlow(chart) {
-  var isKo=AppState.language==='ko';
-  var dmStem=chart.dayMaster.stem;
-  var fd=DAILY_FLOW_DATA[dmStem]||DAILY_FLOW_DATA['丙'];
-  var st=function(id,t){var e=document.getElementById(id);if(e)e.textContent=t;};
-  st('flow-label-love',isKo?'연애':'Love');st('flow-label-wealth',isKo?'재물':'Wealth');
-  st('flow-label-career',isKo?'직업':'Career');st('flow-label-health',isKo?'건강':'Health');
-  if(fd){st('flow-love',isKo?fd.love_ko:fd.love_en);st('flow-wealth',isKo?fd.wealth_ko:fd.wealth_en);st('flow-career',isKo?fd.career_ko:fd.career_en);st('flow-health',isKo?fd.health_ko:fd.health_en);}
-  var te=document.getElementById('daily-flow-title');if(te)te.textContent=isKo?'오늘의 흐름':"Today's Flow";
-  var b3=document.getElementById('badge-free3');if(b3)b3.textContent=isKo?'무료':'FREE';
+function renderScoreCard(chart) {
+  const f = chart.fortune;
+  const score = calcFortuneScore(f);
+  const isKo = AppState.language === 'ko';
+  const labels = {
+    high: isKo ? '오늘은 강한 날' : 'Strong Day',
+    neutral: isKo ? '오늘은 균형 잡힌 날' : 'Balanced Day',
+    low: isKo ? '오늘은 조용한 날' : 'Quiet Day'
+  };
+  const numEl = document.getElementById('score-number');
+  const barEl = document.getElementById('score-bar');
+  const labelEl = document.getElementById('score-label');
+  const dateEl = document.getElementById('score-date');
+  if (numEl) numEl.textContent = score;
+  if (barEl) { barEl.style.width = '0%'; setTimeout(() => { barEl.style.width = score + '%'; }, 100); }
+  if (labelEl) labelEl.textContent = labels[f.type] || labels.neutral;
+  if (dateEl) {
+    const today = new Date();
+    dateEl.textContent = today.toLocaleDateString(isKo ? 'ko-KR' : 'en-US', {year:'numeric',month:'long',day:'numeric'});
+  }
 }
 
+function renderTopicGrid(chart) {
+  const isKo = AppState.language === 'ko';
+  const f = chart.fortune;
+
+  const lovePreview = isKo
+    ? (f.type === 'high' ? '오늘 인연을 만날 에너지가 강합니다.' : f.type === 'low' ? '감정을 내면에 담아두는 하루입니다.' : '차분하고 진실한 연결이 오는 하루.')
+    : (f.type === 'high' ? 'Strong energy for a new connection today.' : f.type === 'low' ? 'Hold emotions gently within today.' : 'Calm, genuine connections come today.');
+  const wealthPreview = isKo
+    ? (f.type === 'high' ? '재물 흐름이 당신에게 유리합니다.' : f.type === 'low' ? '지출을 조심하는 날입니다.' : '꾸준한 노력이 결실을 맺는 날.')
+    : (f.type === 'high' ? 'Wealth energy flows in your favor.' : f.type === 'low' ? 'Be mindful of expenses today.' : 'Steady effort brings results.');
+
+  const loveNameEl = document.getElementById('topic-love-name');
+  const wealthNameEl = document.getElementById('topic-wealth-name');
+  const careerNameEl = document.getElementById('topic-career-name');
+  const healthNameEl = document.getElementById('topic-health-name');
+  if (loveNameEl) loveNameEl.textContent = isKo ? '연애운' : 'Love';
+  if (wealthNameEl) wealthNameEl.textContent = isKo ? '재물운' : 'Wealth';
+  if (careerNameEl) careerNameEl.textContent = isKo ? '직업운' : 'Career';
+  if (healthNameEl) healthNameEl.textContent = isKo ? '건강운' : 'Health';
+
+  const lovePrevEl = document.getElementById('topic-love-preview');
+  const wealthPrevEl = document.getElementById('topic-wealth-preview');
+  if (lovePrevEl) lovePrevEl.textContent = lovePreview;
+  if (wealthPrevEl) wealthPrevEl.textContent = wealthPreview;
+}
+
+// ═══════════════════════════════════════════════
 // SECTION J: MODAL
 // ═══════════════════════════════════════════════
 
@@ -2374,21 +2434,27 @@ function applyLanguage() {
   // Results labels
   el('lbl-pillars', L.lbl_pillars);
   el('badge-free1', L.badge_free); el('badge-free2', L.badge_free);
-  el('badge-free4', L.badge_free);
+  el('badge-free3', L.badge_free); el('badge-free4', L.badge_free);
+  el('badge-paid', L.badge_paid);
   el('lbl-strengths', L.lbl_strengths); el('lbl-shadows', L.lbl_shadows);
   el('dm-eyebrow', L.dm_eyebrow);
   el('personality-title', L.personality_title);
+  el('fortune-title', L.fortune_title);
+  el('daeun-title', L.daeun_title);
+  el('daeun-intro', L.daeun_intro);
   el('btn-back', L.back_btn);
   el('footer-text', L.footer_text);
   
   // If chart exists, re-render language-dependent content
   if (AppState.chart) {
     renderIdentityBar(AppState.chart);
+    renderScoreCard(AppState.chart);
     renderPillarGrid(AppState.chart);
     renderElementBars(AppState.chart);
     renderDayMaster(AppState.chart);
     renderPersonality(AppState.chart);
-    renderDailyFlow(AppState.chart);
+    renderTopicGrid(AppState.chart);
+    renderFortune(AppState.chart);
     renderDaeun(AppState.chart);
     renderAllPaid(AppState.chart);
   }
@@ -2534,7 +2600,9 @@ function renderResults(chart) {
 
   // 1. Identity bar
   renderIdentityBar(chart);
-  // 2. Pillar grid
+  // 2. Score card
+  renderScoreCard(chart);
+  // 3. Pillar grid
   renderPillarGrid(chart);
   // 4. Element bars
   renderElementBars(chart);
@@ -2549,11 +2617,13 @@ function renderResults(chart) {
 
   // 6. Personality
   renderPersonality(chart);
-  // 7. Daily flow
-  renderDailyFlow(chart);
-  // 8. Daeun (simplified)
+  // 7. Topic grid
+  renderTopicGrid(chart);
+  // 8. Fortune
+  renderFortune(chart);
+  // 9. Daeun
   renderDaeun(chart);
-  // 9. Premium section
+  // 10. Paid sections
   renderAllPaid(chart);
 }
 
@@ -2793,82 +2863,145 @@ function renderDayMaster(chart) {
 }
 
 function renderPersonality(chart) {
-  var sec=document.getElementById('personality-section');if(!sec)return;
-  var dm=chart.dayMaster,profile=dm.profile;if(!profile)return;
-  var isKo=AppState.language==='ko';
-  var domEl=ELEM_ORDER.reduce(function(a,b){return chart.elements[a].pct>=chart.elements[b].pct?a:b;});
-  var weakEl=ELEM_ORDER.reduce(function(a,b){return chart.elements[a].pct<=chart.elements[b].pct?a:b;});
-  var edKo={Wood:'성장 지향적이고 창의적인',Fire:'열정적이고 표현력이 강한',Earth:'안정적이고 현실적인',Metal:'분석적이고 정밀한',Water:'직관적이고 깊이 있는'};
-  var edEn={Wood:'growth-oriented and visionary',Fire:'passionate and expressive',Earth:'stable and grounded',Metal:'analytical and precise',Water:'intuitive and deep'};
-  var sumKo=ELEMENT_KR[domEl]+'이 '+chart.elements[domEl].pct+'%로 지배적 — '+(edKo[domEl]||'')+' 성향 강화. '+ELEMENT_KR[weakEl]+'('+chart.elements[weakEl].pct+'%) 가장 약함.';
-  var sumEn=domEl+' dominant at '+chart.elements[domEl].pct+'% — amplifying '+(edEn[domEl]||'')+' nature. '+weakEl+' weakest at '+chart.elements[weakEl].pct+'%.';
-  var tgC={};['year','month','hour'].forEach(function(pos){var p=chart.pillars[pos];if(!p||!p.stem||p.stem==='?')return;var k=calcTenGod(chart.pillars.day.stem,p.stem);if(k)tgC[k]=(tgC[k]||0)+1;});
-  var dTg='',mx=0;Object.keys(tgC).forEach(function(k){if(tgC[k]>mx){mx=tgC[k];dTg=k;}});
-  var bnTxt=isKo?(TENGOD_NATURE_KO[dTg]||''):(TENGOD_NATURE_EN[dTg]||'');
-  var bnP=bnTxt.split(' — ');
-  var bRaw=isKo?(profile.bodyKo||profile.bodyEn||''):(profile.bodyEn||'');
-  var paras=bRaw.split(/\n\n+/).filter(Boolean);
-  var bHtml=paras.map(function(p){return '<p>'+p+'</p>';}).join('');
-  var strs=(isKo?profile.strengthsKo:profile.strengthsEn)||[];
-  var shds=(isKo?profile.shadowsKo:profile.shadowsEn)||[];
-  var h4p=isKo?'살면서 강점이 되는 것들':'Core Strengths';
-  var h4c=isKo?'조심해야 할 부분들':'Shadow Traits';
-  var ebH=ELEM_ORDER.map(function(el){var d=chart.elements[el];var col=ELEMENT_COLORS[el];var nm=isKo?ELEMENT_KR[el]:el;return '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div style="color:'+col+';width:52px;font-size:12px">'+nm+'</div><div style="flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden"><div style="width:'+d.pct+'%;height:100%;background:'+col+';border-radius:3px"></div></div><div style="font-size:11px;color:var(--text-muted);width:32px;text-align:right">'+d.pct+'%</div></div>';}).join('');
-  var bnH=bnTxt?'<div class="born-nature-block"><div class="born-nature-badge">'+(bnP[0]||bnTxt)+'</div>'+(bnP[1]?'<p class="born-nature-desc">'+bnP[1]+'</p>':'')+'</div>':'';
-  sec.innerHTML='<div class="personality-section"><div class="element-dist-summary"><h3>'+(isKo?'오행 분포':'Five Elements')+'</h3><div class="elem-bars">'+ebH+'</div><p class="elem-summary-text">'+(isKo?sumKo:sumEn)+'</p></div>'+bnH+'<div class="personality-body-block">'+bHtml+'</div><div class="pros-cons"><div class="pros-block"><h4>'+h4p+'</h4><ul id="personality-strengths">'+strs.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div><div class="cons-block"><h4>'+h4c+'</h4><ul id="personality-shadows">'+shds.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ul></div></div></div>';
+  const dm = chart.dayMaster;
+  const profile = dm.profile;
+  if (!profile) return;
+  const lang = AppState.language;
+  const isKo = lang === 'ko';
+  
+  const bodyEl = document.getElementById('personality-body');
+  if (!bodyEl) return;
+  
+  // Personality analysis based on elements + day master
+  const domEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct >= chart.elements[b].pct ? a : b);
+  const weakEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct <= chart.elements[b].pct ? a : b);
+  
+  const personality = isKo ? (profile.bodyKo || profile.bodyEn || '') : (profile.bodyEn || '');
+  
+  if (isKo) {
+    bodyEl.innerHTML = `<p>${personality[0]}</p>
+    <p><strong>주요 오행 분포:</strong> 당신의 차트에서 ${ELEMENT_KR[domEl]}이 ${chart.elements[domEl].pct}%로 지배적이며, ${ELEMENT_KR[weakEl]}이 ${chart.elements[weakEl].pct}%로 가장 약합니다. 이 불균형은 ${domEl === 'Wood' ? '성장 지향적이고 창의적인' : domEl === 'Fire' ? '열정적이고 표현력이 강한' : domEl === 'Earth' ? '안정적이고 현실적인' : domEl === 'Metal' ? '분석적이고 정밀한' : '직관적이고 깊이 있는'} 성향을 강화합니다.</p>
+    <p>${personality[1]}</p>
+    <p>${personality[2]}</p>`;
+  } else {
+    bodyEl.innerHTML = `<p>${personality[0]}</p>
+    <p><strong>Your elemental balance:</strong> ${domEl} is dominant at ${chart.elements[domEl].pct}%, making you especially ${domEl === 'Wood' ? 'growth-oriented and visionary' : domEl === 'Fire' ? 'passionate and expressive' : domEl === 'Earth' ? 'stable and grounded' : domEl === 'Metal' ? 'analytical and precise' : 'intuitive and deep'}. ${weakEl} is weakest at ${chart.elements[weakEl].pct}% — an area that may require conscious cultivation.</p>
+    <p>${personality[1]}</p>
+    <p>${personality[2]}</p>`;
+  }
 }
 
-
-// renderFortune removed
+function renderFortune(chart) {
+  const f = chart.fortune;
+  const lang = AppState.language;
+  const isKo = lang === 'ko';
+  const L = I18N[lang] || I18N.en;
+  
+  const typeBadge = document.getElementById('fortune-type-badge');
+  const bodyEl = document.getElementById('fortune-body');
+  const luckiesEl = document.getElementById('fortune-luckies');
+  
+  const today = new Date();
+  const dateStr = today.toLocaleDateString(lang === 'ko' ? 'ko-KR' : lang === 'ja' ? 'ja-JP' : lang === 'zh' ? 'zh-CN' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+  
+  if (typeBadge) {
+    const typeLabel = f.type === 'high' ? L.fortune_high : f.type === 'low' ? L.fortune_low : L.fortune_neutral;
+    typeBadge.innerHTML = `<div class="fortune-day-type ${f.type}">${typeLabel} · ${dateStr}</div>`;
+  }
+  
+  const dm = chart.dayMaster;
+  const dmStem = dm.stem;
+  
+  if (bodyEl) {
+    if (f.type === 'high') {
+      bodyEl.innerHTML = isKo
+        ? `<p>오늘의 기운이 당신의 본성과 조화롭게 울립니다.</p><p>${f.todayPillar.stem}${f.todayPillar.branch} 에너지가 당신의 ${ELEMENT_KR[dm.element]}을 강화시켜 직관을 날카롭게 만들고, 존재감을 높이며, 당신의 말이 더 잘 전달되게 합니다.</p><p>오늘은 허락을 기다릴 날이 아닙니다. 미루어 왔던 것이 있나요? 오늘, 조건이 갖춰졌습니다.</p>`
+        : `<p>Today's pillar sings with your nature. The energy is favorable.</p><p>${f.todayPillar.stem}${f.todayPillar.branch} energy amplifies your ${dm.element} in a way that makes your instincts sharper, your presence stronger, your words more likely to land.</p><p>This is not a day to wait for permission. What have you been putting off? Today, the conditions are right.</p>`;
+    } else if (f.type === 'low') {
+      bodyEl.innerHTML = isKo
+        ? `<p>오늘은 흐름이 거스릅니다.</p><p>오늘의 기운이 당신의 ${ELEMENT_KR[dm.element]}과 마찰을 일으킵니다 — 위험은 아니지만, 같은 결과를 얻기 위해 더 많은 노력이 필요한 저항입니다.</p><p>어떤 날에는 강이 언덕을 오릅니다. 오늘은 더 쉬고, 덜 밀어붙이세요. 가능하다면 긴박한 일을 내일로 미루세요.</p>`
+        : `<p>The current is against you today.</p><p>Today's ${f.todayPillar.element} energy creates friction with your ${dm.element} — not danger, but the kind of resistance that requires more effort for the same result.</p><p>Some days the river climbs uphill. Today: rest more, push less. Let the urgent wait if it can.</p>`;
+    } else {
+      bodyEl.innerHTML = isKo
+        ? `<p>돌파보다는 작업을 위한 날입니다.</p><p>오늘의 기운은 밀지도 막지도 않습니다. 이것은 급류 사이의 조용한 강줄기 — 물은 여전히 흐르고, 진전은 계속되지만, 드라마 없이.</p><p>이 안정감을 활용하세요. 영감이 아닌 꾸준함을 요구하는 일을 하세요. 가장 좋은 날이 항상 전기가 오르는 날은 아닙니다.</p>`
+        : `<p>A day for the work, not the breakthrough.</p><p>The energy today neither pushes nor resists. This is the quiet river stretch between rapids — water still moves, progress still happens, but without the drama.</p><p>Use this steadiness. Do the thing that requires consistency, not inspiration. The best days aren't always the electric ones.</p>`;
+    }
+  }
+  
+  if (luckiesEl) {
+    const colorLabel = isKo ? f.luckyColorKo : f.luckyColor;
+    const dirLabel = isKo ? f.luckyDirKo : f.luckyDir;
+    luckiesEl.innerHTML = `
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_color}</div><div class="lucky-val">${colorLabel}</div></div>
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_dir}</div><div class="lucky-val">${dirLabel}</div></div>
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_num}</div><div class="lucky-val">${f.luckyNum}</div></div>
+    `;
+  }
+}
 
 function renderDaeun(chart) {
-  var sec=document.getElementById('daeun-simple-section');if(!sec)return;
-  var isKo=AppState.language==='ko';
-  var daeun=chart.daeunData.daeun;
-  var desc=isKo?DAEUN_DESC_KO:DAEUN_DESC_EN;
-  var cur=daeun.find(function(d){return d.isCurrent;})||daeun[0];
-  var curL=isKo?'현재 대운':'Current Cycle';
-  var curP=cur?(cur.stem+cur.branch):'—';
-  var curA=cur?(cur.ageStart+'–'+cur.ageEnd+(isKo?'세':' yrs')):'';
-  var dmEl=chart.dayMaster.element;
-  var favEl=DM_FAVORABLE[dmEl]||dmEl;
-  var ctlEl=Object.keys(DM_FAVORABLE).find(function(k){return DM_FAVORABLE[k]===dmEl;})||'';
-  var peak=null,low=null,pkSc=-1;
-  daeun.forEach(function(d){
-    var s=(d.element===favEl?2:0)+(d.branchElement===favEl?1:0);
-    if(s>pkSc){pkSc=s;peak=d;}
-    if(!low&&(d.element===ctlEl||d.branchElement===ctlEl)){low=d;}
-  });
-  if(!low&&daeun.length>1)low=daeun[daeun.length-1];
-  var yr=function(d,e){return chart.year+(e?d.ageEnd:d.ageStart);};
-  var pkPer=peak?(yr(peak,0)+'–'+yr(peak,1)):'—';
-  var pkDKo=peak?(ELEMENT_KR[peak.element]+' 운이 강해지는 시기, 새로운 기회와 성장의 바람이 붑니다.'):'';
-  var pkDEn=peak?(peak.element+' energy rises — winds of opportunity and growth blow your way.'):'';
-  var lwPer=low?(yr(low,0)+'–'+yr(low,1)):'—';
-  var lwDKo=low?(ELEMENT_KR[low.element]+' 기운이 강해지는 조심스러운 시기. 내면을 다지고 쉬어가는 것이 현명합니다.'):'';
-  var lwDEn=low?(low.element+' energy dominates — a season to build inner strength and conserve energy.'):'';
-  var pkL=isKo?'인생 전성기':'Peak Years';
-  var lwL=isKo?'힘든 시기':'Challenging Cycle';
-  sec.innerHTML='<div class="daeun-simple-card"><div class="daeun-header"><h3>'+(isKo?'대운 흐름':'10-Year Luck Cycles')+'</h3><span class="section-tag free-tag">'+(isKo?'무료':'FREE')+'</span></div><p class="daeun-desc">'+desc+'</p><div class="daeun-current-block"><div class="daeun-current-label">'+curL+'</div><div class="daeun-current-pillar">'+curP+'</div><div class="daeun-current-age">'+curA+'</div></div><div class="daeun-highlights"><div class="daeun-peak"><div class="peak-icon">✨</div><div class="peak-label">'+pkL+'</div><div class="peak-period">'+pkPer+'</div><div class="peak-desc">'+(isKo?pkDKo:pkDEn)+'</div></div><div class="daeun-low"><div class="low-icon">🌊</div><div class="low-label">'+lwL+'</div><div class="low-period">'+lwPer+'</div><div class="low-desc">'+(isKo?lwDKo:lwDEn)+'</div></div></div></div>';
+  const track = document.getElementById('daeun-track');
+  if (!track) return;
+  const L = I18N[AppState.language] || I18N.en;
+  const { daeun } = chart.daeunData;
+  
+  track.innerHTML = daeun.map(d => {
+    const color = ELEMENT_COLORS[d.element] || '#a8a0c8';
+    return `<div class="daeun-item daeun-block${d.isCurrent?' current':''}">
+      <div class="daeun-age">${d.ageStart}–${d.ageEnd}</div>
+      <div class="daeun-stem" style="color:${color}">${d.stem}</div>
+      <div class="daeun-branch" style="color:${color}80">${d.branch}</div>
+      <div class="daeun-elem" style="color:${color}">${d.element}</div>
+      ${d.isCurrent ? `<div class="daeun-current-badge">${L.daeun_current}</div>` : ''}
+    </div>`;
+  }).join('');
+  
+  // Scroll to current
+  setTimeout(() => {
+    const cur = track.querySelector('.current');
+    if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, 500);
 }
-
 
 function renderAllPaid(chart) {
-  var sec=document.getElementById('premium-section');if(!sec)return;
-  var isKo=AppState.language==='ko';
-  var title=isKo?'당신의 운명, 더 깊이 읽기':'Read Your Fate, Deeper';
-  var sub=isKo?'사주팔자가 말하는 당신의 진짜 이야기':'The real story your Four Pillars are telling';
-  var price='₩6,900';
-  var priceSub=isKo?'전체 감명 • 평생 열람':'Full Reading · Lifetime Access';
-  var btn=isKo?'전체 감명 열기 →':'Unlock Full Reading →';
-  var reas=isKo?'수천 년의 지혜, 지금 당신의 이야기로':'Millennia of wisdom, now your story.';
-  var feats=isKo?['💕 <strong>연애 &amp; 결혼운</strong> — 어떤 사람과 맞고, 언제 인연이 오는가','💰 <strong>재물 &amp; 직업운</strong> — 당신이 돈 버는 방식과 커리어의 정점','👨‍👩‍👧 <strong>가족 &amp; 건강</strong> — 부모 인연, 자녀운, 몸이 말하는 신호','✨ <strong>대운 상세 분석</strong> — 10년 단위 전체 풀이 + 개운법','🔮 <strong>AI 맞춤 종합 감명</strong> — 당신만을 위한 전체 사주 해석']:['💕 <strong>Love &amp; Marriage</strong> — Who you match, when love arrives','💰 <strong>Wealth &amp; Career</strong> — How you make money, your career peak','👨‍👩‍👧 <strong>Family &amp; Health</strong> — Parent bonds, children, what your body signals','✨ <strong>Full Daeun Analysis</strong> — All 10-year cycles decoded + remedies','🔮 <strong>AI Personal Reading</strong> — Your entire chart, interpreted just for you'];
-  sec.innerHTML='<div class="premium-header"><div class="premium-lock-icon">🔮</div><h2 class="premium-title">'+title+'</h2><p class="premium-subtitle">'+sub+'</p></div><ul class="premium-features">'+feats.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul><div class="premium-cta-block"><div class="premium-price">'+price+'</div><div class="premium-price-sub">'+priceSub+'</div><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button><p class="premium-reassure">'+reas+'</p></div>';
+  const L = I18N[AppState.language] || I18N.en;
+  const name = AppState.userName || L.word_you;
+  const dm = chart.dayMaster;
+  const dmStem = dm.stem;
+  
+  // Helper to inject name into hook
+  const hook = (key) => t(key).replace('[NAME]', name);
+  
+  // Paid 1: Life Path
+  setPaywall('paid1', hook('paid1_hook'), t('paid1_sub'), t('paid1_btn'),
+    `${name}의 사주에는 하나의 주제가 있습니다. 년주 ${chart.pillars.year.stem}${chart.pillars.year.branch}과 일주 ${dmStem}${chart.pillars.day.branch} 사이의 대화는... 외부의 권위와 내면의 앎 사이에 강렬한 긴장을 만들어내며.`);
+  
+  // Paid 2: Wealth
+  setPaywall('paid2', hook('paid2_hook'), t('paid2_sub'), t('paid2_btn'),
+    `${dmStem} 일간의 재물운은 일반적인 방식과 다릅니다. 재성(財星)이 현재 대운과 만나는 방식은... 독특한 레버리지를 만들어내지만 특정 패턴을 피해야만.`);
+  
+  // Paid 3: Love
+  setPaywall('paid3', hook('paid3_hook'), t('paid3_sub'), t('paid3_btn'),
+    `${dmStem}에게 사랑은 깊이 느끼는 것입니다. 관성(官星)이 이 특별한 이야기를 담고 있습니다. 당신에게 실제로 닿는 파트너의 유형은 당신의 외모에서 대부분의 사람들이 예측하는 것과 다릅니다.`);
+  
+  // Paid 4: Family
+  setPaywall('paid4', hook('paid4_hook'), t('paid4_sub'), t('paid4_btn'),
+    `년주와 월주는 원가족의 에너지를 담고 있습니다. 건강에 대해: 당신의 오행 균형은 몸이 스트레스를 어디에 담는지에 관한 이야기를 합니다. ${ELEMENT_KR[dm.element]} 과잉은 전통 의학의 특정 경락과 연결됩니다.`);
+  
+  // Paid 5: Daeun
+  const currentDaeun = chart.daeunData.daeun.find(d => d.isCurrent);
+  const nextDaeun = currentDaeun ? chart.daeunData.daeun[chart.daeunData.daeun.indexOf(currentDaeun)+1] : null;
+  setPaywall('paid5', hook('paid5_hook'), t('paid5_sub'), t('paid5_btn'),
+    `현재 ${currentDaeun ? currentDaeun.stem+currentDaeun.branch : ''}대운 안에 있습니다. ${nextDaeun ? `다음 대운(${nextDaeun.stem}${nextDaeun.branch})은 ${nextDaeun.yearStart}년에 시작됩니다.` : ''} 이 전환이 ${dmStem} 일간에게 의미하는 것은...`);
 }
-function openPayModal(){openModal('premium');}
 
-
-// setPaywall removed
+function setPaywall(id, hook, sub, btnText, previewText) {
+  el(`${id}-hook`, hook);
+  el(`${id}-sub`, sub);
+  el(`${id}-btn`, btnText);
+  const prevEl = document.getElementById(`${id}-preview`);
+  if (prevEl) { prevEl.className = 'paid-preview-text blur-preview'; prevEl.textContent = previewText; }
+}
 
 // ═══════════════════════════════════════════════
 // SECTION K: MODAL SYSTEM
