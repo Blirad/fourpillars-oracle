@@ -1354,66 +1354,68 @@ function getSolarTermDay(year, month0) {
 
 
 
-function calcYearPillar(year) {
-  // 甲子 year = 4 CE, so offset = 4+6=10 → (4+6)%10=0 ✓
-  const stemIdx = ((year + 6) % 10 + 10) % 10;
-  const branchIdx = ((year + 8) % 12 + 12) % 12;
+function calcYearPillar(year, month, day) {
+  // Adjust for 立春 (Lichun ~Feb 4): before Lichun = previous year
+  const lichunDay = getSolarTermDay(year, 1); // month index 1 = February = 立春
+  const effectiveYear = (month < 2 || (month === 2 && day < lichunDay)) ? year - 1 : year;
+  const stemIdx = ((effectiveYear + 6) % 10 + 10) % 10;
+  const branchIdx = ((effectiveYear + 8) % 12 + 12) % 12;
   return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
            element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
-           branchElement: BRANCH_ELEMENTS[branchIdx] };
+           branchElement: BRANCH_ELEMENTS[branchIdx], stemIdx, branchIdx, effectiveYear };
 }
 
 function calcMonthPillar(year, month, day) {
-  // Determine which solar month we're in based on the solar term (節)
-  // Solar month index: 立春(Feb)=1, 驚蟄(Mar)=2, ..., 小寒(Jan of next year)=0
-  const m0 = month - 1; // 0-indexed
-  const termDay = getSolarTermDay(year, m0);
-  
-  // Solar month number (0=寅月/立春 to 11=丑月/小寒)
-  // 寅月 starts at 立春 (Feb term), index 1 in our month0 system
-  let solarMonthIdx; // 0=寅, 1=卯, 2=辰, 3=巳, 4=午, 5=未, 6=申, 7=酉, 8=戌, 9=亥, 10=子, 11=丑
-  
-  // Which calendar month is the 節 term → solar month mapping:
-  // Jan(0)=小寒→丑(11), Feb(1)=立春→寅(0), Mar(2)=驚蟄→卯(1), Apr(3)=清明→辰(2)
-  // May(4)=立夏→巳(3), Jun(5)=芒種→午(4), Jul(6)=小暑→未(5), Aug(7)=立秋→申(6)
-  // Sep(8)=白露→酉(7), Oct(9)=寒露→戌(8), Nov(10)=立冬→亥(9), Dec(11)=大雪→子(10)
-  const calToSolar = [11,0,1,2,3,4,5,6,7,8,9,10];
-  
-  let effMonth0 = m0;
-  if (day < termDay) {
-    // Before the term of this month → still in previous solar month
-    effMonth0 = (m0 - 1 + 12) % 12;
-    if (m0 === 0) effMonth0 = 11; // Jan before 小寒 → prev Dec's solar month (子月)
+  // Determine 節 (jie) month index (0=寅/Feb, 1=卯/Mar, ..., 11=丑/Jan)
+  // Each month starts at its 節 (first solar term of the pair)
+  // Get the 節 day for this calendar month
+  const termDay = getSolarTermDay(year, month - 1); // month-1 = 0-indexed
+
+  // If day >= termDay, we're in the new solar month; otherwise previous
+  let jieMonthIdx; // 0=寅, 1=卯, ..., 11=丑
+  const calMonthTo0Base = month - 1; // 0=Jan, 1=Feb, ..., 11=Dec
+
+  if (day >= termDay) {
+    // After the 節: in the solar month corresponding to this calendar month
+    // Feb→寅(0), Mar→卯(1), ..., Jan→丑(11)
+    jieMonthIdx = calMonthTo0Base === 0 ? 11 : calMonthTo0Base - 1;
+  } else {
+    // Before the 節: still in previous solar month
+    jieMonthIdx = calMonthTo0Base === 0 ? 10 : calMonthTo0Base === 1 ? 11 : calMonthTo0Base - 2;
   }
-  solarMonthIdx = calToSolar[effMonth0];
-  
-  // Month stem: based on year stem
-  // 甲(0)/己(5) year → 寅月(0) starts at 丙(2)
-  // 乙(1)/庚(6) year → 寅月(0) starts at 戊(4)
-  // 丙(2)/辛(7) year → 寅月(0) starts at 庚(6)
-  // 丁(3)/壬(8) year → 寅月(0) starts at 壬(8)
-  // 戊(4)/癸(9) year → 寅月(0) starts at 甲(0)
-  const yStemIdx = ((year + 6) % 10 + 10) % 10;
-  const startStem = ((yStemIdx % 5) * 2 + 2) % 10;
-  const monthStemIdx = (startStem + solarMonthIdx) % 10;
-  // Month branch: 寅=2, 卯=3, ..., 丑=1
-  const monthBranchIdx = (solarMonthIdx + 2) % 12;
-  
-  return { stem: STEMS[monthStemIdx], branch: BRANCHES[monthBranchIdx],
-           element: STEM_ELEMENTS[monthStemIdx], polarity: STEM_POLARITIES[monthStemIdx],
-           branchElement: BRANCH_ELEMENTS[monthBranchIdx] };
+
+  // Branch: 寅=2, 卯=3, ..., 丑=1 (jieMonthIdx 0=寅=branch2)
+  const branchIdx = (jieMonthIdx + 2) % 12;
+
+  // Stem: Five Tiger Year Stem formula
+  // Effective year for stem calculation (Lichun boundary)
+  const lichunDay = getSolarTermDay(year, 1);
+  const effectiveYear = (month < 2 || (month === 2 && day < lichunDay)) ? year - 1 : year;
+  const yearStemIdx = ((effectiveYear + 6) % 10 + 10) % 10;
+  // 甲/己(0,5) → 寅月starts丙(2); 乙/庚(1,6) → 戊(4); 丙/辛(2,7) → 庚(6); 丁/壬(3,8) → 壬(8); 戊/癸(4,9) → 甲(0)
+  const monthStemStart = [2, 4, 6, 8, 0, 2, 4, 6, 8, 0][yearStemIdx]; // stem of 寅 month
+  const stemIdx = (monthStemStart + jieMonthIdx) % 10;
+
+  return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+           element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
+           branchElement: BRANCH_ELEMENTS[branchIdx], stemIdx, branchIdx };
 }
 
 function calcDayPillar(year, month, day) {
-  // Reference: 2000-01-01 = 甲子 (stemIdx=0, branchIdx=0)
-  const ref = new Date(2000, 0, 1);
-  const d = new Date(year, month - 1, day);
-  const diffDays = Math.round((d - ref) / 86400000);
-  const stemIdx = ((diffDays % 10) + 10) % 10;
-  const branchIdx = ((diffDays % 12) + 12) % 12;
+  // Julian Day Number (Gregorian calendar)
+  // Verified: 1990-01-21 → JDN=2447913 → stem=(2447913-11)%10=2(丙), branch=(2447913-11)%12=10(戌) ✅
+  function toJDN(y, m, d) {
+    if (m <= 2) { y -= 1; m += 12; }
+    const A = Math.floor(y / 100);
+    const B = 2 - A + Math.floor(A / 4);
+    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524;
+  }
+  const jdn = toJDN(year, month, day);
+  const stemIdx = ((jdn - 11) % 10 + 10) % 10;
+  const branchIdx = ((jdn - 11) % 12 + 12) % 12;
   return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
            element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
-           branchElement: BRANCH_ELEMENTS[branchIdx] };
+           branchElement: BRANCH_ELEMENTS[branchIdx], stemIdx, branchIdx };
 }
 
 function calcHourPillar(dayPillar, hour) {
@@ -1546,7 +1548,7 @@ function calcTodayFortune(dayMaster, todayPillar) {
 }
 
 function buildFullChart(year, month, day, hour, minute, gender, noTime) {
-  const yPillar = calcYearPillar(year);
+  const yPillar = calcYearPillar(year, month, day);
   const mPillar = calcMonthPillar(year, month, day);
   const dPillar = calcDayPillar(year, month, day);
   let hPillar;
@@ -2733,7 +2735,26 @@ function hexToRgb(hex) {
 }
 
 // ═══════════════════════════════════════════════
-// SECTION N: INITIALIZATION
+// SECTION N: SELF-TEST
+// ═══════════════════════════════════════════════
+// Self-test: 1990-01-21 21:57 should give 己巳/丁丑/丙戌/己亥
+function selfTest() {
+  const chart = buildFullChart(1990, 1, 21, 21, 57, 'M', false);
+  const expected = {year:'己巳', month:'丁丑', day:'丙戌', hour:'己亥'};
+  const actual = {
+    year: chart.pillars.year.stem + chart.pillars.year.branch,
+    month: chart.pillars.month.stem + chart.pillars.month.branch,
+    day: chart.pillars.day.stem + chart.pillars.day.branch,
+    hour: chart.pillars.hour.stem + chart.pillars.hour.branch,
+  };
+  const pass = JSON.stringify(expected) === JSON.stringify(actual);
+  console.log('Self-test:', pass ? '✅ PASS' : '❌ FAIL', actual);
+  if (!pass) console.warn('Expected:', expected);
+  return pass;
+}
+
+// ═══════════════════════════════════════════════
+// SECTION O: INITIALIZATION
 // ═══════════════════════════════════════════════
 function init() {
   initForm();
@@ -2753,6 +2774,7 @@ function init() {
     b.classList.toggle('active', b.dataset.lang === AppState.language);
   });
   applyLanguage();
+  selfTest();
 }
 
 document.addEventListener('DOMContentLoaded', init);
