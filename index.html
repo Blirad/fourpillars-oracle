@@ -851,8 +851,8 @@
       <div class="form-group">
         <label class="form-label" id="lbl-gender">GENDER</label>
         <div class="gender-row">
-          <button type="button" class="gender-btn active" id="btn-male" data-gender="M" onclick="selectGender('M')" id="btn-male">♂ Male</button>
-          <button type="button" class="gender-btn" id="btn-female" data-gender="F" onclick="selectGender('F')" id="btn-female">♀ Female</button>
+          <button type="button" class="gender-btn active" id="btn-male" data-gender="M" onclick="selectGender('M')">♂ Male</button>
+          <button type="button" class="gender-btn" id="btn-female" data-gender="F" onclick="selectGender('F')">♀ Female</button>
         </div>
         <div class="form-error" id="err-gender"></div>
       </div>
@@ -2368,7 +2368,7 @@ function initForm() {
   }
   // Minutes
   const minSel = document.getElementById('inp-minute');
-  for (let m = 0; m < 60; m += 5) {
+  for (let m = 0; m < 60; m++) {
     const o = document.createElement('option');
     o.value = m; o.textContent = String(m).padStart(2,'0');
     minSel.appendChild(o);
@@ -2385,6 +2385,10 @@ function toggleUnknownTime(checked) {
   const timeInputs = document.getElementById('time-inputs');
   if (checked) timeInputs.classList.add('time-disabled');
   else timeInputs.classList.remove('time-disabled');
+  const hourSel = document.getElementById('inp-hour');
+  const minSel = document.getElementById('inp-minute');
+  if (hourSel) hourSel.disabled = checked;
+  if (minSel) minSel.disabled = checked;
 }
 
 // ═══════════════════════════════════════════════
