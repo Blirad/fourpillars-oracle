@@ -1045,6 +1045,18 @@ const ST_BASE_20 = [5.4055,3.8724,5.6324,4.8693,5.7133,6.0893,6.9693,7.2688,7.85
 const ST_BASE_19 = [6.11,4.6295,6.3826,5.1526,6.0942,5.6982,7.108,7.5928,8.2443,8.4102,7.8820,7.9];
 
 // ═══════════════════════════════════════════════
+// SECTION A2: APP STATE
+// ═══════════════════════════════════════════════
+let AppState = {
+  language: 'en',
+  gender: 'M',
+  pillars: null,
+  userInfo: null,
+  apiKey: null,
+  noTime: false,
+};
+
+// ═══════════════════════════════════════════════
 // SECTION B: I18N DICTIONARY
 // ═══════════════════════════════════════════════
 const I18N = {
@@ -1238,102 +1250,1872 @@ ko: {
   footer_text:'Momentor · 개인정보 · 이용약관',
   word_you:'당신',
 },
-ja: {
-  app_tagline:'あなたの運命、解読します。',
-  hero_eyebrow:'あなたが生まれたその瞬間',
-  hero_headline:'<em>518,400</em>通りの運命の中で、<br>これがあなただけのもの。',
-  hero_sub:'Momentorはあなたの四柱推命を解読します — 東アジアで何百万人もの人々が信頼してきた1,500年の知恵。日主、五行のバランス、そして人生を形づくる10年ごとの大運を発見してください。',
-  hero_cta:'私の運命を見る →',
-  usp1_title:'12分の1ではなく、518,400分の1。',
-  usp1_body:'西洋占星術は全人類を12の星座に分類します。四柱推命はあなたの生年・生月・生日・さらに生時まで使い、あなただけのチャートを構築します。指紋のように。',
-  usp2_title:'1,400年の知恵',
-  usp2_body:'韓国大統領、日本の経営者、中国の大家族が重大な決断に使ってきた知恵。今、あなたの言語で。',
-  usp3_title:'人生は10年ごとの季節で流れる',
-  usp3_body:'大運はあなたの人生の各10年を支配する五行エネルギーを明かします。ある10年は収穫、ある10年は嵐。今どの季節にいるか知ってください。',
-  t1_text:'「3年間Co-Starを使い続けました。Momentorは5分で、2年間のカウンセリングで気づいたことを教えてくれました。」',
-  t1_author:'— サラ K.、ニューヨーク',
-  t2_text:'「在日コリアンとして育ち、四柱推命は知っていましたが、英語で使えるちゃんとしたアプリがありませんでした。」',
-  t2_author:'— ジェニー L.、ロサンゼルス',
-  t3_text:'「大運の分析で、キャリアの計画を見直すことになりました。占いアプリで泣くとは思っていませんでした。」',
-  t3_author:'— マーカス T.、ロンドン',
-  social_count:'✦ すでに12,000人以上が自分の日主と出会っています',
-  form_title:'生年月日時を入力してください',
-  form_subtitle:'完全な四柱推命のチャートには全項目が必要です',
-  lbl_name:'お名前',lbl_gender:'性別',gender_male:'♂ 男性',gender_female:'♀ 女性',
-  lbl_birthdate:'生年月日',lbl_birthtime:'生まれた時刻',lbl_notime:'生まれた時刻がわかりません',
-  btn_calculate:'私の命式を見る →',
-  lbl_pillars:'四柱 · FOUR PILLARS',lbl_elements:'五行分析',
-  lbl_personality:'性格分析',lbl_fortune:'今日の運勢',lbl_daeun:'大運の流れ',lbl_paid:'深層分析',
-  badge_free:'無料',badge_paid:'フル鑑定',
-  dm_eyebrow:'日主 · DAY MASTER',lbl_strengths:'✦ 強み',lbl_shadows:'↯ 影の特性',
-  fortune_high:'⚡ 高共鳴',fortune_neutral:'◯ 安定した流れ',fortune_low:'⚠ 抵抗',
-  lucky_color:'ラッキーカラー',lucky_dir:'ラッキー方位',lucky_num:'ラッキーナンバー',
-  daeun_title:'大運の流れ（10年周期）',
-  daeun_intro:'各大運は異なる五行エネルギーをもたらします。現在の大運がハイライトされています。',
-  daeun_current:'現在',personality_title:'性格分析',fortune_title:'今日の運勢',
-  paid1_hook:'では、[NAME]さんの人生の大きな流れを見てみましょう。',paid1_sub:'すべての命式にはパターンの奥にあるパターンがあります。',paid1_btn:'人生の流れ 全分析を見る · ¥750',
-  paid2_hook:'[NAME]さん、お金とのあなたの関係は、ほとんどの人が考えるものとは異なります。',paid2_sub:'あなたの命式の中の財星は珍しい位置にあります。',paid2_btn:'財運・成功運 全分析を見る · ¥750',
-  paid3_hook:'恋愛はあなたの日主が複雑になる領域です。',paid3_sub:'あなたの命式の官星が特別なストーリーを語っています。',paid3_btn:'恋愛運・結婚運 全分析を見る · ¥750',
-  paid4_hook:'あなたが生まれた柱はあなたが言葉を持つ前にあなたを形作りました。',paid4_sub:'年柱と月柱は原家族のエネルギーを担っています。',paid4_btn:'家族運・健康運 全分析を見る · ¥750',
-  paid5_hook:'これは西洋占星術にはない機能です。',paid5_sub:'あなたの人生は10年ごとの章で流れています。次の大運があなたにもたらすものは...',paid5_btn:'10年大運 全分析を見る · ¥750',
-  modal_eyebrow:'✦ アーリーアクセス ✦',modal_title:'あなたが気になっていたことを知っている鑑定。',modal_sub:'すでに四柱を見ました。日主と出会いました。今、より深く入りましょう。',
-  modal_features:['人生の流れ全体のナラティブ','財運・成功運のブループリント','恋愛運・結婚運の深い分析','家族運・健康運の分析','10年大運 — あなただけの人生の季節、完全解読','5年間の年間運勢予測'],
-  modal_price:'¥750',modal_price_sub:'コーヒー一杯より安い。一生続く鑑定。',modal_pay_btn:'フル鑑定を解放 →',
-  modal_waitlist_title:'まだ決済の準備ができていませんか？最初にお知らせします。',modal_notify_btn:'通知を受け取る →',modal_note:'✓ スパムなし。ノイズなし。鑑定が準備できたらすぐにお知らせ。',
-  err_name:'お名前を入力してください。',err_name_short:'名前は2文字以上にしてください。',err_date:'生年月日を入力してください。',err_date_future:'生年月日は未来の日付にできません。',err_date_old:'1900年以降の生年月日のみ対応しています。',err_gender:'大運の方向計算のために性別を選択してください。',err_time:'時柱の計算に生まれた時刻が必要です。',
-  toast_waitlist_ok:'✓ リストに登録されました。最初にお知らせします。',toast_waitlist_dup:'すでにリストに登録されています！まもなくご連絡します。',toast_email_invalid:'有効なメールアドレスを入力してください。',toast_payment_info:'決済機能は近日公開予定。ウェイトリストに登録してください！',toast_calc_ok:'✓ 命式が完成しました。',toast_copy_ok:'✓ リンクがコピーされました — チャートをシェアしましょう！',
-  ten_god:{bigyeon:'比肩',geopjae:'劫財',sikshin:'食神',sanggwan:'傷官',pyeonginjae:'偏財',jeongjae:'正財',pyeonggwan:'偏官',jeonggwan:'正官',pyeongin:'偏印',jeongin:'正印'},
-  year_p:'年柱',month_p:'月柱',day_p:'日主',hour_p:'時柱',back_btn:'← 戻る',footer_text:'Momentor · プライバシー · 利用規約',word_you:'あなた',
-},
-zh: {
-  app_tagline:'您的命运，即将解读。',
-  hero_eyebrow:'您出生的那一刻',
-  hero_headline:'<em>518,400</em>种可能的命运。<br>这一个，是你的。',
-  hero_sub:'Momentor解读您的四柱八字 — 这是在整个东亚被数千万人信赖的1,500年古老智慧体系。探索您的日干、五行本质，以及塑造您人生的十年大运。',
-  hero_cta:'揭示我的命运 →',
-  usp1_title:'不是12分之1，而是518,400分之1。',
-  usp1_body:'西方星座将全人类分为十二个太阳星座。四柱八字使用您的出生年、月、日，乃至出生时辰，构建出属于您的独特命盘。指纹，而非类别。',
-  usp2_title:'1,400年的智慧',
-  usp2_body:'韩国总统、日本高管和中国家族做出百万美元决策时所依赖的智慧。现在以您的语言呈现。',
-  usp3_title:'您的人生以十年为周期运行',
-  usp3_body:'大运揭示您人生每个十年的五行能量。某些十年是收获，某些十年是风暴。了解您现在身处哪个季节。',
-  t1_text:'「我使用Co-Star已有三年。Momentor在五分钟内告诉了我，我花了两年心理咨询才弄明白的事情。」',
-  t1_author:'—— Sarah K.，纽约',
-  t2_text:'「作为一个在美国长大的韩裔，我从小就听说过四柱，但从未有过英文版的好应用。这是第一个做对了的应用。」',
-  t2_author:'—— Jenny L.，洛杉矶',
-  t3_text:'「大运分析让我重新思考了职业规划。我没想到会在一个命理应用上哭出来。」',
-  t3_author:'—— Marcus T.，伦敦',
-  social_count:'✦ 已有12,000+用户遇见了自己的日干',
-  form_title:'请输入您的出生信息',form_subtitle:'完整的四柱命盘需要所有项目',
-  lbl_name:'您的姓名',lbl_gender:'性别',gender_male:'♂ 男',gender_female:'♀ 女',
-  lbl_birthdate:'出生日期',lbl_birthtime:'出生时辰',lbl_notime:'不知道出生时辰',
-  btn_calculate:'查看我的八字 →',
-  lbl_pillars:'四柱 · FOUR PILLARS',lbl_elements:'五行分析',
-  lbl_personality:'性格分析',lbl_fortune:'今日运势',lbl_daeun:'大运流势',lbl_paid:'深度解析',
-  badge_free:'免费',badge_paid:'完整解读',
-  dm_eyebrow:'日干 · DAY MASTER',lbl_strengths:'✦ 优势',lbl_shadows:'↯ 暗面特质',
-  fortune_high:'⚡ 强力共鸣',fortune_neutral:'◯ 平稳运行',fortune_low:'⚠ 阻力',
-  lucky_color:'幸运色',lucky_dir:'幸运方位',lucky_num:'幸运数字',
-  daeun_title:'大运流势（十年周期）',
-  daeun_intro:'每个大运带来不同的五行能量。当前大运已高亮显示。',
-  daeun_current:'当前',personality_title:'性格分析',fortune_title:'今日运势',
-  paid1_hook:'那么，让我们来看看[NAME]的人生整体脉络。',paid1_sub:'每一张命盘都包含模式背后的模式。大多数人从未看见。',paid1_btn:'人生整体脉络全文解读 · ¥36',
-  paid2_hook:'[NAME]，您与金钱的关系并非大多数人所认为的那样。',paid2_sub:'您命盘中的财星处于一个不寻常的位置...',paid2_btn:'财运与事业运全文解读 · ¥36',
-  paid3_hook:'感情是您的日干变得复杂的领域。',paid3_sub:'您命盘中的官星讲述着一个特别的故事。',paid3_btn:'感情运与婚姻运深度解析 · ¥36',
-  paid4_hook:'您出生时的命柱在您有语言之前就塑造了您。',paid4_sub:'年柱和月柱承载着原生家庭的能量。',paid4_btn:'家庭运与健康运分析 · ¥36',
-  paid5_hook:'这是西方占星术中没有等价物的功能。',paid5_sub:'您的人生以十年为一个章节运行。下一个大运为您准备的，是几乎没有人能预见到的事情。',paid5_btn:'十年大运全文解读 · ¥36',
-  modal_eyebrow:'✦ 早期访问 ✦',modal_title:'一份了解你一直在思考的问题的解读。',modal_sub:'您已经看过四柱了。您已经认识了日干。现在，更深入地探索吧。',
-  modal_features:['人生整体脉络叙述','财运与事业运蓝图','感情运与婚姻运深度解析','家庭运与健康运分析','十年大运——您专属的人生季节，完全解码','五年流年运势预测'],
-  modal_price:'¥36',modal_price_sub:'比一杯咖啡还便宜。一次解读，受益终身。',modal_pay_btn:'解锁完整解读 →',
-  modal_waitlist_title:'还没准备好付款？支付功能上线时我们会第一时间通知您。',modal_notify_btn:'立即订阅通知 →',modal_note:'✓ 无垃圾邮件。无噪音。解读就绪时立即通知。',
-  err_name:'请输入您的姓名。',err_name_short:'姓名至少需要2个字符。',err_date:'请输入出生日期。',err_date_future:'出生日期不能是未来的日期。',err_date_old:'我们支持1900年以后的出生日期。',err_gender:'请选择性别——这会影响大运的运行方向。',err_time:'计算时柱需要出生时辰。',
-  toast_waitlist_ok:'✓ 您已加入等待名单。我们会第一时间通知您。',toast_waitlist_dup:'您已经在名单上了！我们会尽快与您联系。',toast_email_invalid:'请输入有效的电子邮件地址。',toast_payment_info:'支付功能即将上线。加入等待名单获取早期访问！',toast_calc_ok:'✓ 您的命盘已完成。',toast_copy_ok:'✓ 链接已复制——分享您的命盘！',
-  ten_god:{bigyeon:'比肩',geopjae:'劫财',sikshin:'食神',sanggwan:'伤官',pyeonginjae:'偏财',jeongjae:'正财',pyeonggwan:'偏官',jeonggwan:'正官',pyeongin:'偏印',jeongin:'正印'},
-  year_p:'年柱',month_p:'月柱',day_p:'日干',hour_p:'时柱',back_btn:'← 返回',footer_text:'Momentor · 隐私政策 · 服务条款',word_you:'您',
-}
 };
 function t(key){
   const lang=AppState.language||'en';
   return (I18N[lang]&&I18N[lang][key]!=null)?I18N[lang][key]:(I18N.en[key]!=null?I18N.en[key]:key);
 }
 
+
+// ═══════════════════════════════════════════════
+// SECTION C: DAY MASTER PROFILES (ALL 10)
+// ═══════════════════════════════════════════════
+const DAY_MASTERS = {
+'甲': {
+  element:'Wood',polarity:'Yang',name_en:'Yang Wood',name_ko:'갑목(甲木)',
+  title_en:'THE ANCIENT OAK',title_ko:'고목(古木)',
+  oneliner_en:'The ancient oak that reaches for heaven — deeply rooted, fiercely upright, and built to outlast every storm.',
+  oneliner_ko:'하늘을 향해 뻗은 고목(古木) — 깊은 뿌리, 꿋꿋한 자세, 어떤 폭풍도 견뎌내도록 만들어진 존재.',
+  personality_en:['You do not bend. This is your greatest gift and your most persistent wound. While others adapt their principles to circumstances, you carry yours like a spine — something load-bearing, non-negotiable. People feel this about you before they know it consciously. There\'s a solidity to you that others are drawn to and occasionally terrified by.','You think in growth. Every decision, every relationship, every choice — you\'re asking, consciously or not: is this helping me become more fully myself? This is not selfishness. It is the nature of 甲木, the great tree. The tree does not apologize for reaching toward sunlight. It simply reaches.','Your inner world is more tender than anyone suspects. The upright nature that the world sees is not a performance — but it can become armor. The oak is magnificent. But even the oak has rings that remember drought years, flood years, years where something wanted to grow but couldn\'t break through the bark.'],
+  personality_ko:['당신은 굽히지 않습니다. 이것이 당신의 가장 큰 선물이자 가장 깊은 상처입니다. 다른 사람들이 상황에 따라 원칙을 바꿀 때, 당신은 원칙을 척추처럼 지킵니다. 사람들은 당신에게서 끌리기도 하고 때로는 두려워하기도 하는 견고함을 느낍니다.','당신은 성장의 언어로 생각합니다. 모든 결정과 관계에서 당신은 묻습니다: 이것이 나를 더 온전하게 만드는가? 이것은 이기심이 아닙니다. 나무는 햇빛을 향해 뻗는 것에 사과하지 않습니다. 그저 뻗을 뿐입니다.','당신의 내면은 누구도 예상하는 것보다 더 섬세합니다. 꿋꿋한 자세는 연기가 아니지만 갑옷이 될 수 있습니다. 고목에도 가뭄과 홍수의 해를 기억하는 나이테가 있습니다.'],
+  strengths_en:['Unshakeable moral clarity — you don\'t waver when it matters most','Natural leadership: people follow the tree, not the wind','Long-game thinking: you build things that last generations'],
+  strengths_ko:['흔들리지 않는 도덕적 명료함 — 중요한 순간에 굳건합니다','타고난 리더십: 사람들은 바람이 아닌 나무를 따릅니다','장기적 사고: 세대를 아우르는 지속적인 결과물을 만듭니다'],
+  shadows_en:['Rigidity masquerading as principle: sometimes you\'re wrong, and the tree doesn\'t admit it easily','The exhaustion of being the one everyone leans on — who does the oak lean on?'],
+  shadows_ko:['원칙으로 포장된 완고함: 때로는 틀릴 수 있으며, 고목은 이를 쉽게 인정하지 않습니다','모두가 기대는 역할의 피로함 — 고목은 누구에게 기댈 수 있을까요?'],
+  keywords_en:['INTEGRITY','VISION','ENDURANCE','AUTHORITY','GROWTH'],
+  keywords_ko:['정직','비전','인내','권위','성장'],
+},
+'乙': {
+  element:'Wood',polarity:'Yin',name_en:'Yin Wood',name_ko:'을목(乙木)',
+  title_en:'THE RESILIENT VINE',title_ko:'담쟁이',
+  oneliner_en:'The vine that survives the winter not by standing against it, but by remembering exactly where the light is.',
+  oneliner_ko:'겨울을 버티는 담쟁이 — 힘으로 맞서는 것이 아니라, 빛이 어디에 있는지 정확히 기억함으로써.',
+  personality_en:['You are adaptable in a way that is deeply misunderstood. People mistake your flexibility for weakness. They mistake your willingness to work around obstacles for lack of conviction. But the vine is not less than the oak — it simply understands that intelligence, not force, is what opens locked rooms.','Your emotional intelligence is extraordinary. You read rooms, you read people, you read the subtext beneath words. This gift serves you immensely — and also means that social interaction, at its deepest levels, is exhausting. You feel everything that others broadcast, whether they intend to or not.','You have a quality that few people will ever name correctly: an almost botanical sense of when conditions are right. You know when to move and when to wait. Patience is not passivity for 乙木. It\'s intelligence wearing a longer coat.'],
+  personality_ko:['당신의 적응력은 깊이 오해받습니다. 사람들은 당신의 유연함을 나약함으로 착각합니다. 하지만 담쟁이는 고목보다 못한 것이 아닙니다 — 힘이 아닌 지성이 잠긴 문을 연다는 것을 알 뿐입니다.','당신의 감성 지능은 탁월합니다. 방의 분위기를 읽고, 사람을 읽고, 말 아래의 행간을 읽습니다. 이 선물은 당신에게 엄청난 도움이 되지만, 동시에 깊은 수준의 사회적 상호작용이 지치는 이유이기도 합니다.','당신에게는 거의 식물적인 감각이 있습니다 — 조건이 갖춰졌을 때를 아는. 언제 움직이고 언제 기다려야 하는지를 압니다. 을목의 인내는 수동성이 아닙니다. 더 긴 외투를 입은 지성입니다.'],
+  strengths_en:['Strategic adaptability — you find the path others miss','Relationship alchemy: you bring out hidden qualities in the people around you','Resilience: you\'ve survived things that broke sturdier-seeming people'],
+  strengths_ko:['전략적 적응력 — 다른 사람들이 놓치는 길을 찾습니다','관계의 연금술: 주변 사람들의 숨겨진 자질을 이끌어냅니다','회복력: 더 강해 보이는 사람들을 부순 것들을 견뎌냈습니다'],
+  shadows_en:['The tendency to over-accommodate until you no longer recognize your own preferences','Accumulated resentment from years of adjusting without asking for adjustment in return'],
+  shadows_ko:['자신의 선호를 알아볼 수 없을 때까지 과도하게 맞추는 경향','아무것도 돌려받지 않고 수년간 조정한 것에서 쌓인 원망'],
+  keywords_en:['ADAPTABILITY','SENSITIVITY','STRATEGY','GRACE','PERSISTENCE'],
+  keywords_ko:['적응력','감수성','전략','우아함','지속성'],
+},
+'丙': {
+  element:'Fire',polarity:'Yang',name_en:'Yang Fire',name_ko:'병화(丙火)',
+  title_en:'THE SUN',title_ko:'태양(太陽)',
+  oneliner_en:'You are the sun. Not metaphorically. In the saju system, 丙火 is the sun — and the sun does not ask permission to illuminate.',
+  oneliner_ko:'당신은 태양입니다. 비유가 아닙니다. 사주에서 병화(丙火)는 태양 — 태양은 빛을 비추기 위해 허락을 구하지 않습니다.',
+  personality_en:['There is a warmth that radiates from you that people feel before they can explain it. Rooms shift when you enter. Conversations open. People who were guarded find themselves saying things they haven\'t said to anyone. This is not charisma as a performance. This is 丙火 — the great yang fire, diffuse, generous, impossible to contain.','The burden of the sun is that it must always shine. Even on days you feel depleted, hollow, tired in ways you can\'t articulate — the world still arrives expecting light. And most of the time, you give it, because withholding warmth feels more unnatural than giving it when you have nothing left. This is something to watch.','You have a quality of radical generosity that can become a vulnerability. You extend — opportunities, energy, trust, second chances — before you\'ve established whether the recipient has earned it. You\'ve been burned (painfully ironic for fire) by people you illuminated and who used that light to find their way to someone else.'],
+  personality_ko:['당신에게서 발산되는 온기는 사람들이 설명하기 전에 느낍니다. 당신이 들어서면 방이 바뀝니다. 방어적이던 사람들이 아무에게도 하지 않은 말을 하게 됩니다. 이것은 연기로서의 카리스마가 아닙니다. 이것은 병화 — 위대한 양화, 확산적이고 관대하며 담을 수 없는.','태양의 짐은 항상 빛나야 한다는 것입니다. 당신이 고갈되고 공허하고 표현할 수 없는 방식으로 지친 날에도 — 세상은 여전히 빛을 기대하며 찾아옵니다. 그리고 대부분의 경우 당신은 그것을 줍니다. 아무것도 없을 때도.','당신에게는 근본적인 관대함이 있어 취약점이 될 수 있습니다. 상대방이 그것을 받을 자격이 있는지 확인하기 전에 — 기회, 에너지, 신뢰, 두 번째 기회를 먼저 줍니다.'],
+  strengths_en:['Natural magnetism that opens doors before you knock','Fearless optimism that creates the conditions for its own success','A genuinely warm heart that people feel, not just perceive'],
+  strengths_ko:['문을 두드리기 전에 문을 여는 타고난 자력','자신의 성공 조건을 만들어내는 두려움 없는 낙관주의','사람들이 단순히 인식하는 것이 아니라 진정으로 느끼는 따뜻한 마음'],
+  shadows_en:['Overextension: giving warmth freely until you\'re running cold','The hidden ego of the sun: everything must orbit you, even when you\'re trying not to need that'],
+  shadows_ko:['과도한 확장: 냉각될 때까지 자유롭게 온기를 줍니다','태양의 숨겨진 자아: 그것을 필요로 하지 않으려 할 때도 모든 것이 당신을 중심으로 돌아야 합니다'],
+  keywords_en:['RADIANCE','GENEROSITY','COURAGE','MAGNETISM','GLORY'],
+  keywords_ko:['광채','관대함','용기','자력','영광'],
+},
+'丁': {
+  element:'Fire',polarity:'Yin',name_en:'Yin Fire',name_ko:'정화(丁火)',
+  title_en:'THE CANDLE FLAME',title_ko:'촛불',
+  oneliner_en:'The candle flame — small enough to seem fragile, hot enough to melt iron, steady enough to guide ships home through storms.',
+  oneliner_ko:'촛불 — 연약해 보일 만큼 작고, 쇠를 녹일 만큼 뜨겁고, 폭풍 속에서도 배를 집으로 안내할 만큼 안정적인.',
+  personality_en:['People underestimate you. This is both frustrating and, quietly, useful. You have learned to operate in the gap between what people expect from you and what you are actually capable of. The candle flame does not announce itself. It simply burns. And when the power goes out, suddenly everyone is looking for you.','Your emotional life is rich and complex in ways that your exterior often doesn\'t telegraph. While 丙火 shines outward in all directions, your fire is focused — intentional, directed. You have the gift of concentration, of bringing specific, sustained warmth to the things and people you care about. Your love is not general. It is particular.','You are drawn to depth — in ideas, in relationships, in craft. You find the surface unbearable for extended periods. Small talk is a mild form of suffering for you. You want to get to the thing beneath the thing.'],
+  personality_ko:['사람들은 당신을 과소평가합니다. 이것은 좌절스럽기도 하지만, 조용히 유용하기도 합니다. 당신은 사람들이 기대하는 것과 실제 당신의 능력 사이의 간격에서 일하는 법을 배웠습니다. 촛불은 자신을 알리지 않습니다. 그냥 탈 뿐입니다. 그리고 전력이 나가면 갑자기 모두가 당신을 찾습니다.','당신의 감정적 삶은 외모가 보여주지 않는 방식으로 풍부하고 복잡합니다. 병화가 모든 방향으로 빛나는 반면, 당신의 불은 집중되어 있습니다 — 의도적이고 방향이 있습니다.','당신은 깊이를 추구합니다 — 아이디어, 관계, 장인정신에서. 표면은 확장된 기간 동안 견디기 힘듭니다. 당신은 무언가 아래의 것에 닿고 싶어합니다.'],
+  strengths_en:['Depth of focus and concentration that produces exceptional work','The gift of genuine intimacy — people feel truly known by you','Quiet endurance: you burn long, not just bright'],
+  strengths_ko:['예외적인 작업을 만들어내는 집중력의 깊이','진정한 친밀감의 선물 — 사람들은 당신에게 진정으로 알려진다고 느낍니다','조용한 지구력: 밝기만이 아니라 오래 탑니다'],
+  shadows_en:['The wound of being underestimated, accumulated over years, can become a chip on the shoulder','The candle can be extinguished by strong winds — you may isolate when overwhelmed'],
+  shadows_ko:['수년에 걸쳐 쌓인 과소평가의 상처는 어깨 위의 무거운 짐이 될 수 있습니다','강한 바람은 촛불을 끌 수 있습니다 — 압도될 때 고립될 수 있습니다'],
+  keywords_en:['DEPTH','DEVOTION','CRAFT','INTIMACY','ILLUMINATION'],
+  keywords_ko:['깊이','헌신','장인정신','친밀감','조명'],
+},
+'戊': {
+  element:'Earth',polarity:'Yang',name_en:'Yang Earth',name_ko:'무토(戊土)',
+  title_en:'THE MOUNTAIN',title_ko:'산(山)',
+  oneliner_en:'A mountain doesn\'t need to prove itself. It simply is — ancient, stable, and the reason rivers know which direction to flow.',
+  oneliner_ko:'산은 자신을 증명할 필요가 없습니다. 그저 존재합니다 — 고대적이고 안정적이며, 강이 어느 방향으로 흘러야 하는지 아는 이유.',
+  personality_en:['There is a groundedness to you that others find almost magnetically reassuring. In crisis, people turn to you. In uncertainty, people look for where you\'re standing. This is not a coincidence of personality. It is the nature of 戊土 — the great mountain, the thing that does not move.','You carry a great deal without complaint. The mountain absorbs — rain, heat, erosion, the weight of everything that makes its home on its surface. You do this with relationships and responsibility. You take on what others put down. You maintain what others let lapse.','Your relationship with time is different from most people. You think in decades, in generations, in outcomes that won\'t be visible for years. Fast-moving people run themselves into the ground while you, steady and consistent, built something they\'re still trying to catch up to.'],
+  personality_ko:['당신의 안정감은 다른 사람들이 거의 자석처럼 안심하는 것을 찾게 합니다. 위기에서 사람들은 당신에게 의지합니다. 불확실성에서 사람들은 당신이 어디 서 있는지 찾습니다.','당신은 불평 없이 많은 것을 지탱합니다. 산은 흡수합니다 — 비, 열기, 침식, 그 표면에 집을 만드는 모든 것의 무게. 당신은 관계와 책임에서 이것을 합니다.','당신의 시간과의 관계는 대부분의 사람들과 다릅니다. 당신은 수십 년, 세대, 수년 후에야 보일 결과로 생각합니다.'],
+  strengths_en:['Reliability as a superpower: you almost never fail the people who count on you','Long-term thinking that produces genuinely durable outcomes','Extraordinary capacity to hold space for others\' chaos without being destabilized'],
+  strengths_ko:['초능력으로서의 신뢰성: 당신에게 의지하는 사람들을 거의 실망시키지 않습니다','진정으로 지속적인 결과를 만들어내는 장기적 사고','불안정해지지 않고 다른 사람들의 혼돈을 위한 공간을 유지하는 탁월한 능력'],
+  shadows_en:['Stubbornness dressed as steadiness: the mountain can refuse to move when movement is needed','The burden of always being the stable one — when does 戊土 get to fall apart for a minute?'],
+  shadows_ko:['안정감으로 포장된 고집: 산은 움직임이 필요할 때 움직이기를 거부할 수 있습니다','항상 안정적인 사람이 되는 짐 — 무토는 언제 잠깐 무너질 수 있을까요?'],
+  keywords_en:['STABILITY','FOUNDATION','PATIENCE','PROTECTION','PERMANENCE'],
+  keywords_ko:['안정','기반','인내','보호','영속'],
+},
+'己': {
+  element:'Earth',polarity:'Yin',name_en:'Yin Earth',name_ko:'기토(己土)',
+  title_en:'THE FERTILE SOIL',title_ko:'옥토(沃土)',
+  oneliner_en:'Rich, fertile earth — the kind that turns seeds into forests, ideas into empires, and thin relationships into roots that hold.',
+  oneliner_ko:'풍부하고 비옥한 흙 — 씨앗을 숲으로, 아이디어를 제국으로, 얕은 관계를 버티는 뿌리로 바꾸는.',
+  personality_en:['You are a nurturer in the original sense of the word — not the diminished version we\'ve inherited, but the ground itself, the soil that contains exactly what is needed for things to grow. Ideas that come near you get developed. Relationships in your orbit get deeper. Projects you touch reach completion.','You have an almost alchemical relationship with other people\'s potential. You see it before they do. You tend to it before they know it exists. This gift can lead you into helping arrangements that are not reciprocal.','Your inner world is more complex and tumultuous than your soft exterior suggests. You process deeply, feel acutely, and arrive at clarity through a long, winding, often uncomfortable internal route.'],
+  personality_ko:['당신은 원래 의미에서의 양육자입니다 — 물려받은 축소된 버전이 아니라, 사물이 자라는 데 필요한 것을 정확히 담고 있는 토양 자체. 당신 근처에 오는 아이디어는 발전합니다. 당신 궤도의 관계는 더 깊어집니다.','당신은 다른 사람들의 잠재력과 거의 연금술적인 관계가 있습니다. 그들이 알기 전에 당신은 그것을 봅니다. 그들이 그것이 존재한다는 것을 알기 전에 당신은 그것을 돌봅니다.','당신의 내면 세계는 부드러운 외모가 시사하는 것보다 더 복잡하고 격동적입니다. 깊이 처리하고, 예리하게 느끼고, 길고 구불구불하며 종종 불편한 내부 경로를 통해 명료함에 도달합니다.'],
+  strengths_en:['Nurturing intelligence that makes everyone around you more capable','Deep emotional processing that leads to genuine wisdom','The ability to create the conditions for others\' success and your own simultaneously'],
+  strengths_ko:['주변 모든 사람을 더 유능하게 만드는 양육 지성','진정한 지혜로 이어지는 깊은 감정 처리','타인의 성공과 자신의 성공을 위한 조건을 동시에 만드는 능력'],
+  shadows_en:['Over-giving until your own soil is depleted','Difficulty recognizing your contributions because they often happen underground, invisibly'],
+  shadows_ko:['자신의 토양이 고갈될 때까지 과도하게 주기','종종 지하에서, 보이지 않게 일어나기 때문에 자신의 기여를 인식하기 어려움'],
+  keywords_en:['NOURISHMENT','DISCERNMENT','WARMTH','PATIENCE','CULTIVATION'],
+  keywords_ko:['양육','식별력','따뜻함','인내','재배'],
+},
+'庚': {
+  element:'Metal',polarity:'Yang',name_en:'Yang Metal',name_ko:'경금(庚金)',
+  title_en:'THE RAW ORE',title_ko:'원석(原石)',
+  oneliner_en:'Raw iron ore from the earth\'s core — not yet refined, not yet a sword, but containing exactly the hardness that will one day cut through everything.',
+  oneliner_ko:'지구 핵에서 나온 원광석 — 아직 정제되지 않았고, 아직 검이 아니지만, 언젠가 모든 것을 관통할 단단함을 정확히 담고 있는.',
+  personality_en:['There is an intensity to you that people feel immediately. Not aggression — though it can read that way. It is a kind of relentless pressure toward truth. You cannot tolerate vagueness, softness where clarity is needed, or pretense where honesty is available. This is both your gift and the reason certain people find you difficult.','You hold high standards. For yourself, first — often to a punishing degree. And then for the people and structures around you. The world, in your experience, frequently falls short. This creates a specific frustration that can become cynicism if you\'re not careful.','Beneath the metal exterior: 庚金 is not finished. The ore is not the sword. You are in a constant process of refinement, being shaped by heat and pressure into something more precise. The challenges of your life have not broken you. They have sharpened you.'],
+  personality_ko:['사람들이 즉시 느끼는 강렬함이 당신에게 있습니다. 공격성이 아닙니다 — 그렇게 읽힐 수 있지만. 그것은 진실을 향한 끊임없는 압박의 일종입니다. 명료함이 필요한 곳에서의 모호함, 정직이 가능한 곳에서의 가식을 참을 수 없습니다.','당신은 높은 기준을 유지합니다. 먼저 자신에게 — 종종 가혹한 수준으로. 그리고 주변의 사람들과 구조에게. 당신의 경험에서 세상은 자주 기대에 못 미칩니다.','금속 외관 아래에서: 경금(庚金)은 완성되지 않았습니다. 광석은 검이 아닙니다. 당신은 끊임없는 정련 과정에 있으며, 열과 압력에 의해 더 정밀한 무언가로 형성되고 있습니다.'],
+  strengths_en:['Moral precision: you know the right call and you make it, even when it costs you','The strength to initiate necessary endings — you can cut what needs cutting','Natural authority that comes from demonstrated capacity, not demand'],
+  strengths_ko:['도덕적 정확성: 옳은 결정을 알고 그것이 당신에게 비용이 들어도 그것을 합니다','필요한 종결을 시작하는 강인함 — 잘라야 할 것을 자를 수 있습니다','요구가 아닌 입증된 능력에서 오는 자연스러운 권위'],
+  shadows_en:['Standards that become weapons turned inward: relentless self-critique that never fully relents','The isolation of always being the hardest person in the room'],
+  shadows_ko:['내면을 향해 무기가 되는 기준: 결코 완전히 완화되지 않는 끊임없는 자기 비판','항상 방에서 가장 강인한 사람이 되는 고립'],
+  keywords_en:['STRENGTH','PRECISION','JUSTICE','COURAGE','REFINEMENT'],
+  keywords_ko:['강인함','정밀함','정의','용기','정련'],
+},
+'辛': {
+  element:'Metal',polarity:'Yin',name_en:'Yin Metal',name_ko:'신금(辛金)',
+  title_en:'THE POLISHED BLADE',title_ko:'보검(寶劍)',
+  oneliner_en:'The polished blade of a master\'s sword — beautiful, precise, and capable of surgical cuts so clean they don\'t hurt until the motion is over.',
+  oneliner_ko:'장인의 검날 — 아름답고 정밀하며, 움직임이 끝날 때까지 아프지 않을 정도로 정교한 절개를 할 수 있는.',
+  personality_en:['You are refined in a way that is not affectation — it goes to the core of how you process the world. You notice what others miss: the detail that changes the picture, the word that reveals the subtext. This precision is a gift and also a sensitivity that, uncalibrated, can make everything feel slightly short of what it could be.','Your aesthetic intelligence is exceptional. Whether in design, writing, music, cooking, architecture — you bring a quality of attunement to craft that makes your work feel considered in ways others can\'t fully explain.','You are more emotional than your polished surface suggests. 辛金 is the finished blade, but what made it was fire and pressure and heat — and those experiences are still in the metal. You carry experience in you. You have learned to be discriminating about who and what you allow near you. This is not coldness. It is appropriate self-protection.'],
+  personality_ko:['당신의 정교함은 가식이 아닙니다 — 세상을 처리하는 방식의 핵심까지 갑니다. 다른 사람들이 놓치는 것을 알아챕니다: 그림을 바꾸는 세부사항, 행간을 드러내는 단어. 이 정밀함은 선물이지만 또한 보정되지 않으면 모든 것이 조금 부족하게 느껴지게 하는 감수성이기도 합니다.','당신의 미적 지성은 탁월합니다. 디자인, 글쓰기, 음악, 요리, 건축 어느 분야에서든 — 다른 사람들이 완전히 설명할 수 없는 방식으로 배려된 느낌을 주는 공명의 질을 장인정신에 가져옵니다.','당신은 당신의 세련된 표면이 시사하는 것보다 더 감정적입니다. 신금(辛金)은 완성된 검날이지만, 그것을 만든 것은 불과 압력과 열이었습니다 — 그리고 그 경험들은 여전히 금속 안에 있습니다.'],
+  strengths_en:['Refined perception that creates exceptional work in whatever field you operate','Emotional intelligence that reads the room and adjusts without others noticing','The capacity to make beautiful things, including beautiful relationships'],
+  strengths_ko:['어떤 분야에서든 탁월한 작업을 만들어내는 정제된 인식','다른 사람들이 알아차리지 못하는 사이에 방을 읽고 조정하는 감성 지능','아름다운 관계를 포함해 아름다운 것들을 만드는 능력'],
+  shadows_en:['Perfectionism that becomes the enemy of done: the polishing goes on past the point of usefulness','Cutting others with precision when hurt — the blade doesn\'t know it\'s been unsheathed'],
+  shadows_ko:['완료의 적이 되는 완벽주의: 유용함의 지점을 넘어서도 계속되는 연마','상처받았을 때 다른 사람들을 정밀하게 자르는 것 — 검은 뽑혔다는 것을 모릅니다'],
+  keywords_en:['REFINEMENT','ELEGANCE','DISCERNMENT','PRECISION','BEAUTY'],
+  keywords_ko:['정련','우아함','식별력','정밀함','아름다움'],
+},
+'壬': {
+  element:'Water',polarity:'Yang',name_en:'Yang Water',name_ko:'임수(壬水)',
+  title_en:'THE GREAT RIVER',title_ko:'대하(大河)',
+  oneliner_en:'The great river — moving always, finding passage through every obstacle, carrying more beneath its surface than any eye can see from the bank.',
+  oneliner_ko:'대하(大河) — 항상 움직이고, 모든 장애물을 통과하는 길을 찾고, 강둑에서는 어떤 눈으로도 볼 수 없을 만큼 많은 것을 수면 아래에 담고.',
+  personality_en:['Your mind does not move in straight lines. It flows — around problems, through gaps, into unexplored territory, back to old questions with new eyes. This makes you an extraordinary strategic thinker and an occasionally maddening conversational partner, because you arrived at your conclusion three steps before you said the step you\'re currently on.','You are drawn to knowledge with a hunger that doesn\'t fully satisfy. Each answer contains approximately four new questions, and the river cannot stop to examine what it has already passed. You may have started multiple things in your life. Some of them are remarkable unfinished projects that live in your mind as both achievements and guilts.','Your emotional depth is one of your most misunderstood qualities. The river looks calm from the bridge. Beneath the surface, the current is significant. You experience emotion with intensity, but water does not always announce its depth.'],
+  personality_ko:['당신의 마음은 직선으로 움직이지 않습니다. 흐릅니다 — 문제 주위를, 틈을 통해, 탐험되지 않은 영역으로, 새로운 눈으로 오래된 질문으로 돌아갑니다. 이것은 당신을 탁월한 전략적 사고자로 만들고 때로는 당혹스러운 대화 상대로 만듭니다.','당신은 완전히 충족되지 않는 굶주림으로 지식에 끌립니다. 각 답은 대략 네 개의 새로운 질문을 담고 있고, 강은 이미 지나간 것을 검토하기 위해 멈출 수 없습니다.','당신의 감정적 깊이는 가장 오해받는 특성 중 하나입니다. 강은 다리에서 보면 고요합니다. 수면 아래에서 물살은 상당합니다.'],
+  strengths_en:['Strategic intelligence that sees through complexity to find the path forward','Absorptive capacity for information, experience, and other people\'s realities','A philosophical resilience: you know, in your bones, that water always eventually reaches the ocean'],
+  strengths_ko:['복잡함을 꿰뚫어 앞으로 나아가는 길을 찾는 전략적 지성','정보, 경험, 다른 사람들의 현실을 흡수하는 능력','철학적 회복력: 물은 언제나 결국 바다에 도달한다는 것을 뼛속으로 압니다'],
+  shadows_en:['The paralysis of too many paths: when everything is a possibility, sometimes nothing gets chosen','Emotional depth that doesn\'t always surface in time — others may feel you\'re withholding when you\'re just processing'],
+  shadows_ko:['너무 많은 경로의 마비: 모든 것이 가능성일 때, 때로는 아무것도 선택되지 않습니다','항상 제때 수면에 오르지 않는 감정적 깊이 — 당신이 처리하는 중일 때 다른 사람들은 당신이 숨기고 있다고 느낄 수 있습니다'],
+  keywords_en:['INTELLIGENCE','FLOW','DEPTH','STRATEGY','WISDOM'],
+  keywords_ko:['지성','흐름','깊이','전략','지혜'],
+},
+'癸': {
+  element:'Water',polarity:'Yin',name_en:'Yin Water',name_ko:'계수(癸水)',
+  title_en:'THE MORNING DEW',title_ko:'아침 이슬',
+  oneliner_en:'Morning dew, hidden spring, the quiet rain that finds every crack — softness so persistent it shapes stone.',
+  oneliner_ko:'아침 이슬, 숨겨진 샘, 모든 균열을 찾는 조용한 비 — 너무나 집요해서 돌을 형성하는 부드러움.',
+  personality_en:['You are sensitive in a way the world has not adequately valued. Not fragile — sensitive, in the precise sense: capable of detecting what others cannot. You read subtlety. You notice the pause, the slight change in tone, the thing that was not said but was present in the room. This is not anxiety. It is a form of intelligence that operates through attunement.','Your inner life is extraordinarily rich. Dreams, intuitions, moods that seem to arrive with the weather — 癸水 lives at the interface between the known and the unknown. You may have found yourself drawn to creative work, spiritual inquiry, healing arts, anything that takes the formless and gives it shape.','You have a quality of empathy that can blur your own edges. In the presence of strong emotion — someone else\'s grief, someone else\'s certainty — you may find yourself feeling it too. Learning your own edges is work 癸水 returns to throughout a lifetime.'],
+  personality_ko:['당신은 세상이 충분히 가치 있게 여기지 않는 방식으로 민감합니다. 취약한 것이 아닙니다 — 민감한, 정확한 의미에서: 다른 사람들이 감지할 수 없는 것을 감지할 수 있는. 당신은 뉘앙스를 읽습니다. 멈춤, 어조의 미묘한 변화, 말해지지 않았지만 방에 있었던 것을 알아챕니다.','당신의 내면 생활은 매우 풍요롭습니다. 꿈, 직관, 날씨와 함께 오는 것 같은 기분 — 계수(癸水)는 알려진 것과 알려지지 않은 것의 경계에서 삽니다.','당신은 자신의 경계를 흐리게 할 수 있는 공감의 특성이 있습니다. 강한 감정의 존재에서 — 다른 사람의 슬픔, 다른 사람의 확신 — 당신도 그것을 느끼는 자신을 발견할 수 있습니다.'],
+  strengths_en:['Intuitive intelligence that perceives what data cannot measure','Empathic resonance that makes others feel genuinely understood','Creative depth that draws from places others cannot access'],
+  strengths_ko:['데이터가 측정할 수 없는 것을 인식하는 직관적 지성','다른 사람들이 진정으로 이해받는다고 느끼게 하는 공감적 공명','다른 사람들이 접근할 수 없는 곳에서 끌어오는 창의적 깊이'],
+  shadows_en:['Absorbing others\' emotions until you cannot locate your own','The difficulty of asserting yourself clearly — water always finds the path of least resistance'],
+  shadows_ko:['자신의 것을 찾을 수 없을 때까지 다른 사람들의 감정을 흡수하기','자신을 명확하게 주장하는 어려움 — 물은 항상 최소 저항의 경로를 찾습니다'],
+  keywords_en:['INTUITION','EMPATHY','CREATIVITY','SENSITIVITY','MYSTERY'],
+  keywords_ko:['직관','공감','창의성','감수성','신비'],
+},
+};
+
+
+// ═══════════════════════════════════════════════
+// SECTION D: APP STATE
+// ═══════════════════════════════════════════════
+const AppState = {
+  language: localStorage.getItem('momentor_lang') || 'en',
+  chart: null,
+  userGender: 'M',
+  userName: '',
+  isPremium: false,
+  waitlist: JSON.parse(localStorage.getItem('momentor_waitlist') || '[]'),
+};
+
+// ═══════════════════════════════════════════════
+// SECTION E: SAJU CALCULATION ENGINE
+// ═══════════════════════════════════════════════
+
+function getSolarTermDay(year, month0) {
+  // month0: 0=Jan(小寒), 1=Feb(立春), 2=Mar(驚蟄), ..., 11=Dec(大雪)
+  const Y = year % 100;
+  const base = year >= 2000 ? ST_BASE_20[month0] : ST_BASE_19[month0];
+  return Math.floor(Y * 0.2422 + base) - Math.floor(Y / 4);
+}
+
+function calcSolarTermDate(year, month0) {
+  return { year, month: month0 + 1, day: getSolarTermDay(year, month0) };
+}
+
+function calcYearPillar(year) {
+  // 甲子 year = 4 CE, so offset = 4+6=10 → (4+6)%10=0 ✓
+  const stemIdx = ((year + 6) % 10 + 10) % 10;
+  const branchIdx = ((year + 8) % 12 + 12) % 12;
+  return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+           element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
+           branchElement: BRANCH_ELEMENTS[branchIdx] };
+}
+
+function calcMonthPillar(year, month, day) {
+  // Determine which solar month we're in based on the solar term (節)
+  // Solar month index: 立春(Feb)=1, 驚蟄(Mar)=2, ..., 小寒(Jan of next year)=0
+  const m0 = month - 1; // 0-indexed
+  const termDay = getSolarTermDay(year, m0);
+  
+  // Solar month number (0=寅月/立春 to 11=丑月/小寒)
+  // 寅月 starts at 立春 (Feb term), index 1 in our month0 system
+  let solarMonthIdx; // 0=寅, 1=卯, 2=辰, 3=巳, 4=午, 5=未, 6=申, 7=酉, 8=戌, 9=亥, 10=子, 11=丑
+  
+  // Which calendar month is the 節 term → solar month mapping:
+  // Jan(0)=小寒→丑(11), Feb(1)=立春→寅(0), Mar(2)=驚蟄→卯(1), Apr(3)=清明→辰(2)
+  // May(4)=立夏→巳(3), Jun(5)=芒種→午(4), Jul(6)=小暑→未(5), Aug(7)=立秋→申(6)
+  // Sep(8)=白露→酉(7), Oct(9)=寒露→戌(8), Nov(10)=立冬→亥(9), Dec(11)=大雪→子(10)
+  const calToSolar = [11,0,1,2,3,4,5,6,7,8,9,10];
+  
+  let effMonth0 = m0;
+  if (day < termDay) {
+    // Before the term of this month → still in previous solar month
+    effMonth0 = (m0 - 1 + 12) % 12;
+    if (m0 === 0) effMonth0 = 11; // Jan before 小寒 → prev Dec's solar month (子月)
+  }
+  solarMonthIdx = calToSolar[effMonth0];
+  
+  // Month stem: based on year stem
+  // 甲(0)/己(5) year → 寅月(0) starts at 丙(2)
+  // 乙(1)/庚(6) year → 寅月(0) starts at 戊(4)
+  // 丙(2)/辛(7) year → 寅月(0) starts at 庚(6)
+  // 丁(3)/壬(8) year → 寅月(0) starts at 壬(8)
+  // 戊(4)/癸(9) year → 寅月(0) starts at 甲(0)
+  const yStemIdx = ((year + 6) % 10 + 10) % 10;
+  const startStem = ((yStemIdx % 5) * 2 + 2) % 10;
+  const monthStemIdx = (startStem + solarMonthIdx) % 10;
+  // Month branch: 寅=2, 卯=3, ..., 丑=1
+  const monthBranchIdx = (solarMonthIdx + 2) % 12;
+  
+  return { stem: STEMS[monthStemIdx], branch: BRANCHES[monthBranchIdx],
+           element: STEM_ELEMENTS[monthStemIdx], polarity: STEM_POLARITIES[monthStemIdx],
+           branchElement: BRANCH_ELEMENTS[monthBranchIdx] };
+}
+
+function calcDayPillar(year, month, day) {
+  // Reference: 2000-01-01 = 甲子 (stemIdx=0, branchIdx=0)
+  const ref = new Date(2000, 0, 1);
+  const d = new Date(year, month - 1, day);
+  const diffDays = Math.round((d - ref) / 86400000);
+  const stemIdx = ((diffDays % 10) + 10) % 10;
+  const branchIdx = ((diffDays % 12) + 12) % 12;
+  return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+           element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
+           branchElement: BRANCH_ELEMENTS[branchIdx] };
+}
+
+function calcHourPillar(dayPillar, hour) {
+  // 子時=0(23-1), 丑時=1(1-3), 寅時=2(3-5), 卯時=3(5-7), 辰時=4(7-9), 巳時=5(9-11)
+  // 午時=6(11-13), 未時=7(13-15), 申時=8(15-17), 酉時=9(17-19), 戌時=10(19-21), 亥時=11(21-23)
+  const h = hour === 23 ? 0 : Math.floor((hour + 1) / 2);
+  const branchIdx = h % 12;
+  // Hour stem based on day stem
+  const dStemIdx = STEMS.indexOf(dayPillar.stem);
+  const startStem = ((dStemIdx % 5) * 2) % 10; // 子時 stem
+  const stemIdx = (startStem + branchIdx) % 10;
+  return { stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+           element: STEM_ELEMENTS[stemIdx], polarity: STEM_POLARITIES[stemIdx],
+           branchElement: BRANCH_ELEMENTS[branchIdx] };
+}
+
+function calcTenGod(dayMasterStem, targetStem) {
+  if (!targetStem || targetStem === '?') return '';
+  const dmEl = STEM_ELEMENTS[STEMS.indexOf(dayMasterStem)];
+  const dmPol = STEM_POLARITIES[STEMS.indexOf(dayMasterStem)];
+  const tgEl = STEM_ELEMENTS[STEMS.indexOf(targetStem)];
+  const tgPol = STEM_POLARITIES[STEMS.indexOf(targetStem)];
+  const sameEl = dmEl === tgEl;
+  const samePol = dmPol === tgPol;
+  if (sameEl) return samePol ? 'bigyeon' : 'geopjae';
+  if (PRODUCES[dmEl] === tgEl) return samePol ? 'sikshin' : 'sanggwan';
+  if (PRODUCES[tgEl] === dmEl) return samePol ? 'pyeongin' : 'jeongin';
+  if (CONTROLS[dmEl] === tgEl) return samePol ? 'pyeonginjae' : 'jeongjae';
+  if (CONTROLS[tgEl] === dmEl) return samePol ? 'pyeonggwan' : 'jeonggwan';
+  return '';
+}
+
+function calcElements(pillars) {
+  const counts = {Wood:0,Fire:0,Earth:0,Metal:0,Water:0};
+  const all = [pillars.year, pillars.month, pillars.day, pillars.hour].filter(Boolean);
+  all.forEach(p => {
+    if (p.stem !== '?') counts[p.element] = (counts[p.element]||0) + 1;
+    if (p.branchElement) counts[p.branchElement] = (counts[p.branchElement]||0) + 1;
+  });
+  const total = Object.values(counts).reduce((a,b)=>a+b,0) || 1;
+  const result = {};
+  ELEM_ORDER.forEach(el => { result[el] = { count: counts[el]||0, pct: Math.round((counts[el]||0)/total*100) }; });
+  return result;
+}
+
+function calcDaeunStartAge(year, month, day, monthPillar, forward) {
+  const m0 = month - 1;
+  let termYear = year, termMonth0 = m0;
+  
+  if (forward) {
+    const termDay = getSolarTermDay(year, m0);
+    if (day >= termDay) {
+      termMonth0 = (m0 + 1) % 12;
+      termYear = m0 === 11 ? year + 1 : year;
+    }
+    const targetDay = getSolarTermDay(termYear, termMonth0);
+    const birth = new Date(year, month-1, day);
+    const term = new Date(termYear, termMonth0, targetDay);
+    const diff = (term - birth) / 86400000;
+    return Math.max(1, Math.round(diff / 3));
+  } else {
+    const termDay = getSolarTermDay(year, m0);
+    if (day < termDay) {
+      termMonth0 = (m0 - 1 + 12) % 12;
+      termYear = m0 === 0 ? year - 1 : year;
+    }
+    const targetDay = getSolarTermDay(termYear, termMonth0);
+    const birth = new Date(year, month-1, day);
+    const term = new Date(termYear, termMonth0, targetDay);
+    const diff = Math.abs(birth - term) / 86400000;
+    return Math.max(1, Math.round(diff / 3));
+  }
+}
+
+function calcDaeun(year, month, day, pillars, gender) {
+  const yStemIdx = STEMS.indexOf(pillars.year.stem);
+  const isYangYear = yStemIdx % 2 === 0;
+  const isMale = gender === 'M';
+  const forward = (isYangYear && isMale) || (!isYangYear && !isMale);
+  
+  const mStemIdx = STEMS.indexOf(pillars.month.stem);
+  const mBranchIdx = BRANCHES.indexOf(pillars.month.branch);
+  const startAge = calcDaeunStartAge(year, month, day, pillars.month, forward);
+  
+  const currentYear = new Date().getFullYear();
+  const userAge = currentYear - year;
+  
+  const daeun = [];
+  for (let i = 0; i < 8; i++) {
+    const stemIdx = forward
+      ? (mStemIdx + 1 + i) % 10
+      : ((mStemIdx - 1 - i) % 10 + 10) % 10;
+    const branchIdx = forward
+      ? (mBranchIdx + 1 + i) % 12
+      : ((mBranchIdx - 1 - i) % 12 + 12) % 12;
+    const ageStart = startAge + i * 10;
+    const ageEnd = ageStart + 9;
+    const isCurrent = userAge >= ageStart && userAge <= ageEnd;
+    daeun.push({
+      stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+      element: STEM_ELEMENTS[stemIdx],
+      ageStart, ageEnd, isCurrent,
+      yearStart: year + ageStart, yearEnd: year + ageEnd,
+    });
+  }
+  return { daeun, startAge, forward };
+}
+
+function calcTodayFortune(dayMaster, todayPillar) {
+  const dmEl = dayMaster.element;
+  const todayEl = todayPillar.element;
+  let type = 'neutral';
+  if (PRODUCES[todayEl] === dmEl) type = 'high';      // today produces dm → favorable
+  else if (CONTROLS[todayEl] === dmEl) type = 'low';  // today controls dm → challenging
+  else if (PRODUCES[dmEl] === todayEl) type = 'neutral'; // dm produces today
+  else if (CONTROLS[dmEl] === todayEl) type = 'neutral';
+  else if (dmEl === todayEl) type = 'neutral';
+  
+  const luckyEl = type === 'high' ? dmEl : (type === 'low' ? PRODUCES[dmEl] : dmEl);
+  const nums = LUCKY_NUMS[luckyEl] || [5];
+  return {
+    type,
+    todayPillar,
+    luckyColor: LUCKY_COLORS[luckyEl],
+    luckyColorKo: LUCKY_COLORS_KR[luckyEl],
+    luckyDir: LUCKY_DIRS[luckyEl],
+    luckyDirKo: LUCKY_DIRS_KR[luckyEl],
+    luckyNum: nums[0],
+  };
+}
+
+function buildFullChart(year, month, day, hour, minute, gender, noTime) {
+  const yPillar = calcYearPillar(year);
+  const mPillar = calcMonthPillar(year, month, day);
+  const dPillar = calcDayPillar(year, month, day);
+  let hPillar;
+  if (noTime) {
+    hPillar = { stem: '?', branch: '?', element: 'Water', branchElement: 'Water', unknown: true };
+  } else {
+    hPillar = calcHourPillar(dPillar, hour);
+  }
+  
+  const pillars = { year: yPillar, month: mPillar, day: dPillar, hour: hPillar };
+  const dayMaster = {
+    stem: dPillar.stem,
+    element: dPillar.element,
+    polarity: dPillar.polarity,
+    profile: DAY_MASTERS[dPillar.stem],
+  };
+  const elements = calcElements(pillars);
+  const daeunData = calcDaeun(year, month, day, pillars, gender);
+  
+  // Today's fortune
+  const today = new Date();
+  const todayPillar = calcDayPillar(today.getFullYear(), today.getMonth()+1, today.getDate());
+  const fortune = calcTodayFortune(dayMaster, todayPillar);
+  
+  // Ten gods
+  const tenGods = {};
+  ['year','month','hour'].forEach(pos => {
+    const p = pillars[pos];
+    if (p && p.stem && p.stem !== '?') {
+      tenGods[pos] = calcTenGod(dPillar.stem, p.stem);
+    }
+  });
+  
+  return { year, month, day, hour, minute, noTime, gender, pillars, dayMaster, elements, daeunData, fortune, tenGods };
+}
+
+
+
+// ═══════════════════════════════════════════════
+// SECTION C: SOLAR TERM CALCULATION
+// ═══════════════════════════════════════════════
+function calcSolarTermDate(year, termIndex) {
+  // termIndex: 0=小寒(Jan), 1=立春(Feb), 2=驚蟄(Mar), 3=清明(Apr),
+  //            4=立夏(May), 5=芒種(Jun), 6=小暑(Jul), 7=立秋(Aug),
+  //            8=白露(Sep), 9=寒露(Oct), 10=立冬(Nov), 11=大雪(Dec)
+  const C = (year % 100 < 20) ? ST_BASE_19[termIndex] : ST_BASE_20[termIndex];
+  const Y = year % 100;
+  return Math.trunc(Y * 0.2422 + C) - Math.trunc(Y / 4);
+}
+
+// ═══════════════════════════════════════════════
+// SECTION D: PILLAR CALCULATIONS
+// ═══════════════════════════════════════════════
+function getYearPillar(year, month, day) {
+  const lichunDay = calcSolarTermDate(year, 1);
+  const effectiveYear = (month < 2 || (month === 2 && day < lichunDay)) ? year - 1 : year;
+  const stemIdx = ((effectiveYear - 4) % 10 + 10) % 10;
+  const branchIdx = ((effectiveYear - 4) % 12 + 12) % 12;
+  return {
+    stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+    stemKr: STEM_KR[stemIdx], branchKr: BRANCH_KR[branchIdx],
+    element: STEM_ELEMENTS[stemIdx], branchElement: BRANCH_ELEMENTS[branchIdx],
+    stemIdx, branchIdx
+  };
+}
+
+function getMonthPillar(year, month, day) {
+  const termDay = calcSolarTermDate(year, month - 1);
+  const monthIndex = (day < termDay) ? month - 2 : month - 1;
+  const adjustedMonth = ((monthIndex % 12) + 12) % 12;
+  const yearStemIdx = ((year - 4) % 10 + 10) % 10;
+  const monthStemStart = (yearStemIdx % 5) * 2;
+  const stemIdx = (monthStemStart + adjustedMonth) % 10;
+  const branchIdx = (adjustedMonth + 2) % 12;
+  return {
+    stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+    stemKr: STEM_KR[stemIdx], branchKr: BRANCH_KR[branchIdx],
+    element: STEM_ELEMENTS[stemIdx], branchElement: BRANCH_ELEMENTS[branchIdx],
+    stemIdx, branchIdx
+  };
+}
+
+function getDayPillar(year, month, day) {
+  function toJulian(y, m, d) {
+    if (m <= 2) { y--; m += 12; }
+    const A = Math.floor(y / 100);
+    const B = 2 - A + Math.floor(A / 4);
+    return Math.floor(365.25 * (y + 4716)) + Math.floor(30.6001 * (m + 1)) + d + B - 1524;
+  }
+  const jd = toJulian(year, month, day);
+  const stemIdx = ((jd - 11) % 10 + 10) % 10;
+  const branchIdx = ((jd - 11) % 12 + 12) % 12;
+  return {
+    stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+    stemKr: STEM_KR[stemIdx], branchKr: BRANCH_KR[branchIdx],
+    element: STEM_ELEMENTS[stemIdx], branchElement: BRANCH_ELEMENTS[branchIdx],
+    stemIdx, branchIdx
+  };
+}
+
+function getHourPillar(dayStemIdx, hour) {
+  const branchIdx = hour === 23 ? 0 : Math.floor((hour + 1) / 2) % 12;
+  const stemStart = (dayStemIdx % 5) * 2;
+  const stemIdx = (stemStart + branchIdx) % 10;
+  return {
+    stem: STEMS[stemIdx], branch: BRANCHES[branchIdx],
+    stemKr: STEM_KR[stemIdx], branchKr: BRANCH_KR[branchIdx],
+    element: STEM_ELEMENTS[stemIdx], branchElement: BRANCH_ELEMENTS[branchIdx],
+    stemIdx, branchIdx
+  };
+}
+
+function calcFourPillars(year, month, day, hour, minute, gender, noTime) {
+  const yearPillar = getYearPillar(year, month, day);
+  const monthPillar = getMonthPillar(year, month, day);
+  const dayPillar = getDayPillar(year, month, day);
+  const hourPillar = noTime ? null : getHourPillar(dayPillar.stemIdx, hour);
+
+  const elements = {Wood:0,Fire:0,Earth:0,Metal:0,Water:0};
+  [yearPillar, monthPillar, dayPillar, hourPillar].forEach(p => {
+    if (!p) return;
+    elements[p.element]++;
+    elements[p.branchElement]++;
+  });
+
+  const yearYang = yearPillar.stemIdx % 2 === 0;
+  const forward = (yearYang && gender === 'M') || (!yearYang && gender === 'F');
+
+  const daeun = [];
+  const startAge = 5;
+  for (let i = 0; i < 8; i++) {
+    const age = startAge + i * 10;
+    const mIdx = ((monthPillar.branchIdx + (forward ? i+1 : -(i+1))) % 12 + 12) % 12;
+    const sIdx = ((monthPillar.stemIdx + (forward ? i+1 : -(i+1))) % 10 + 10) % 10;
+    const currentYear = new Date().getFullYear();
+    const personAge = currentYear - year;
+    daeun.push({
+      age, stem: STEMS[sIdx], branch: BRANCHES[mIdx],
+      stemKr: STEM_KR[sIdx], branchKr: BRANCH_KR[mIdx],
+      element: STEM_ELEMENTS[sIdx], branchElement: BRANCH_ELEMENTS[mIdx],
+      stemIdx: sIdx, branchIdx: mIdx,
+      isCurrent: personAge >= age && personAge < age + 10
+    });
+  }
+
+  return { yearPillar, monthPillar, dayPillar, hourPillar, elements, daeun, noTime };
+}
+
+// ═══════════════════════════════════════════════
+// SECTION E: DAY MASTER DATA
+// ═══════════════════════════════════════════════
+const DAY_MASTERS = {
+  '甲': {
+    element: 'Wood', polarity: 'Yang',
+    titleEn: 'Yang Wood — The Towering Oak',
+    onelinerEn: 'Not a sapling, not a hedge. A towering oak that grew through concrete if it had to.',
+    bodyEn: 'There is something relentless about you — a forward motion that doesn\'t require permission and doesn\'t acknowledge walls the way other people do. Where others see obstacles, you see the next handhold. Where others pause to assess risk, you\'re already halfway up. This isn\'t recklessness. It\'s a profound, bone-deep orientation toward upward. You were wired for growth before you had a word for it.\n\nThe people in your life have probably called you driven, ambitious, or — when they\'re being less generous — stubborn. They\'re not wrong about the stubbornness, but they\'re missing the reason behind it. You don\'t hold your position out of ego. You hold it because you\'ve already thought about it from seventeen angles, and this is where you landed. When 甲 Wood commits to a direction, it\'s not impulsive — it\'s structural. Like a root system. You go deep before you go wide.\n\nWhat most people never see is how much you carry in private. The 甲 Oak looks powerful from the outside — tall, solid, unbothered by wind. Inside: the constant calculation, the weight of your own standards, the quiet loneliness of being the person everyone else leans on. You give and give and give, and sometimes you wonder if anyone notices the tree before it falls.',
+    strengthsEn: ['Pioneering under pressure: You don\'t just survive hard environments — you become the landmark that others navigate by.', 'Structural loyalty: When you commit to a person or a cause, you don\'t drift. Decade after decade, you are still there.', 'Visionary patience: You can hold a long-term goal in your chest for years without losing faith in it, while others forget they ever wanted it.'],
+    shadowsEn: ['Rigidity disguised as principle: Sometimes your "this is who I am" is actually "I don\'t know how to change, and I\'m afraid of it."', 'The weight of being unmovable: You absorb other people\'s storms without letting them see the cost. Eventually, even oaks split.'],
+    keywordsEn: ['Growth', 'Integrity', 'Leadership', 'Endurance', 'Pioneer'],
+    titleKo: '양목 — 거목',
+    onelinerKo: '묘목이 아닙니다, 울타리도 아닙니다. 콘크리트를 뚫고 자란 거목입니다.',
+    bodyKo: '당신에게는 뭔가 끊임없는 것이 있습니다 — 허락을 구하지 않고, 타인이 느끼는 방식으로 벽을 인식하지 않는 전진하는 힘입니다. 남들이 장애물을 보는 곳에서 당신은 다음 발판을 봅니다. 남들이 위험을 평가하며 멈추는 동안, 당신은 이미 반쯤 올라와 있습니다. 이것은 무모함이 아닙니다. 깊은 곳에서 새겨진 위로를 향한 방향성입니다.\n\n당신 삶의 사람들은 아마도 당신을 열정적이라거나 야심차다고 불렀을 것입니다 — 덜 관대할 때는 고집스럽다고도 했겠지요. 고집에 대해서는 틀리지 않지만, 그 이유를 놓치고 있습니다. 甲木은 에고 때문에 자신의 입장을 지키지 않습니다. 이미 열일곱 가지 각도에서 생각해보고 내린 결론이기 때문입니다. 甲木이 방향에 헌신할 때, 그것은 충동적인 것이 아닙니다 — 구조적입니다.\n\n대부분의 사람들이 절대 보지 못하는 것은 당신이 내면에서 얼마나 많은 것을 감당하고 있는지입니다. 甲木의 거목은 외부에서는 강하고 단단하며 바람에도 흔들리지 않는 것처럼 보입니다. 내면에서는: 끊임없는 계산, 자신의 기준이라는 무게, 모두가 기대는 사람이 되는 조용한 고독.',
+    strengthsKo: ['압박 속의 개척: 힘든 환경에서 생존하는 것을 넘어 — 타인이 방향을 찾을 때 기준점이 됩니다.', '구조적 충성심: 사람이나 대의에 헌신하면 흔들리지 않습니다. 수십 년이 지나도 당신은 여전히 그 자리에 있습니다.', '선견지명의 인내: 남들이 원했다는 사실조차 잊어버리는 동안, 당신은 수년간 장기 목표를 가슴속에 품고 믿음을 잃지 않습니다.'],
+    shadowsKo: ['원칙으로 위장한 경직성: 때로 "이것이 내 모습이다"는 사실 "나는 변하는 방법을 모르고, 그것이 두렵다"입니다.', '움직이지 않음의 무게: 남들의 폭풍을 그 대가를 보이지 않으면서 흡수합니다. 결국, 거목조차 갈라집니다.'],
+    keywordsKo: ['성장', '성실', '리더십', '인내', '개척'],
+  },
+  '乙': {
+    element: 'Wood', polarity: 'Yin',
+    titleEn: 'Yin Wood — The Living Vine',
+    onelinerEn: 'Not rigid, not straight. A vine that reaches the top by learning the shape of everything in its way.',
+    bodyEn: 'Adaptability is your superpower, and people consistently underestimate you because of it. You don\'t arrive with flags and proclamations. You arrive quietly, observe carefully, and within six months you\'re indispensable. This is not manipulation — it\'s a profound form of intelligence. 乙 Wood knows that the oak breaks in the hurricane while the bamboo survives. You have always known that survival and success belong to those who can move.\n\nThere is a warmth in you that draws people in without effort. You make people feel heard — genuinely, specifically heard — in a way that takes others years to learn. This is because you are actually listening. Not formulating your next sentence, not waiting for your turn, but listening. This makes you a rare and precious person to have in a circle.\n\nThe shadow of 乙 Wood is the question you ask yourself at 2 AM: Am I adapting, or am I disappearing? You\'ve shaped yourself to so many people, so many environments, that sometimes you lose track of the un-adapted version of yourself. That version exists. It always existed. Finding it again — that\'s the work of your life.',
+    strengthsEn: ['Navigating the impossible: You find paths through systems, people, and situations that would stop most others cold.', 'Emotional attunement: You read rooms, read people, and read unspoken dynamics with an accuracy that borders on uncanny.', 'Resilient return: You can be bent entirely to the ground and spring back without anyone knowing you were ever down.'],
+    shadowsEn: ['Disappearing to please: Your desire for harmony can cause you to edit yourself into someone unrecognizable. The vine must know its own roots.', 'Indirect at the cost of clarity: You can spend so much energy managing others\' feelings that you forget to say what you actually need.'],
+    keywordsEn: ['Adaptability', 'Empathy', 'Elegance', 'Resilience', 'Intuition'],
+    titleKo: '음목 — 생명의 덩굴',
+    onelinerKo: '딱딱하지도, 곧지도 않습니다. 앞에 있는 모든 것의 형태를 배우며 정상에 다다르는 덩굴입니다.',
+    bodyKo: '적응력은 당신의 초능력이며, 사람들은 바로 그 때문에 당신을 끊임없이 과소평가합니다. 당신은 깃발과 선언을 들고 도착하지 않습니다. 조용히 도착하고, 주의 깊게 관찰하고, 6개월 안에 없어서는 안 될 존재가 됩니다. 이것은 조종이 아닙니다 — 이것은 심오한 형태의 지능입니다.\n\n당신에게는 사람들을 노력 없이 끌어당기는 따뜻함이 있습니다. 당신은 사람들이 진정으로, 구체적으로 들린다고 느끼게 만드는데, 그것은 남들이 배우는 데 수년이 걸리는 능력입니다. 당신이 실제로 듣고 있기 때문입니다.\n\n乙木의 그림자는 새벽 2시에 스스로에게 묻는 질문입니다: 나는 적응하고 있는 건가, 아니면 사라지고 있는 건가? 너무 많은 사람들과 환경에 자신을 맞춰온 나머지, 때로는 적응하지 않은 버전의 자신을 잃어버립니다. 그 버전은 존재합니다. 항상 존재했습니다.',
+    strengthsKo: ['불가능한 길 찾기: 대부분의 사람들을 멈추게 할 시스템, 사람들, 상황 속에서 길을 찾습니다.', '감정적 동조: 분위기, 사람들, 말하지 않은 역학을 소름 돋을 만큼 정확하게 읽습니다.', '회복력 있는 복귀: 완전히 땅에 눌려도 아무도 모르게 다시 일어날 수 있습니다.'],
+    shadowsKo: ['기쁘게 하기 위한 소멸: 조화에 대한 욕구가 당신을 알아보기 힘든 누군가로 편집하게 만들 수 있습니다.', '명확성을 희생하는 간접성: 타인의 감정을 관리하는 데 너무 많은 에너지를 쓰다가 정작 자신이 필요한 것을 말하는 것을 잊습니다.'],
+    keywordsKo: ['적응력', '공감', '우아함', '회복력', '직관'],
+  },
+  '丙': {
+    element: 'Fire', polarity: 'Yang',
+    titleEn: 'Yang Fire — The Blazing Sun',
+    onelinerEn: 'The sun itself. Not a lamp, not a match. The source that everything else orbits.',
+    bodyEn: 'You have almost certainly been told that you "have a presence." People notice when you enter a room, and they notice when you leave — though they often can\'t say exactly why. The answer is this: 丙 Fire radiates. You don\'t perform warmth; you are warmth. This quality makes you magnetic in ways that feel effortless from the inside, but that others find remarkable, even enviable.\n\nYour relationship to joy is particular. You feel it loudly and completely, and you are generous with it — you give joy, instinctively, the way the sun gives light without accounting for it. This is a beautiful quality. It is also exhausting in ways most people never acknowledge, because you\'re expected to be luminous even when you\'re depleted. The sun doesn\'t get a cloudy day by choice.\n\nThere is a pride in you that is real and worth examining. Not vanity — something older and more structural. You have a sense of your own dignity that is almost constitutional. When it\'s violated — when someone dismisses you, belittles you, or ignores you — the response is visceral. You recover. But you remember. 丙 Fire has a long memory for slights.',
+    strengthsEn: ['Radiant leadership: People follow you not because you demanded it, but because they feel better when they\'re near you.', 'Contagious enthusiasm: You are genuinely capable of making someone fall in love with an idea they\'d dismissed five minutes earlier.', 'Honest heart: You don\'t scheme. What you feel is usually what you show, and people trust that transparency absolutely.'],
+    shadowsEn: ['Pride as a wall: Your dignity is real, but it can become armor that keeps honest feedback and vulnerable love out equally.', 'Burning too bright: You attract everyone\'s need and light everyone\'s way, and sometimes there is no one left to light yours.'],
+    keywordsEn: ['Radiance', 'Generosity', 'Charisma', 'Vision', 'Dignity'],
+    titleKo: '양화 — 타오르는 태양',
+    onelinerKo: '태양 그 자체입니다. 램프가 아닙니다, 성냥도 아닙니다. 모든 것이 그 주위를 도는 근원입니다.',
+    bodyKo: '당신은 분명히 "존재감이 있다"는 말을 들어왔을 것입니다. 사람들은 당신이 방에 들어올 때 알아채고, 나갈 때도 알아챕니다. 丙火는 빛을 발합니다. 당신은 따뜻함을 연기하지 않습니다; 당신은 따뜻함 자체입니다.\n\n기쁨에 대한 당신의 관계는 특별합니다. 당신은 기쁨을 크고 완전하게 느끼고, 그것에 관대합니다 — 태양이 그것을 헤아리지 않고 빛을 주듯, 본능적으로 기쁨을 줍니다. 이것은 아름다운 특성입니다. 또한 당신이 고갈되었을 때도 빛나기를 기대받기 때문에 지치게도 합니다.\n\n당신 안에는 실재하고 살펴볼 가치가 있는 자존심이 있습니다. 허영심이 아니라 — 더 오래되고 더 구조적인 무언가입니다. 거의 헌법적인 자신의 존엄성에 대한 감각. 丙火는 모욕에 대한 긴 기억을 가지고 있습니다.',
+    strengthsKo: ['빛나는 리더십: 사람들이 요구해서가 아니라 당신 옆에 있을 때 더 나아진다고 느끼기 때문에 따릅니다.', '전염되는 열정: 5분 전만 해도 무시했던 아이디어에 누군가를 사랑하게 만들 수 있습니다.', '정직한 마음: 꾀를 부리지 않습니다. 느끼는 것이 대체로 보이는 것이고, 사람들은 그 투명함을 절대적으로 신뢰합니다.'],
+    shadowsKo: ['방벽으로서의 자존심: 당신의 존엄성은 실재하지만, 정직한 피드백과 취약한 사랑을 똑같이 막는 갑옷이 될 수 있습니다.', '너무 밝게 타오르기: 모든 사람의 필요를 끌어당기고 모든 사람의 길을 밝히다가, 때로는 당신의 길을 밝혀줄 사람이 남지 않습니다.'],
+    keywordsKo: ['빛남', '관대함', '카리스마', '비전', '존엄'],
+  },
+  '丁': {
+    element: 'Fire', polarity: 'Yin',
+    titleEn: 'Yin Fire — The Candle Flame',
+    onelinerEn: 'Intimate, precise, and powerful enough to illuminate an entire room while never announcing itself loudly.',
+    bodyEn: 'You are the most quietly powerful person in most rooms you walk into, and you prefer it that way. Unlike the blazing sun of 丙 Fire, you don\'t try to illuminate everything at once. You are particular. You choose what you light, who you warm, which corners of darkness you tend to. This selectivity is not coldness — it is reverence.\n\nThere is an intensity to you that catches people off guard. You seem gentle, thoughtful, observant — and you are all of those things. But underneath: a fire. A deep, sustained, extraordinarily consistent burn. When you care about something, you care about it with your whole self. 丁 Fire finishes things. This makes you someone people can count on in a world full of people who don\'t finish what they start.\n\nYou are perceptive in ways that make you unusually good with people, and sometimes unusually burdened by them. You notice what people are actually feeling underneath what they\'re saying. You notice when someone is pretending to be fine. This gift is real. So is the weight of it.',
+    strengthsEn: ['Deep sustained focus: You can bring more concentrated attention to a single thing than almost anyone, and maintain it long past when others would have moved on.', 'Emotional precision: You don\'t just feel — you understand what you feel, why you feel it, and what to do with it.', 'Steady warmth that transforms: People don\'t just feel comfortable around you; they become better versions of themselves while standing in your light.'],
+    shadowsEn: ['The invisible flame: You can work yourself to the bone without anyone noticing, because you\'re too dignified to ask for recognition. Dignity is good. Martyrdom is not.', 'Slow to cool: When someone breaks your trust, the wound is surprisingly deep and slow to close. Forgiveness comes, but on your timeline.'],
+    keywordsEn: ['Depth', 'Devotion', 'Perception', 'Artistry', 'Constancy'],
+    titleKo: '음화 — 촛불',
+    onelinerKo: '친밀하고, 정교하며, 스스로를 크게 드러내지 않으면서도 방 전체를 비출 만큼 강력합니다.',
+    bodyKo: '당신은 들어가는 대부분의 방에서 가장 조용히 강력한 사람이며, 그것을 더 선호합니다. 丙火의 타오르는 태양과 달리, 당신은 모든 것을 한꺼번에 비추려 하지 않습니다. 당신은 선택적입니다. 무엇을 밝힐지, 누구를 따뜻하게 할지 선택합니다.\n\n당신에게는 사람들을 불시에 사로잡는 강렬함이 있습니다. 당신은 부드럽고, 사려 깊고, 관찰력이 있어 보입니다. 하지만 그 아래에: 불이 있습니다. 깊고, 지속적이고, 놀랍도록 일관된 연소. 丁火는 끝까지 합니다.\n\n당신은 사람들과 함께하는 데 비정상적으로 능하게 만드는 방식으로 통찰력이 있습니다. 사람들이 말하는 것 아래에서 실제로 느끼는 것을 알아챕니다. 누군가 괜찮은 척하고 있을 때 알아챕니다. 이 선물은 진짜입니다. 그 무게도 그렇습니다.',
+    strengthsKo: ['깊고 지속적인 집중: 거의 누구보다도 하나에 더 집중된 주의를 기울일 수 있고, 남들이 포기했을 때 훨씬 더 오래 유지할 수 있습니다.', '감정적 정밀함: 느끼는 것에 그치지 않고 — 무엇을 느끼는지, 왜 느끼는지, 어떻게 할지를 이해합니다.', '변화시키는 꾸준한 따뜻함: 사람들이 당신 옆에서 편안함을 느끼는 데 그치지 않고, 당신의 빛 안에 서 있는 동안 더 나은 자신의 버전이 됩니다.'],
+    shadowsKo: ['보이지 않는 불꽃: 어떤 것이나 누군가를 위해 뼈 빠지게 일하면서도 아무도 알아채지 못할 수 있습니다. 품위는 좋습니다. 순교는 그렇지 않습니다.', '느린 냉각: 누군가 신뢰를 깨뜨릴 때, 상처는 놀랍도록 깊고 천천히 닫힙니다.'],
+    keywordsKo: ['깊이', '헌신', '통찰', '예술성', '항구성'],
+  },
+  '戊': {
+    element: 'Earth', polarity: 'Yang',
+    titleEn: 'Yang Earth — The Mountain',
+    onelinerEn: 'Vast, grounding, patient. The thing people navigate around and the thing they come back to.',
+    bodyEn: 'Stability is not something you seek. It\'s something you are. In a chaotic world full of people who destabilize at the first sign of turbulence, you are the fixed point. People who know you describe you as the person they call when something goes wrong. Not because you always have answers, but because your presence itself communicates that whatever this is, it can be survived. You don\'t just provide safety. You embody it.\n\nYour patience is not passivity. It is profound, strategic, almost geological in its nature. You understand time in a way others don\'t. You can see ten moves ahead and choose not to play until the moment is exactly right. The 戊 Mountain knows that the land beneath a building matters more than how quickly the building goes up. You build on solid ground, and you build things that last.\n\nWhat people mistake for rigidity in you is actually rootedness. You change — you absolutely change — but slowly, deliberately, and thoroughly. Your values are not a costume you swap out when they become inconvenient. They are the bedrock. And bedrock changes only when something tectonic moves through.',
+    strengthsEn: ['Anchor under pressure: When everything is in crisis, you remain available, present, and functional — a quality rarer than people realize.', 'Long-range integrity: You make commitments that you actually keep, not because you fear consequences, but because your word means something structural to you.', 'Capacity for others: You can hold space for an unusual number of people without losing your center — a lighthouse in others\' storms.'],
+    shadowsEn: ['Immovability becomes isolation: The mountain doesn\'t come to you. Eventually, people stop asking it to, and both parties lose something.', 'Carrying what isn\'t yours: You absorb the heaviness of those around you without realizing it, and you are slow to put it down.'],
+    keywordsEn: ['Stability', 'Patience', 'Trust', 'Endurance', 'Foundation'],
+    titleKo: '양토 — 산',
+    onelinerKo: '광대하고, 안정적이며, 인내심이 있습니다. 사람들이 돌아가는 대상이자 돌아오는 곳입니다.',
+    bodyKo: '안정은 당신이 추구하는 것이 아닙니다. 당신이 있는 것입니다. 혼란의 첫 신호에 불안정해지는 사람들로 가득 찬 세상에서, 당신은 고정점입니다. 당신을 아는 사람들은 당신을 무언가 잘못되었을 때 전화하는 사람이라고 표현합니다. 당신의 존재 자체가 무슨 일이든 살아남을 수 있다고 전달하기 때문입니다.\n\n당신의 인내심은 수동성이 아닙니다. 그것은 지질학적 성격에 가깝게 심오하고, 전략적입니다. 당신은 타인이 이해하지 못하는 방식으로 시간을 이해합니다. 열 수 앞을 내다보고 순간이 정확히 맞을 때까지 움직이지 않도록 선택할 수 있습니다.\n\n당신에게서 경직성으로 오해받는 것은 사실 뿌리 내림입니다. 당신은 변합니다 — 분명히 변합니다 — 하지만 천천히, 의도적으로, 철저하게. 당신의 가치관은 불편해질 때 교체하는 의상이 아닙니다. 기반암입니다.',
+    strengthsKo: ['압박 속의 닻: 모든 것이 위기일 때, 당신은 이용 가능하고, 현존하며, 기능적입니다.', '장기적 성실함: 결과가 두려워서가 아니라, 당신의 말이 구조적으로 의미 있기 때문에 실제로 지키는 약속을 합니다.', '타인을 위한 용량: 중심을 잃지 않으면서 비정상적으로 많은 사람들을 위한 공간을 만들 수 있습니다.'],
+    shadowsKo: ['움직이지 않음이 고립이 되다: 산은 당신에게 오지 않습니다. 결국, 사람들은 요청하는 것을 멈추고, 양측 모두 무언가를 잃습니다.', '자신의 것이 아닌 것 짊어지기: 주변 사람들의 무거움을 인식하지 못한 채 흡수하고, 내려놓는 데 시간이 걸립니다.'],
+    keywordsKo: ['안정', '인내', '신뢰', '지구력', '기반'],
+  },
+  '己': {
+    element: 'Earth', polarity: 'Yin',
+    titleEn: 'Yin Earth — The Fertile Field',
+    onelinerEn: 'Not the mountain, but the field. The ground where things actually grow. Without you, nothing blooms.',
+    bodyEn: 'There is a particular kind of intelligence you possess that often goes unnamed: the intelligence of nurturing. You understand, instinctively, what each person, project, or environment needs to thrive. You adjust. You tend. You create the conditions for growth without demanding credit for the harvest. This is both your profound gift and your chronic undervaluation. The field never gets a trophy. The crops do.\n\nYou are deeply relational — you experience the world primarily through connection. Your wellbeing rises and falls in significant part based on the health of your key relationships, which means you invest in them with unusual intentionality. You notice the small things: who has been quieter than usual, who is working too hard, who needs someone to ask how they really are.\n\nThe word "over-giving" was probably invented with 己 Earth in mind. You have an extraordinary capacity for generosity, and you struggle to recognize when you\'ve exceeded your own resources. You give from the soil of yourself, and soil can become depleted. The most important lesson: learning to receive.',
+    strengthsEn: ['Catalytic support: You see what others are capable of before they see it themselves — and provide exactly the conditions that bring it out.', 'Practical wisdom: You solve problems from the ground up, with a practicality that is grounding for everyone around you.', 'Steady emotional presence: You are the person who shows up. Consistently, reliably, often without being asked.'],
+    shadowsEn: ['Invisible to yourself: You see everyone\'s needs so clearly that your own needs can become genuinely invisible to you — not ignored, but unseen.', 'Over-identification with helpfulness: When you\'re not helping, you\'re not sure what your purpose is. This is worth examining.'],
+    keywordsEn: ['Nourishment', 'Practicality', 'Care', 'Community', 'Harvest'],
+    titleKo: '음토 — 비옥한 들판',
+    onelinerKo: '산이 아니라, 들판입니다. 모든 것이 실제로 자라는 땅입니다. 당신 없이는 아무것도 피어나지 않습니다.',
+    bodyKo: '당신이 갖고 있는 특정한 종류의 지능은 종종 이름이 없습니다: 양육의 지능. 당신은 본능적으로 각 사람, 프로젝트, 또는 환경이 번영하기 위해 무엇이 필요한지 이해합니다. 당신은 조정합니다. 돌봅니다. 수확에 대한 인정을 요구하지 않고 성장의 조건을 만듭니다.\n\n당신은 깊이 관계적입니다 — 주로 연결을 통해 세상을 경험합니다. 당신의 행복은 주요 관계의 건강에 따라 크게 오르내립니다. 작은 것들을 알아챕니다: 평소보다 조용해진 사람, 너무 열심히 일하는 사람, 진짜로 어떤지 물어봐 줄 사람이 필요한 사람.\n\n"과잉 베풀기"라는 단어는 己土를 염두에 두고 만들어졌을 가능성이 높습니다. 당신은 관대함에 대한 비범한 능력이 있고, 자신의 자원을 초과했을 때를 인식하는 데 어려움을 겪습니다. 가장 중요한 교훈: 받는 법을 배우는 것.',
+    strengthsKo: ['촉매적 지원: 타인이 자신을 보기 전에 그들이 무엇을 할 수 있는지 보는 비범한 능력이 있습니다.', '실용적 지혜: 아래에서 위로 문제를 해결하며, 주변 모든 사람에게 안정적인 실용성을 가집니다.', '꾸준한 감정적 현존: 당신은 나타나는 사람입니다. 일관되게, 신뢰할 수 있게, 종종 요청받지 않고도.'],
+    shadowsKo: ['자신에게 보이지 않는: 모든 사람의 필요를 너무 명확하게 보기 때문에 자신의 필요가 진정으로 보이지 않게 됩니다.', '도움이 됨과의 과잉 동일시: 돕지 않을 때, 자신의 목적이 무엇인지 확신하지 못합니다.'],
+    keywordsKo: ['영양', '실용성', '돌봄', '공동체', '수확'],
+  },
+  '庚': {
+    element: 'Metal', polarity: 'Yang',
+    titleEn: 'Yang Metal — The Iron Sword',
+    onelinerEn: 'Fresh from the forge. Unpolished, powerful, and built for precision. The world will try to dull you. It won\'t succeed.',
+    bodyEn: 'There is a directness to you that can be startling to those who aren\'t used to it. You say what you mean. You do not soften, hedge, or perform diplomacy when plain speech will do. This is not rudeness — it is respect. You believe people can handle the truth, and you treat them accordingly. In a world full of people who say one thing and mean another, this quality is rare.\n\nYou have standards. High ones. And they apply to yourself first, which is what makes them bearable to those around you. You have a sense of justice — almost constitutional — that fires up viscerally when you witness unfairness, hypocrisy, or betrayal. You will speak up when others won\'t. You will hold the line when others fold.\n\nThe forge of 庚 Metal is important here: you are at your best when you have been refined by difficulty. The challenges of your life have not broken you; they have shaped you. Each hard season has removed something that wasn\'t essential, leaving you cleaner, sharper, more yourself.',
+    strengthsEn: ['Honest courage: You will say the thing that needs to be said, even when it costs you something. This quality builds lasting trust.', 'Decisive action: When it\'s time to move, you move. The analysis is done; the sword is drawn; the moment is met.', 'Refinement through adversity: Difficulty doesn\'t diminish you. It improves you.'],
+    shadowsEn: ['The blade that cuts its own hand: Your directness can wound people you\'re trying to help. Precision requires knowing when to be sharp, not just how.', 'Justice as rigidity: Your sense of right and wrong is one of your finest qualities. It becomes a problem when it leaves no room for the complicated middle.'],
+    keywordsEn: ['Precision', 'Justice', 'Courage', 'Refinement', 'Clarity'],
+    titleKo: '양금 — 쇠검',
+    onelinerKo: '용광로에서 막 나온 검입니다. 연마되지 않았고, 강력하며, 정밀함을 위해 만들어졌습니다.',
+    bodyKo: '당신에게는 익숙하지 않은 사람들을 놀라게 할 수 있는 직접성이 있습니다. 당신은 말하는 것을 의미합니다. 직접적인 말로 충분할 때 부드럽게 하거나, 얼버무리거나, 외교를 연기하지 않습니다. 이것은 무례함이 아닙니다 — 존중입니다.\n\n당신은 기준이 있습니다. 높은 기준. 그리고 그것은 자신에게 먼저 적용됩니다. 불공평, 위선, 또는 배신을 목격할 때 본능적으로 반응하는 정의감이 있습니다. 타인이 말하지 않을 때 말할 것입니다. 타인이 무너질 때 선을 지킬 것입니다.\n\n庚金의 용광로가 중요합니다: 당신은 어려움에 의해 정련될 때 최선을 다합니다. 당신 삶의 도전들은 당신을 무너뜨리지 않았습니다; 당신을 형성했습니다. 각 힘든 계절은 필수적이지 않은 것을 제거하여, 더 깨끗하고, 더 예리하며, 더 자신답게 만들었습니다.',
+    strengthsKo: ['정직한 용기: 당신에게 무언가를 대가로 해도 말해야 할 것을 말합니다.', '결단력 있는 행동: 움직일 때가 되면, 움직입니다. 분석은 끝났고; 검은 뽑혔고; 순간은 맞이했습니다.', '역경을 통한 정련: 어려움은 당신을 약화시키지 않습니다. 개선합니다.'],
+    shadowsKo: ['자신의 손을 베는 날: 당신의 직접성은 도우려는 사람들에게 상처를 줄 수 있습니다.', '경직성으로서의 정의: 옳고 그름에 대한 당신의 감각은 가장 훌륭한 특성 중 하나입니다. 복잡한 중간을 위한 여지가 없을 때 문제가 됩니다.'],
+    keywordsKo: ['정밀함', '정의', '용기', '정련', '명확성'],
+  },
+  '辛': {
+    element: 'Metal', polarity: 'Yin',
+    titleEn: 'Yin Metal — The Refined Jewel',
+    onelinerEn: 'Not raw iron, but a cut gem. Every facet of you has been deliberately shaped. That\'s not coldness. That\'s mastery.',
+    bodyEn: 'You have extraordinarily high standards — for yourself, for your work, for everything you allow into your life. This is not perfectionism in the neurotic sense; it is connoisseurship. You have cultivated the ability to distinguish between what is merely good and what is genuinely excellent, and you apply that discernment everywhere. Your space, your relationships, your ideas — all of them have been curated.\n\nThere is a sharpness to your mind that operates below the surface, constantly. You notice inconsistencies that others miss. You pick up on the subtext beneath what people say. You see the pattern in the data before most people recognize there is data. This analytical precision is one of your greatest gifts, most evident in moments of stress when everyone else is reacting and you are — almost irritatingly — already thinking three steps ahead.\n\nWhat makes 辛 Metal unique is the quality of refinement under pressure. A gem is made by compression. Yours has been too. Whatever difficulty you have carried — perhaps privately, perhaps for a long time — it has become part of the structure of who you are. Not trauma, exactly. Shaping. You are more beautiful for having been compressed.',
+    strengthsEn: ['Discerning intelligence: You cut to the heart of complex situations with a precision that others take much longer to reach.', 'Aesthetic and structural mastery: Whatever you create — a career, a home, a conversation — you make it beautiful and functional simultaneously.', 'Composed under fire: When others scatter in chaos, you become, if anything, more focused. The gem doesn\'t melt under heat.'],
+    shadowsEn: ['Inaccessibility as armor: Your composure and standards can make you appear unreachable — and people who might love you deeply sometimes don\'t try because they assume you wouldn\'t want them to.', 'The hidden wound: You process pain more privately than almost any other Day Master. This serves you in many contexts. It can delay healing.'],
+    keywordsEn: ['Excellence', 'Discernment', 'Refinement', 'Precision', 'Elegance'],
+    titleKo: '음금 — 정련된 보석',
+    onelinerKo: '가공되지 않은 철이 아니라, 커팅된 보석입니다. 당신의 모든 면은 의도적으로 형성되었습니다. 그것은 차가움이 아닙니다. 숙련입니다.',
+    bodyKo: '당신은 비범하게 높은 기준을 가지고 있습니다 — 자신에게, 작업에게, 삶에 허용하는 모든 것에게. 이것은 신경증적 의미의 완벽주의가 아닙니다; 감식력입니다. 단순히 좋은 것과 진정으로 훌륭한 것을 구별하는 능력을 키웠고, 그 분별력을 어디에나 적용합니다.\n\n당신의 마음에는 표면 아래에서 끊임없이 작동하는 예리함이 있습니다. 타인이 놓치는 불일치를 알아챕니다. 사람들이 말하는 것 아래의 부제를 잡아냅니다. 대부분의 사람들이 데이터가 있다는 것을 인식하기 전에 데이터의 패턴을 봅니다. 이 분석적 정밀함은 스트레스 순간에 가장 뚜렷하게 나타납니다.\n\n辛金을 열 가지 일간 중 독특하게 만드는 것은 압박 하의 정련이라는 특성입니다. 보석은 압축으로 만들어집니다. 당신의 것도 마찬가지였습니다. 당신이 짊어져온 어떤 어려움도 당신이 누구인지의 구조의 일부가 되었습니다. 당신은 압축되었기 때문에 더 아름답습니다.',
+    strengthsKo: ['분별하는 지능: 타인이 도달하는 데 훨씬 오래 걸리는 정밀함으로 복잡한 상황의 핵심을 찌릅니다.', '미적·구조적 숙련: 당신이 만드는 것 — 경력, 집, 대화 — 을 동시에 아름답고 기능적으로 만듭니다.', '화염 아래의 침착함: 타인이 혼란 속에서 흩어질 때, 당신은 오히려 더 집중됩니다.'],
+    shadowsKo: ['갑옷으로서의 접근 불가능: 당신의 침착함과 기준은 당신을 다가가기 어렵게 보이게 만들 수 있습니다.', '숨겨진 상처: 당신은 거의 모든 다른 일간보다 더 사적으로 고통을 처리합니다. 치유를 지연시킬 수 있습니다.'],
+    keywordsKo: ['탁월함', '분별력', '정련', '정밀함', '우아함'],
+  },
+  '壬': {
+    element: 'Water', polarity: 'Yang',
+    titleEn: 'Yang Water — The Great River',
+    onelinerEn: 'Not a trickle, not a flood. The force that carved the Grand Canyon, one patient century at a time.',
+    bodyEn: 'Your mind moves faster than your words do, which is one reason you can seem quiet or mysterious to people who don\'t know you well. The surface of you is calm. Below: constant motion, constant processing, constant connectivity — you are making connections between ideas, people, and patterns that others don\'t even see the relationship between. This is both the source of your insight and the reason you\'re perpetually ahead of the conversation in ways that can be lonely.\n\nYou are drawn to depth in everything. Shallow conversations, shallow relationships, shallow work — these drain you. You would rather have one conversation that goes somewhere real than ten that don\'t. This makes you selective, occasionally to a fault. There are people you\'ve never let close because you sensed that the depth wouldn\'t be reciprocated. Sometimes you\'ve been right. Sometimes you\'ve missed something extraordinary.\n\nPeople experience you as adaptable, flowing, hard to pin down — and they\'re not wrong. 壬 Water takes the shape of whatever contains it. The real 壬 is underneath the adaptation: vast, purposeful, and headed somewhere specific, even when it appears to meander. The river always finds the sea.',
+    strengthsEn: ['Strategic intelligence: You see systems, patterns, and possibilities in situations that others experience as chaos.', 'Profound adaptability: You can move through radically different environments without losing your essential self. The river changes shape; the water stays water.', 'Deep relational knowing: When you choose to be close to someone, you know them at a level most people never achieve.'],
+    shadowsEn: ['The hard-to-know: Your depth is real, but it can become a distance. The people who love you sometimes can\'t find a way in.', 'Overthinking as a way of life: You can run so many scenarios that the moment for decision passes. The river that deliberates too long becomes a lake.'],
+    keywordsEn: ['Intelligence', 'Depth', 'Adaptability', 'Vision', 'Mystery'],
+    titleKo: '양수 — 대강',
+    onelinerKo: '작은 물줄기가 아니고, 범람도 아닙니다. 한 인내하는 세기씩 그랜드 캐니언을 조각한 힘입니다.',
+    bodyKo: '당신의 마음은 당신의 말보다 빠르게 움직입니다. 그것이 당신을 잘 모르는 사람들에게 조용하거나 신비롭게 보이는 이유 중 하나입니다. 당신의 표면은 고요합니다. 아래: 끊임없는 움직임, 끊임없는 처리, 끊임없는 연결 — 타인이 심지어 관계를 보지 못하는 아이디어, 사람, 패턴 사이의 연결을 만들고 있습니다.\n\n당신은 모든 것에서 깊이에 끌립니다. 얕은 대화, 얕은 관계, 얕은 일 — 이것들은 당신을 고갈시킵니다. 진짜 어딘가로 가는 하나의 대화가 그렇지 않은 열 개보다 낫습니다. 이것은 당신을 선택적으로 만들고, 때로는 과도하게.\n\n사람들은 당신을 적응력 있고, 흐르며, 잡기 어렵다고 경험합니다. 壬水는 그것을 담는 것의 형태를 취합니다. 진정한 壬은 적응 아래에 있습니다. 그것은 광대하고, 목적이 있으며, 방황하는 것처럼 보일 때도 특정한 곳으로 향하고 있습니다. 강은 항상 바다를 찾습니다.',
+    strengthsKo: ['전략적 지능: 타인이 혼란으로 경험하는 상황에서 시스템, 패턴, 가능성을 봅니다.', '심오한 적응력: 본질적 자아를 잃지 않고 근본적으로 다른 환경을 통해 이동할 수 있습니다.', '깊은 관계적 앎: 누군가와 가까워지기로 선택할 때, 대부분의 사람들이 달성하지 못하는 수준에서 그들을 압니다.'],
+    shadowsKo: ['알기 어려움: 당신의 깊이는 진짜이지만, 거리가 될 수 있습니다. 당신을 사랑하는 사람들이 때로 들어갈 방법을 찾지 못합니다.', '삶의 방식으로서의 과잉 사고: 결정의 순간이 헌신하기 전에 지나갈 만큼 많은 시나리오를 돌릴 수 있습니다.'],
+    keywordsKo: ['지능', '깊이', '적응력', '비전', '신비'],
+  },
+  '癸': {
+    element: 'Water', polarity: 'Yin',
+    titleEn: 'Yin Water — The Mountain Spring',
+    onelinerEn: 'Small in appearance, inexhaustible in nature. The source that feeds everything downstream.',
+    bodyEn: 'There is a delicacy to you that coexists with a profound inner strength, and most people encounter only one of these until they know you deeply. You appear sensitive — and you are, genuinely. You feel things at a frequency that most people can\'t access. Beauty moves you. Music finds the places in you that words can\'t reach. This is not weakness. This is the water that keeps the world from being entirely dry.\n\nYou have an interior life of remarkable richness. Thoughts, memories, images, feelings — they layer and connect in ways that make you an unusually deep conversation partner and often an unusually creative one. You may not always show this in social contexts. But in the right conversation, with the right person — what emerges is extraordinary.\n\nYou are more resilient than you look. 癸 Water has survived everything it\'s encountered — not through force, but through patience and persistence. You go around. You seep through. You find a way. The spring doesn\'t stop because a boulder fell on its path. It finds the gap between the stones and keeps going. You always keep going.',
+    strengthsEn: ['Emotional depth as wisdom: You process experience at a depth that generates real insight — into yourself, into others, into how life works.', 'Creative synthesis: You connect things that don\'t appear related and make something new from the connection. This is the source of genuine originality.', 'Quiet persistence: You outlast things. Situations, challenges, people who underestimate you — they all eventually discover you haven\'t stopped.'],
+    shadowsEn: ['Overwhelm as a weather pattern: You absorb the emotional atmosphere of whatever environment you\'re in. You need to know which feelings are yours.', 'Difficulty with scale: Your natural context is intimate. Large environments, large groups, large expectations can make you feel like you\'re evaporating.'],
+    keywordsEn: ['Intuition', 'Creativity', 'Sensitivity', 'Persistence', 'Wonder'],
+    titleKo: '음수 — 산속의 샘',
+    onelinerKo: '외양은 작지만, 본성은 무궁무진합니다. 하류의 모든 것을 먹이는 근원입니다.',
+    bodyKo: '당신에게는 심오한 내면의 강인함과 공존하는 섬세함이 있으며, 대부분의 사람들은 당신을 깊이 알기 전까지 그 중 하나만 만납니다. 당신은 감성적으로 보입니다 — 실제로 그렇습니다. 대부분의 사람들이 접근할 수 없는 주파수로 것들을 느낍니다. 아름다움이 당신을 움직입니다. 이것은 약점이 아닙니다. 세상이 완전히 건조해지지 않게 하는 물입니다.\n\n당신에게는 놀라울 만큼 풍부한 내면의 삶이 있습니다. 생각, 기억, 이미지, 감정 — 그것들은 당신을 비정상적으로 깊은 대화 상대이자 종종 비정상적으로 창의적인 사람으로 만드는 방식으로 겹치고 연결됩니다.\n\n당신은 보이는 것보다 더 탄력적입니다. 癸水는 만난 모든 것에서 살아남았습니다 — 힘이 아니라, 인내와 끈기를 통해. 우회합니다. 스며듭니다. 방법을 찾습니다. 샘은 바위가 길에 떨어진다고 멈추지 않습니다. 당신은 항상 계속 갑니다.',
+    strengthsKo: ['지혜로서의 감정적 깊이: 실제 통찰을 생성하는 깊이에서 경험을 처리합니다.', '창의적 종합: 관련 없어 보이는 것들을 연결하고 그 연결에서 새로운 것을 만듭니다.', '조용한 끈기: 당신은 것들을 넘어서 살아냅니다. 당신을 과소평가하는 사람들도 결국 당신이 멈추지 않았다는 것을 발견합니다.'],
+    shadowsKo: ['기상 패턴으로서의 압도: 당신이 있는 모든 환경의 감정적 분위기를 흡수합니다. 어떤 감정이 자신의 것인지 알아야 합니다.', '규모에 대한 어려움: 당신의 자연스러운 맥락은 친밀합니다. 큰 환경, 큰 그룹은 당신을 증발하는 것처럼 느끼게 할 수 있습니다.'],
+    keywordsKo: ['직관', '창의성', '감수성', '끈기', '경이'],
+  },
+};
+
+// ═══════════════════════════════════════════════
+// SECTION F: FORTUNE & TOAST
+// ═══════════════════════════════════════════════
+function getTodayFortune(dayMasterElement) {
+  const today = new Date();
+  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 86400000);
+  const types = ['high', 'neutral', 'low'];
+  const type = types[dayOfYear % 3];
+  return { type, element: dayMasterElement };
+}
+
+function showToast(message, type = 'info', duration = 3000) {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  const icons = { success: '✓', error: '✕', info: 'ℹ' };
+  toast.innerHTML = `<span class="toast-icon">${icons[type]||'ℹ'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, duration);
+}
+
+// ═══════════════════════════════════════════════
+// SECTION G: LANGUAGE & UI
+// ═══════════════════════════════════════════════
+function setLang(lang) {
+  if (lang !== 'en' && lang !== 'ko') return;
+  AppState.language = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === lang);
+  });
+  const ids = {
+    'hdr-sub': 'app_tagline',
+    'hero-eyebrow': 'hero_eyebrow',
+    'hero-headline': 'hero_headline',
+    'hero-sub': 'hero_sub',
+    'hero-cta': 'hero_cta',
+    'usp1-title': 'usp1_title',
+    'usp1-body': 'usp1_body',
+    'usp2-title': 'usp2_title',
+    'usp2-body': 'usp2_body',
+    'usp3-title': 'usp3_title',
+    'usp3-body': 'usp3_body',
+    't1-text': 't1_text',
+    't2-text': 't2_text',
+    't3-text': 't3_text',
+    't1-author': 't1_author',
+    't2-author': 't2_author',
+    't3-author': 't3_author',
+    'social-count-text': 'social_count',
+    'form-title': 'form_title',
+    'form-subtitle': 'form_subtitle',
+    'lbl-name': 'lbl_name',
+    'lbl-gender': 'lbl_gender',
+    'btn-male': 'gender_male',
+    'btn-female': 'gender_female',
+    'lbl-birthdate': 'lbl_birthdate',
+    'lbl-birthtime': 'lbl_birthtime',
+    'lbl-notime': 'lbl_notime',
+    'btn-calc-text': 'btn_calculate',
+    'btn-back': 'back_btn',
+    'lbl-pillars': 'lbl_pillars',
+    'lbl-elements': 'lbl_elements',
+    'lbl-personality': 'lbl_personality',
+    'lbl-fortune': 'lbl_fortune',
+    'lbl-daeun': 'lbl_daeun',
+    'lbl-paid': 'lbl_paid',
+    'badge-free1': 'badge_free',
+    'badge-free2': 'badge_free',
+    'badge-free3': 'badge_free',
+    'badge-free4': 'badge_free',
+    'badge-paid': 'badge_paid',
+  };
+  Object.entries(ids).forEach(([id, key]) => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = t(key);
+  });
+  if (AppState.pillars) renderAll();
+}
+
+function selectGender(g) {
+  AppState.gender = g;
+  document.querySelectorAll('.gender-btn').forEach(b => b.classList.toggle('active', b.dataset.gender === g));
+}
+
+function toggleUnknownTime(checked) {
+  const inputs = document.getElementById('time-inputs');
+  if (inputs) inputs.classList.toggle('time-disabled', checked);
+  AppState.noTime = checked;
+}
+
+function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
+
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ═══════════════════════════════════════════════
+// SECTION H: FORM & VALIDATION
+// ═══════════════════════════════════════════════
+function calculateChart() {
+  clearErrors();
+  const name = document.getElementById('inp-name').value.trim();
+  const year = parseInt(document.getElementById('inp-year').value);
+  const month = parseInt(document.getElementById('inp-month').value);
+  const day = parseInt(document.getElementById('inp-day').value);
+  const hourEl = document.getElementById('inp-hour');
+  const minEl = document.getElementById('inp-minute');
+  const hour = parseInt(hourEl.value) || 0;
+  const minute = parseInt(minEl.value) || 0;
+  const noTime = document.getElementById('chk-notime').checked;
+
+  let valid = true;
+  if (!name || name.length < 1) {
+    showError('err-name', t('err_name')); valid = false;
+  }
+  if (!year || !month || !day) {
+    showError('err-date', t('err_date')); valid = false;
+  } else {
+    const now = new Date();
+    const birthDate = new Date(year, month - 1, day);
+    if (birthDate > now) { showError('err-date', t('err_date_future')); valid = false; }
+    else if (year < 1900) { showError('err-date', t('err_date_old')); valid = false; }
+  }
+  if (!valid) return;
+
+  const pillars = calcFourPillars(year, month, day, hour, minute, AppState.gender, noTime);
+  AppState.pillars = pillars;
+  AppState.userInfo = { name: name || t('word_you'), year, month, day, hour, minute, noTime };
+
+  renderAll();
+  showToast(t('toast_calc_ok'), 'success');
+
+  const resultsEl = document.getElementById('section-results');
+  const heroEl = document.getElementById('section-hero');
+  const inputEl = document.getElementById('section-input');
+  if (resultsEl) resultsEl.classList.add('visible');
+  if (heroEl) heroEl.style.display = 'none';
+  if (inputEl) inputEl.style.display = 'none';
+
+  const dmCard = document.getElementById('day-master-card');
+  if (dmCard) setTimeout(() => dmCard.classList.add('revealed'), 300);
+
+  smoothScrollTo('section-results');
+}
+
+function showError(id, msg) {
+  const el = document.getElementById(id);
+  if (el) { el.textContent = msg; el.classList.add('show'); }
+  setTimeout(() => { if (el) el.classList.remove('show'); }, 3000);
+}
+
+function clearErrors() {
+  document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
+}
+
+// ═══════════════════════════════════════════════
+// SECTION I: RENDER FUNCTIONS
+// ═══════════════════════════════════════════════
+function renderAll() {
+  const {pillars, userInfo} = AppState;
+  if (!pillars || !userInfo) return;
+  renderHeader(userInfo);
+  renderPillarGrid(pillars);
+  renderFiveElements(pillars.elements);
+  renderDayMaster(pillars.dayPillar, userInfo.name);
+  renderFortune(pillars.dayPillar);
+  renderDaeun(pillars);
+  renderPaidSections(userInfo.name, pillars.dayPillar);
+}
+
+function renderHeader(info) {
+  const nameEl = document.getElementById('results-name-display');
+  const dateEl = document.getElementById('results-date-display');
+  if (nameEl) nameEl.textContent = info.name ? `✦ ${info.name} ✦` : '';
+  const dateStr = `${info.year}.${String(info.month).padStart(2,'0')}.${String(info.day).padStart(2,'0')}${info.noTime ? '' : ` ${String(info.hour).padStart(2,'0')}:${String(info.minute).padStart(2,'0')}`}`;
+  if (dateEl) dateEl.textContent = dateStr;
+}
+
+function renderPillarGrid(pillars) {
+  const grid = document.getElementById('pillar-grid');
+  if (!grid) return;
+  const lang = AppState.language;
+  const lbl = lang === 'ko'
+    ? [t('year_p'), t('month_p'), t('day_p'), t('hour_p')]
+    : ['Year', 'Month', 'Day', 'Hour'];
+  const ps = [pillars.yearPillar, pillars.monthPillar, pillars.dayPillar, pillars.hourPillar];
+
+  grid.innerHTML = ps.map((p, i) => {
+    if (!p && i === 3) {
+      return `<div class="pillar-card" data-element="Water">
+        <div class="pillar-label">${lbl[3]}</div>
+        <div class="pillar-glow"></div>
+        <div class="pillar-stem" style="opacity:.3">?</div>
+        <div class="pillar-branch" style="opacity:.3">?</div>
+        <div class="pillar-sub" style="opacity:.3">${lang==='ko'?'시간 미상':'Unknown'}</div>
+      </div>`;
+    }
+    const isDay = i === 2;
+    const animal = BRANCH_ANIMALS[p.branchIdx];
+    const animalKr = BRANCH_ANIMALS_KR[p.branchIdx];
+    return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${p.element}">
+      <div class="pillar-label${isDay?' day-label':''}">${lbl[i]}</div>
+      <div class="pillar-glow"></div>
+      <div class="pillar-stem">${p.stem}</div>
+      <div class="pillar-branch">${p.branch}</div>
+      <div class="pillar-sub">${lang==='ko'?p.stemKr+' '+p.branchKr:p.element+' '+STEM_POLARITIES[p.stemIdx]}</div>
+      <div class="pillar-animal">${lang==='ko'?animalKr:animal}</div>
+      ${isDay ? '<div class="you-badge">YOU</div>' : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderFiveElements(elements) {
+  const barsEl = document.getElementById('element-bars');
+  if (!barsEl) return;
+  const total = Object.values(elements).reduce((a,b)=>a+b,0)||1;
+  barsEl.innerHTML = ELEM_ORDER.map(e => {
+    const count = elements[e] || 0;
+    const pct = Math.round(count / total * 100);
+    const color = ELEMENT_COLORS[e];
+    const label = AppState.language === 'ko' ? ELEMENT_KR[e] : e;
+    return `<div class="elem-bar-row">
+      <span class="elem-bar-label" style="color:${color}">${label}</span>
+      <div class="elem-bar-track">
+        <div class="elem-bar-fill" style="width:${pct}%;background:${color};box-shadow:0 0 8px ${color}40"></div>
+      </div>
+      <span class="elem-bar-pct" style="color:${color}">${count}</span>
+    </div>`;
+  }).join('');
+
+  const svg = document.getElementById('elements-svg');
+  if (!svg) return;
+  const cx=110, cy=110, r=80;
+  const angles = [-90,-18,54,126,198];
+  const maxVal = Math.max(...Object.values(elements), 1);
+  const points = ELEM_ORDER.map((e,i) => {
+    const ratio = (elements[e]||0)/maxVal;
+    const angle = angles[i]*Math.PI/180;
+    return `${cx+r*ratio*Math.cos(angle)},${cy+r*ratio*Math.sin(angle)}`;
+  }).join(' ');
+  const bgPoints = angles.map(a => {
+    const angle = a*Math.PI/180;
+    return `${cx+r*Math.cos(angle)},${cy+r*Math.sin(angle)}`;
+  }).join(' ');
+  const colors = ELEM_ORDER.map(e=>ELEMENT_COLORS[e]);
+  svg.innerHTML = `<defs>
+    <linearGradient id="radar-fill" x1="0" y1="0" x2="1" y2="1">
+      ${colors.map((c,i)=>`<stop offset="${i*25}%" stop-color="${c}" stop-opacity="0.6"/>`).join('')}
+    </linearGradient>
+  </defs>
+  <polygon points="${bgPoints}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+  <polygon points="${points}" fill="url(#radar-fill)" stroke="rgba(232,197,71,0.6)" stroke-width="1.5"/>
+  ${ELEM_ORDER.map((e,i) => {
+    const angle = angles[i]*Math.PI/180;
+    const lx = cx+(r+22)*Math.cos(angle);
+    const ly = cy+(r+22)*Math.sin(angle);
+    const label = AppState.language==='ko' ? ELEMENT_KR[e].split('(')[0] : e.slice(0,2);
+    return `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="${ELEMENT_COLORS[e]}" font-size="11" font-family="Noto Sans KR,sans-serif">${label}</text>`;
+  }).join('')}`;
+}
+
+function renderDayMaster(dayPillar, name) {
+  const dm = DAY_MASTERS[dayPillar.stem];
+  if (!dm) return;
+  const lang = AppState.language;
+  const card = document.getElementById('day-master-card');
+  if (card) {
+    card.style.setProperty('--dm-color', ELEMENT_COLORS[dayPillar.element]);
+    card.setAttribute('data-element', dayPillar.element);
+    card.style.background = `linear-gradient(135deg, rgba(13,11,30,0.95) 0%, ${ELEMENT_COLORS[dayPillar.element]}18 100%)`;
+  }
+  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+  const setHTML = (id, val) => { const el=document.getElementById(id); if(el) el.innerHTML=val; };
+
+  const bgChar = document.getElementById('dm-bg-char');
+  if (bgChar) { bgChar.textContent = dayPillar.stem; bgChar.style.color = ELEMENT_COLORS[dayPillar.element]; }
+  set('dm-eyebrow', t('dm_eyebrow'));
+  const dmChar = document.getElementById('dm-char');
+  if (dmChar) { dmChar.textContent = dayPillar.stem; dmChar.style.color = ELEMENT_COLORS[dayPillar.element]; }
+  set('dm-element-name', lang==='ko' ? ELEMENT_KR[dayPillar.element] : dayPillar.element + ' · ' + STEM_POLARITIES[dayPillar.stemIdx]);
+  set('dm-title-text', lang==='ko' ? dm.titleKo : dm.titleEn);
+  set('dm-oneliner', lang==='ko' ? dm.onelinerKo : dm.onelinerEn);
+
+  const bodyText = (lang==='ko' ? dm.bodyKo : dm.bodyEn).replace(/\n\n/g, '<br><br>');
+  setHTML('dm-body', bodyText);
+
+  const strengthItems = lang==='ko' ? dm.strengthsKo : dm.strengthsEn;
+  const shadowItems = lang==='ko' ? dm.shadowsKo : dm.shadowsEn;
+  setHTML('dm-strengths', strengthItems.map(s=>`<li>${s}</li>`).join(''));
+  setHTML('dm-shadows', shadowItems.map(s=>`<li>${s}</li>`).join(''));
+  set('lbl-strengths', t('lbl_strengths'));
+  set('lbl-shadows', t('lbl_shadows'));
+
+  const kwEls = lang==='ko' ? dm.keywordsKo : dm.keywordsEn;
+  setHTML('dm-keywords', kwEls.map(k=>`<span class="dm-keyword">${k}</span>`).join(''));
+}
+
+function renderFortune(dayPillar) {
+  const fortune = getTodayFortune(dayPillar.element);
+  const lang = AppState.language;
+  const colorMap = { high:'var(--wood)', neutral:'var(--gold)', low:'var(--fire)' };
+
+  const fortuneTexts = {
+    high: {
+      en: `Your ${dayPillar.element} energy aligns powerfully with today's forces. This is a day to move, to speak, to initiate. The universe is listening more than usual.`,
+      ko: `오늘은 ${ELEMENT_KR[dayPillar.element]} 에너지가 강하게 흐릅니다. 시작하기 좋은 날, 표현하기 좋은 날입니다. 우주가 평소보다 더 귀를 기울이고 있습니다.`
+    },
+    neutral: {
+      en: `A balanced day. Your ${dayPillar.element} nature flows without friction. Good for reflection, planning, steady progress. Not a storm, not a calm — a clear sky with purpose.`,
+      ko: `균형 잡힌 하루입니다. ${ELEMENT_KR[dayPillar.element]} 에너지가 마찰 없이 흐릅니다. 성찰하고, 계획하고, 꾸준히 나아가기 좋은 날입니다.`
+    },
+    low: {
+      en: `Today brings friction for ${dayPillar.element} energy. Not a day to force things — a day to conserve, observe, and let others lead. The resistance is temporary; your season will return.`,
+      ko: `오늘은 ${ELEMENT_KR[dayPillar.element]} 에너지에 저항이 있습니다. 강하게 밀기보다는 보존하고, 관찰하고, 때를 기다리는 것이 좋습니다. 이 시간도 지나갑니다.`
+    }
+  };
+
+  const badgeEl = document.getElementById('fortune-type-badge');
+  if (badgeEl) badgeEl.innerHTML = `<span style="font-size:12px;font-weight:700;color:${colorMap[fortune.type]};letter-spacing:.1em">${t('fortune_'+fortune.type)}</span>`;
+
+  const titleEl = document.getElementById('fortune-title');
+  if (titleEl) titleEl.textContent = t('fortune_title');
+
+  const bodyEl = document.getElementById('fortune-body');
+  if (bodyEl) bodyEl.textContent = lang==='ko' ? fortuneTexts[fortune.type].ko : fortuneTexts[fortune.type].en;
+
+  const color = LUCKY_COLORS[dayPillar.element];
+  const colorKr = LUCKY_COLORS_KR[dayPillar.element];
+  const dir = LUCKY_DIRS[dayPillar.element];
+  const dirKr = LUCKY_DIRS_KR[dayPillar.element];
+  const nums = LUCKY_NUMS[dayPillar.element];
+  const luckiesEl = document.getElementById('fortune-luckies');
+  if (luckiesEl) luckiesEl.innerHTML = `
+    <div class="lucky-item"><div class="lucky-label">${t('lucky_color')}</div><div class="lucky-val" style="color:${ELEMENT_COLORS[dayPillar.element]}">${lang==='ko'?colorKr:color}</div></div>
+    <div class="lucky-item"><div class="lucky-label">${t('lucky_dir')}</div><div class="lucky-val">${lang==='ko'?dirKr:dir}</div></div>
+    <div class="lucky-item"><div class="lucky-label">${t('lucky_num')}</div><div class="lucky-val">${nums.join(' · ')}</div></div>
+  `;
+}
+
+function renderDaeun(pillars) {
+  const titleEl = document.getElementById('daeun-title');
+  const introEl = document.getElementById('daeun-intro');
+  if (titleEl) titleEl.textContent = t('daeun_title');
+  if (introEl) introEl.textContent = t('daeun_intro');
+
+  const lang = AppState.language;
+  const track = document.getElementById('daeun-track');
+  if (!track) return;
+  track.innerHTML = pillars.daeun.map(d => {
+    const color = ELEMENT_COLORS[d.element];
+    return `<div class="daeun-item${d.isCurrent?' current':''}" style="${d.isCurrent?'border-color:'+color+';background:'+color+'12':''}">
+      <div class="daeun-stem" style="color:${color}">${d.stem}</div>
+      <div class="daeun-branch">${d.branch}</div>
+      <div class="daeun-age" style="color:${d.isCurrent?color:'var(--text-muted)'}">${d.age}${lang==='ko'?'세':''}</div>
+      ${d.isCurrent ? `<div class="daeun-current-badge">${t('daeun_current')}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderPaidSections(name, dayPillar) {
+  const lang = AppState.language;
+  const displayName = name || t('word_you');
+  const sections = [
+    { hookKey:'paid1_hook', subKey:'paid1_sub', btnKey:'paid1_btn',
+      previewEn:'Your four pillars reveal a specific life trajectory — one that moves through distinct phases of expansion and contraction. The energy of your Day Master creates a particular kind of arc...',
+      previewKo:'당신의 사주는 특정한 인생 궤적을 보여줍니다 — 팽창과 수축의 뚜렷한 단계를 통과하는 궤적. 일간의 에너지는 특별한 종류의 흐름을 만들어냅니다...',
+      hookId:'paid1-hook', subId:'paid1-sub', btnId:'paid1-btn', previewId:'paid1-preview' },
+    { hookKey:'paid2_hook', subKey:'paid2_sub', btnKey:'paid2_btn',
+      previewEn:'The wealth configuration in your chart is unusual. Your Wealth Star sits in a position that creates both exceptional opportunity and specific vulnerability. The years between...',
+      previewKo:'당신 차트의 재물 구조는 특별합니다. 재성이 탁월한 기회와 특정 취약성을 동시에 만드는 위치에 있습니다...',
+      hookId:'paid2-hook', subId:'paid2-sub', btnId:'paid2-btn', previewId:'paid2-preview' },
+    { hookKey:'paid3_hook', subKey:'paid3_sub', btnKey:'paid3_btn',
+      previewEn:'Your relationship patterns are shaped by your Day Master in ways that most conventional relationship advice will never address. The partner who actually reaches you has a specific elemental signature...',
+      previewKo:'당신의 관계 패턴은 대부분의 일반적인 관계 조언이 절대 다루지 않는 방식으로 일간에 의해 형성됩니다...',
+      hookId:'paid3-hook', subId:'paid3-sub', btnId:'paid3-btn', previewId:'paid3-preview' },
+    { hookKey:'paid4_hook', subKey:'paid4_sub', btnKey:'paid4_btn',
+      previewEn:'The energy of your year and month pillars carries information about your family of origin that explains patterns you\'ve probably noticed but never been able to name. Your health...',
+      previewKo:'년주와 월주의 에너지는 당신이 아마도 알아챘지만 이름 붙일 수 없었던 패턴을 설명하는 원가족에 대한 정보를 담고 있습니다...',
+      hookId:'paid4-hook', subId:'paid4-sub', btnId:'paid4-btn', previewId:'paid4-preview' },
+    { hookKey:'paid5_hook', subKey:'paid5_sub', btnKey:'paid5_btn',
+      previewEn:'Your current 10-year cycle governs a decade of specific elemental energy. The pressures, opportunities, and windows that define this chapter of your life are already written in your chart...',
+      previewKo:'현재 대운은 특정한 오행 에너지의 10년을 다스립니다. 이 챕터를 정의하는 압박, 기회, 창문들은 이미 당신의 사주에 쓰여 있습니다...',
+      hookId:'paid5-hook', subId:'paid5-sub', btnId:'paid5-btn', previewId:'paid5-preview' },
+  ];
+  sections.forEach(s => {
+    const hookText = t(s.hookKey).replace('[NAME]',displayName).replace('[name]',displayName);
+    const hookEl = document.getElementById(s.hookId);
+    const subEl = document.getElementById(s.subId);
+    const btnEl = document.getElementById(s.btnId);
+    const previewEl = document.getElementById(s.previewId);
+    if (hookEl) hookEl.textContent = hookText;
+    if (subEl) subEl.textContent = t(s.subKey);
+    if (btnEl) btnEl.textContent = t(s.btnKey);
+    if (previewEl) previewEl.textContent = lang==='ko' ? s.previewKo : s.previewEn;
+  });
+}
+
+// ═══════════════════════════════════════════════
+// SECTION J: MODAL
+// ═══════════════════════════════════════════════
+function openModal(type) {
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.add('open');
+  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
+  const setHTML = (id, val) => { const el=document.getElementById(id); if(el) el.innerHTML=val; };
+  set('modal-eyebrow', t('modal_eyebrow'));
+  set('modal-title', t('modal_title'));
+  set('modal-sub', t('modal_sub'));
+  const features = t('modal_features');
+  if (Array.isArray(features)) setHTML('modal-features', features.map(f=>`<li>${f}</li>`).join(''));
+  set('modal-price', t('modal_price'));
+  set('modal-price-sub', t('modal_price_sub'));
+  set('modal-pay-btn', t('modal_pay_btn'));
+  set('modal-waitlist-title', t('modal_waitlist_title'));
+  set('modal-notify-btn', t('modal_notify_btn'));
+  set('modal-note', t('modal_note'));
+}
+
+function closeModal() {
+  const overlay = document.getElementById('modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function closeModalIfOverlay(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function handlePayment() {
+  showToast(t('toast_payment_info'), 'info');
+}
+
+function joinWaitlist() {
+  const emailEl = document.getElementById('modal-email');
+  if (!emailEl) return;
+  const email = emailEl.value.trim();
+  if (!email || !email.includes('@')) { showToast(t('toast_email_invalid'), 'error'); return; }
+  const list = JSON.parse(localStorage.getItem('momentor_waitlist') || '[]');
+  if (list.includes(email)) { showToast(t('toast_waitlist_dup'), 'info'); return; }
+  list.push(email);
+  localStorage.setItem('momentor_waitlist', JSON.stringify(list));
+  showToast(t('toast_waitlist_ok'), 'success');
+  emailEl.value = '';
+}
+
+// ═══════════════════════════════════════════════
+// SECTION K: VIEW MANAGEMENT
+// ═══════════════════════════════════════════════
+function showHero() {
+  const resultsEl = document.getElementById('section-results');
+  const heroEl = document.getElementById('section-hero');
+  const inputEl = document.getElementById('section-input');
+  if (resultsEl) resultsEl.classList.remove('visible');
+  if (heroEl) heroEl.style.display = '';
+  if (inputEl) inputEl.style.display = '';
+  AppState.pillars = null;
+  scrollToTop();
+}
+
+// ═══════════════════════════════════════════════
+// SECTION L: POPULATE DROPDOWNS
+// ═══════════════════════════════════════════════
+function populateDropdowns() {
+  const yearSel = document.getElementById('inp-year');
+  const monthSel = document.getElementById('inp-month');
+  const daySel = document.getElementById('inp-day');
+  const hourSel = document.getElementById('inp-hour');
+  const minSel = document.getElementById('inp-minute');
+  if (!yearSel) return;
+
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear; y >= 1900; y--) {
+    yearSel.innerHTML += `<option value="${y}">${y}</option>`;
+  }
+  for (let m = 1; m <= 12; m++) {
+    monthSel.innerHTML += `<option value="${m}">${m}</option>`;
+  }
+  for (let d = 1; d <= 31; d++) {
+    daySel.innerHTML += `<option value="${d}">${d}</option>`;
+  }
+  for (let h = 0; h <= 23; h++) {
+    hourSel.innerHTML += `<option value="${h}">${String(h).padStart(2,'0')}:00</option>`;
+  }
+  for (let m = 0; m <= 59; m++) {
+    minSel.innerHTML += `<option value="${m}">${String(m).padStart(2,'0')}</option>`;
+  }
+}
+
+// ═══════════════════════════════════════════════
+// SECTION M: ADDITIONAL CSS (injected)
+// ═══════════════════════════════════════════════
+(function injectStyles() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .pillar-sub{font-size:10px;color:var(--text-muted);margin-top:4px;}
+    .pillar-animal{font-size:11px;color:var(--text-secondary);margin-top:4px;opacity:.7;}
+    .day-label{color:var(--gold)!important;}
+    .elem-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .elem-bar-label{width:52px;font-size:12px;color:var(--text-secondary);flex-shrink:0;}
+    .elem-bar-track{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;}
+    .elem-bar-fill{height:100%;border-radius:3px;transition:width .8s ease;}
+    .elem-bar-pct{width:20px;font-size:12px;text-align:right;flex-shrink:0;}
+    .lucky-item{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:10px;text-align:center;}
+    .lucky-label{font-size:10px;color:var(--text-muted);margin-bottom:4px;display:block;}
+    .lucky-val{font-size:14px;font-weight:700;color:var(--text-secondary);display:block;}
+    .dm-keyword{font-size:10px;font-weight:700;letter-spacing:.1em;padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.12);color:var(--text-muted);text-transform:uppercase;display:inline-block;}
+    #day-master-card{--dm-color:var(--gold);}
+    #day-master-card.revealed{opacity:1!important;transform:translateY(0) scale(1)!important;}
+  `;
+  document.head.appendChild(style);
+})();
+
+// ═══════════════════════════════════════════════
+// SECTION N: INIT
+// ═══════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  populateDropdowns();
+  setLang('en');
+});
+
+</script>
+</body>
+</html>
+
+// ═══════════════════════════════════════════════
+// SECTION F: TOAST SYSTEM
+// ═══════════════════════════════════════════════
+function showToast(message, type = 'info') {
+  const container = document.getElementById('toast-container');
+  if (!container) return;
+  const icons = { success: '✓', error: '✗', info: '✦' };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span class="toast-icon">${icons[type]||'✦'}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => toast.remove(), 300);
+  }, 3200);
+}
+
+// ═══════════════════════════════════════════════
+// SECTION G: LANGUAGE SYSTEM
+// ═══════════════════════════════════════════════
+function setLang(lang) {
+  AppState.language = lang;
+  localStorage.setItem('momentor_lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  applyLanguage();
+  if (AppState.chart) renderAllPaid(AppState.chart);
+}
+
+function applyLanguage() {
+  const lang = AppState.language;
+  const L = I18N[lang] || I18N.en;
+  document.documentElement.lang = lang;
+  
+  // Header
+  el('hdr-sub', L.app_tagline);
+  
+  // Hero
+  el('hero-eyebrow', L.hero_eyebrow);
+  shtml('hero-headline', L.hero_headline);
+  el('hero-sub', L.hero_sub);
+  el('hero-cta', L.hero_cta);
+  
+  // USP
+  el('usp1-title', L.usp1_title); el('usp1-body', L.usp1_body);
+  el('usp2-title', L.usp2_title); el('usp2-body', L.usp2_body);
+  el('usp3-title', L.usp3_title); el('usp3-body', L.usp3_body);
+  
+  // Testimonials
+  el('t1-text', L.t1_text); el('t1-author', L.t1_author);
+  el('t2-text', L.t2_text); el('t2-author', L.t2_author);
+  el('t3-text', L.t3_text); el('t3-author', L.t3_author);
+  el('social-count-text', L.social_count);
+  
+  // Form
+  el('form-title', L.form_title); el('form-subtitle', L.form_subtitle);
+  el('lbl-name', L.lbl_name); el('lbl-gender', L.lbl_gender);
+  el('btn-male', L.gender_male); el('btn-female', L.gender_female);
+  el('lbl-birthdate', L.lbl_birthdate); el('lbl-birthtime', L.lbl_birthtime);
+  el('lbl-notime', L.lbl_notime); el('btn-calc-text', L.btn_calculate);
+  
+  // Results labels
+  el('lbl-pillars', L.lbl_pillars);
+  el('badge-free1', L.badge_free); el('badge-free2', L.badge_free);
+  el('badge-free3', L.badge_free); el('badge-free4', L.badge_free);
+  el('badge-paid', L.badge_paid);
+  el('lbl-strengths', L.lbl_strengths); el('lbl-shadows', L.lbl_shadows);
+  el('dm-eyebrow', L.dm_eyebrow);
+  el('personality-title', L.personality_title);
+  el('fortune-title', L.fortune_title);
+  el('daeun-title', L.daeun_title);
+  el('daeun-intro', L.daeun_intro);
+  el('btn-back', L.back_btn);
+  el('footer-text', L.footer_text);
+  
+  // If chart exists, re-render language-dependent content
+  if (AppState.chart) {
+    renderDayMaster(AppState.chart);
+    renderPersonality(AppState.chart);
+    renderFortune(AppState.chart);
+    renderDaeun(AppState.chart);
+    renderAllPaid(AppState.chart);
+    renderPillarGrid(AppState.chart);
+    renderElementBars(AppState.chart);
+  }
+}
+
+function el(id, text) {
+  const e = document.getElementById(id);
+  if (e && text != null) e.textContent = text;
+}
+function shtml(id, html) {
+  const e = document.getElementById(id);
+  if (e && html != null) e.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════
+// SECTION H: FORM INITIALIZATION
+// ═══════════════════════════════════════════════
+function initForm() {
+  // Populate year dropdown
+  const yearSel = document.getElementById('inp-year');
+  const cy = new Date().getFullYear();
+  for (let y = cy; y >= 1900; y--) {
+    const o = document.createElement('option');
+    o.value = y; o.textContent = y;
+    yearSel.appendChild(o);
+  }
+  // Months
+  const monthSel = document.getElementById('inp-month');
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  monthNames.forEach((m,i) => {
+    const o = document.createElement('option');
+    o.value = i+1; o.textContent = `${i+1} — ${m}`;
+    monthSel.appendChild(o);
+  });
+  // Days
+  const daySel = document.getElementById('inp-day');
+  for (let d = 1; d <= 31; d++) {
+    const o = document.createElement('option');
+    o.value = d; o.textContent = d;
+    daySel.appendChild(o);
+  }
+  // Hours
+  const hourSel = document.getElementById('inp-hour');
+  for (let h = 0; h < 24; h++) {
+    const o = document.createElement('option');
+    o.value = h; o.textContent = `${String(h).padStart(2,'0')}:00`;
+    hourSel.appendChild(o);
+  }
+  // Minutes
+  const minSel = document.getElementById('inp-minute');
+  for (let m = 0; m < 60; m += 5) {
+    const o = document.createElement('option');
+    o.value = m; o.textContent = String(m).padStart(2,'0');
+    minSel.appendChild(o);
+  }
+}
+
+function selectGender(g) {
+  AppState.userGender = g;
+  document.getElementById('btn-male').classList.toggle('active', g === 'M');
+  document.getElementById('btn-female').classList.toggle('active', g === 'F');
+}
+
+function toggleUnknownTime(checked) {
+  const timeInputs = document.getElementById('time-inputs');
+  if (checked) timeInputs.classList.add('time-disabled');
+  else timeInputs.classList.remove('time-disabled');
+}
+
+// ═══════════════════════════════════════════════
+// SECTION I: CHART CALCULATION ENTRY
+// ═══════════════════════════════════════════════
+function calculateChart() {
+  const L = I18N[AppState.language] || I18N.en;
+  
+  // Validate
+  const name = document.getElementById('inp-name').value.trim();
+  const year = parseInt(document.getElementById('inp-year').value);
+  const month = parseInt(document.getElementById('inp-month').value);
+  const day = parseInt(document.getElementById('inp-day').value);
+  const noTime = document.getElementById('chk-notime').checked;
+  const hour = noTime ? 12 : parseInt(document.getElementById('inp-hour').value);
+  const minute = noTime ? 0 : parseInt(document.getElementById('inp-minute').value||'0');
+  
+  let valid = true;
+  clearErrors();
+  
+  if (!name || name.length < 1) {
+    showFieldError('err-name', L.err_name); valid = false;
+  }
+  if (!year || !month || !day) {
+    showFieldError('err-date', L.err_date); valid = false;
+  } else {
+    const bd = new Date(year, month-1, day);
+    if (bd > new Date()) { showFieldError('err-date', L.err_date_future); valid = false; }
+    else if (year < 1900) { showFieldError('err-date', L.err_date_old); valid = false; }
+  }
+  if (!noTime && (isNaN(hour) || hour < 0 || hour > 23)) {
+    showFieldError('err-time', L.err_time); valid = false;
+  }
+  
+  if (!valid) return;
+  
+  AppState.userName = name;
+  
+  try {
+    const chart = buildFullChart(year, month, day, hour, minute, AppState.userGender, noTime);
+    AppState.chart = chart;
+    renderResults(chart);
+    showToast(t('toast_calc_ok'), 'success');
+    smoothScrollTo('section-results');
+  } catch(e) {
+    showToast('Calculation error. Please check your inputs.', 'error');
+  }
+}
+
+function clearErrors() {
+  document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
+  document.querySelectorAll('.form-control').forEach(e => e.classList.remove('error'));
+}
+function showFieldError(errId, msg) {
+  const errEl = document.getElementById(errId);
+  if (errEl) { errEl.textContent = msg; errEl.classList.add('show'); }
+}
+
+// ═══════════════════════════════════════════════
+// SECTION J: RENDERERS
+// ═══════════════════════════════════════════════
+function renderResults(chart) {
+  const resultsSection = document.getElementById('section-results');
+  document.getElementById('section-hero').style.display = 'none';
+  document.getElementById('section-input').style.display = 'none';
+  resultsSection.classList.add('visible');
+  
+  // Header info
+  const L = I18N[AppState.language] || I18N.en;
+  el('results-name-display', AppState.userName);
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? ' (time unknown)' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
+  
+  renderPillarGrid(chart);
+  renderElementBars(chart);
+  renderElementSVG(chart.elements);
+  
+  // Animate day master card
+  setTimeout(() => {
+    renderDayMaster(chart);
+    const dmCard = document.getElementById('day-master-card');
+    if (dmCard) dmCard.classList.add('revealed');
+  }, 400);
+  
+  renderPersonality(chart);
+  renderFortune(chart);
+  renderDaeun(chart);
+  renderAllPaid(chart);
+}
+
+function renderPillarGrid(chart) {
+  const grid = document.getElementById('pillar-grid');
+  if (!grid) return;
+  const L = I18N[AppState.language] || I18N.en;
+  const labels = [L.year_p, L.month_p, L.day_p, L.hour_p];
+  const keys = ['year','month','day','hour'];
+  const lang = AppState.language;
+  
+  grid.innerHTML = keys.map((key, i) => {
+    const p = chart.pillars[key];
+    const isDay = key === 'day';
+    const isUnknown = p.unknown;
+    const tgKey = chart.tenGods[key];
+    const tgLabel = tgKey ? (t('ten_god')[tgKey]||tgKey) : '';
+    const stemKrIdx = STEMS.indexOf(p.stem);
+    const brKrIdx = BRANCHES.indexOf(p.branch);
+    const stemKr = stemKrIdx >= 0 ? STEM_KR[stemKrIdx] : '';
+    const brKr = brKrIdx >= 0 ? BRANCH_KR[brKrIdx] : '';
+    
+    return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${p.element||''}">
+      <div class="pillar-glow"></div>
+      ${isDay ? '<div class="you-badge">YOU</div>' : ''}
+      <div class="pillar-label">${labels[i]}</div>
+      <div class="pillar-stem">${isUnknown ? '?' : p.stem}</div>
+      <div class="pillar-stem-name">${isUnknown ? '' : (lang==='ko'||lang==='ja'||lang==='zh' ? stemKr+' '+p.element : p.element)}</div>
+      <div class="pillar-branch">${isUnknown ? '?' : p.branch}</div>
+      <div class="pillar-branch-name">${isUnknown ? '' : (lang==='ko' ? brKr : p.branch+' '+BRANCH_ANIMALS[brKrIdx])}</div>
+      ${tgLabel && !isDay ? `<div class="pillar-ten-god">${tgLabel}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function renderElementBars(chart) {
+  const barsEl = document.getElementById('element-bars');
+  if (!barsEl) return;
+  const lang = AppState.language;
+  barsEl.innerHTML = ELEM_ORDER.map(el => {
+    const d = chart.elements[el];
+    const color = ELEMENT_COLORS[el];
+    const name = lang === 'ko' ? ELEMENT_KR[el] : (lang==='ja'?ELEMENT_JA[el]:lang==='zh'?ELEMENT_ZH[el]:el);
+    return `<div class="el-bar-row">
+      <div class="el-bar-name" style="color:${color}">${name}</div>
+      <div class="el-bar-track"><div class="el-bar-fill" style="width:${d.pct}%;background:${color}"></div></div>
+      <div class="el-bar-pct">${d.pct}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderElementSVG(elements) {
+  const svg = document.getElementById('elements-svg');
+  if (!svg) return;
+  const cx = 110, cy = 110, maxR = 80;
+  const angles = [-90, -90+72, -90+144, -90+216, -90+288]; // top, upper-right, lower-right, lower-left, upper-left
+  // Order: Wood(top), Fire, Earth, Metal, Water
+  const order = ['Wood','Fire','Earth','Metal','Water'];
+  
+  const pts = order.map((el, i) => {
+    const pct = elements[el].pct / 100;
+    const r = Math.max(12, pct * maxR);
+    const rad = (angles[i] * Math.PI) / 180;
+    return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad), el, pct, angle: angles[i] };
+  });
+  
+  const outerPts = order.map((el, i) => {
+    const rad = (angles[i] * Math.PI) / 180;
+    return { x: cx + maxR * Math.cos(rad), y: cy + maxR * Math.sin(rad) };
+  });
+  
+  // Background pentagon
+  const bgPath = outerPts.map((p,i) => `${i===0?'M':'L'}${p.x},${p.y}`).join(' ') + 'Z';
+  // Data polygon
+  const dataPath = pts.map((p,i) => `${i===0?'M':'L'}${p.x},${p.y}`).join(' ') + 'Z';
+  
+  // Grid lines
+  const gridLines = [0.25,0.5,0.75,1].map(f => {
+    const gp = outerPts.map((p,i) => {
+      const x = cx + (p.x-cx)*f, y = cy + (p.y-cy)*f;
+      return `${i===0?'M':'L'}${x},${y}`;
+    }).join(' ') + 'Z';
+    return `<path d="${gp}" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>`;
+  }).join('');
+  
+  // Axis lines
+  const axisLines = outerPts.map(p => `<line x1="${cx}" y1="${cy}" x2="${p.x}" y2="${p.y}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>`).join('');
+  
+  // Labels
+  const labelOffset = 20;
+  const labels = order.map((el, i) => {
+    const rad = (angles[i] * Math.PI) / 180;
+    const lx = cx + (maxR + labelOffset) * Math.cos(rad);
+    const ly = cy + (maxR + labelOffset) * Math.sin(rad);
+    const color = ELEMENT_COLORS[el];
+    const char = { Wood:'木', Fire:'火', Earth:'土', Metal:'金', Water:'水' }[el];
+    return `<text x="${lx}" y="${ly}" text-anchor="middle" dominant-baseline="middle" fill="${color}" font-size="13" font-family="serif">${char}</text>
+    <text x="${lx}" y="${ly+14}" text-anchor="middle" dominant-baseline="middle" fill="rgba(168,160,200,0.7)" font-size="9">${elements[el].pct}%</text>`;
+  }).join('');
+  
+  // Dominant element gradient color
+  const domEl = order.reduce((a,b) => elements[a].pct >= elements[b].pct ? a : b);
+  const gradColor = ELEMENT_COLORS[domEl];
+  
+  svg.innerHTML = `
+    <defs>
+      <radialGradient id="radarGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="${gradColor}" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="${gradColor}" stop-opacity="0.08"/>
+      </radialGradient>
+    </defs>
+    ${gridLines}${axisLines}
+    <path d="${bgPath}" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <path d="${dataPath}" fill="url(#radarGrad)" stroke="${gradColor}" stroke-width="1.5" opacity="0.9"/>
+    ${labels}
+    ${pts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" fill="${ELEMENT_COLORS[p.el]}" opacity="0.9"/>`).join('')}
+  `;
+}
+
+function renderDayMaster(chart) {
+  const dm = chart.dayMaster;
+  const profile = dm.profile;
+  if (!profile) return;
+  const lang = AppState.language;
+  const isKo = lang === 'ko';
+  
+  const color = ELEMENT_COLORS[dm.element];
+  const card = document.getElementById('day-master-card');
+  if (card) {
+    card.style.background = `radial-gradient(ellipse at 30% 50%, rgba(${hexToRgb(color)},0.12) 0%, rgba(255,255,255,0.03) 60%)`;
+    card.style.borderColor = `rgba(${hexToRgb(color)},0.4)`;
+    card.style.boxShadow = `0 0 40px rgba(${hexToRgb(color)},0.1)`;
+  }
+  
+  el('dm-bg-char', dm.stem);
+  el('dm-char', dm.stem);
+  document.getElementById('dm-char').style.color = color;
+  document.getElementById('dm-char').style.textShadow = `0 0 30px rgba(${hexToRgb(color)},0.6)`;
+  
+  const elName = isKo ? profile.name_ko : profile.name_en;
+  const title = isKo ? profile.title_ko : profile.title_en;
+  el('dm-element-name', elName);
+  el('dm-title-text', title);
+  el('dm-oneliner', isKo ? profile.oneliner_ko : profile.oneliner_en);
+  
+  // Body paragraphs
+  const bodyEl = document.getElementById('dm-body');
+  if (bodyEl) {
+    const paras = isKo ? profile.personality_ko : profile.personality_en;
+    bodyEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+  }
+  
+  // Strengths
+  const strEl = document.getElementById('dm-strengths');
+  if (strEl) {
+    const strs = isKo ? profile.strengths_ko : profile.strengths_en;
+    strEl.innerHTML = strs.map(s => `<li>${s}</li>`).join('');
+  }
+  
+  // Shadows
+  const shadEl = document.getElementById('dm-shadows');
+  if (shadEl) {
+    const shads = isKo ? profile.shadows_ko : profile.shadows_en;
+    shadEl.innerHTML = shads.map(s => `<li>${s}</li>`).join('');
+  }
+  
+  // Keywords
+  const kwEl = document.getElementById('dm-keywords');
+  if (kwEl) {
+    const kws = isKo ? profile.keywords_ko : profile.keywords_en;
+    kwEl.innerHTML = kws.map(kw => `<span class="dm-keyword" style="border-color:rgba(${hexToRgb(color)},0.3);color:${color}">${kw}</span>`).join('');
+  }
+}
+
+function renderPersonality(chart) {
+  const dm = chart.dayMaster;
+  const profile = dm.profile;
+  if (!profile) return;
+  const lang = AppState.language;
+  const isKo = lang === 'ko';
+  
+  const bodyEl = document.getElementById('personality-body');
+  if (!bodyEl) return;
+  
+  // Personality analysis based on elements + day master
+  const domEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct >= chart.elements[b].pct ? a : b);
+  const weakEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct <= chart.elements[b].pct ? a : b);
+  
+  const personality = isKo ? profile.personality_ko : profile.personality_en;
+  
+  if (isKo) {
+    bodyEl.innerHTML = `<p>${personality[0]}</p>
+    <p><strong>주요 오행 분포:</strong> 당신의 차트에서 ${ELEMENT_KR[domEl]}이 ${chart.elements[domEl].pct}%로 지배적이며, ${ELEMENT_KR[weakEl]}이 ${chart.elements[weakEl].pct}%로 가장 약합니다. 이 불균형은 ${domEl === 'Wood' ? '성장 지향적이고 창의적인' : domEl === 'Fire' ? '열정적이고 표현력이 강한' : domEl === 'Earth' ? '안정적이고 현실적인' : domEl === 'Metal' ? '분석적이고 정밀한' : '직관적이고 깊이 있는'} 성향을 강화합니다.</p>
+    <p>${personality[1]}</p>
+    <p>${personality[2]}</p>`;
+  } else {
+    bodyEl.innerHTML = `<p>${personality[0]}</p>
+    <p><strong>Your elemental balance:</strong> ${domEl} is dominant at ${chart.elements[domEl].pct}%, making you especially ${domEl === 'Wood' ? 'growth-oriented and visionary' : domEl === 'Fire' ? 'passionate and expressive' : domEl === 'Earth' ? 'stable and grounded' : domEl === 'Metal' ? 'analytical and precise' : 'intuitive and deep'}. ${weakEl} is weakest at ${chart.elements[weakEl].pct}% — an area that may require conscious cultivation.</p>
+    <p>${personality[1]}</p>
+    <p>${personality[2]}</p>`;
+  }
+}
+
+function renderFortune(chart) {
+  const f = chart.fortune;
+  const lang = AppState.language;
+  const isKo = lang === 'ko';
+  const L = I18N[lang] || I18N.en;
+  
+  const typeBadge = document.getElementById('fortune-type-badge');
+  const bodyEl = document.getElementById('fortune-body');
+  const luckiesEl = document.getElementById('fortune-luckies');
+  
+  const today = new Date();
+  const dateStr = today.toLocaleDateString(lang === 'ko' ? 'ko-KR' : lang === 'ja' ? 'ja-JP' : lang === 'zh' ? 'zh-CN' : 'en-US', { year:'numeric', month:'long', day:'numeric' });
+  
+  if (typeBadge) {
+    const typeLabel = f.type === 'high' ? L.fortune_high : f.type === 'low' ? L.fortune_low : L.fortune_neutral;
+    typeBadge.innerHTML = `<div class="fortune-day-type ${f.type}">${typeLabel} · ${dateStr}</div>`;
+  }
+  
+  const dm = chart.dayMaster;
+  const dmStem = dm.stem;
+  
+  if (bodyEl) {
+    if (f.type === 'high') {
+      bodyEl.innerHTML = isKo
+        ? `<p>오늘의 기운이 당신의 본성과 조화롭게 울립니다.</p><p>${f.todayPillar.stem}${f.todayPillar.branch} 에너지가 당신의 ${ELEMENT_KR[dm.element]}을 강화시켜 직관을 날카롭게 만들고, 존재감을 높이며, 당신의 말이 더 잘 전달되게 합니다.</p><p>오늘은 허락을 기다릴 날이 아닙니다. 미루어 왔던 것이 있나요? 오늘, 조건이 갖춰졌습니다.</p>`
+        : `<p>Today's pillar sings with your nature. The energy is favorable.</p><p>${f.todayPillar.stem}${f.todayPillar.branch} energy amplifies your ${dm.element} in a way that makes your instincts sharper, your presence stronger, your words more likely to land.</p><p>This is not a day to wait for permission. What have you been putting off? Today, the conditions are right.</p>`;
+    } else if (f.type === 'low') {
+      bodyEl.innerHTML = isKo
+        ? `<p>오늘은 흐름이 거스릅니다.</p><p>오늘의 기운이 당신의 ${ELEMENT_KR[dm.element]}과 마찰을 일으킵니다 — 위험은 아니지만, 같은 결과를 얻기 위해 더 많은 노력이 필요한 저항입니다.</p><p>어떤 날에는 강이 언덕을 오릅니다. 오늘은 더 쉬고, 덜 밀어붙이세요. 가능하다면 긴박한 일을 내일로 미루세요.</p>`
+        : `<p>The current is against you today.</p><p>Today's ${f.todayPillar.element} energy creates friction with your ${dm.element} — not danger, but the kind of resistance that requires more effort for the same result.</p><p>Some days the river climbs uphill. Today: rest more, push less. Let the urgent wait if it can.</p>`;
+    } else {
+      bodyEl.innerHTML = isKo
+        ? `<p>돌파보다는 작업을 위한 날입니다.</p><p>오늘의 기운은 밀지도 막지도 않습니다. 이것은 급류 사이의 조용한 강줄기 — 물은 여전히 흐르고, 진전은 계속되지만, 드라마 없이.</p><p>이 안정감을 활용하세요. 영감이 아닌 꾸준함을 요구하는 일을 하세요. 가장 좋은 날이 항상 전기가 오르는 날은 아닙니다.</p>`
+        : `<p>A day for the work, not the breakthrough.</p><p>The energy today neither pushes nor resists. This is the quiet river stretch between rapids — water still moves, progress still happens, but without the drama.</p><p>Use this steadiness. Do the thing that requires consistency, not inspiration. The best days aren't always the electric ones.</p>`;
+    }
+  }
+  
+  if (luckiesEl) {
+    const colorLabel = isKo ? f.luckyColorKo : f.luckyColor;
+    const dirLabel = isKo ? f.luckyDirKo : f.luckyDir;
+    luckiesEl.innerHTML = `
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_color}</div><div class="lucky-val">${colorLabel}</div></div>
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_dir}</div><div class="lucky-val">${dirLabel}</div></div>
+      <div class="lucky-item"><div class="lucky-label">${L.lucky_num}</div><div class="lucky-val">${f.luckyNum}</div></div>
+    `;
+  }
+}
+
+function renderDaeun(chart) {
+  const track = document.getElementById('daeun-track');
+  if (!track) return;
+  const L = I18N[AppState.language] || I18N.en;
+  const { daeun } = chart.daeunData;
+  
+  track.innerHTML = daeun.map(d => {
+    const color = ELEMENT_COLORS[d.element] || '#a8a0c8';
+    return `<div class="daeun-item${d.isCurrent?' current':''}">
+      <div class="daeun-stem" style="color:${color}">${d.stem}</div>
+      <div class="daeun-branch" style="color:${color}80">${d.branch}</div>
+      <div class="daeun-age">${d.ageStart}–${d.ageEnd}</div>
+      <div class="daeun-age">${d.yearStart}–${d.yearEnd}</div>
+      ${d.isCurrent ? `<div class="daeun-current-badge">${L.daeun_current}</div>` : ''}
+    </div>`;
+  }).join('');
+  
+  // Scroll to current
+  setTimeout(() => {
+    const cur = track.querySelector('.current');
+    if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, 500);
+}
+
+function renderAllPaid(chart) {
+  const L = I18N[AppState.language] || I18N.en;
+  const name = AppState.userName || L.word_you;
+  const dm = chart.dayMaster;
+  const dmStem = dm.stem;
+  
+  // Helper to inject name into hook
+  const hook = (key) => t(key).replace('[NAME]', name);
+  
+  // Paid 1: Life Path
+  setPaywall('paid1', hook('paid1_hook'), t('paid1_sub'), t('paid1_btn'),
+    `${name}의 사주에는 하나의 주제가 있습니다. 년주 ${chart.pillars.year.stem}${chart.pillars.year.branch}과 일주 ${dmStem}${chart.pillars.day.branch} 사이의 대화는... 외부의 권위와 내면의 앎 사이에 강렬한 긴장을 만들어내며.`);
+  
+  // Paid 2: Wealth
+  setPaywall('paid2', hook('paid2_hook'), t('paid2_sub'), t('paid2_btn'),
+    `${dmStem} 일간의 재물운은 일반적인 방식과 다릅니다. 재성(財星)이 현재 대운과 만나는 방식은... 독특한 레버리지를 만들어내지만 특정 패턴을 피해야만.`);
+  
+  // Paid 3: Love
+  setPaywall('paid3', hook('paid3_hook'), t('paid3_sub'), t('paid3_btn'),
+    `${dmStem}에게 사랑은 깊이 느끼는 것입니다. 관성(官星)이 이 특별한 이야기를 담고 있습니다. 당신에게 실제로 닿는 파트너의 유형은 당신의 외모에서 대부분의 사람들이 예측하는 것과 다릅니다.`);
+  
+  // Paid 4: Family
+  setPaywall('paid4', hook('paid4_hook'), t('paid4_sub'), t('paid4_btn'),
+    `년주와 월주는 원가족의 에너지를 담고 있습니다. 건강에 대해: 당신의 오행 균형은 몸이 스트레스를 어디에 담는지에 관한 이야기를 합니다. ${ELEMENT_KR[dm.element]} 과잉은 전통 의학의 특정 경락과 연결됩니다.`);
+  
+  // Paid 5: Daeun
+  const currentDaeun = chart.daeunData.daeun.find(d => d.isCurrent);
+  const nextDaeun = currentDaeun ? chart.daeunData.daeun[chart.daeunData.daeun.indexOf(currentDaeun)+1] : null;
+  setPaywall('paid5', hook('paid5_hook'), t('paid5_sub'), t('paid5_btn'),
+    `현재 ${currentDaeun ? currentDaeun.stem+currentDaeun.branch : ''}대운 안에 있습니다. ${nextDaeun ? `다음 대운(${nextDaeun.stem}${nextDaeun.branch})은 ${nextDaeun.yearStart}년에 시작됩니다.` : ''} 이 전환이 ${dmStem} 일간에게 의미하는 것은...`);
+}
+
+function setPaywall(id, hook, sub, btnText, previewText) {
+  el(`${id}-hook`, hook);
+  el(`${id}-sub`, sub);
+  el(`${id}-btn`, btnText);
+  const prevEl = document.getElementById(`${id}-preview`);
+  if (prevEl) prevEl.textContent = previewText;
+}
+
+// ═══════════════════════════════════════════════
+// SECTION K: MODAL SYSTEM
+// ═══════════════════════════════════════════════
+let _currentModalType = null;
+
+function openModal(type) {
+  _currentModalType = type;
+  const L = I18N[AppState.language] || I18N.en;
+  const name = AppState.userName || L.word_you;
+  
+  el('modal-eyebrow', L.modal_eyebrow);
+  el('modal-title', L.modal_title);
+  el('modal-sub', L.modal_sub);
+  el('modal-price', L.modal_price);
+  el('modal-price-sub', L.modal_price_sub);
+  el('modal-pay-btn', L.modal_pay_btn);
+  el('modal-waitlist-title', L.modal_waitlist_title);
+  el('modal-notify-btn', L.modal_notify_btn);
+  el('modal-note', L.modal_note);
+  
+  const featEl = document.getElementById('modal-features');
+  if (featEl && L.modal_features) {
+    featEl.innerHTML = L.modal_features.map(f => `<li>${f}</li>`).join('');
+  }
+  
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function closeModalIfOverlay(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+
+function handlePayment() {
+  showToast(t('toast_payment_info'), 'info');
+}
+
+function joinWaitlist() {
+  const L = I18N[AppState.language] || I18N.en;
+  const email = document.getElementById('modal-email').value.trim();
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    showToast(L.toast_email_invalid, 'error'); return;
+  }
+  if (AppState.waitlist.includes(email)) {
+    showToast(L.toast_waitlist_dup, 'info'); return;
+  }
+  AppState.waitlist.push(email);
+  localStorage.setItem('momentor_waitlist', JSON.stringify(AppState.waitlist));
+  showToast(L.toast_waitlist_ok, 'success');
+  document.getElementById('modal-email').value = '';
+  closeModal();
+}
+
+// ═══════════════════════════════════════════════
+// SECTION L: NAVIGATION UTILITIES
+// ═══════════════════════════════════════════════
+function smoothScrollTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showHero() {
+  document.getElementById('section-results').classList.remove('visible');
+  document.getElementById('section-hero').style.display = '';
+  document.getElementById('section-input').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════
+// SECTION M: UTILITY FUNCTIONS
+// ═══════════════════════════════════════════════
+function hexToRgb(hex) {
+  const r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return r ? `${parseInt(r[1],16)},${parseInt(r[2],16)},${parseInt(r[3],16)}` : '255,255,255';
+}
+
+// ═══════════════════════════════════════════════
+// SECTION N: INITIALIZATION
+// ═══════════════════════════════════════════════
+function init() {
+  initForm();
+  applyLanguage();
+  
+  // Keyboard: ESC closes modal
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+  
+  // Restore language
+  const savedLang = localStorage.getItem('momentor_lang') || 'en';
+  if (savedLang !== AppState.language) {
+    AppState.language = savedLang;
+  }
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.lang === AppState.language);
+  });
+  applyLanguage();
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
