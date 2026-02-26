@@ -235,7 +235,7 @@
     .time-disabled{opacity:.4;pointer-events:none;}
 
     /* RESULTS */
-    #section-results{display:none;padding:0 16px 40px;max-width:900px;margin:0 auto;}
+    #section-results{display:none;padding:0 16px calc(40px + 80px);max-width:900px;margin:0 auto;}
     #section-results.visible{display:block;}
     .results-top{
       text-align:center;padding:32px 0 24px;
@@ -592,6 +592,23 @@
     .stagger-3{animation-delay:.3s;opacity:0;}
     .stagger-4{animation-delay:.4s;opacity:0;}
 
+    /* HERO ENTRANCE */
+    @keyframes heroFadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    .hero{animation:heroFadeIn .85s ease forwards;}
+
+    /* HERO CTA PULSE */
+    @keyframes ctaPulse{0%,100%{box-shadow:0 4px 20px rgba(232,197,71,.3)}50%{box-shadow:0 4px 34px rgba(232,197,71,.55),0 0 0 8px rgba(232,197,71,.08)}}
+    #hero-cta{animation:ctaPulse 2.6s ease-in-out infinite;}
+
+    /* INTERSECTION REVEAL */
+    .reveal-section{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease;}
+    .reveal-section.is-visible{opacity:1;transform:translateY(0);}
+
+    /* PREMIUM SHIMMER */
+    @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+    .premium-unlock-btn{background-size:200% auto;background-image:linear-gradient(135deg,#f0b860,#e8a840,#ffd080,#ff7eb3,#f0b860);animation:shimmer 3.2s linear infinite;}
+    .sticky-cta-btn{animation:shimmer 3.2s linear infinite;background-size:200% auto;background-image:linear-gradient(135deg,#f0b860,#e8a840,#ffd080,#ff7eb3,#f0b860);}
+
     /* SOCIAL PROOF */
     .social-section{
       max-width:900px;margin:0 auto;
@@ -619,7 +636,8 @@
       border-top:1px solid rgba(255,255,255,.05);
       font-size:12px;color:var(--text-muted);
     }
-    footer a{color:var(--text-muted);text-decoration:none;}
+    footer a{color:var(--text-muted);text-decoration:none;transition:color .2s;}
+    footer a:hover{color:var(--gold);}
 
     /* UTIL */
     .text-center{text-align:center;}
@@ -677,6 +695,10 @@
       .pillar-branch{font-size:1.6rem;}
       .form-card{padding:20px 16px;}
       .modal-box{padding:24px 18px;}
+      .hero-headline{font-size:28px;line-height:1.22;}
+      .hero-sub{font-size:13px;}
+      .usp-row{padding:0 12px 32px;}
+      .trust-bullets li{font-size:13px;padding:6px 0;}
     }
 
     /* ── ELEMENT BARS ── */
@@ -858,7 +880,7 @@
     .peak-period,.low-period{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
     .peak-desc,.low-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
     /* ── PREMIUM ── */
-    .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.3);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);}
+    .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.35);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);box-shadow:0 0 40px rgba(240,184,96,0.1),inset 0 1px 0 rgba(240,184,96,0.15);}
     .premium-header{margin-bottom:24px;}
     .premium-lock-icon{font-size:36px;margin-bottom:12px;}
     .premium-title{font-size:22px;font-weight:700;color:#f0e8d0;margin-bottom:8px;}
@@ -869,12 +891,12 @@
     .premium-price{font-size:36px;font-weight:700;color:#f0b860;}
     .premium-price-sub{font-size:13px;color:rgba(255,255,255,0.4);margin-bottom:16px;}
     .premium-cta-block{}
-    .premium-unlock-btn{width:100%;padding:16px;border-radius:12px;background:linear-gradient(135deg,#f0b860,#ff7eb3);color:white;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(240,184,96,0.3);transition:all .2s;}
+    .premium-unlock-btn{width:100%;padding:16px;border-radius:12px;color:white;font-size:16px;font-weight:700;border:none;cursor:pointer;box-shadow:0 4px 24px rgba(240,184,96,0.3);transition:transform .2s,box-shadow .2s;}
     .premium-unlock-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(240,184,96,0.4);}
     .premium-reassure{font-size:12px;color:rgba(255,255,255,0.3);margin-top:12px;}
     /* ── DM Insight Grid ── */
-    .dm-insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;margin-bottom:20px;}
-    .dm-insight-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 14px;text-align:center;}
+    .dm-insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;margin-bottom:20px;align-items:stretch;}
+    .dm-insight-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px 14px;text-align:center;border-left:3px solid var(--dm-accent,var(--gold));}
     .dm-insight-card:hover{border-color:rgba(240,184,96,0.3);background:rgba(240,184,96,0.05);transition:all 0.2s;}
     .dm-insight-icon{font-size:22px;margin-bottom:8px;}
     .dm-insight-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
@@ -910,7 +932,7 @@
     .elem-int-dot.absent{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);}
     .elem-int-dot.tip-dot{background:var(--gold);}
 
-  .sticky-cta-bar{position:fixed;bottom:0;left:0;right:0;z-index:900;background:linear-gradient(135deg,rgba(20,12,40,0.97),rgba(30,15,50,0.97));border-top:1px solid rgba(240,184,96,0.35);padding:12px 20px;backdrop-filter:blur(12px);animation:slideUp 0.4s ease;}
+  .sticky-cta-bar{position:fixed;bottom:0;left:0;right:0;z-index:900;background:linear-gradient(135deg,rgba(20,12,40,0.97),rgba(30,15,50,0.97));border-top:1px solid rgba(240,184,96,0.35);padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));backdrop-filter:blur(12px);animation:slideUp 0.4s ease;}
   @keyframes slideUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
   .sticky-cta-inner{display:flex;align-items:center;justify-content:space-between;max-width:480px;margin:0 auto;gap:12px;}
   .sticky-cta-text{font-size:13px;color:rgba(255,255,255,0.7);flex:1;font-family:'Cormorant Garamond',serif;}
@@ -1094,13 +1116,13 @@
   </div>
 
   <!-- 4 PILLAR CHART -->
-  <div class="pillar-section">
+  <div class="pillar-section reveal-section">
     <div class="section-label" id="lbl-pillars">FOUR PILLARS · Saju Paljja</div>
     <div class="pillar-grid" id="pillar-grid"></div>
   </div>
 
   <!-- FIVE ELEMENTS -->
-  <div class="elements-section">
+  <div class="elements-section reveal-section">
     <div class="section-divider" id="lbl-elements">Five Elements Analysis</div>
     <div class="elements-grid">
       <div class="element-bars" id="element-bars"></div>
@@ -1138,7 +1160,7 @@
   </div>
 
   <!-- PREMIUM -->
-  <div class="premium-unlock-section" id="premium-section">
+  <div class="premium-unlock-section reveal-section" id="premium-section">
     <!-- Filled by renderAllPaid() -->
   </div>
 
@@ -1157,7 +1179,7 @@
 <!-- UNLOCK MODAL -->
 <div id="modal-overlay" onclick="closeModalIfOverlay(event)">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
+    <button class="modal-close" onclick="closeModal()" title="Close">✕</button>
     <div class="modal-eyebrow" id="modal-eyebrow">✦ EARLY ACCESS ✦</div>
     <div class="modal-title" id="modal-title">The reading that knows what you've been wondering.</div>
     <div class="modal-sub" id="modal-sub">You've seen your pillars. You've met your Day Master. Now go deeper.</div>
@@ -2866,6 +2888,19 @@ function renderResults(chart) {
     if (dmCard) dmCard.classList.add('revealed');
   }, 400);
 
+  // Entrance animations via IntersectionObserver
+  setTimeout(() => {
+    const revealEls = document.querySelectorAll('#section-results .reveal-section');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+      }, { threshold: 0.08 });
+      revealEls.forEach(el => observer.observe(el));
+    } else {
+      revealEls.forEach(el => el.classList.add('is-visible'));
+    }
+  }, 200);
+
   // Sticky CTA bar after 35 seconds
   if (!AppState.isPremium) {
     setTimeout(function() {
@@ -3161,6 +3196,7 @@ function renderDayMaster(chart) {
     card.style.background = `radial-gradient(ellipse at 30% 50%, rgba(${hexToRgb(color)},0.12) 0%, rgba(255,255,255,0.03) 60%)`;
     card.style.borderColor = `rgba(${hexToRgb(color)},0.4)`;
     card.style.boxShadow = `0 0 40px rgba(${hexToRgb(color)},0.1)`;
+    card.style.setProperty('--dm-accent', color);
   }
 
   // Hide strengths/shadows container
@@ -3628,21 +3664,21 @@ function renderPremiumContent(chart) {
   const dayStem = chart && chart.dayMaster ? chart.dayMaster.stem : (chart && chart.pillars && chart.pillars.day ? chart.pillars.day.stem : '');
   const content = PREMIUM_CONTENT[dayStem];
   const sections = [
-    { icon: '🌟', titleKo: '인생 전반', titleEn: 'Life Path', koKey: 'life_ko', enKey: 'life_en' },
-    { icon: '💰', titleKo: '재물 & 커리어', titleEn: 'Wealth & Career', koKey: 'wealth_ko', enKey: 'wealth_en' },
-    { icon: '💕', titleKo: '연애 & 결혼', titleEn: 'Love & Marriage', koKey: 'love_ko', enKey: 'love_en' },
-    { icon: '👨‍👩‍👧', titleKo: '가족 & 건강', titleEn: 'Family & Health', koKey: 'family_ko', enKey: 'family_en' },
-    { icon: '🔮', titleKo: '10년 대운 분석', titleEn: 'Decade Analysis', koKey: 'decade_ko', enKey: 'decade_en' },
+    { icon: '🌟', titleKo: '인생 전반', titleEn: 'Life Path', koKey: 'life_ko', enKey: 'life_en', borderColor: '#f0b860' },
+    { icon: '💰', titleKo: '재물 & 커리어', titleEn: 'Wealth & Career', koKey: 'wealth_ko', enKey: 'wealth_en', borderColor: '#4ade80' },
+    { icon: '💕', titleKo: '연애 & 결혼', titleEn: 'Love & Marriage', koKey: 'love_ko', enKey: 'love_en', borderColor: '#ff7eb3' },
+    { icon: '👨‍👩‍👧', titleKo: '가족 & 건강', titleEn: 'Family & Health', koKey: 'family_ko', enKey: 'family_en', borderColor: '#60a5fa' },
+    { icon: '🔮', titleKo: '10년 대운 분석', titleEn: 'Decade Analysis', koKey: 'decade_ko', enKey: 'decade_en', borderColor: '#a78bfa' },
   ];
   const fallbackKo = '준비 중입니다. 곧 업데이트됩니다.';
   const fallbackEn = 'Deep analysis coming soon - being personalized for your chart.';
   const cardsHtml = sections.map(s => {
     const body = content ? (isKo ? content[s.koKey] : content[s.enKey]) : null;
     const bodyText = body || (isKo ? fallbackKo : fallbackEn);
-    return `<div class="premium-content-card">
+    return `<div class="premium-content-card" style="border-left:3px solid ${s.borderColor};box-shadow:0 0 20px rgba(0,0,0,0.15);">
       <div class="premium-card-header">
         <span class="premium-card-icon">${s.icon}</span>
-        <span class="premium-card-title">${isKo ? s.titleKo : s.titleEn}</span>
+        <span class="premium-card-title" style="color:${s.borderColor}">${isKo ? s.titleKo : s.titleEn}</span>
       </div>
       <div class="premium-card-body">${bodyText}</div>
     </div>`;
@@ -3751,7 +3787,7 @@ document.addEventListener('DOMContentLoaded', init);
   <div class="sticky-cta-inner">
     <span class="sticky-cta-text" id="sticky-cta-text">✦ Your Full Reading</span>
     <button class="sticky-cta-btn" id="sticky-cta-btn" onclick="openPayModal()">$4.99 · Unlock →</button>
-    <button class="sticky-cta-close" onclick="document.getElementById('sticky-cta-bar').style.display='none'">✕</button>
+    <button class="sticky-cta-close" onclick="document.getElementById('sticky-cta-bar').style.display='none'" title="Dismiss">✕</button>
   </div>
 </div>
 </body>
