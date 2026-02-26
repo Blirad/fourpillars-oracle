@@ -703,8 +703,8 @@
     <div class="lang-tabs">
       <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
       <button class="lang-btn" data-lang="ko" onclick="setLang('ko')">한</button>
-      <button class="lang-btn" data-lang="ja" onclick="setLang('ja')">日</button>
-      <button class="lang-btn" data-lang="zh" onclick="setLang('zh')">中</button>
+      
+      
     </div>
   </div>
 </header>
@@ -1427,9 +1427,7 @@ function getSolarTermDay(year, month0) {
   return Math.floor(Y * 0.2422 + base) - Math.floor(Y / 4);
 }
 
-function calcSolarTermDate(year, month0) {
-  return { year, month: month0 + 1, day: getSolarTermDay(year, month0) };
-}
+
 
 function calcYearPillar(year) {
   // 甲子 year = 4 CE, so offset = 4+6=10 → (4+6)%10=0 ✓
@@ -1939,144 +1937,25 @@ function getTodayFortune(dayMasterElement) {
   return { type, element: dayMasterElement };
 }
 
-function showToast(message, type = 'info', duration = 3000) {
-  const container = document.getElementById('toast-container');
-  if (!container) return;
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  const icons = { success: '✓', error: '✕', info: 'ℹ' };
-  toast.innerHTML = `<span class="toast-icon">${icons[type]||'ℹ'}</span><span>${message}</span>`;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    setTimeout(() => toast.remove(), 300);
-  }, duration);
-}
+
 
 // ═══════════════════════════════════════════════
 // SECTION G: LANGUAGE & UI
 // ═══════════════════════════════════════════════
-function setLang(lang) {
-  if (lang !== 'en' && lang !== 'ko') return;
-  AppState.language = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === lang);
-  });
-  const ids = {
-    'hdr-sub': 'app_tagline',
-    'hero-eyebrow': 'hero_eyebrow',
-    'hero-headline': 'hero_headline',
-    'hero-sub': 'hero_sub',
-    'hero-cta': 'hero_cta',
-    'usp1-title': 'usp1_title',
-    'usp1-body': 'usp1_body',
-    'usp2-title': 'usp2_title',
-    'usp2-body': 'usp2_body',
-    'usp3-title': 'usp3_title',
-    'usp3-body': 'usp3_body',
-    't1-text': 't1_text',
-    't2-text': 't2_text',
-    't3-text': 't3_text',
-    't1-author': 't1_author',
-    't2-author': 't2_author',
-    't3-author': 't3_author',
-    'social-count-text': 'social_count',
-    'form-title': 'form_title',
-    'form-subtitle': 'form_subtitle',
-    'lbl-name': 'lbl_name',
-    'lbl-gender': 'lbl_gender',
-    'btn-male': 'gender_male',
-    'btn-female': 'gender_female',
-    'lbl-birthdate': 'lbl_birthdate',
-    'lbl-birthtime': 'lbl_birthtime',
-    'lbl-notime': 'lbl_notime',
-    'btn-calc-text': 'btn_calculate',
-    'btn-back': 'back_btn',
-    'lbl-pillars': 'lbl_pillars',
-    'lbl-elements': 'lbl_elements',
-    'lbl-personality': 'lbl_personality',
-    'lbl-fortune': 'lbl_fortune',
-    'lbl-daeun': 'lbl_daeun',
-    'lbl-paid': 'lbl_paid',
-    'badge-free1': 'badge_free',
-    'badge-free2': 'badge_free',
-    'badge-free3': 'badge_free',
-    'badge-free4': 'badge_free',
-    'badge-paid': 'badge_paid',
-  };
-  Object.entries(ids).forEach(([id, key]) => {
-    const el = document.getElementById(id);
-    if (el) el.innerHTML = t(key);
-  });
-  if (AppState.pillars) renderAll();
-}
 
-function selectGender(g) {
-  AppState.gender = g;
-  document.querySelectorAll('.gender-btn').forEach(b => b.classList.toggle('active', b.dataset.gender === g));
-}
 
-function toggleUnknownTime(checked) {
-  const inputs = document.getElementById('time-inputs');
-  if (inputs) inputs.classList.toggle('time-disabled', checked);
-  AppState.noTime = checked;
-}
 
-function scrollToTop() { window.scrollTo({top:0,behavior:'smooth'}); }
 
-function smoothScrollTo(id) {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
-}
+
+
+
+
+
 
 // ═══════════════════════════════════════════════
 // SECTION H: FORM & VALIDATION
 // ═══════════════════════════════════════════════
-function calculateChart() {
-  clearErrors();
-  const name = document.getElementById('inp-name').value.trim();
-  const year = parseInt(document.getElementById('inp-year').value);
-  const month = parseInt(document.getElementById('inp-month').value);
-  const day = parseInt(document.getElementById('inp-day').value);
-  const hourEl = document.getElementById('inp-hour');
-  const minEl = document.getElementById('inp-minute');
-  const hour = parseInt(hourEl.value) || 0;
-  const minute = parseInt(minEl.value) || 0;
-  const noTime = document.getElementById('chk-notime').checked;
 
-  let valid = true;
-  if (!name || name.length < 1) {
-    showError('err-name', t('err_name')); valid = false;
-  }
-  if (!year || !month || !day) {
-    showError('err-date', t('err_date')); valid = false;
-  } else {
-    const now = new Date();
-    const birthDate = new Date(year, month - 1, day);
-    if (birthDate > now) { showError('err-date', t('err_date_future')); valid = false; }
-    else if (year < 1900) { showError('err-date', t('err_date_old')); valid = false; }
-  }
-  if (!valid) return;
-
-  const pillars = calcFourPillars(year, month, day, hour, minute, AppState.gender, noTime);
-  AppState.pillars = pillars;
-  AppState.userInfo = { name: name || t('word_you'), year, month, day, hour, minute, noTime };
-
-  renderAll();
-  showToast(t('toast_calc_ok'), 'success');
-
-  const resultsEl = document.getElementById('section-results');
-  const heroEl = document.getElementById('section-hero');
-  const inputEl = document.getElementById('section-input');
-  if (resultsEl) resultsEl.classList.add('visible');
-  if (heroEl) heroEl.style.display = 'none';
-  if (inputEl) inputEl.style.display = 'none';
-
-  const dmCard = document.getElementById('day-master-card');
-  if (dmCard) setTimeout(() => dmCard.classList.add('revealed'), 300);
-
-  smoothScrollTo('section-results');
-}
 
 function showError(id, msg) {
   const el = document.getElementById(id);
@@ -2084,9 +1963,7 @@ function showError(id, msg) {
   setTimeout(() => { if (el) el.classList.remove('show'); }, 3000);
 }
 
-function clearErrors() {
-  document.querySelectorAll('.form-error').forEach(e => e.classList.remove('show'));
-}
+
 
 // ═══════════════════════════════════════════════
 // SECTION I: RENDER FUNCTIONS
@@ -2111,39 +1988,7 @@ function renderHeader(info) {
   if (dateEl) dateEl.textContent = dateStr;
 }
 
-function renderPillarGrid(pillars) {
-  const grid = document.getElementById('pillar-grid');
-  if (!grid) return;
-  const lang = AppState.language;
-  const lbl = lang === 'ko'
-    ? [t('year_p'), t('month_p'), t('day_p'), t('hour_p')]
-    : ['Year', 'Month', 'Day', 'Hour'];
-  const ps = [pillars.yearPillar, pillars.monthPillar, pillars.dayPillar, pillars.hourPillar];
 
-  grid.innerHTML = ps.map((p, i) => {
-    if (!p && i === 3) {
-      return `<div class="pillar-card" data-element="Water">
-        <div class="pillar-label">${lbl[3]}</div>
-        <div class="pillar-glow"></div>
-        <div class="pillar-stem" style="opacity:.3">?</div>
-        <div class="pillar-branch" style="opacity:.3">?</div>
-        <div class="pillar-sub" style="opacity:.3">${lang==='ko'?'시간 미상':'Unknown'}</div>
-      </div>`;
-    }
-    const isDay = i === 2;
-    const animal = BRANCH_ANIMALS[p.branchIdx];
-    const animalKr = BRANCH_ANIMALS_KR[p.branchIdx];
-    return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${p.element}">
-      <div class="pillar-label${isDay?' day-label':''}">${lbl[i]}</div>
-      <div class="pillar-glow"></div>
-      <div class="pillar-stem">${p.stem}</div>
-      <div class="pillar-branch">${p.branch}</div>
-      <div class="pillar-sub">${lang==='ko'?p.stemKr+' '+p.branchKr:p.element+' '+STEM_POLARITIES[p.stemIdx]}</div>
-      <div class="pillar-animal">${lang==='ko'?animalKr:animal}</div>
-      ${isDay ? '<div class="you-badge">YOU</div>' : ''}
-    </div>`;
-  }).join('');
-}
 
 function renderFiveElements(elements) {
   const barsEl = document.getElementById('element-bars');
@@ -2194,103 +2039,11 @@ function renderFiveElements(elements) {
   }).join('')}`;
 }
 
-function renderDayMaster(dayPillar, name) {
-  const dm = DAY_MASTERS[dayPillar.stem];
-  if (!dm) return;
-  const lang = AppState.language;
-  const card = document.getElementById('day-master-card');
-  if (card) {
-    card.style.setProperty('--dm-color', ELEMENT_COLORS[dayPillar.element]);
-    card.setAttribute('data-element', dayPillar.element);
-    card.style.background = `linear-gradient(135deg, rgba(13,11,30,0.95) 0%, ${ELEMENT_COLORS[dayPillar.element]}18 100%)`;
-  }
-  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
-  const setHTML = (id, val) => { const el=document.getElementById(id); if(el) el.innerHTML=val; };
 
-  const bgChar = document.getElementById('dm-bg-char');
-  if (bgChar) { bgChar.textContent = dayPillar.stem; bgChar.style.color = ELEMENT_COLORS[dayPillar.element]; }
-  set('dm-eyebrow', t('dm_eyebrow'));
-  const dmChar = document.getElementById('dm-char');
-  if (dmChar) { dmChar.textContent = dayPillar.stem; dmChar.style.color = ELEMENT_COLORS[dayPillar.element]; }
-  set('dm-element-name', lang==='ko' ? ELEMENT_KR[dayPillar.element] : dayPillar.element + ' · ' + STEM_POLARITIES[dayPillar.stemIdx]);
-  set('dm-title-text', lang==='ko' ? dm.titleKo : dm.titleEn);
-  set('dm-oneliner', lang==='ko' ? dm.onelinerKo : dm.onelinerEn);
 
-  const bodyText = (lang==='ko' ? dm.bodyKo : dm.bodyEn).replace(/\n\n/g, '<br><br>');
-  setHTML('dm-body', bodyText);
 
-  const strengthItems = lang==='ko' ? dm.strengthsKo : dm.strengthsEn;
-  const shadowItems = lang==='ko' ? dm.shadowsKo : dm.shadowsEn;
-  setHTML('dm-strengths', strengthItems.map(s=>`<li>${s}</li>`).join(''));
-  setHTML('dm-shadows', shadowItems.map(s=>`<li>${s}</li>`).join(''));
-  set('lbl-strengths', t('lbl_strengths'));
-  set('lbl-shadows', t('lbl_shadows'));
 
-  const kwEls = lang==='ko' ? dm.keywordsKo : dm.keywordsEn;
-  setHTML('dm-keywords', kwEls.map(k=>`<span class="dm-keyword">${k}</span>`).join(''));
-}
 
-function renderFortune(dayPillar) {
-  const fortune = getTodayFortune(dayPillar.element);
-  const lang = AppState.language;
-  const colorMap = { high:'var(--wood)', neutral:'var(--gold)', low:'var(--fire)' };
-
-  const fortuneTexts = {
-    high: {
-      en: `Your ${dayPillar.element} energy aligns powerfully with today's forces. This is a day to move, to speak, to initiate. The universe is listening more than usual.`,
-      ko: `오늘은 ${ELEMENT_KR[dayPillar.element]} 에너지가 강하게 흐릅니다. 시작하기 좋은 날, 표현하기 좋은 날입니다. 우주가 평소보다 더 귀를 기울이고 있습니다.`
-    },
-    neutral: {
-      en: `A balanced day. Your ${dayPillar.element} nature flows without friction. Good for reflection, planning, steady progress. Not a storm, not a calm — a clear sky with purpose.`,
-      ko: `균형 잡힌 하루입니다. ${ELEMENT_KR[dayPillar.element]} 에너지가 마찰 없이 흐릅니다. 성찰하고, 계획하고, 꾸준히 나아가기 좋은 날입니다.`
-    },
-    low: {
-      en: `Today brings friction for ${dayPillar.element} energy. Not a day to force things — a day to conserve, observe, and let others lead. The resistance is temporary; your season will return.`,
-      ko: `오늘은 ${ELEMENT_KR[dayPillar.element]} 에너지에 저항이 있습니다. 강하게 밀기보다는 보존하고, 관찰하고, 때를 기다리는 것이 좋습니다. 이 시간도 지나갑니다.`
-    }
-  };
-
-  const badgeEl = document.getElementById('fortune-type-badge');
-  if (badgeEl) badgeEl.innerHTML = `<span style="font-size:12px;font-weight:700;color:${colorMap[fortune.type]};letter-spacing:.1em">${t('fortune_'+fortune.type)}</span>`;
-
-  const titleEl = document.getElementById('fortune-title');
-  if (titleEl) titleEl.textContent = t('fortune_title');
-
-  const bodyEl = document.getElementById('fortune-body');
-  if (bodyEl) bodyEl.textContent = lang==='ko' ? fortuneTexts[fortune.type].ko : fortuneTexts[fortune.type].en;
-
-  const color = LUCKY_COLORS[dayPillar.element];
-  const colorKr = LUCKY_COLORS_KR[dayPillar.element];
-  const dir = LUCKY_DIRS[dayPillar.element];
-  const dirKr = LUCKY_DIRS_KR[dayPillar.element];
-  const nums = LUCKY_NUMS[dayPillar.element];
-  const luckiesEl = document.getElementById('fortune-luckies');
-  if (luckiesEl) luckiesEl.innerHTML = `
-    <div class="lucky-item"><div class="lucky-label">${t('lucky_color')}</div><div class="lucky-val" style="color:${ELEMENT_COLORS[dayPillar.element]}">${lang==='ko'?colorKr:color}</div></div>
-    <div class="lucky-item"><div class="lucky-label">${t('lucky_dir')}</div><div class="lucky-val">${lang==='ko'?dirKr:dir}</div></div>
-    <div class="lucky-item"><div class="lucky-label">${t('lucky_num')}</div><div class="lucky-val">${nums.join(' · ')}</div></div>
-  `;
-}
-
-function renderDaeun(pillars) {
-  const titleEl = document.getElementById('daeun-title');
-  const introEl = document.getElementById('daeun-intro');
-  if (titleEl) titleEl.textContent = t('daeun_title');
-  if (introEl) introEl.textContent = t('daeun_intro');
-
-  const lang = AppState.language;
-  const track = document.getElementById('daeun-track');
-  if (!track) return;
-  track.innerHTML = pillars.daeun.map(d => {
-    const color = ELEMENT_COLORS[d.element];
-    return `<div class="daeun-item${d.isCurrent?' current':''}" style="${d.isCurrent?'border-color:'+color+';background:'+color+'12':''}">
-      <div class="daeun-stem" style="color:${color}">${d.stem}</div>
-      <div class="daeun-branch">${d.branch}</div>
-      <div class="daeun-age" style="color:${d.isCurrent?color:'var(--text-muted)'}">${d.age}${lang==='ko'?'세':''}</div>
-      ${d.isCurrent ? `<div class="daeun-current-badge">${t('daeun_current')}</div>` : ''}
-    </div>`;
-  }).join('');
-}
 
 function renderPaidSections(name, dayPillar) {
   const lang = AppState.language;
@@ -2333,63 +2086,20 @@ function renderPaidSections(name, dayPillar) {
 // ═══════════════════════════════════════════════
 // SECTION J: MODAL
 // ═══════════════════════════════════════════════
-function openModal(type) {
-  const overlay = document.getElementById('modal-overlay');
-  if (overlay) overlay.classList.add('open');
-  const set = (id, val) => { const el=document.getElementById(id); if(el) el.textContent=val; };
-  const setHTML = (id, val) => { const el=document.getElementById(id); if(el) el.innerHTML=val; };
-  set('modal-eyebrow', t('modal_eyebrow'));
-  set('modal-title', t('modal_title'));
-  set('modal-sub', t('modal_sub'));
-  const features = t('modal_features');
-  if (Array.isArray(features)) setHTML('modal-features', features.map(f=>`<li>${f}</li>`).join(''));
-  set('modal-price', t('modal_price'));
-  set('modal-price-sub', t('modal_price_sub'));
-  set('modal-pay-btn', t('modal_pay_btn'));
-  set('modal-waitlist-title', t('modal_waitlist_title'));
-  set('modal-notify-btn', t('modal_notify_btn'));
-  set('modal-note', t('modal_note'));
-}
 
-function closeModal() {
-  const overlay = document.getElementById('modal-overlay');
-  if (overlay) overlay.classList.remove('open');
-}
 
-function closeModalIfOverlay(e) {
-  if (e.target === document.getElementById('modal-overlay')) closeModal();
-}
 
-function handlePayment() {
-  showToast(t('toast_payment_info'), 'info');
-}
 
-function joinWaitlist() {
-  const emailEl = document.getElementById('modal-email');
-  if (!emailEl) return;
-  const email = emailEl.value.trim();
-  if (!email || !email.includes('@')) { showToast(t('toast_email_invalid'), 'error'); return; }
-  const list = JSON.parse(localStorage.getItem('momentor_waitlist') || '[]');
-  if (list.includes(email)) { showToast(t('toast_waitlist_dup'), 'info'); return; }
-  list.push(email);
-  localStorage.setItem('momentor_waitlist', JSON.stringify(list));
-  showToast(t('toast_waitlist_ok'), 'success');
-  emailEl.value = '';
-}
+
+
+
+
+
 
 // ═══════════════════════════════════════════════
 // SECTION K: VIEW MANAGEMENT
 // ═══════════════════════════════════════════════
-function showHero() {
-  const resultsEl = document.getElementById('section-results');
-  const heroEl = document.getElementById('section-hero');
-  const inputEl = document.getElementById('section-input');
-  if (resultsEl) resultsEl.classList.remove('visible');
-  if (heroEl) heroEl.style.display = '';
-  if (inputEl) inputEl.style.display = '';
-  AppState.pillars = null;
-  scrollToTop();
-}
+
 
 // ═══════════════════════════════════════════════
 // SECTION L: POPULATE DROPDOWNS
@@ -2447,14 +2157,12 @@ function populateDropdowns() {
 // ═══════════════════════════════════════════════
 // SECTION N: INIT
 // ═══════════════════════════════════════════════
-document.addEventListener('DOMContentLoaded', () => {
-  populateDropdowns();
-  setLang('en');
-});
+// init handled by DOMContentLoaded below
 
-</script>
-</body>
-</html>
+
+
+// ═══ CONTINUED JS ═══
+
 
 // ═══════════════════════════════════════════════
 // SECTION F: TOAST SYSTEM
