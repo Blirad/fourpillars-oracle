@@ -757,6 +757,72 @@
       border:1px solid rgba(232,197,71,0.25);
       color:var(--gold);text-transform:uppercase;
     }
+
+    /* ── IDENTITY BAR ── */
+    .saju-identity-bar{display:flex;gap:12px;margin:0 0 16px;justify-content:center;}
+    .identity-card{
+      flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px;padding:16px 8px;text-align:center;backdrop-filter:blur(10px);
+    }
+    .identity-icon{
+      width:52px;height:52px;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      margin:0 auto 8px;font-size:22px;font-weight:700;
+    }
+    .identity-icon.wood-el{background:rgba(93,232,160,0.2);color:#5de8a0;}
+    .identity-icon.fire-el{background:rgba(255,100,60,0.25);color:#ff7eb3;}
+    .identity-icon.earth-el{background:rgba(240,184,96,0.2);color:#f0b860;}
+    .identity-icon.metal-el{background:rgba(200,216,240,0.2);color:#c8d8f0;}
+    .identity-icon.water-el{background:rgba(96,180,250,0.2);color:#60b4fa;}
+    .identity-icon.animal{background:rgba(255,200,100,0.12);font-size:28px;}
+    .identity-icon.tengod{background:rgba(80,80,80,0.35);color:#c8d8f0;font-size:14px;font-weight:700;}
+    .identity-label{font-size:15px;font-weight:600;color:#f0e8d0;margin-bottom:4px;}
+    .identity-sub{font-size:11px;color:rgba(255,255,255,0.4);}
+
+    /* ── SCORE CARD ── */
+    .today-score-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+      border-radius:16px;backdrop-filter:blur(10px);
+      padding:20px;margin:0 0 20px;text-align:center;
+    }
+    .score-number{font-size:64px;font-weight:700;color:#f0b860;line-height:1;font-family:var(--font-serif);}
+    .score-bar-wrap{background:rgba(255,255,255,0.1);border-radius:4px;height:6px;margin:12px 0;}
+    .score-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#f0b860,#ff7eb3);transition:width 0.8s ease;}
+    .score-label{font-size:14px;color:var(--text-secondary);margin-bottom:4px;}
+    .score-date{font-size:11px;color:rgba(255,255,255,0.3);}
+
+    /* ── NEW PILLAR CARD INTERNALS ── */
+    .pillar-tengod-label{font-size:11px;color:rgba(255,255,255,0.5);text-align:center;margin-bottom:6px;min-height:16px;}
+    .pillar-stem-badge,.pillar-branch-badge{margin-bottom:6px;}
+    .stem-polarity-circle,.branch-polarity-circle{
+      width:52px;height:52px;border-radius:12px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:24px;font-weight:300;color:white;
+      margin:0 auto 4px;position:relative;
+    }
+    .polarity-sign{
+      font-size:10px;font-weight:700;position:absolute;top:4px;left:6px;opacity:0.8;
+    }
+    .pillar-stem-char,.pillar-branch-char{font-family:var(--font-serif);font-size:26px;font-weight:300;}
+    .stem-label,.branch-label{font-size:9px;color:rgba(255,255,255,0.4);text-align:center;line-height:1.3;margin-top:2px;}
+    .pillar-branch-tengod{font-size:10px;color:rgba(255,255,255,0.4);text-align:center;margin-top:4px;min-height:14px;}
+    .pillar-12-unsung{font-size:10px;color:rgba(255,255,255,0.28);text-align:center;margin-top:2px;}
+
+    /* ── TOPIC GRID ── */
+    .topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0;}
+    .topic-card{
+      background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+      border-radius:16px;backdrop-filter:blur(10px);
+      padding:16px 12px;position:relative;cursor:pointer;transition:all 0.2s;
+    }
+    .topic-card:hover{background:rgba(255,255,255,0.07);transform:translateY(-2px);}
+    .topic-card.locked{opacity:0.72;}
+    .topic-icon{font-size:24px;margin-bottom:6px;}
+    .topic-name{font-size:13px;font-weight:700;color:#f0e8d0;margin-bottom:4px;}
+    .topic-preview{font-size:12px;color:rgba(255,255,255,0.45);line-height:1.5;margin-bottom:8px;}
+    .topic-badge{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:6px;}
+    .topic-badge.free-badge{background:rgba(93,232,160,0.2);color:#5de8a0;}
+    .topic-badge.lock-badge{background:rgba(200,216,240,0.1);color:#c8d8f0;}
   </style>
 </head>
 <body>
@@ -915,6 +981,35 @@
     <div class="results-date" id="results-date-display"></div>
   </div>
 
+  <!-- IDENTITY BAR -->
+  <div class="saju-identity-bar">
+    <div class="identity-card">
+      <div class="identity-icon" id="id-element-icon"></div>
+      <div class="identity-label" id="id-element-name"></div>
+      <div class="identity-sub" id="id-ohaeng-sub">오행</div>
+    </div>
+    <div class="identity-card">
+      <div class="identity-icon animal" id="id-animal-icon"></div>
+      <div class="identity-label" id="id-animal-name"></div>
+      <div class="identity-sub" id="id-animal-sub">일주 동물</div>
+    </div>
+    <div class="identity-card">
+      <div class="identity-icon tengod" id="id-tengod-icon"></div>
+      <div class="identity-label" id="id-tengod-name"></div>
+      <div class="identity-sub" id="id-nature-sub">타고난 성향</div>
+    </div>
+  </div>
+
+  <!-- SCORE CARD -->
+  <div class="today-score-card">
+    <div class="score-number" id="score-number">78</div>
+    <div class="score-bar-wrap">
+      <div class="score-bar" id="score-bar" style="width:78%"></div>
+    </div>
+    <div class="score-label" id="score-label">오늘은 강한 날</div>
+    <div class="score-date" id="score-date"></div>
+  </div>
+
   <!-- 4 PILLAR CHART -->
   <div class="pillar-section">
     <div class="section-label" id="lbl-pillars">FOUR PILLARS · 사주 원국</div>
@@ -961,6 +1056,34 @@
   <div class="analysis-card">
     <div class="analysis-title" id="personality-title">Personality Analysis</div>
     <div class="analysis-body" id="personality-body"></div>
+  </div>
+
+  <!-- TOPIC GRID -->
+  <div class="topic-grid" id="topic-grid-section">
+    <div class="topic-card free" id="topic-love">
+      <div class="topic-icon">💕</div>
+      <div class="topic-name" id="topic-love-name">연애운</div>
+      <div class="topic-preview" id="topic-love-preview">...</div>
+      <div class="topic-badge free-badge">FREE</div>
+    </div>
+    <div class="topic-card free" id="topic-wealth">
+      <div class="topic-icon">💰</div>
+      <div class="topic-name" id="topic-wealth-name">재물운</div>
+      <div class="topic-preview" id="topic-wealth-preview">...</div>
+      <div class="topic-badge free-badge">FREE</div>
+    </div>
+    <div class="topic-card locked" id="topic-career">
+      <div class="topic-icon">💼</div>
+      <div class="topic-name" id="topic-career-name">직업운</div>
+      <div class="topic-preview">첫 줄만 공개...</div>
+      <div class="topic-badge lock-badge">🔒</div>
+    </div>
+    <div class="topic-card locked" id="topic-health">
+      <div class="topic-icon">❤️</div>
+      <div class="topic-name" id="topic-health-name">건강운</div>
+      <div class="topic-preview">첫 줄만 공개...</div>
+      <div class="topic-badge lock-badge">🔒</div>
+    </div>
   </div>
 
   <!-- TODAY'S FORTUNE (FREE) -->
@@ -1097,6 +1220,11 @@ const STEM_KR = ['갑','을','병','정','무','기','경','신','임','계'];
 const BRANCH_KR = ['자','축','인','묘','진','사','오','미','신','유','술','해'];
 const BRANCH_ANIMALS = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
 const BRANCH_ANIMALS_KR = ['쥐','소','호랑이','토끼','용','뱀','말','양','원숭이','닭','개','돼지'];
+const BRANCH_ANIMAL_EMOJI = {'子':'🐭','丑':'🐂','寅':'🐯','卯':'🐇','辰':'🐲','巳':'🐍','午':'🐴','未':'🐑','申':'🐒','酉':'🐓','戌':'🐕','亥':'🐖'};
+const BRANCH_PRIMARY_STEM_MAP = {'子':'癸','丑':'己','寅':'甲','卯':'乙','辰':'戊','巳':'丙','午':'丁','未':'己','申':'庚','酉':'辛','戌':'戊','亥':'壬'};
+const TWELVE_STAGES = ['장생','목욕','관대','건록','제왕','쇠','병','사','묘','절','태','양'];
+const ELEM_COLOR_PREFIX_KO = {Wood:'청',Fire:'붉은',Earth:'황',Metal:'흰',Water:'검은'};
+const ELEM_SHORT_KO = {Wood:'목木',Fire:'불火',Earth:'흙土',Metal:'금金',Water:'물水'};
 const ELEMENT_COLORS = {Wood:'#5de8a0',Fire:'#ff7eb3',Earth:'#f0b860',Metal:'#c8d8f0',Water:'#60b4fa'};
 const ELEMENT_KR = {Wood:'목(木)',Fire:'화(火)',Earth:'토(土)',Metal:'금(金)',Water:'수(水)'};
 const ELEMENT_JA = {Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
@@ -1112,6 +1240,23 @@ const LUCKY_NUMS = {Wood:[3,4],Fire:[7,2],Earth:[5,10],Metal:[8,9],Water:[1,6]};
 // Control cycle: Wood→Earth, Earth→Water, Water→Fire, Fire→Metal, Metal→Wood
 const PRODUCES = {Wood:'Fire',Fire:'Earth',Earth:'Metal',Metal:'Water',Water:'Wood'};
 const CONTROLS = {Wood:'Earth',Earth:'Water',Water:'Fire',Fire:'Metal',Metal:'Wood'};
+
+// 12운성 calculation
+function calc12Stage(dayStem, branch) {
+  // 장생 start branch index for each element (Yang stems)
+  const starts = {Wood:6,Fire:2,Earth:2,Metal:0,Water:8};
+  const dIdx = STEMS.indexOf(dayStem);
+  if (dIdx < 0) return '';
+  const dEl = STEM_ELEMENTS[dIdx];
+  const bIdx = BRANCHES.indexOf(branch);
+  if (bIdx < 0) return '';
+  const startBranch = starts[dEl] !== undefined ? starts[dEl] : 0;
+  const isYang = STEM_POLARITIES[dIdx] === 'Yang';
+  const stage = isYang
+    ? ((bIdx - startBranch + 12) % 12)
+    : ((startBranch - bIdx + 12) % 12);
+  return TWELVE_STAGES[stage] || '';
+}
 
 // Solar term base constants (major 節 terms, 0=Jan/小寒, 1=Feb/立春, ...)
 const ST_BASE_20 = [5.4055,3.8724,5.6324,4.8693,5.7133,6.0893,6.9693,7.2688,7.8543,7.9921,6.6193,7.0433];
@@ -1220,6 +1365,13 @@ en: {
   back_btn:'← Back',
   footer_text:'Momentor · Privacy · Terms',
   word_you:'you',
+  id_ohaeng:'Element',id_animal:'Day Animal',id_nature:'Born Nature',
+  topic_love:'Love',topic_wealth:'Wealth',topic_career:'Career',topic_health:'Health',
+  score_strong:'Strong Day',score_neutral:'Balanced Day',score_quiet:'Quiet Day',
+  tengod_bigyeon:'Rob Wealth',tengod_geopjae:'Competitor',tengod_sikshin:'Eating God',
+  tengod_sanggwan:'Hurting Officer',tengod_pyeongjae:'Indirect Wealth',tengod_jeongjae:'Direct Wealth',
+  tengod_pyeonggwan:'7 Killings',tengod_jeonggwan:'Direct Officer',
+  tengod_pyeongin:'Indirect Resource',tengod_jeongin:'Direct Resource',
 },
 ko: {
   app_tagline:'당신의 운명, 해독됩니다.',
@@ -1315,6 +1467,13 @@ ko: {
   back_btn:'← 다시 입력',
   footer_text:'Momentor · 개인정보 · 이용약관',
   word_you:'당신',
+  id_ohaeng:'오행',id_animal:'일주 동물',id_nature:'타고난 성향',
+  topic_love:'연애운',topic_wealth:'재물운',topic_career:'직업운',topic_health:'건강운',
+  score_strong:'강한 날',score_neutral:'균형 잡힌 날',score_quiet:'조용한 날',
+  tengod_bigyeon:'비견',tengod_geopjae:'겁재',tengod_sikshin:'식신',
+  tengod_sanggwan:'상관',tengod_pyeongjae:'편재',tengod_jeongjae:'정재',
+  tengod_pyeonggwan:'편관',tengod_jeonggwan:'정관',
+  tengod_pyeongin:'편인',tengod_jeongin:'정인',
 },
 };
 function t(key){
@@ -1864,6 +2023,15 @@ function getTodayFortune(dayMasterElement) {
   return { type, element: dayMasterElement };
 }
 
+function calcFortuneScore(fortune) {
+  // Deterministic daily seed so score is stable within a day
+  const seed = Math.floor(Date.now() / 86400000) % 1000;
+  const pseudoRng = ((seed * 9301 + 49297) % 233280) / 233280;
+  const ranges = {high:[75,94], neutral:[45,69], low:[20,44]};
+  const [min,max] = ranges[fortune.type] || [45,69];
+  return Math.floor(pseudoRng * (max - min + 1)) + min;
+}
+
 
 
 // ═══════════════════════════════════════════════
@@ -2008,6 +2176,114 @@ function renderPaidSections(name, dayPillar) {
     if (btnEl) btnEl.textContent = t(s.btnKey);
     if (previewEl) previewEl.textContent = lang==='ko' ? s.previewKo : s.previewEn;
   });
+}
+
+function renderIdentityBar(chart) {
+  const dm = chart.dayMaster;
+  const dmEl = dm.element;
+  const color = ELEMENT_COLORS[dmEl] || '#e8c547';
+  const isKo = AppState.language === 'ko';
+  const rgb = hexToRgb(color);
+
+  // Element icon
+  const iconEl = document.getElementById('id-element-icon');
+  if (iconEl) {
+    iconEl.className = `identity-icon ${dmEl.toLowerCase()}-el`;
+    iconEl.textContent = ELEMENT_JA[dmEl] || '';
+    iconEl.style.fontSize = '28px';
+    iconEl.style.fontFamily = 'serif';
+    iconEl.style.fontWeight = '400';
+    iconEl.style.background = `rgba(${rgb},0.22)`;
+    iconEl.style.color = color;
+  }
+  const elemNameEl = document.getElementById('id-element-name');
+  if (elemNameEl) { elemNameEl.textContent = isKo ? ELEMENT_KR[dmEl] : dmEl; elemNameEl.style.color = color; }
+  const ohaengSub = document.getElementById('id-ohaeng-sub');
+  if (ohaengSub) ohaengSub.textContent = isKo ? '오행' : 'Element';
+
+  // Animal icon (day branch)
+  const dayBranch = chart.pillars.day.branch;
+  const brIdx = BRANCHES.indexOf(dayBranch);
+  const emoji = BRANCH_ANIMAL_EMOJI[dayBranch] || '?';
+  const animalKr = brIdx >= 0 ? BRANCH_ANIMALS_KR[brIdx] : '';
+  const animalEn = brIdx >= 0 ? BRANCH_ANIMALS[brIdx] : '';
+  const prefix = isKo ? (ELEM_COLOR_PREFIX_KO[dmEl] || '') : '';
+  const animalName = isKo ? `${prefix} ${animalKr}`.trim() : `${dmEl} ${animalEn}`;
+
+  const animalIconEl = document.getElementById('id-animal-icon');
+  if (animalIconEl) animalIconEl.textContent = emoji;
+  const animalNameEl = document.getElementById('id-animal-name');
+  if (animalNameEl) animalNameEl.textContent = animalName;
+  const animalSub = document.getElementById('id-animal-sub');
+  if (animalSub) animalSub.textContent = isKo ? '일주 동물' : 'Day Animal';
+
+  // Dominant ten god (most frequent across year/month/hour stems)
+  const tgCounts = {};
+  ['year','month','hour'].forEach(pos => {
+    const p = chart.pillars[pos];
+    if (!p || !p.stem || p.stem === '?') return;
+    const tgKey = calcTenGod(chart.pillars.day.stem, p.stem);
+    if (tgKey) tgCounts[tgKey] = (tgCounts[tgKey] || 0) + 1;
+  });
+  let dominantTg = '';
+  let maxCnt = 0;
+  Object.keys(tgCounts).forEach(k => { if (tgCounts[k] > maxCnt) { maxCnt = tgCounts[k]; dominantTg = k; } });
+  const tgKo = dominantTg ? (t('ten_god')[dominantTg] || dominantTg) : '';
+
+  const tengodIconEl = document.getElementById('id-tengod-icon');
+  if (tengodIconEl) tengodIconEl.textContent = tgKo;
+  const tengodNameEl = document.getElementById('id-tengod-name');
+  if (tengodNameEl) tengodNameEl.textContent = tgKo;
+  const natureSub = document.getElementById('id-nature-sub');
+  if (natureSub) natureSub.textContent = isKo ? '타고난 성향' : 'Born Nature';
+}
+
+function renderScoreCard(chart) {
+  const f = chart.fortune;
+  const score = calcFortuneScore(f);
+  const isKo = AppState.language === 'ko';
+  const labels = {
+    high: isKo ? '오늘은 강한 날' : 'Strong Day',
+    neutral: isKo ? '오늘은 균형 잡힌 날' : 'Balanced Day',
+    low: isKo ? '오늘은 조용한 날' : 'Quiet Day'
+  };
+  const numEl = document.getElementById('score-number');
+  const barEl = document.getElementById('score-bar');
+  const labelEl = document.getElementById('score-label');
+  const dateEl = document.getElementById('score-date');
+  if (numEl) numEl.textContent = score;
+  if (barEl) { barEl.style.width = '0%'; setTimeout(() => { barEl.style.width = score + '%'; }, 100); }
+  if (labelEl) labelEl.textContent = labels[f.type] || labels.neutral;
+  if (dateEl) {
+    const today = new Date();
+    dateEl.textContent = today.toLocaleDateString(isKo ? 'ko-KR' : 'en-US', {year:'numeric',month:'long',day:'numeric'});
+  }
+}
+
+function renderTopicGrid(chart) {
+  const isKo = AppState.language === 'ko';
+  const f = chart.fortune;
+
+  const lovePreview = isKo
+    ? (f.type === 'high' ? '오늘 인연을 만날 에너지가 강합니다.' : f.type === 'low' ? '감정을 내면에 담아두는 하루입니다.' : '차분하고 진실한 연결이 오는 하루.')
+    : (f.type === 'high' ? 'Strong energy for a new connection today.' : f.type === 'low' ? 'Hold emotions gently within today.' : 'Calm, genuine connections come today.');
+  const wealthPreview = isKo
+    ? (f.type === 'high' ? '재물 흐름이 당신에게 유리합니다.' : f.type === 'low' ? '지출을 조심하는 날입니다.' : '꾸준한 노력이 결실을 맺는 날.')
+    : (f.type === 'high' ? 'Wealth energy flows in your favor.' : f.type === 'low' ? 'Be mindful of expenses today.' : 'Steady effort brings results.');
+
+  const loveNameEl = document.getElementById('topic-love-name');
+  const wealthNameEl = document.getElementById('topic-wealth-name');
+  const careerNameEl = document.getElementById('topic-career-name');
+  const healthNameEl = document.getElementById('topic-health-name');
+  if (loveNameEl) loveNameEl.textContent = isKo ? '연애운' : 'Love';
+  if (wealthNameEl) wealthNameEl.textContent = isKo ? '재물운' : 'Wealth';
+  if (careerNameEl) careerNameEl.textContent = isKo ? '직업운' : 'Career';
+  if (healthNameEl) healthNameEl.textContent = isKo ? '건강운' : 'Health';
+
+  const lovePrevEl = document.getElementById('topic-love-preview');
+  const wealthPrevEl = document.getElementById('topic-wealth-preview');
+  if (lovePrevEl) lovePrevEl.textContent = lovePreview;
+  if (wealthPrevEl) wealthPrevEl.textContent = wealthPreview;
 }
 
 // ═══════════════════════════════════════════════
@@ -2167,13 +2443,16 @@ function applyLanguage() {
   
   // If chart exists, re-render language-dependent content
   if (AppState.chart) {
+    renderIdentityBar(AppState.chart);
+    renderScoreCard(AppState.chart);
+    renderPillarGrid(AppState.chart);
+    renderElementBars(AppState.chart);
     renderDayMaster(AppState.chart);
     renderPersonality(AppState.chart);
+    renderTopicGrid(AppState.chart);
     renderFortune(AppState.chart);
     renderDaeun(AppState.chart);
     renderAllPaid(AppState.chart);
-    renderPillarGrid(AppState.chart);
-    renderElementBars(AppState.chart);
   }
 }
 
@@ -2309,58 +2588,129 @@ function renderResults(chart) {
   document.getElementById('section-hero').style.display = 'none';
   document.getElementById('section-input').style.display = 'none';
   resultsSection.classList.add('visible');
-  
+
   // Header info
-  const L = I18N[AppState.language] || I18N.en;
   el('results-name-display', AppState.userName);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? ' (time unknown)' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
-  
+
+  // 1. Identity bar
+  renderIdentityBar(chart);
+  // 2. Score card
+  renderScoreCard(chart);
+  // 3. Pillar grid
   renderPillarGrid(chart);
+  // 4. Element bars
   renderElementBars(chart);
   renderElementSVG(chart.elements);
-  
-  // Animate day master card
+
+  // 5. Day Master (animated reveal)
   setTimeout(() => {
     renderDayMaster(chart);
     const dmCard = document.getElementById('day-master-card');
     if (dmCard) dmCard.classList.add('revealed');
   }, 400);
-  
+
+  // 6. Personality
   renderPersonality(chart);
+  // 7. Topic grid
+  renderTopicGrid(chart);
+  // 8. Fortune
   renderFortune(chart);
+  // 9. Daeun
   renderDaeun(chart);
+  // 10. Paid sections
   renderAllPaid(chart);
 }
 
 function renderPillarGrid(chart) {
   const grid = document.getElementById('pillar-grid');
   if (!grid) return;
-  const L = I18N[AppState.language] || I18N.en;
-  const labels = [L.year_p, L.month_p, L.day_p, L.hour_p];
-  const keys = ['year','month','day','hour'];
-  const lang = AppState.language;
-  
+  const isKo = AppState.language === 'ko';
+  const dayStem = chart.pillars.day.stem;
+
+  // New column order: 시주 | 일주 | 월주 | 년주
+  const keys = ['hour','day','month','year'];
+  const labelKo = ['시주','일주','월주','년주'];
+  const labelEn = ['Hour','Day Master','Month','Year'];
+  const labels = isKo ? labelKo : labelEn;
+
   grid.innerHTML = keys.map((key, i) => {
     const p = chart.pillars[key];
     const isDay = key === 'day';
-    const isUnknown = p.unknown;
-    const tgKey = chart.tenGods[key];
-    const tgLabel = tgKey ? (t('ten_god')[tgKey]||tgKey) : '';
-    const stemKrIdx = STEMS.indexOf(p.stem);
-    const brKrIdx = BRANCHES.indexOf(p.branch);
-    const stemKr = stemKrIdx >= 0 ? STEM_KR[stemKrIdx] : '';
-    const brKr = brKrIdx >= 0 ? BRANCH_KR[brKrIdx] : '';
-    
-    return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${p.element||''}">
-      <div class="pillar-glow"></div>
+    const isUnknown = !p || !!p.unknown;
+    const stem = (p && p.stem) ? p.stem : '?';
+    const branch = (p && p.branch) ? p.branch : '?';
+
+    // Stem ten god
+    let stemTgLabel = '';
+    if (isDay) {
+      stemTgLabel = isKo ? '일원' : 'Day Master';
+    } else if (!isUnknown && stem !== '?') {
+      const tgKey = calcTenGod(dayStem, stem);
+      stemTgLabel = tgKey ? (t('ten_god')[tgKey] || tgKey) : '';
+    }
+
+    // Branch ten god via primary hidden stem (장간 본기)
+    let branchTgLabel = '';
+    if (!isUnknown && branch !== '?') {
+      const primaryStem = BRANCH_PRIMARY_STEM_MAP[branch];
+      if (primaryStem) {
+        const btgKey = calcTenGod(dayStem, primaryStem);
+        branchTgLabel = btgKey ? (t('ten_god')[btgKey] || btgKey) : '';
+      }
+    }
+
+    // 12운성
+    const stage12 = (!isUnknown && stem !== '?' && branch !== '?')
+      ? calc12Stage(dayStem, branch) : '';
+
+    // Stem styling
+    const stemIdx = STEMS.indexOf(stem);
+    const stemEl = stemIdx >= 0 ? STEM_ELEMENTS[stemIdx] : 'Earth';
+    const stemColor = ELEMENT_COLORS[stemEl] || '#a8a0c8';
+    const stemPolarity = stemIdx >= 0 ? STEM_POLARITIES[stemIdx] : 'Yang';
+    const stemSign = stemPolarity === 'Yang' ? '+' : '-';
+    const stemKr = stemIdx >= 0 ? STEM_KR[stemIdx] : '';
+    const stemLabelStr = isUnknown ? '' : (isKo
+      ? `${stemSign}${stemKr},${ELEM_SHORT_KO[stemEl]||stemEl}`
+      : `${stemSign}${stem},${stemEl}`);
+
+    // Branch styling
+    const branchIdx = BRANCHES.indexOf(branch);
+    const branchEl = branchIdx >= 0 ? BRANCH_ELEMENTS[branchIdx] : 'Earth';
+    const branchColor = ELEMENT_COLORS[branchEl] || '#a8a0c8';
+    const branchPolarity = branchIdx >= 0 ? BRANCH_POLARITY[branchIdx] : 'Yang';
+    const branchSign = branchPolarity === 'Yang' ? '+' : '-';
+    const branchKr = branchIdx >= 0 ? BRANCH_KR[branchIdx] : '';
+    const branchLabelStr = isUnknown ? '' : (isKo
+      ? `${branchSign}${branchKr},${ELEM_SHORT_KO[branchEl]||branchEl}`
+      : `${branchSign}${branch},${branchEl}`);
+
+    const stemRgb = hexToRgb(stemColor);
+    const branchRgb = hexToRgb(branchColor);
+
+    return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${stemEl}">
+      <div class="pillar-glow" style="background:radial-gradient(circle at center,rgba(${stemRgb},0.12) 0%,transparent 70%)"></div>
       ${isDay ? '<div class="you-badge">YOU</div>' : ''}
       <div class="pillar-label">${labels[i]}</div>
-      <div class="pillar-stem">${isUnknown ? '?' : p.stem}</div>
-      <div class="pillar-stem-name">${isUnknown ? '' : (lang==='ko'||lang==='ja'||lang==='zh' ? stemKr+' '+p.element : p.element)}</div>
-      <div class="pillar-branch">${isUnknown ? '?' : p.branch}</div>
-      <div class="pillar-branch-name">${isUnknown ? '' : (lang==='ko' ? brKr : p.branch+' '+BRANCH_ANIMALS[brKrIdx])}</div>
-      ${tgLabel && !isDay ? `<div class="pillar-ten-god">${tgLabel}</div>` : ''}
+      <div class="pillar-tengod-label">${stemTgLabel}</div>
+      <div class="pillar-stem-badge">
+        <div class="stem-polarity-circle" style="background:rgba(${stemRgb},0.22);box-shadow:0 0 12px rgba(${stemRgb},0.28)">
+          ${!isUnknown ? `<span class="polarity-sign">${stemSign}</span>` : ''}
+          <span class="pillar-stem-char" style="color:${stemColor}">${stem}</span>
+        </div>
+        <div class="stem-label">${stemLabelStr}</div>
+      </div>
+      <div class="pillar-branch-badge">
+        <div class="branch-polarity-circle" style="background:rgba(${branchRgb},0.18);box-shadow:0 0 10px rgba(${branchRgb},0.22)">
+          ${!isUnknown ? `<span class="polarity-sign">${branchSign}</span>` : ''}
+          <span class="pillar-branch-char" style="color:${branchColor}">${branch}</span>
+        </div>
+        <div class="branch-label">${branchLabelStr}</div>
+      </div>
+      <div class="pillar-branch-tengod">${branchTgLabel}</div>
+      ${stage12 ? `<div class="pillar-12-unsung">${stage12}</div>` : ''}
     </div>`;
   }).join('');
 }
