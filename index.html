@@ -2453,52 +2453,56 @@ function renderDayMaster(chart) {
   if (!profile) return;
   const lang = AppState.language;
   const isKo = lang === 'ko';
-  
-  const color = ELEMENT_COLORS[dm.element];
+  const color = ELEMENT_COLORS[dm.element] || '#e8c547';
+
+  // Apply element color to card
   const card = document.getElementById('day-master-card');
   if (card) {
     card.style.background = `radial-gradient(ellipse at 30% 50%, rgba(${hexToRgb(color)},0.12) 0%, rgba(255,255,255,0.03) 60%)`;
     card.style.borderColor = `rgba(${hexToRgb(color)},0.4)`;
     card.style.boxShadow = `0 0 40px rgba(${hexToRgb(color)},0.1)`;
   }
-  
+
   el('dm-bg-char', dm.stem);
   el('dm-char', dm.stem);
-  document.getElementById('dm-char').style.color = color;
-  document.getElementById('dm-char').style.textShadow = `0 0 30px rgba(${hexToRgb(color)},0.6)`;
-  
-  const elName = isKo ? profile.name_ko : profile.name_en;
-  const title = isKo ? profile.title_ko : profile.title_en;
-  el('dm-element-name', elName);
-  el('dm-title-text', title);
-  el('dm-oneliner', isKo ? profile.oneliner_ko : profile.oneliner_en);
-  
-  // Body paragraphs
+  const dmCharEl = document.getElementById('dm-char');
+  if (dmCharEl) { dmCharEl.style.color = color; dmCharEl.style.textShadow = `0 0 30px rgba(${hexToRgb(color)},0.6)`; }
+
+  // Element name (construct from element + polarity)
+  const elemName = isKo
+    ? (ELEMENT_KR[dm.element] || dm.element)
+    : `${dm.polarity || ''} ${dm.element || ''}`.trim();
+  el('dm-element-name', elemName);
+  el('dm-title-text', isKo ? (profile.titleKo || profile.titleEn || '') : (profile.titleEn || ''));
+  el('dm-oneliner', isKo ? (profile.onelinerKo || profile.onelinerEn || '') : (profile.onelinerEn || ''));
+
+  // Body: split string by double newline into paragraphs
   const bodyEl = document.getElementById('dm-body');
   if (bodyEl) {
-    const paras = isKo ? profile.personality_ko : profile.personality_en;
-    bodyEl.innerHTML = paras.map(p => `<p>${p}</p>`).join('');
+    const raw = isKo ? (profile.bodyKo || profile.bodyEn || '') : (profile.bodyEn || '');
+    const paras = raw.split(/\n\n+/).filter(Boolean);
+    bodyEl.innerHTML = paras.length ? paras.map(p => `<p style="margin-bottom:12px">${p}</p>`).join('') : `<p>${raw}</p>`;
   }
-  
+
   // Strengths
   const strEl = document.getElementById('dm-strengths');
   if (strEl) {
-    const strs = isKo ? profile.strengths_ko : profile.strengths_en;
+    const strs = (isKo ? profile.strengthsKo : profile.strengthsEn) || [];
     strEl.innerHTML = strs.map(s => `<li>${s}</li>`).join('');
   }
-  
+
   // Shadows
   const shadEl = document.getElementById('dm-shadows');
   if (shadEl) {
-    const shads = isKo ? profile.shadows_ko : profile.shadows_en;
+    const shads = (isKo ? profile.shadowsKo : profile.shadowsEn) || [];
     shadEl.innerHTML = shads.map(s => `<li>${s}</li>`).join('');
   }
-  
+
   // Keywords
   const kwEl = document.getElementById('dm-keywords');
   if (kwEl) {
-    const kws = isKo ? profile.keywords_ko : profile.keywords_en;
-    kwEl.innerHTML = kws.map(kw => `<span class="dm-keyword" style="border-color:rgba(${hexToRgb(color)},0.3);color:${color}">${kw}</span>`).join('');
+    const kws = (isKo ? profile.keywordsKo : profile.keywordsEn) || [];
+    kwEl.innerHTML = kws.map(k => `<span class="dm-keyword">${k}</span>`).join('');
   }
 }
 
@@ -2516,7 +2520,7 @@ function renderPersonality(chart) {
   const domEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct >= chart.elements[b].pct ? a : b);
   const weakEl = ELEM_ORDER.reduce((a,b) => chart.elements[a].pct <= chart.elements[b].pct ? a : b);
   
-  const personality = isKo ? profile.personality_ko : profile.personality_en;
+  const personality = isKo ? (profile.bodyKo || profile.bodyEn || '') : (profile.bodyEn || '');
   
   if (isKo) {
     bodyEl.innerHTML = `<p>${personality[0]}</p>
