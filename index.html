@@ -422,15 +422,10 @@
     .fortune-day-type.high{background:rgba(93,232,160,.15);color:var(--wood);}
     .fortune-day-type.neutral{background:rgba(200,216,240,.1);color:var(--metal);}
     .fortune-day-type.challenging{background:rgba(255,126,179,.1);color:var(--fire);}
-    .fortune-luckies{
-      display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;
-    }
-    .lucky-item{
-      background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
-      border-radius:10px;padding:10px;text-align:center;
-    }
-    .lucky-label{font-size:10px;color:var(--text-muted);margin-bottom:4px;}
-    .lucky-val{font-size:14px;font-weight:700;color:var(--text-secondary);}
+    .fortune-luckies{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.06);}
+    .lucky-item{display:flex;flex-direction:column;gap:4px;}
+    .lucky-label{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;}
+    .lucky-val{font-size:15px;font-weight:600;color:var(--text-primary);}
 
     /* DAEUN TIMELINE */
     .daeun-section{
@@ -439,13 +434,12 @@
       padding:24px;margin-bottom:16px;overflow:hidden;
     }
     .daeun-track{
-      display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;
+      display:flex;gap:8px;overflow-x:auto;padding-bottom:12px;
       scroll-snap-type:x mandatory;
       -webkit-overflow-scrolling:touch;
     }
-    .daeun-track::-webkit-scrollbar{height:3px;}
-    .daeun-track::-webkit-scrollbar-track{background:rgba(255,255,255,.05);}
-    .daeun-track::-webkit-scrollbar-thumb{background:rgba(232,197,71,.3);border-radius:2px;}
+    .daeun-track::-webkit-scrollbar{height:4px;}
+    .daeun-track::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
     .daeun-item{
       flex:0 0 100px;scroll-snap-align:start;
       background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
@@ -683,6 +677,85 @@
       .pillar-branch{font-size:1.6rem;}
       .form-card{padding:20px 16px;}
       .modal-box{padding:24px 18px;}
+    }
+
+    /* ── ELEMENT BARS ── */
+    .elem-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+    .elem-bar-label{font-size:13px;font-weight:700;min-width:48px;font-family:var(--font-sans);}
+    .elem-bar-track{flex:1;height:8px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;}
+    .elem-bar-fill{height:100%;border-radius:999px;transition:width 0.6s ease;}
+    .elem-bar-pct,.elem-bar-val{font-size:12px;min-width:20px;text-align:right;color:var(--text-muted);}
+
+    /* ── DAEUN BLOCKS ── */
+    .daeun-block{
+      display:flex;flex-direction:column;align-items:center;
+      min-width:70px;padding:12px 8px;border-radius:12px;
+      border:1px solid rgba(255,255,255,0.07);
+      background:rgba(255,255,255,0.03);
+      transition:all 0.2s;flex-shrink:0;
+    }
+    .daeun-block.current{border-color:var(--gold);background:rgba(232,197,71,0.08);}
+    .daeun-block .daeun-age{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--text-muted);margin-bottom:6px;}
+    .daeun-block .daeun-stem{font-size:22px;line-height:1;margin-bottom:2px;}
+    .daeun-block .daeun-branch{font-size:16px;line-height:1;color:var(--text-secondary);margin-bottom:4px;}
+    .daeun-elem{font-size:10px;letter-spacing:.04em;font-weight:600;}
+    .daeun-block .daeun-current-badge{
+      font-size:9px;font-weight:800;letter-spacing:.1em;
+      color:var(--gold);text-transform:uppercase;margin-top:6px;
+    }
+
+    /* ── PILLAR EXTRAS ── */
+    .pillar-animal{font-size:10px;color:var(--text-muted);margin-top:2px;letter-spacing:.04em;}
+    .pillar-tengod{font-size:10px;color:var(--text-muted);margin-top:1px;}
+
+    /* ── FORTUNE ── */
+    .fortune-type-badge{margin-bottom:8px;}
+
+    /* ── ANALYSIS CARDS ── */
+    .analysis-card{
+      background:var(--card-bg);border:1px solid var(--card-border);
+      border-radius:var(--radius-md);backdrop-filter:blur(20px);
+      padding:20px;margin-bottom:16px;
+    }
+    .analysis-title{
+      font-family:var(--font-serif);font-size:18px;font-weight:600;
+      color:var(--text-primary);margin-bottom:12px;
+    }
+    .analysis-body{font-size:14px;color:var(--text-secondary);line-height:1.8;}
+    .personality-card,.personality-section{margin-bottom:16px;}
+
+    /* ── PAID SECTION BLUR ── */
+    .blur-preview{
+      filter:blur(5px);
+      user-select:none;pointer-events:none;
+      font-size:14px;color:var(--text-secondary);
+      line-height:1.8;margin-bottom:12px;
+      max-height:80px;overflow:hidden;
+    }
+
+    /* ── DAY MASTER EXTRAS ── */
+    .dm-ss-card{flex:1;}
+    .dm-ss-title{font-size:12px;font-weight:800;letter-spacing:.1em;margin-bottom:10px;text-transform:uppercase;}
+    .dm-ss-list{list-style:none;padding:0;}
+    .dm-ss-list li{font-size:13px;color:var(--text-secondary);padding:4px 0;line-height:1.6;padding-left:12px;position:relative;}
+    .dm-ss-list li::before{content:'·';position:absolute;left:0;color:var(--gold);}
+    .dm-shadows{}
+    .dm-char-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+    .dm-char{font-size:4rem;line-height:1;font-family:var(--font-serif);}
+    .dm-char-info{display:flex;flex-direction:column;gap:4px;}
+    .dm-element-name{font-size:12px;letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--text-muted);}
+    .dm-title{font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--text-primary);}
+    .dm-oneliner{font-family:var(--font-serif);font-style:italic;font-size:16px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;padding:12px 16px;border-left:2px solid var(--gold);background:rgba(232,197,71,0.04);}
+    .dm-body{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:20px;}
+    .dm-strengths-shadows{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+    @media(max-width:480px){.dm-strengths-shadows{grid-template-columns:1fr;}}
+    .dm-keywords{display:flex;flex-wrap:wrap;gap:8px;}
+    .dm-keyword{
+      font-size:11px;font-weight:700;letter-spacing:.12em;
+      padding:5px 12px;border-radius:999px;
+      background:rgba(232,197,71,0.1);
+      border:1px solid rgba(232,197,71,0.25);
+      color:var(--gold);text-transform:uppercase;
     }
   </style>
 </head>
@@ -2658,11 +2731,11 @@ function renderDaeun(chart) {
   
   track.innerHTML = daeun.map(d => {
     const color = ELEMENT_COLORS[d.element] || '#a8a0c8';
-    return `<div class="daeun-item${d.isCurrent?' current':''}">
+    return `<div class="daeun-item daeun-block${d.isCurrent?' current':''}">
+      <div class="daeun-age">${d.ageStart}–${d.ageEnd}</div>
       <div class="daeun-stem" style="color:${color}">${d.stem}</div>
       <div class="daeun-branch" style="color:${color}80">${d.branch}</div>
-      <div class="daeun-age">${d.ageStart}–${d.ageEnd}</div>
-      <div class="daeun-age">${d.yearStart}–${d.yearEnd}</div>
+      <div class="daeun-elem" style="color:${color}">${d.element}</div>
       ${d.isCurrent ? `<div class="daeun-current-badge">${L.daeun_current}</div>` : ''}
     </div>`;
   }).join('');
@@ -2711,7 +2784,7 @@ function setPaywall(id, hook, sub, btnText, previewText) {
   el(`${id}-sub`, sub);
   el(`${id}-btn`, btnText);
   const prevEl = document.getElementById(`${id}-preview`);
-  if (prevEl) prevEl.textContent = previewText;
+  if (prevEl) { prevEl.className = 'paid-preview-text blur-preview'; prevEl.textContent = previewText; }
 }
 
 // ═══════════════════════════════════════════════
