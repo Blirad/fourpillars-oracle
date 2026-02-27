@@ -1747,9 +1747,9 @@ ko: {
   lbl_pillars:'사주 원국 · FOUR PILLARS',
   lbl_elements:'나의 오행 DNA',
   lbl_personality:'성격 분석',
-  lbl_fortune:'오늘의 운세',
-  lbl_daeun:'대운 흐름',
-  lbl_paid:'심층 분석',
+  lbl_fortune:'오늘의 에너지',
+  lbl_daeun:'대운 흐름 · 10년 주기',
+  lbl_paid:'심층 분석 · 8가지 층위',
   badge_free:'무료',
   dm_eyebrow:'일간 · DAY MASTER',
   lbl_strengths:'✦ 강점',
@@ -2929,7 +2929,7 @@ function applyLanguage() {
   el('lbl-pillars', L.lbl_pillars);
   el('lbl-elements', L.lbl_elements);
   el('lbl-strengths', L.lbl_strengths); el('lbl-shadows', L.lbl_shadows);
-  el('mini-cta-text', AppState.language === 'ko' ? '재물운·연애운·직업운이 이미 당신의 사주에 쓰여 있습니다.' : 'Your wealth, love, and career patterns are already written in your chart.');
+  el('mini-cta-text', AppState.language === 'ko' ? '재물운·연애운·직업운 — 이미 당신의 사주에 새겨져 있습니다.' : 'Your wealth, love, and career patterns are already written in your chart.');
   el('modal-urgency', L.modal_urgency);
   el('trust-headline', L.trust_headline);
   el('trust-b1', L.trust_b1);
@@ -4140,7 +4140,7 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const lockCopy = LOCKED_COPY_EN[s.key];
       const displayTitle = !isKo && lockCopy ? lockCopy.title : title;
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
-      const ctaText  = isKo ? '심층 분석 보기' : 'Unlock My Reading';
+      const ctaText  = isKo ? '내 심층 분석 열기 →' : 'Unlock My Reading';
       const ctaPrice = isKo ? '₩6,900' : '$4.99';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
@@ -4360,7 +4360,7 @@ function renderDaeun(chart) {
         : "Your destiny unfolds in 10-year waves from birth. See which chapter you're living now."}</p>
       <div class="daeun-tl-grid">${timelineHtml}</div>
       ${!isPrem ? `<button class="daeun-unlock-btn" onclick="openPayModal()">
-        ${isKo ? '🔓 전체 대운 보기' : '🔓 Unlock Full Cycles'}
+        ${isKo ? '🔓 전체 대운 사이클 열기 →' : '🔓 Unlock Full Cycles'}
       </button>` : ''}
     </div>`;
 
@@ -4591,7 +4591,7 @@ function renderDaeunAnalysis(chart) {
       : 'Each 10-year cycle analyzed in relation to your Day Master. Your current cycle is unlocked free.') + '</p>' +
     '<div class="da-accordion">' + items + '</div>' +
     (!AppState.isPremium ? '<button class="daeun-unlock-btn" onclick="openPayModal()" style="margin-top:12px">' +
-      (isKo ? '🔓 전체 대운 분석 보기' : '🔓 Unlock All Cycle Analyses') + '</button>' : '') +
+      (isKo ? '🔓 전체 대운 분석 열기 →' : '🔓 Unlock All Cycle Analyses') + '</button>' : '') +
   '</div>';
 }
 
@@ -4606,7 +4606,7 @@ function toggleDaItem(id) {
 function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
   var isKo=AppState.language==='ko';
-  var btn=isKo?'심층 분석 열기 →':'Unlock My Full Reading →';
+  var btn=isKo?'내 8가지 심층 분석 보기 →':'Unlock My Full Reading →';
   sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
 }
 // ── 결제 설정 (Lemon Squeezy) ──────────────────────────────────────────
