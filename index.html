@@ -965,23 +965,6 @@
     .dm-insight-label{font-size:11px;font-weight:600;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
     .dm-insight-sub{font-size:12px;line-height:1.6;color:rgba(255,255,255,0.7);}
     /* ── Premium Content Cards ── */
-    .premium-content-wrapper{margin-top:24px;}
-    .premium-content-card{background:rgba(255,255,255,0.04);border:1px solid rgba(240,184,96,0.2);border-radius:16px;padding:28px 24px;margin-bottom:20px;}
-    .premium-card-header{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.08);}
-    .premium-card-icon{font-size:24px;}
-    .premium-card-title{font-size:17px;font-weight:700;color:#f0b860;font-family:'Cormorant Garamond',serif;letter-spacing:0.02em;}
-    .premium-card-body{font-size:14px;line-height:1.85;color:rgba(255,255,255,0.78);white-space:pre-wrap;}
-    .premium-content-header{text-align:center;margin-bottom:28px;}
-    .premium-content-title{font-size:22px;font-weight:700;color:#f0e8d0;font-family:'Cormorant Garamond',serif;margin-bottom:8px;}
-    .premium-content-sub{font-size:13px;color:rgba(255,255,255,0.45);}
-    .premium-content-wrapper{padding:8px 0;}
-    .premium-content-header{text-align:center;margin-bottom:28px;padding:24px 16px;background:linear-gradient(135deg,rgba(240,184,96,0.08) 0%,rgba(255,126,179,0.06) 100%);border:1px solid rgba(240,184,96,0.25);border-radius:16px;}
-    .premium-content-section{margin-bottom:20px;padding:20px;background:rgba(255,255,255,0.04);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;transition:border-color .2s;}
-    .premium-content-section:hover{border-color:rgba(240,184,96,0.25);}
-    .premium-section-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-    .premium-section-icon{font-size:22px;}
-    .premium-section-title{font-size:16px;font-weight:700;color:#f0e8d0;margin:0;}
-    .premium-section-body{font-size:14px;color:rgba(255,255,255,0.7);line-height:1.65;}
     .section-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;}
 
     /* ── ELEMENT INTERPRETATION ── */
@@ -1710,9 +1693,7 @@ en: {
   toast_copy_ok:'✓ Link copied - share your chart!',
   daily_flow_title:"Today's Flow",
   daeun_peak:'Peak Years',daeun_low:'Challenging Cycle',
-  premium_title:'Read Your Fate, Deeper',premium_sub:'The real story your Four Pillars are telling',
-  premium_price:'$4.99',premium_price_sub:'Full Reading · Lifetime Access',
-  premium_btn:'Unlock Full Reading →',premium_reassure:'Millennia of wisdom, now your story.',
+
   ten_god:{bigyeon:'Parallel',geopjae:'Rob Wealth',sikshin:'Eating God',sanggwan:'Hurting Officer',pyeongjae:'Partial Wealth',jeongjae:'Direct Wealth',pyeonggwan:'Partial Officer',jeonggwan:'Direct Officer',pyeongin:'Partial Resource',jeongin:'Direct Resource'},
   year_p:'Year Pillar',month_p:'Month Pillar',day_p:'Day Master',hour_p:'Hour Pillar',
   back_btn:'← Back',
@@ -1823,9 +1804,7 @@ ko: {
   toast_copy_ok:'✓ 링크가 복사되었습니다 - 차트를 공유하세요!',
   daily_flow_title:'오늘의 흐름',
   daeun_peak:'인생 전성기',daeun_low:'힘든 시기',
-  premium_title:'당신의 운명, 더 깊이 읽기',premium_sub:'사주팔자가 말하는 당신의 진짜 이야기',
-  premium_price:'₩6,900',premium_price_sub:'전체 감명 • 평생 열람',
-  premium_btn:'전체 감명 열기 →',premium_reassure:'수천 년의 지혜, 지금 당신의 이야기로',
+
   ten_god:{bigyeon:'비견',geopjae:'겁재',sikshin:'식신',sanggwan:'상관',pyeongjae:'편재',jeongjae:'정재',pyeonggwan:'편관',jeonggwan:'정관',pyeongin:'편인',jeongin:'정인'},
   year_p:'년주',month_p:'월주',day_p:'일간',hour_p:'시주',
   back_btn:'← 다시 입력',
@@ -2940,7 +2919,7 @@ function setLang(lang) {
   localStorage.setItem('momentor_lang', lang);
   document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   applyLanguage();
-  if (AppState.chart) { if (AppState.isPremium) renderPremiumContent(AppState.chart); else renderAllPaid(AppState.chart); }
+  if (AppState.chart) renderAllPaid(AppState.chart);
 }
 
 function applyLanguage() {
@@ -3217,11 +3196,7 @@ function renderResults(chart) {
   }
 
   // 9. Premium section
-  if (AppState.isPremium) {
-    renderPremiumContent(chart);
-  } else {
-    renderAllPaid(chart);
-  }
+  renderAllPaid(chart);
 }
 
 function renderPillarGrid(chart) {
@@ -4484,7 +4459,6 @@ function unlockPremiumContent() {
   AppState.isPremium = true;
   var bar = document.getElementById('sticky-cta-bar');
   if (bar) bar.style.display = 'none';
-  if (AppState.chart) renderPremiumContent(AppState.chart);
   document.querySelectorAll('.premium-locked').forEach(function(el) {
     el.classList.remove('premium-locked');
     el.classList.add('premium-unlocked');
@@ -4584,8 +4558,7 @@ function unlockPremium() {
   localStorage.setItem('momentor_premium', '1');
   closeModal();
   var bar=document.getElementById('sticky-cta-bar'); if(bar) bar.style.display='none';
-  if (AppState.chart) renderPremiumContent(AppState.chart);
-  showToast(AppState.language === 'ko' ? '🔮 전체 감명이 열렸습니다!' : '🔮 Full reading unlocked!', 'success');
+  showToast(AppState.language === 'ko' ? '🔮 결제 완료!' : '🔮 Payment complete!', 'success');
 }
 
 function handlePayment() {
@@ -4829,42 +4802,6 @@ const PREMIUM_CONTENT = {
   },
 
 };
-
-function renderPremiumContent(chart) {
-  const sec = document.getElementById('premium-section');
-  if (!sec) return;
-  const isKo = AppState.language === 'ko';
-  const dayStem = chart && chart.dayMaster ? chart.dayMaster.stem : (chart && chart.pillars && chart.pillars.day ? chart.pillars.day.stem : '');
-  const content = PREMIUM_CONTENT[dayStem];
-  const sections = [
-    { icon: '🌟', titleKo: '인생 전반', titleEn: 'Life Path', koKey: 'life_ko', enKey: 'life_en', borderColor: '#f0b860' },
-    { icon: '💰', titleKo: '재물 & 커리어', titleEn: 'Wealth & Career', koKey: 'wealth_ko', enKey: 'wealth_en', borderColor: '#4ade80' },
-    { icon: '💕', titleKo: '연애 & 결혼', titleEn: 'Love & Marriage', koKey: 'love_ko', enKey: 'love_en', borderColor: '#ff7eb3' },
-    { icon: '👨‍👩‍👧', titleKo: '가족 & 건강', titleEn: 'Family & Health', koKey: 'family_ko', enKey: 'family_en', borderColor: '#60a5fa' },
-    { icon: '🔮', titleKo: '10년 대운 분석', titleEn: 'Decade Analysis', koKey: 'decade_ko', enKey: 'decade_en', borderColor: '#a78bfa' },
-  ];
-  const fallbackKo = '준비 중입니다. 곧 업데이트됩니다.';
-  const fallbackEn = 'Deep analysis coming soon - being personalized for your chart.';
-  const cardsHtml = sections.map(s => {
-    const body = content ? (isKo ? content[s.koKey] : content[s.enKey]) : null;
-    const bodyText = body || (isKo ? fallbackKo : fallbackEn);
-    return `<div class="premium-content-card" style="border-left:3px solid ${s.borderColor};box-shadow:0 0 20px rgba(0,0,0,0.15);">
-      <div class="premium-card-header">
-        <span class="premium-card-icon">${s.icon}</span>
-        <span class="premium-card-title" style="color:${s.borderColor}">${isKo ? s.titleKo : s.titleEn}</span>
-      </div>
-      <div class="premium-card-body">${bodyText}</div>
-    </div>`;
-  }).join('');
-  sec.innerHTML = `<div class="premium-content-wrapper">
-    <div class="premium-content-header">
-      <div class="premium-lock-icon">🔮</div>
-      <h2 class="premium-content-title">${isKo ? '전체 감명이 열렸습니다' : 'Your Full Reading is Unlocked'}</h2>
-      <p class="premium-content-sub">${isKo ? '당신의 사주가 말하는 진짜 이야기' : 'The real story your Four Pillars are telling'}</p>
-    </div>
-    ${cardsHtml}
-  </div>`;
-}
 
 function joinWaitlist() {
   const L = I18N[AppState.language] || I18N.en;
