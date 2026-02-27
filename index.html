@@ -899,6 +899,19 @@
     .daeun-lock-overlay{text-align:center;padding:20px;background:linear-gradient(to bottom,transparent,rgba(13,11,30,0.95));margin-top:8px;border-radius:12px;}
     .daeun-lock-icon{font-size:28px;margin-bottom:8px;}
     .daeun-lock-msg{font-size:13px;color:var(--text-secondary);}
+    .daeun-tl-section{padding:4px 0;}
+    .daeun-tl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:16px 0;}
+    .daeun-tl-item{position:relative;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 12px;text-align:center;}
+    .daeun-tl-item.current{border-color:rgba(232,197,71,0.6);box-shadow:0 0 16px rgba(232,197,71,0.15);}
+    .daeun-tl-item.locked{filter:blur(3px);pointer-events:none;}
+    .daeun-tl-blur-overlay{position:absolute;inset:0;border-radius:12px;cursor:pointer;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:20px;}
+    .daeun-tl-year{font-size:12px;font-weight:700;margin-bottom:2px;}
+    .daeun-tl-age{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:6px;}
+    .daeun-tl-pillar{font-family:var(--font-serif);font-size:22px;margin-bottom:6px;}
+    .daeun-tl-desc{font-size:10px;color:rgba(255,255,255,0.6);line-height:1.4;}
+    .daeun-tl-desc-text{font-size:13px;color:var(--text-muted);margin-bottom:4px;line-height:1.7;}
+    .daeun-unlock-btn{width:100%;margin-top:12px;padding:12px;background:linear-gradient(135deg,rgba(232,197,71,0.2),rgba(232,197,71,0.05));border:1px solid rgba(232,197,71,0.4);border-radius:12px;color:#e8c547;font-size:14px;cursor:pointer;letter-spacing:.05em;}
+    .daeun-unlock-btn:hover{background:rgba(232,197,71,0.25);}
     /* ── PREMIUM ── */
     .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.35);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);box-shadow:0 0 40px rgba(240,184,96,0.1),inset 0 1px 0 rgba(240,184,96,0.15);}
     .premium-header{margin-bottom:24px;}
@@ -4872,7 +4885,7 @@ function renderAccordion(stem, isKo, color) {
         <span class="dm-acc-title">${title}</span>
         <span class="dm-acc-chevron">▼</span>
       </div>
-      <div class="dm-acc-body"${isFirst?' style="display:block"':''}}><div class="dm-acc-body-inner">${body}</div></div>
+      <div class="dm-acc-body"${isFirst?' style="display:block"':''}><div class="dm-acc-body-inner">${body.replace(/\n/g,'<br>')}</div></div>
     </div>`;
   }).join('')}</div>`;
 }
@@ -4971,62 +4984,54 @@ function renderDayMaster(chart) {
 // renderFortune removed
 
 function renderDaeun(chart) {
-  var sec=document.getElementById('daeun-simple-section');if(!sec)return;
-  var isKo=AppState.language==='ko';
-  var daeun=chart.daeunData.daeun;
-  var isPremium=AppState.isPremium===true;
-  var birthYear=chart.year;
-  var dmEl=chart.dayMaster.element;
-  var favEl=DM_FAVORABLE[dmEl]||dmEl;
-  var ctlEl=Object.keys(CONTROLS).find(function(k){return CONTROLS[k]===dmEl;})||'';
-  var sameEl=dmEl;
+  const sec = document.getElementById('daeun-simple-section');
+  if (!sec) return;
+  const isKo = AppState.language === 'ko';
+  const daeun = chart.daeunData.daeun;
+  const birthYear = chart.year;
+  const dmEl = chart.dayMaster.element;
+  const favEl = DM_FAVORABLE[dmEl] || dmEl;
 
-  function getDaeunDesc(d){
-    var el=d.element||d.branchElement;
-    if(el===favEl) return isKo?'기회와 성장의 시기':'A season of opportunity & growth';
-    if(el===sameEl) return isKo?'자신을 돌아보는 시기':'A time for inner reflection';
-    if(el===ctlEl)  return isKo?'단단해지는 시기':'A time to grow stronger';
-    return isKo?'변화와 흐름의 시기':'A season of change & flow';
+  function getPeriodDesc(d) {
+    const score = (d.element === favEl ? 2 : 0) + (d.branchElement === favEl ? 1 : 0);
+    if (d.isCurrent) return isKo ? '⭐ 지금 이 시기' : '⭐ Your Current Cycle';
+    if (score >= 2) return isKo ? '🌸 꽃이 피는 시기' : '🌸 Flourishing Years';
+    if (score === 1) return isKo ? '🌱 성장하는 시기' : '🌱 Growth Years';
+    if (d.element === CONTROLS[dmEl] || d.branchElement === CONTROLS[dmEl])
+      return isKo ? '🌊 단단해지는 시기' : '🌊 Strengthening Years';
+    return isKo ? '🍂 내실을 다지는 시기' : '🍂 Consolidating Years';
   }
 
-  var FREE_COUNT=3;
-  var title=isKo?'대운 타임라인':'10-Year Luck Cycle Timeline';
-  var subtitle=isKo?'당신의 인생은 10년 단위로 흐릅니다':'Your life flows in 10-year chapters';
-  var unlockBtn=isKo?'전체 대운 보기 →':'See Full Timeline →';
+  const FREE_COUNT = 3;
+  const isPrem = AppState.isPremium;
 
-  var items=daeun.map(function(d,i){
-    var startYr=birthYear+d.ageStart;
-    var endYr=birthYear+d.ageEnd;
-    var ageStr=isKo?(d.ageStart+'~'+d.ageEnd+'세'):(d.ageStart+'~'+d.ageEnd+' yrs');
-    var period=startYr+'~'+endYr+(isKo?'년':'');
-    var pillar=(d.stem||'')+(d.branch||'');
-    var desc=getDaeunDesc(d);
-    var isCurrent=d.isCurrent;
-    var isLocked=!isPremium&&i>=FREE_COUNT;
-    var blurStyle=isLocked?'filter:blur(4px);pointer-events:none;user-select:none;':'';
-    var glowStyle=isCurrent?'border-color:rgba(232,197,71,0.6);box-shadow:0 0 18px rgba(232,197,71,0.2);':'';
-    return '<div class="daeun-tl-item'+(isCurrent?' daeun-tl-current':'')+'" style="'+glowStyle+blurStyle+'">'
-      +(isCurrent?'<div class="daeun-tl-now">'+(isKo?'현재':'NOW')+'</div>':'')
-      +'<div class="daeun-tl-period">'+period+' <span class="daeun-tl-age">('+ageStr+')</span></div>'
-      +'<div class="daeun-tl-pillar">'+pillar+'</div>'
-      +'<div class="daeun-tl-desc">'+desc+'</div>'
-      +'</div>';
-  });
+  const timelineHtml = daeun.map((d, i) => {
+    const startYear = birthYear + d.ageStart;
+    const endYear   = birthYear + d.ageEnd;
+    const isFree    = isPrem || i < FREE_COUNT;
+    const isCur     = d.isCurrent;
+    const desc      = getPeriodDesc(d);
+    const elColor   = ELEMENT_COLORS[d.element] || '#a8a0c8';
+    return `<div class="daeun-tl-item${isCur?' current':''}${!isFree?' locked':''}">
+      <div class="daeun-tl-year" style="color:${elColor}">${startYear}–${endYear}</div>
+      <div class="daeun-tl-age">${isKo ? `(${d.ageStart}–${d.ageEnd}세)` : `(Age ${d.ageStart}–${d.ageEnd})`}</div>
+      <div class="daeun-tl-pillar">${d.stem}${d.branch}</div>
+      <div class="daeun-tl-desc">${isFree ? desc : '🔒'}</div>
+      ${!isFree ? `<div class="daeun-tl-blur-overlay" onclick="openPayModal()"></div>` : ''}
+    </div>`;
+  }).join('');
 
-  var lockOverlay='';
-  if(!isPremium&&daeun.length>FREE_COUNT){
-    lockOverlay='<div class="daeun-lock-overlay">'
-      +'<div class="daeun-lock-icon">🔒</div>'
-      +'<div class="daeun-lock-msg">'+(isKo?'나머지 대운은 전체 감명에서 확인하세요':'Unlock full timeline with Full Reading')+'</div>'
-      +'<button class="premium-unlock-btn" style="margin-top:12px;padding:10px 20px;font-size:14px;" onclick="openPayModal()">'+unlockBtn+'</button>'
-      +'</div>';
-  }
-
-  sec.innerHTML='<div class="daeun-tl-wrap">'
-    +'<div class="daeun-tl-header"><h3>'+title+'</h3><p class="daeun-tl-sub">'+subtitle+'</p></div>'
-    +'<div class="daeun-tl-list">'+items.join('')+'</div>'
-    +lockOverlay
-    +'</div>';
+  sec.innerHTML = `
+    <div class="daeun-tl-section">
+      <div class="section-divider">${isKo ? '나의 대운 흐름' : 'My Life Cycles'}</div>
+      <p class="daeun-tl-desc-text">${isKo
+        ? '태어날 때부터 10년 단위로 흐르는 운의 파동입니다. 지금 당신이 어떤 시기를 걷고 있는지 확인하세요.'
+        : "Your destiny unfolds in 10-year waves from birth. See which chapter you're living now."}</p>
+      <div class="daeun-tl-grid">${timelineHtml}</div>
+      ${!isPrem ? `<button class="daeun-unlock-btn" onclick="openPayModal()">
+        ${isKo ? '🔓 전체 대운 보기' : '🔓 Unlock Full Cycles'}
+      </button>` : ''}
+    </div>`;
 }
 
 
