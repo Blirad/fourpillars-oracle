@@ -4442,8 +4442,78 @@ function renderAllPaid(chart) {
   var btn=isKo?'전체 감명 열기 →':'Unlock Full Reading →';
   sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
 }
-function openPayModal(){openModal('premium');}
+// ── 결제 설정 (Lemon Squeezy) ──────────────────────────────────────────
+const LS_VARIANT_ID = '1350661';
+const LS_STORE_DOMAIN = 'momentor.lemonsqueezy.com';
 
+function buildCheckoutUrl(options) {
+  var opts = options || {};
+  var email = opts.email || '';
+  var userId = opts.userId || '';
+  var testMode = opts.testMode || false;
+
+  var base = 'https://' + LS_STORE_DOMAIN + '/buy/' + LS_VARIANT_ID;
+  var params = new URLSearchParams();
+
+  params.set('checkout[success_url]', 'https://momentor.app?payment=success');
+  params.set('checkout[cancel_url]', 'https://momentor.app?payment=cancel');
+
+  if (email) params.set('checkout[email]', email);
+  if (userId) params.set('checkout[custom][user_id]', userId);
+  if (testMode) params.set('test', '1');
+
+  return base + '?' + params.toString();
+}
+
+function openPayModal() {
+  var checkoutUrl = buildCheckoutUrl({ testMode: false });
+  var win = window.open(checkoutUrl, '_blank', 'width=500,height=700');
+  if (!win) {
+    // 팝업 차단 시 현재 탭으로 이동
+    window.location.href = checkoutUrl;
+  }
+}
+
+// ── 결제 완료 감지 ──────────────────────────────────────────
+const PREMIUM_KEY = 'momentor_premium';
+const PREMIUM_TIMESTAMP_KEY = 'momentor_premium_ts';
+
+function unlockPremiumContent() {
+  localStorage.setItem(PREMIUM_KEY, '1');
+  localStorage.setItem(PREMIUM_TIMESTAMP_KEY, Date.now().toString());
+  AppState.isPremium = true;
+  var bar = document.getElementById('sticky-cta-bar');
+  if (bar) bar.style.display = 'none';
+  if (AppState.chart) renderPremiumContent(AppState.chart);
+  document.querySelectorAll('.premium-locked').forEach(function(el) {
+    el.classList.remove('premium-locked');
+    el.classList.add('premium-unlocked');
+  });
+  var lockOverlay = document.getElementById('premium-lock-overlay');
+  if (lockOverlay) lockOverlay.style.display = 'none';
+  showToast('🎉 Full Reading unlocked!', 'success');
+  console.log('[Momentor] Premium unlocked');
+}
+
+function checkPaymentReturn() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('payment') === 'success') {
+    unlockPremiumContent();
+    window.history.replaceState({}, '', window.location.pathname);
+  } else if (params.get('payment') === 'cancel') {
+    console.log('[Momentor] 결제 취소됨');
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}
+
+function restorePremiumState() {
+  if (localStorage.getItem(PREMIUM_KEY) === '1') {
+    AppState.isPremium = true;
+    document.querySelectorAll('.premium-locked').forEach(function(el) {
+      el.classList.remove('premium-locked');
+    });
+  }
+}
 
 // setPaywall removed
 
@@ -4883,7 +4953,11 @@ function init() {
   selfTest();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', function() {
+  init();
+  restorePremiumState();
+  checkPaymentReturn();
+});
 
 // ═══════════════════════════════════════════════
 // SHARE CARD MODULE
