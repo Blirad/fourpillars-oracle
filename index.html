@@ -717,6 +717,31 @@
       .trust-bullets li{font-size:13px;padding:6px 0;}
     }
 
+    /* ── HERO 3-STEP FLOW ── */
+    .hero-steps{display:flex;align-items:center;justify-content:center;gap:0;margin:20px auto 24px;max-width:360px;}
+    .hero-step{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;}
+    .step-num{font-size:9px;font-weight:800;letter-spacing:.12em;color:var(--gold);opacity:.7;}
+    .step-icon{font-size:20px;margin:2px 0;}
+    .step-text{font-size:11px;color:var(--text-secondary);letter-spacing:.04em;text-align:center;line-height:1.3;font-weight:600;}
+    .hero-step-divider{font-size:14px;color:rgba(232,197,71,.35);padding:0 4px;padding-bottom:10px;flex-shrink:0;}
+    @media(max-width:375px){.step-text{font-size:10px;}.step-icon{font-size:16px;}}
+
+    /* ── HERO TRUST LINE ── */
+    .hero-trust-line{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
+    .trust-dot{opacity:.4;}
+
+    /* ── ACCORDION EXPAND MORE ── */
+    .acc-expand-row{margin:8px 0;}
+    .acc-expand-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:rgba(255,255,255,.03);border:1px dashed rgba(232,197,71,.3);border-radius:14px;cursor:pointer;transition:all .2s ease;font-family:var(--font-sans);}
+    .acc-expand-btn:hover{background:rgba(232,197,71,.06);border-color:rgba(232,197,71,.5);}
+    .acc-expand-label{font-size:13px;color:var(--gold);font-weight:600;letter-spacing:.04em;}
+    .acc-expand-icon{font-size:11px;color:var(--gold);transition:transform .3s ease;}
+    .acc-expand-btn[aria-expanded="true"] .acc-expand-icon{transform:rotate(180deg);}
+    .acc-expand-lock{font-size:12px;opacity:.6;}
+    .acc-more-sections{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease;opacity:0;}
+    .acc-more-sections.expanded{max-height:4000px;opacity:1;}
+    .acc-free-badge{font-size:8px;font-weight:800;letter-spacing:.12em;padding:2px 7px;border-radius:4px;background:rgba(93,232,160,.2);color:var(--wood);text-transform:uppercase;margin-left:8px;vertical-align:middle;}
+
     /* ── ELEMENT BARS ── */
     .elem-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
     .elem-bar-label{font-size:13px;font-weight:700;min-width:48px;font-family:var(--font-sans);}
@@ -1037,8 +1062,36 @@
   <div class="hero">
     <div class="hero-eyebrow" id="hero-eyebrow">THE MOMENT YOU WERE BORN</div>
     <h1 class="hero-headline" id="hero-headline"><em>518,400</em> possible destinies.<br>This one is yours.</h1>
-    <p class="hero-sub" id="hero-sub">Momentor decodes your Korean Four Pillars (사주팔자) birth chart - the 1,500-year-old system consulted by millions across East Asia. Discover your Day Master, your elemental nature, and the 10-year destiny cycles that shape your life.</p>
+    <p class="hero-sub" id="hero-sub">1,500 years of East Asian wisdom — decoded.<br>Your birth date reveals your personality, destiny, and the seasons of your life.</p>
+    <!-- 3-STEP MINI FLOW -->
+    <div class="hero-steps" id="hero-steps">
+      <div class="hero-step">
+        <div class="step-num">01</div>
+        <div class="step-icon">📅</div>
+        <div class="step-text" id="step1-text">Enter<br>Birth Date</div>
+      </div>
+      <div class="hero-step-divider">→</div>
+      <div class="hero-step">
+        <div class="step-num">02</div>
+        <div class="step-icon">✦</div>
+        <div class="step-text" id="step2-text">Calculate<br>Chart</div>
+      </div>
+      <div class="hero-step-divider">→</div>
+      <div class="hero-step">
+        <div class="step-num">03</div>
+        <div class="step-icon">🌟</div>
+        <div class="step-text" id="step3-text">Reveal<br>Destiny</div>
+      </div>
+    </div>
     <button class="btn-primary" id="hero-cta" onclick="smoothScrollTo('section-input')">Reveal My Destiny →</button>
+    <!-- 신뢰 마이크로카피 -->
+    <div class="hero-trust-line" id="hero-trust-line">
+      <span id="trust-free">✓ Free</span>
+      <span class="trust-dot">·</span>
+      <span id="trust-no-signup">✓ No sign-up</span>
+      <span class="trust-dot">·</span>
+      <span id="trust-time">✓ 30 seconds</span>
+    </div>
   </div>
 
   <!-- USP CARDS -->
@@ -1491,8 +1544,14 @@ en: {
   app_tagline:'Your destiny, decoded.',
   hero_eyebrow:'THE MOMENT YOU WERE BORN',
   hero_headline:'<em>518,400</em> possible destinies.<br>This one is yours.',
-  hero_sub:'Your birth moment encodes a specific elemental signature - one of 518,400 possible combinations. Momentor decodes it using the Four Pillars system, East Asia\'s most precise personality and destiny framework. Discover who you actually are.',
+  hero_sub:'1,500 years of East Asian wisdom — decoded.<br>Your birth date reveals your personality, destiny, and the seasons of your life.',
   hero_cta:'Reveal My Destiny →',
+  step1_text:'Enter<br>Birth Date',
+  step2_text:'Calculate<br>Chart',
+  step3_text:'Reveal<br>Destiny',
+  trust_free:'✓ Free',
+  trust_no_signup:'✓ No sign-up',
+  trust_time:'✓ 30 seconds',
   usp1_title:'Not 1 in 12. 1 in 518,400.',
   usp1_body:'Western horoscopes divide humanity into twelve signs. Saju uses your birth year, month, day, AND hour - making your chart a fingerprint, not a category.',
   usp2_title:'1,400 Years of Wisdom',
@@ -1604,8 +1663,14 @@ ko: {
   app_tagline:'당신의 운명, 해독됩니다.',
   hero_eyebrow:'당신이 태어난 그 순간',
   hero_headline:'<em>518,400</em>가지 가능한 운명 중,<br>이것이 바로 당신의 것입니다.',
-  hero_sub:'모멘터는 당신의 사주팔자를 해독합니다 - 동아시아 수천만 명이 의지해온 1,500년의 지혜. 일간, 오행의 본성, 그리고 당신의 삶을 형성하는 10년 단위의 대운을 발견하세요.',
+  hero_sub:'사주팔자 — 1,500년의 동아시아 지혜.<br>당신의 생년월일이 말해주는 성격, 운명, 인생의 흐름.',
   hero_cta:'내 운명 보기 →',
+  step1_text:'생년월일<br>입력',
+  step2_text:'사주<br>계산',
+  step3_text:'운명<br>해독',
+  trust_free:'✓ 무료',
+  trust_no_signup:'✓ 가입 불필요',
+  trust_time:'✓ 30초 완성',
   usp1_title:'12분의 1이 아닌, 518,400분의 1.',
   usp1_body:'서양 별자리는 전 인류를 열두 가지로 나눕니다. 사주는 생년·생월·생일·생시까지 사용해 오직 당신만의 차트를 만들어냅니다. 당신의 차트는 카테고리가 아닙니다. 지문입니다.',
   usp2_title:'1,400년 검증된 지혜',
@@ -2820,8 +2885,20 @@ function applyLanguage() {
   // Hero
   el('hero-eyebrow', L.hero_eyebrow);
   shtml('hero-headline', L.hero_headline);
-  el('hero-sub', L.hero_sub);
+  shtml('hero-sub', L.hero_sub);
   el('hero-cta', L.hero_cta);
+  shtml('step1-text', L.step1_text);
+  shtml('step2-text', L.step2_text);
+  shtml('step3-text', L.step3_text);
+  el('trust-free', L.trust_free);
+  el('trust-no-signup', L.trust_no_signup);
+  el('trust-time', L.trust_time);
+  // Sync accordion more-btn label if open
+  const expandLabel = document.getElementById('acc-expand-label');
+  if (expandLabel) {
+    const isExpanded = document.getElementById('acc-expand-btn') && document.getElementById('acc-expand-btn').getAttribute('aria-expanded') === 'true';
+    expandLabel.textContent = isExpanded ? (lang === 'ko' ? '심층 분석 접기' : 'Collapse deep analysis') : (lang === 'ko' ? '심층 분석 8가지 더 보기' : 'See 8 deep analyses');
+  }
 
   // USP
   el('usp1-title', L.usp1_title); el('usp1-body', L.usp1_body);
@@ -4021,13 +4098,16 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
   const data = ACCORDION_CONTENT[stem] || {};
   const rgb = hexToRgb(color) || '240,184,96';
   const isPremium = AppState.isPremium === true;
-  return `<div class="dm-accordion" style="--dm-accent-rgb:${rgb}">${sections.map((s,i) => {
+  const CORE_SECTIONS = ['personality', 'strengths', 'weakness'];
+
+  function renderSection(s) {
     const sec = (s.key === 'personality' && personalityOverride) ? Object.assign({}, data[s.key] || {}, personalityOverride) : (data[s.key] || {});
     const title = isKo ? (sec.titleKo || s.key) : (sec.titleEn || s.key);
     const body  = isKo ? (sec.bodyKo  || '') : (sec.bodyEn  || '');
     const id = `acc-${stem}-${s.key}`;
-    const isFirst = i === 0;
-    const isLocked = !isFirst && !isPremium;
+    const isCoreSection = CORE_SECTIONS.includes(s.key);
+    const isLocked = !isCoreSection && !isPremium;
+    const freeBadge = s.key === 'weakness' ? `<span class="acc-free-badge">FREE</span>` : '';
     if (isLocked) {
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="openPayModal()" style="cursor:pointer;">
@@ -4037,15 +4117,33 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
         </div>
       </div>`;
     }
-    return `<div class="dm-acc-item${isFirst?' open':''}" id="${id}">
+    return `<div class="dm-acc-item open" id="${id}">
       <div class="dm-acc-header" onclick="toggleAccordion('${id}')">
         <span class="dm-acc-icon">${s.icon}</span>
-        <span class="dm-acc-title">${title}</span>
+        <span class="dm-acc-title">${title}${freeBadge}</span>
         <span class="dm-acc-chevron">▼</span>
       </div>
-      <div class="dm-acc-body"${isFirst?' style="display:block"':''}><div class="dm-acc-body-inner">${body.replace(/\n/g,'<br>')}</div></div>
+      <div class="dm-acc-body" style="display:block"><div class="dm-acc-body-inner">${body.replace(/\n/g,'<br>')}</div></div>
     </div>`;
-  }).join('')}</div>`;
+  }
+
+  const coreSections = sections.filter(s => CORE_SECTIONS.includes(s.key));
+  const moreSections = sections.filter(s => !CORE_SECTIONS.includes(s.key));
+  const expandLabel = isKo ? '심층 분석 8가지 더 보기' : 'See 8 deep analyses';
+
+  return `<div class="dm-accordion" style="--dm-accent-rgb:${rgb}">
+    ${coreSections.map(renderSection).join('')}
+    <div class="acc-expand-row" id="acc-expand-row">
+      <button class="acc-expand-btn" id="acc-expand-btn" onclick="toggleAccordionMore()" aria-expanded="false" aria-controls="acc-more-sections">
+        <span class="acc-expand-label" id="acc-expand-label">${expandLabel}</span>
+        <span class="acc-expand-icon">∨</span>
+        <span class="acc-expand-lock">🔒</span>
+      </button>
+    </div>
+    <div class="acc-more-sections" id="acc-more-sections" aria-hidden="true">
+      ${moreSections.map(renderSection).join('')}
+    </div>
+  </div>`;
 }
 
 function toggleAccordion(id) {
@@ -4056,6 +4154,21 @@ function toggleAccordion(id) {
   const container = item.closest('.dm-accordion');
   if (container) container.querySelectorAll('.dm-acc-item.open').forEach(el => el.classList.remove('open'));
   if (!isOpen) item.classList.add('open');
+}
+
+function toggleAccordionMore() {
+  const btn = document.getElementById('acc-expand-btn');
+  const moreSection = document.getElementById('acc-more-sections');
+  const label = document.getElementById('acc-expand-label');
+  if (!btn || !moreSection) return;
+  const isKo = AppState.language === 'ko';
+  const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+  btn.setAttribute('aria-expanded', String(!isExpanded));
+  moreSection.setAttribute('aria-hidden', String(isExpanded));
+  moreSection.classList.toggle('expanded', !isExpanded);
+  label.textContent = !isExpanded
+    ? (isKo ? '심층 분석 접기' : 'Collapse deep analysis')
+    : (isKo ? '심층 분석 8가지 더 보기' : 'See 8 deep analyses');
 }
 
 function renderDayMaster(chart) {
