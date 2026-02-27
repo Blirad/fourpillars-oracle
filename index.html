@@ -3142,6 +3142,10 @@ function renderResults(chart) {
 
   // 9. Premium section
   renderAllPaid(chart);
+
+  // 10. Daeun timeline + analysis
+  renderDaeun(chart);
+  renderDaeunAnalysis(chart);
 }
 
 function renderPillarGrid(chart) {
@@ -4355,6 +4359,134 @@ function renderDaeun(chart) {
     </div>`;
 }
 
+
+function renderDaeunAnalysis(chart) {
+  var sec = document.getElementById('daeun-analysis-section');
+  if (!sec) return;
+  var isKo = AppState.language === 'ko';
+  var daeun = chart.daeunData.daeun;
+  var birthYear = chart.year;
+  var dmEl = chart.dayMaster.element;
+
+  function getRelation(dm, d) {
+    if (dm === d) return 'same';
+    if (PRODUCES[dm] === d) return 'produces';
+    if (PRODUCES[d] === dm) return 'nurtures';
+    if (CONTROLS[dm] === d) return 'controls';
+    if (CONTROLS[d] === dm) return 'controlled';
+    return 'neutral';
+  }
+
+  var RELATION_CONTENT = {
+    same: {
+      tagKo: '비화 (比和) — 동일 오행', tagEn: 'Same Energy (Parallel)',
+      colorHex: '#a8a0c8',
+      bodyKo: { energy: '일간과 동일한 오행 에너지가 강하게 흐르는 시기입니다. 자신의 본성이 더욱 선명하게 드러납니다.', relation: '자신과 같은 기운이 공명하여 자신감과 주체성이 강해집니다. 다만 고집이 세질 수 있으니 유연성을 유지하세요.', opportunity: '독립적인 프로젝트, 자기 표현, 리더십 발휘에 유리한 시기입니다.', caution: '경쟁이 치열해질 수 있으며, 협력보다 독주하는 경향이 생길 수 있습니다.' },
+      bodyEn: { energy: 'A period where your native elemental energy is amplified and fully expressed.', relation: 'The resonance of your own element strengthens willpower and self-direction, though stubbornness may increase.', opportunity: 'Excellent for independent ventures, self-expression, and taking the lead.', caution: 'Watch for competitiveness and tendency to work alone rather than in collaboration.' }
+    },
+    produces: {
+      tagKo: '식상 (食傷) — 일간이 생함', tagEn: 'Output Cycle (You Feed It)',
+      colorHex: '#5de8a0',
+      bodyKo: { energy: '일간이 대운 오행을 생하는 시기입니다. 당신의 에너지가 세상으로 흘러나가는 흐름입니다.', relation: '창조적 표현, 기술, 소통 능력이 활성화됩니다. 무언가를 만들고 나누고자 하는 욕구가 강해집니다.', opportunity: '창작 활동, 교육, 소통, 새로운 기술 개발에 유리한 시기입니다.', caution: '과도한 소진에 주의하세요. 주는 것에 집중하다 보면 자신을 돌보는 것을 잊을 수 있습니다.' },
+      bodyEn: { energy: 'Your Day Master element generates the luck cycle energy — your vitality flows outward into the world.', relation: 'Creative expression, communication, and skill development are heightened. The desire to create and share intensifies.', opportunity: 'Favorable for creative work, teaching, communication, and developing new skills.', caution: 'Guard against over-expenditure of energy. Giving too much can deplete your own reserves.' }
+    },
+    nurtures: {
+      tagKo: '인성 (印星) — 대운이 생함', tagEn: 'Resource Cycle (It Feeds You)',
+      colorHex: '#60b4fa',
+      bodyKo: { energy: '대운 오행이 일간을 생하는 시기입니다. 외부에서 당신을 키우고 지지하는 에너지가 흘러옵니다.', relation: '배움, 지혜, 지지 세력이 강화됩니다. 좋은 스승이나 후원자를 만날 수 있는 시기입니다.', opportunity: '공부, 자격 취득, 정신적 성장, 귀인 만남에 유리합니다.', caution: '너무 의존적이 되거나 자기 주도성이 약해질 수 있으니 균형을 유지하세요.' },
+      bodyEn: { energy: 'The luck cycle element feeds and supports your Day Master — nourishing energy flows toward you.', relation: 'Learning, wisdom, and support networks are strengthened. Mentors and benefactors appear.', opportunity: 'Excellent for study, certification, spiritual growth, and finding helpful allies.', caution: 'Avoid over-reliance on others; keep your own initiative strong.' }
+    },
+    controls: {
+      tagKo: '재성 (財星) — 일간이 극함', tagEn: 'Wealth Cycle (You Control It)',
+      colorHex: '#f0b860',
+      bodyKo: { energy: '일간이 대운 오행을 극하는 시기입니다. 당신이 세상을 다스리고 관리하는 힘이 강해집니다.', relation: '물질적 관리 능력, 재물 감각, 실용적 추진력이 활성화됩니다.', opportunity: '사업, 재테크, 자원 관리, 현실적 목표 달성에 유리한 시기입니다.', caution: '과도한 통제욕이나 물질에 집착하는 경향이 생길 수 있습니다. 균형을 잃지 마세요.' },
+      bodyEn: { energy: 'Your Day Master controls the luck cycle element — your power to manage and acquire strengthens.', relation: 'Practical drive, wealth sense, and material management are activated.', opportunity: 'Favorable for business, investment, resource management, and achieving tangible goals.', caution: 'Watch for excessive need to control or material obsession. Keep perspective.' }
+    },
+    controlled: {
+      tagKo: '관성 (官星) — 대운이 극함', tagEn: 'Authority Cycle (It Controls You)',
+      colorHex: '#ff7eb3',
+      bodyKo: { energy: '대운 오행이 일간을 극하는 시기입니다. 외부의 압력이나 구조가 당신을 단련시키는 흐름입니다.', relation: '규율, 책임감, 사회적 역할이 강조됩니다. 외부 권위나 조직과의 관계가 중요해집니다.', opportunity: '커리어 성장, 조직 내 역할 확립, 자기 규율 강화에 유리합니다.', caution: '압박감이나 스트레스가 높아질 수 있습니다. 경직되지 않고 유연하게 대응하세요.' },
+      bodyEn: { energy: 'The luck cycle element pressures your Day Master — external structures discipline and shape you.', relation: 'Discipline, responsibility, and social roles are emphasized. Relationships with authority matter.', opportunity: 'Favorable for career advancement, establishing roles in organizations, and self-discipline.', caution: 'Pressure and stress may increase. Stay flexible rather than becoming rigid.' }
+    },
+    neutral: {
+      tagKo: '중화 (中和)', tagEn: 'Neutral Flow',
+      colorHex: '#a8a0c8',
+      bodyKo: { energy: '대운 오행과 일간 사이에 직접적인 생극 관계가 없는 균형의 시기입니다.', relation: '큰 파동 없이 안정적으로 흐르는 시기입니다. 자신의 페이스를 찾기 좋습니다.', opportunity: '장기적인 계획 수립, 내면 성찰, 꾸준한 습관 형성에 유리합니다.', caution: '변화가 없다고 느껴질 수 있으나, 내실을 다지는 소중한 시간입니다.' },
+      bodyEn: { energy: 'No direct generating or controlling relationship — a balanced, neutral period.', relation: 'A stable, steady flow without dramatic ups or downs. Good for finding your own rhythm.', opportunity: 'Favorable for long-term planning, inner reflection, and building consistent habits.', caution: 'It may feel uneventful, but this is valuable time for internal consolidation.' }
+    }
+  };
+
+  var sectionTitles = {
+    energy:      { ko: '오행 에너지', en: 'Elemental Energy' },
+    relation:    { ko: '일간과의 관계', en: 'Relationship to Day Master' },
+    opportunity: { ko: '기회', en: 'Opportunities' },
+    caution:     { ko: '주의사항', en: 'Caution' }
+  };
+
+  var items = daeun.map(function(d, i) {
+    var isCur = d.isCurrent;
+    var startYear = birthYear + d.ageStart;
+    var endYear = birthYear + d.ageEnd;
+    var rel = getRelation(dmEl, d.element);
+    var rc = RELATION_CONTENT[rel];
+    var elColor = ELEMENT_COLORS[d.element] || '#a8a0c8';
+    var hdrLabel = startYear + '–' + endYear + ' (' + (isKo ? '만 ' + d.ageStart + '–' + d.ageEnd + '세' : 'Age ' + d.ageStart + '–' + d.ageEnd) + ')';
+    var itemId = 'da-item-' + i;
+
+    if (!isCur) {
+      return '<div class="da-item" id="' + itemId + '">' +
+        '<div class="da-header" onclick="openPayModal()" style="cursor:pointer;">' +
+          '<span class="da-pillar-display" style="color:' + elColor + '">' + d.stem + d.branch + '</span>' +
+          '<div style="flex:1;min-width:0"><div class="da-header-text" style="font-size:12px;color:var(--text-muted)">' + hdrLabel + '</div></div>' +
+          '<span class="da-header-lock">🔒</span>' +
+        '</div>' +
+      '</div>';
+    }
+
+    var content = isKo ? rc.bodyKo : rc.bodyEn;
+    var bodyHtml = ['energy','relation','opportunity','caution'].map(function(k) {
+      return '<div class="da-section">' +
+        '<div class="da-section-title">' + (isKo ? sectionTitles[k].ko : sectionTitles[k].en) + '</div>' +
+        '<div class="da-section-body">' + content[k] + '</div>' +
+      '</div>';
+    }).join('');
+
+    return '<div class="da-item da-current da-open" id="' + itemId + '">' +
+      '<div class="da-header" onclick="toggleDaItem(\'' + itemId + '\')">' +
+        '<span class="da-pillar-display" style="color:' + elColor + '">' + d.stem + d.branch + '</span>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div class="da-header-text" style="font-size:12px;color:var(--text-muted)">' + hdrLabel + '</div>' +
+        '</div>' +
+        '<span class="da-header-badge">' + (isKo ? '현재' : 'NOW') + '</span>' +
+        '<span class="da-chevron">▲</span>' +
+      '</div>' +
+      '<div class="da-body">' +
+        '<div class="da-relation-tag" style="background:' + rc.colorHex + '22;color:' + rc.colorHex + ';border:1px solid ' + rc.colorHex + '44">' +
+          (isKo ? rc.tagKo : rc.tagEn) +
+        '</div>' +
+        bodyHtml +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  sec.innerHTML = '<div class="daeun-tl-section">' +
+    '<div class="section-divider">' + (isKo ? '대운 시기별 상세 분석' : 'Luck Cycle Deep Dive') + '</div>' +
+    '<p class="daeun-tl-desc-text">' + (isKo
+      ? '각 대운이 일간(日干)과 어떤 관계를 맺는지, 그 시기의 에너지와 방향을 분석합니다. 현재 대운만 무료 공개됩니다.'
+      : 'Each 10-year cycle analyzed in relation to your Day Master. Your current cycle is unlocked free.') + '</p>' +
+    '<div class="da-accordion">' + items + '</div>' +
+    (!AppState.isPremium ? '<button class="daeun-unlock-btn" onclick="openPayModal()" style="margin-top:12px">' +
+      (isKo ? '🔓 전체 대운 분석 보기' : '🔓 Unlock All Cycle Analyses') + '</button>' : '') +
+  '</div>';
+}
+
+function toggleDaItem(id) {
+  var item = document.getElementById(id);
+  if (!item) return;
+  item.classList.toggle('da-open');
+  var chev = item.querySelector('.da-chevron');
+  if (chev) chev.textContent = item.classList.contains('da-open') ? '▲' : '▼';
+}
 
 function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
