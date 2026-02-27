@@ -942,6 +942,23 @@
     .daeun-tl-desc-text{font-size:13px;color:var(--text-muted);margin-bottom:4px;line-height:1.7;}
     .daeun-unlock-btn{width:100%;margin-top:12px;padding:12px;background:linear-gradient(135deg,rgba(232,197,71,0.2),rgba(232,197,71,0.05));border:1px solid rgba(232,197,71,0.4);border-radius:12px;color:#e8c547;font-size:14px;cursor:pointer;letter-spacing:.05em;}
     .daeun-unlock-btn:hover{background:rgba(232,197,71,0.25);}
+    /* Daeun Analysis Accordion */
+    .da-accordion{display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+    .da-item{border:1px solid rgba(255,255,255,0.08);border-radius:12px;background:rgba(255,255,255,0.02);overflow:hidden;transition:border-color .3s;}
+    .da-item.da-current{border-color:rgba(232,197,71,0.45);background:rgba(232,197,71,0.04);}
+    .da-header{display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;user-select:none;}
+    .da-header-text{flex:1;font-size:13px;color:var(--text-secondary);font-family:var(--font-serif);}
+    .da-header-badge{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(232,197,71,0.12);border:1px solid rgba(232,197,71,0.3);border-radius:4px;padding:2px 6px;flex-shrink:0;}
+    .da-header-lock{font-size:14px;flex-shrink:0;}
+    .da-chevron{font-size:11px;color:var(--text-muted);transition:transform .3s;flex-shrink:0;}
+    .da-item.da-open .da-chevron{transform:rotate(180deg);}
+    .da-body{display:none;padding:0 16px 16px;}
+    .da-item.da-open .da-body{display:block;}
+    .da-relation-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.08em;padding:3px 8px;border-radius:20px;margin-bottom:10px;}
+    .da-section{margin-bottom:12px;}
+    .da-section-title{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px;}
+    .da-section-body{font-size:13px;color:var(--text-secondary);line-height:1.7;}
+    .da-pillar-display{font-family:var(--font-serif);font-size:28px;color:var(--text-primary);line-height:1;margin-right:6px;}
     /* ── PREMIUM ── */
     .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.35);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);box-shadow:0 0 40px rgba(240,184,96,0.1),inset 0 1px 0 rgba(240,184,96,0.15);}
     .premium-header{margin-bottom:24px;}
@@ -1346,6 +1363,9 @@
   <!-- DAEUN TIMELINE -->
   <div id="daeun-simple-section" class="daeun-timeline-section reveal-section"></div>
 
+  <!-- DAEUN ANALYSIS ACCORDION -->
+  <div id="daeun-analysis-section" class="daeun-timeline-section reveal-section"></div>
+
 </section><!-- /results -->
 
 </main>
@@ -1593,9 +1613,9 @@ const I18N = {
 en: {
   app_tagline:'Your destiny, decoded.',
   hero_eyebrow:'THE MOMENT YOU WERE BORN',
-  hero_headline:'Born at a specific moment.<br>For a specific reason.',
-  hero_sub:'Saju is a 2,000-year-old system that reads the exact energetic blueprint of your birth — your nature, your timing, your direction.<br>Not who you could be. Who you already are.',
-  hero_cta:'Discover Your Chart →',
+  hero_headline:'The moment you were born,<br>the pattern was already <em>written</em>.',
+  hero_sub:'Saju is a 2,000-year-old system that decodes the exact energetic blueprint of your birth — your nature, your timing, your life\'s direction.<br>Not who you could be. <em>Who you already are.</em>',
+  hero_cta:'Read My Destiny →',
   step1_text:'Enter<br>Birth Date',
   step2_text:'Calculate<br>Chart',
   step3_text:'Reveal<br>Destiny',
@@ -1604,10 +1624,10 @@ en: {
   trust_time:'✓ 30 seconds',
   usp1_title:'Not 1 in 12. 1 in 518,400.',
   usp1_body:'Western horoscopes divide humanity into twelve signs. Saju uses your birth year, month, day, AND hour - making your chart a fingerprint, not a category.',
-  usp2_title:'1,400 Years of Wisdom',
-  usp2_body:'For 1,400 years, East Asian leaders have used this system to time major decisions - career moves, marriages, investments. The West is just catching up.',
+  usp2_title:'1,400 Years. Still Exact.',
+  usp2_body:'East Asian kings, generals, and dynasties used this system to time their highest-stakes decisions — careers, alliances, wars. The same framework. The same precision. Now in your language.',
   usp3_title:'Your Life Runs in Seasons',
-  usp3_body:'大運 (Daeun) reveals the elemental energy of each 10-year chapter of your life. Some decades are harvest. Some are storm. Know which one you\'re in now.',
+  usp3_body:'大運 (Daeun) maps the elemental energy of each 10-year chapter of your life. Some decades are harvest. Some are storm. Know exactly which one you\'re standing in — and what comes next.',
   t1_text:'"I\'ve done therapy, Human Design, MBTI, Co-Star. Nothing named what I\'ve been feeling the way this did. Finding out I\'m 丁火 - the Precise Flame - explained three years of patterns in one paragraph."',
   t1_author:'- Priya N., Austin TX · 丁火 Day Master',
   t2_text:'"I\'m 壬水. My chart said I attract partners who are drawn to my depth but can\'t actually reach it - so they leave frustrated. I\'ve dated that exact person four times. This isn\'t astrology. This is a mirror."',
@@ -1647,16 +1667,16 @@ en: {
   personality_title:'Personality Analysis',
   fortune_title:'Today\'s Fortune',
   modal_eyebrow:'✦ EARLY ACCESS ✦',
-  modal_title:'What your chart says about the next 10 years',
-  modal_sub:'Your free reading shows the map. This shows you where you actually are on it - and what\'s coming.',
+  modal_title:'Your chart has been tracking your next decade. Here\'s what it sees.',
+  modal_sub:'The free reading gave you the map. This shows exactly where you are on it — and what\'s already moving toward you.',
   trust_headline:'The math is 1,500 years old. The calculation is exact.',
   trust_b1:'✦ Solar terms calculated from Ipchun (立春 · Start of Spring), not Jan 1st - using the Julian Day Number formula that traditional practitioners actually use.',
   trust_b2:'✦ Built on classical Four Pillars methodology - 1,500 years of documented interpretation, not a pop-spirituality shortcut.',
   trust_b3:'✦ No account. No sign-up. Your birth data never leaves your device.',
-  trust_closing:'You don\'t have to believe in destiny. You just need to be curious about the pattern.',
-  modal_urgency:'⏳ Early access pricing - $4.99 ends soon',
+  trust_closing:'You don\'t have to believe in destiny. You just have to wonder why the pattern keeps repeating.',
+  modal_urgency:'⏳ Early access: $4.99 — price rises at full launch',
   modal_price:'$4.99',
-  modal_price_sub:'Less than one coffee. A reading that lasts a lifetime.',
+  modal_price_sub:'One reading. A lifetime of patterns — finally explained.',
   modal_waitlist_title:'Not ready yet? Be first to know - and get a discount.',
   modal_notify_btn:'Notify →',
   modal_note:'✓ No spam. No noise. Just your reading, ready.',
@@ -3114,7 +3134,7 @@ function renderResults(chart) {
         document.getElementById('sticky-cta-text').textContent =
           isKoS ? `✦ ${stemS}${stemS?'의':''} 전체 감명` : `✦ ${stemS ? stemS+' · ' : ''}Full Reading`;
         document.getElementById('sticky-cta-btn').textContent =
-          isKoS ? '₩6,900 · 열기 →' : '$4.99 · Unlock →';
+          isKoS ? '₩6,900 · 열기 →' : '$4.99 · See What\'s Coming →';
         bar.style.display = 'block';
       }
     }, 35000);
@@ -4100,17 +4120,17 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const LOCKED_COPY_EN = {
         inner:     { title: 'The Secret Self Your Closest Friends Don\'t See', preview: 'Your birth chart encodes a version of you that\'s been operating in the background your entire life — shaping your instincts, your patterns, your quiet obsessions.\nMost people never find out. You\'re about to.' },
         career:    { title: 'The Work You Were Cosmically Built For (And Why You\'re Probably Not Doing It)', preview: 'The ancient Chinese understood that every person is born with a specific energetic advantage — a kind of cosmic leverage.\nYours is encoded in your chart. Most people spend decades finding it by accident. You don\'t have to.' },
-        money:     { title: 'The Ancient Formula Behind Why You Feel Off', preview: 'Your birth chart is a ratio — five elemental forces in a balance unique to you. Too much of one, too little of another, and something always feels slightly wrong.\nThis section maps exactly what\'s out of alignment and why it keeps showing up.' },
+        money:     { title: 'Why Money Flows In — and Quietly Drains Out Again', preview: 'Your birth chart is a ratio — five elemental forces in a balance unique to you. Too much of one, too little of another, and something always feels slightly wrong.\nThis section maps exactly what\'s out of alignment and why it keeps showing up.' },
         love:      { title: 'Why You Keep Falling for the Same Person in Different Bodies', preview: 'Your chart reveals the exact relational wound that pulls you toward certain people — and why the chemistry feels electric but the ending always looks the same.\nThis isn\'t about who you should date. It\'s about what you\'re actually looking for.' },
         family:    { title: 'Why Some People Drain You and Others Feel Like Home', preview: 'Your chart holds a blueprint of the energies you\'re drawn to — and the ones that quietly cost you.\nOnce you understand the pattern, every relationship in your life starts to make a different kind of sense.' },
         relations: { title: 'The Part of You That\'s Sabotaging Everything', preview: 'There\'s a pattern written into your chart — one that shows up in your worst arguments, your repeated mistakes, your 3am spirals.\nIt has a name. It has a reason. And once you see it, you can\'t unsee it.' },
         direction: { title: 'The Version of You That\'s Waiting on the Other Side of This', preview: 'Growth doesn\'t look the same for everyone. Your chart shows the specific resistance you need to move through — not the generic advice, the actual thing.\nThere\'s a direction your life is trying to move toward. Here\'s what it looks like.' },
-        advice:    { title: 'Small Shifts That Actually Move the Energy in Your Life', preview: 'This isn\'t crystals and manifestation journals. Five-element activation is one of the oldest practical systems ever developed — specific changes to environment, habit, and timing that work with your chart, not against it.\nSome of the simplest ones will surprise you.' },
+        advice:    { title: 'The Specific Shifts That Move Energy in Your Exact Chart', preview: 'This isn\'t crystals and manifestation journals. Five-element activation is one of the oldest practical systems ever developed — specific changes to environment, habit, and timing that work with your chart, not against it.\nSome of the simplest ones will surprise you.' },
       };
       const lockCopy = LOCKED_COPY_EN[s.key];
       const displayTitle = !isKo && lockCopy ? lockCopy.title : title;
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
-      const ctaText  = isKo ? '심층 분석 보기' : 'Unlock Deep Analysis';
+      const ctaText  = isKo ? '심층 분석 보기' : 'Unlock My Reading';
       const ctaPrice = isKo ? '₩6,900' : '$4.99';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
@@ -4145,7 +4165,7 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
 
   const coreSections = sections.filter(s => CORE_SECTIONS.includes(s.key));
   const moreSections = sections.filter(s => !CORE_SECTIONS.includes(s.key));
-  const expandLabel = isKo ? '심층 분석 8가지 더 보기' : 'See 8 deep analyses';
+  const expandLabel = isKo ? '심층 분석 8가지 더 보기' : 'Unlock 8 More Layers of Your Chart';
 
   return `<div class="dm-accordion" style="--dm-accent-rgb:${rgb}">
     ${coreSections.map(renderSection).join('')}
@@ -4339,7 +4359,7 @@ function renderDaeun(chart) {
 function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
   var isKo=AppState.language==='ko';
-  var btn=isKo?'심층 분석 열기 →':'Unlock Deep Analysis →';
+  var btn=isKo?'심층 분석 열기 →':'Unlock My Full Reading →';
   sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
 }
 // ── 결제 설정 (Lemon Squeezy) ──────────────────────────────────────────
