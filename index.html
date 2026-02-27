@@ -3284,7 +3284,7 @@ function renderElementInterpretation(chart) {
 
 // ── ACCORDION CONTENT DATA ──
 const ACCORDION_CONTENT = {
-  '甲': {
+  '갑목': {
     personality: {
       titleKo: `광야를 혼자 뚫고 가는 거목, 꺾이지 않는 개척자의 숙명`,
       titleEn: `The Lone Oak That Breaks Through Wilderness — A Pioneer's Fate`,
@@ -3440,7 +3440,7 @@ A great tree's legacy isn't its height — it's its shade. When people find shel
 Core life challenge: hold the direction, build the method together. Today, find one person near you who needs a hand. Your one word, your one action, can become someone else's turning point.`,
     },
   },
-  '乙': {
+  '을목': {
     personality: {
       titleKo: `콘크리트 벽을 타고 오르는 넝쿨, 부드러움이 결국 이긴다`,
       titleEn: `Ivy Climbing Concrete — Softness Wins in the End`,
@@ -3596,7 +3596,7 @@ A vine climbs on something else — but it's the vine that produces the flower. 
 Core life challenge: hold care and self-expression simultaneously. Do one thing for yourself today. Something small is fine. Sitting alone in a favorite café, opening a book you've wanted to read — that's where it starts.`,
     },
   },
-  '丙': {
+  '병화': {
     personality: {
       titleKo: `브레이크 없이 질주하는 태양, 화려한 언변의 마술사`,
       titleEn: `The Sun With No Brakes — Dazzling, Magnetic, and Burning Everything in Sight`,
@@ -3752,7 +3752,7 @@ Even the sun hides behind clouds. Burning at maximum brightness every day leads 
 Core life challenge: practice finishing what you start, and build the habit of refueling before burning. Give yourself one day with nothing on the agenda. That's also very much Yang Fire Fire self-care.`,
     },
   },
-  '丁': {
+  '정화': {
     personality: {
       titleKo: `어둠 속에서 가장 먼저 찾는 촛불, 흔들려도 꺼지지 않는다`,
       titleEn: `The Candle You Reach for in the Dark — Flickering but Never Out`,
@@ -3908,7 +3908,7 @@ Flickering isn't weakness. A candle flickers and keeps burning. The movement is 
 Core life challenge: don't hold back your light. Tonight, carve out a quiet moment and light something small for yourself. A candle, a song you love, a warm cup of tea. That's how Yin Fire Fire takes care of itself.`,
     },
   },
-  '戊': {
+  '무토': {
     personality: {
       titleKo: `폭풍에도 흔들리지 않는 산, 모든 것을 품는 대지의 왕`,
       titleEn: `The Mountain That Doesn't Move in Storms — King of Earth That Holds Everything`,
@@ -4064,7 +4064,7 @@ Now, one question: "Where is my summit?" Not the mountain others climb — but t
 Core life challenge: stability for others AND growth for yourself, simultaneously. Set one goal this year that is entirely for you — not for anyone else. That's when Yang Earth Earth's flower finally blooms.`,
     },
   },
-  '己': {
+  '기토': {
     personality: {
       titleKo: `만물을 키우는 비옥한 밭, 조용한 실력자의 정체`,
       titleEn: `The Fertile Field That Grows Everything — The Quiet Expert Revealed`,
@@ -4220,7 +4220,7 @@ Now one more thing: tend yourself. A field needs rain and sunlight too. Resting 
 Core life challenge: apply the same care you give others to yourself. Do one thing for yourself today. Eat something you love, start that postponed hobby. When Yin Earth Earth is healthy, the whole world grows better.`,
     },
   },
-  '庚': {
+  '경금': {
     personality: {
       titleKo: `한번 단련된 강철은 부러지지 않는다, 원칙과 의리의 화신`,
       titleEn: `Once-Forged Steel Doesn't Break — Embodiment of Principle and Loyalty`,
@@ -4376,7 +4376,7 @@ The strongest warriors make enemies retreat without drawing the sword. When your
 Core life challenge: maintain the strength, add the warmth. Find one person near you today who needs your strength. Protecting them is where it begins.`,
     },
   },
-  '辛': {
+  '신금': {
     personality: {
       titleKo: `세상에서 가장 작고 가장 빛나는 보석, 섬세함이 최고의 무기`,
       titleEn: `Smallest and Brightest Jewel in the World — Precision Is Your Ultimate Weapon`,
@@ -4532,7 +4532,7 @@ Wanting recognition is completely natural. But internal recognition needs to com
 Core life challenge: hold the standards, AND give yourself recognition first. Take out something you've made today and look at it again. Then say: "This is actually pretty good." That's where it starts.`,
     },
   },
-  '壬': {
+  '임수': {
     personality: {
       titleKo: `모든 것을 담는 깊은 바다, 지식과 자유의 화신`,
       titleEn: `The Deep Ocean That Contains Everything — Embodiment of Knowledge and Freedom`,
@@ -4688,7 +4688,7 @@ The ocean is beautiful when still, but its real power shows when it moves. Have 
 Core life challenge: build the habit of connecting thought to action. Put one thing out into the world today. Writing, words, action — anything. The ocean is strongest when it moves.`,
     },
   },
-  '癸': {
+  '계수': {
     personality: {
       titleKo: `어둠 속에서도 솟아나는 맑은 샘물, 감성과 직관의 근원`,
       titleEn: `The Pure Spring That Rises Even in Darkness — Source of Intuition and Feeling`,
@@ -4846,7 +4846,7 @@ Core life challenge: find the courage to express your inner world outward. Today
   },
 };
 
-function renderAccordion(stem, isKo, color) {
+function renderAccordion(stem, isKo, color, personalityOverride) {
   const sections = [
     {key:'personality', icon:'👤'},
     {key:'strengths',   icon:'🔥'},
@@ -4864,7 +4864,7 @@ function renderAccordion(stem, isKo, color) {
   const rgb = hexToRgb(color) || '240,184,96';
   const isPremium = AppState.isPremium === true;
   return `<div class="dm-accordion" style="--dm-accent-rgb:${rgb}">${sections.map((s,i) => {
-    const sec = data[s.key] || {};
+    const sec = (s.key === 'personality' && personalityOverride) ? Object.assign({}, data[s.key] || {}, personalityOverride) : (data[s.key] || {});
     const title = isKo ? (sec.titleKo || s.key) : (sec.titleEn || s.key);
     const body  = isKo ? (sec.bodyKo  || '') : (sec.bodyEn  || '');
     const id = `acc-${stem}-${s.key}`;
@@ -4959,16 +4959,15 @@ function renderDayMaster(chart) {
     const traits = isKo ? dmContent.traits_ko : dmContent.traits_en;
     const tagline = isKo ? dmContent.tagline_ko : dmContent.tagline_en;
 
-    // Move traits + tagline into personality section as intro
+    // Build personality intro without mutating ACCORDION_CONTENT
     const personalityData = (ACCORDION_CONTENT[dm.stem] || {}).personality || {};
-    const personalityBodyKo = `<p class="dm-personality-intro">${traits}</p>${personalityData.bodyKo || ''}${tagline ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${tagline}</p>` : ''}`;
-    const personalityBodyEn = `<p class="dm-personality-intro">${traits}</p>${personalityData.bodyEn || ''}${tagline ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${tagline}</p>` : ''}`;
-    // Inject merged personality body temporarily
-    if (ACCORDION_CONTENT[dm.stem]) {
-      ACCORDION_CONTENT[dm.stem].personality = Object.assign({}, personalityData, {bodyKo: personalityBodyKo, bodyEn: personalityBodyEn});
-    }
+    const personalityBodyKo = `<p class="dm-personality-intro">${isKo ? dmContent.traits_ko : ''}</p>${personalityData.bodyKo || ''}${dmContent.tagline_ko ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_ko}</p>` : ''}`;
+    const personalityBodyEn = `<p class="dm-personality-intro">${!isKo ? dmContent.traits_en : ''}</p>${personalityData.bodyEn || ''}${dmContent.tagline_en ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_en}</p>` : ''}`;
+    // Pass overrides to renderAccordion without touching global ACCORDION_CONTENT
+    const personalityOverride = {bodyKo: personalityBodyKo, bodyEn: personalityBodyEn,
+      titleKo: personalityData.titleKo, titleEn: personalityData.titleEn};
 
-    bodyEl.innerHTML = renderAccordion(dm.stem, isKo, color);
+    bodyEl.innerHTML = renderAccordion(dm.stem, isKo, color, personalityOverride);
   }
 
   // Clear old lists
