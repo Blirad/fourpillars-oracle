@@ -729,6 +729,7 @@
     /* ── PILLAR EXTRAS ── */
     .pillar-animal{font-size:10px;color:var(--text-muted);margin-top:2px;letter-spacing:.04em;}
     .pillar-tengod{font-size:10px;color:var(--text-muted);margin-top:1px;}
+    .pillar-tengod-desc{font-size:9px;color:rgba(255,255,255,0.35);margin-top:2px;line-height:1.3;text-align:center;}
 
     /* ── FORTUNE ── */
 
@@ -761,7 +762,9 @@
     .dm-ss-list li{font-size:13px;color:var(--text-secondary);padding:4px 0;line-height:1.6;padding-left:12px;position:relative;}
     .dm-ss-list li::before{content:'·';position:absolute;left:0;color:var(--gold);}
     .dm-shadows{}
-    .dm-char-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+    .dm-char-row{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
+    .dm-visual-wrap{display:flex;flex-direction:column;align-items:center;min-width:80px;position:relative;}
+    .dm-visual-emoji{font-size:3rem;margin-top:4px;display:block;text-align:center;filter:drop-shadow(0 0 12px currentColor);}
     .dm-char{font-size:4rem;line-height:1;font-family:var(--font-serif);}
     .dm-char-info{display:flex;flex-direction:column;gap:4px;}
     .dm-element-name{font-size:12px;letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--text-muted);}
@@ -879,6 +882,23 @@
     .peak-label{color:var(--wood);}.low-label{color:var(--text-muted);}
     .peak-period,.low-period{font-size:14px;font-weight:700;color:var(--text-primary);margin-bottom:4px;}
     .peak-desc,.low-desc{font-size:12px;color:var(--text-secondary);line-height:1.5;}
+    /* ── DAEUN TIMELINE ── */
+    .daeun-timeline-section{margin:24px 0;}
+    .daeun-tl-wrap{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:var(--radius-lg);padding:20px;position:relative;overflow:hidden;}
+    .daeun-tl-header{margin-bottom:16px;}
+    .daeun-tl-header h3{font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:4px;}
+    .daeun-tl-sub{font-size:12px;color:var(--text-muted);}
+    .daeun-tl-list{display:flex;flex-direction:column;gap:8px;}
+    .daeun-tl-item{border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:12px 16px;background:rgba(255,255,255,0.02);position:relative;transition:border-color .3s;}
+    .daeun-tl-current{border-color:rgba(232,197,71,0.5)!important;background:rgba(232,197,71,0.05);}
+    .daeun-tl-now{font-size:9px;font-weight:700;letter-spacing:.1em;color:var(--gold);text-transform:uppercase;margin-bottom:4px;}
+    .daeun-tl-period{font-size:12px;color:var(--text-secondary);margin-bottom:4px;}
+    .daeun-tl-age{color:var(--text-muted);font-size:11px;}
+    .daeun-tl-pillar{font-family:var(--font-serif);font-size:22px;color:var(--text-primary);font-weight:600;margin-bottom:2px;}
+    .daeun-tl-desc{font-size:12px;color:var(--text-muted);font-style:italic;}
+    .daeun-lock-overlay{text-align:center;padding:20px;background:linear-gradient(to bottom,transparent,rgba(13,11,30,0.95));margin-top:8px;border-radius:12px;}
+    .daeun-lock-icon{font-size:28px;margin-bottom:8px;}
+    .daeun-lock-msg{font-size:13px;color:var(--text-secondary);}
     /* ── PREMIUM ── */
     .premium-unlock-section{margin:32px 0;padding:28px 20px;text-align:center;border:1px solid rgba(240,184,96,0.35);background:linear-gradient(135deg,rgba(240,184,96,0.06) 0%,rgba(255,126,179,0.04) 100%);border-radius:var(--radius-lg);box-shadow:0 0 40px rgba(240,184,96,0.1),inset 0 1px 0 rgba(240,184,96,0.15);}
     .premium-header{margin-bottom:24px;}
@@ -948,6 +968,9 @@
   .dm-acc-title{flex:1;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.3;}
   .dm-acc-chevron{font-size:12px;color:rgba(255,255,255,0.4);transition:transform .3s;}
   .dm-acc-item.open .dm-acc-chevron{transform:rotate(180deg);}
+  .dm-acc-locked{opacity:0.75;}
+  .dm-acc-locked:hover{border-color:rgba(var(--dm-accent-rgb,240,184,96),0.5);box-shadow:0 0 16px rgba(var(--dm-accent-rgb,240,184,96),0.15);opacity:1;}
+  .dm-acc-lock{margin-left:auto;font-size:14px;}
   .dm-acc-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(0.4,0,0.2,1);}
   .dm-acc-body-inner{padding:0 16px 16px;font-size:14px;color:var(--text-secondary,rgba(255,255,255,0.6));line-height:1.8;}
   .dm-acc-item.open .dm-acc-body{max-height:800px;}
@@ -1137,7 +1160,7 @@
 
   <!-- FIVE ELEMENTS -->
   <div class="elements-section reveal-section">
-    <div class="section-divider" id="lbl-elements">Five Elements Analysis</div>
+    <div class="section-divider" id="lbl-elements">My Elemental DNA</div>
     <div class="elements-grid">
       <div class="element-bars" id="element-bars"></div>
       <svg id="elements-svg" viewBox="0 0 220 220"></svg>
@@ -1152,13 +1175,18 @@
     <div class="dm-bg-char" id="dm-bg-char"></div>
     <div class="dm-eyebrow" id="dm-eyebrow">YOUR DAY PILLAR · 일주</div>
     <div class="dm-char-row">
-      <div class="dm-char" id="dm-char"></div>
+      <div class="dm-visual-wrap">
+        <div class="dm-bg-char" id="dm-bg-char-inner"></div>
+        <div class="dm-char" id="dm-char"></div>
+        <div class="dm-visual-emoji" id="dm-visual-emoji"></div>
+      </div>
       <div class="dm-char-info">
+        <div class="dm-eyebrow-inner" id="dm-eyebrow-inner"></div>
         <div class="dm-element-name" id="dm-element-name"></div>
         <div class="dm-title" id="dm-title-text"></div>
+        <div class="dm-oneliner" id="dm-oneliner"></div>
       </div>
     </div>
-    <div class="dm-oneliner" id="dm-oneliner"></div>
     <div class="dm-body" id="dm-body"></div>
     <div class="dm-strengths-shadows">
       <div class="dm-ss-card">
@@ -1177,6 +1205,9 @@
   <div class="premium-unlock-section reveal-section" id="premium-section">
     <!-- Filled by renderAllPaid() -->
   </div>
+
+  <!-- DAEUN TIMELINE -->
+  <div id="daeun-simple-section" class="daeun-timeline-section reveal-section"></div>
 
 </section><!-- /results -->
 
@@ -1257,6 +1288,44 @@ const TENGOD_NATURE_EN = {bigyeon:'Rob Wealth - Independent, self-made, strong p
 const DM_FAVORABLE = {Wood:'Water',Fire:'Wood',Earth:'Fire',Metal:'Earth',Water:'Metal'};
 const DAEUN_DESC_KO = '대운(大運)은 10년 단위로 바뀌는 인생의 큰 흐름입니다. 어느 시기에 바람이 불고, 어느 시기에 잠잠한지를 보여줍니다.';
 const DAEUN_DESC_EN = 'Da-Un (大運) is the 10-year cycle that shapes the major currents of your life - when the winds favor you, and when stillness is wiser than movement.';
+const TENGOD_DESC_KO = {
+  '비견':'같은 기운의 동료·경쟁심',
+  '겁재':'강한 승부욕·추진력',
+  '식신':'재능·표현력·먹복',
+  '상관':'창의력·언변·반항기',
+  '정재':'안정적 재물·성실함',
+  '편재':'사업 감각·큰 돈',
+  '정관':'명예·규율·책임감',
+  '편관':'강한 실행력·카리스마',
+  '정인':'학문·직관·모성애',
+  '편인':'독창성·예술감·고독',
+  '없음':''
+};
+const TENGOD_DESC_EN = {
+  'Rob Wealth':'Competitive drive & ambition',
+  'Friend':'Peer energy & rivalry',
+  'Eating God':'Talent, expression & abundance',
+  'Hurting Officer':'Creativity, wit & rebellion',
+  'Direct Wealth':'Steady income & diligence',
+  'Indirect Wealth':'Business sense & big money',
+  'Direct Officer':'Honor, discipline & duty',
+  '7 Killings':'Power, charisma & action',
+  'Direct Resource':'Wisdom, intuition & care',
+  'Indirect Resource':'Originality, art & solitude',
+  '':''
+};
+const DM_VISUAL = {
+  '甲': { emoji: '🌲', color: '#5de8a0' },
+  '乙': { emoji: '🌿', color: '#7ee8a0' },
+  '丙': { emoji: '☀️', color: '#ff9a3c' },
+  '丁': { emoji: '🕯️', color: '#ff7eb3' },
+  '戊': { emoji: '⛰️', color: '#f0b860' },
+  '己': { emoji: '🌾', color: '#d4a843' },
+  '庚': { emoji: '⚔️', color: '#c8d8f0' },
+  '辛': { emoji: '💎', color: '#e0eeff' },
+  '壬': { emoji: '🌊', color: '#60b4fa' },
+  '癸': { emoji: '💧', color: '#80c8ff' },
+};
 
 // ── 60 JIAZI PILLAR IDENTITIES ──
 const PILLAR_IDENTITY = {
@@ -1415,7 +1484,7 @@ en: {
   lbl_notime:'I don\'t know my birth time',
   btn_calculate:'Reveal My Chart →',
   lbl_pillars:'FOUR PILLARS · Saju Paljja',
-  lbl_elements:'Five Elements Analysis',
+  lbl_elements:'My Elemental DNA',
   lbl_personality:'Personality Analysis',
   lbl_fortune:'Today\'s Fortune',
   lbl_daeun:'10-Year Luck Cycles',
@@ -1490,7 +1559,7 @@ en: {
   back_btn:'← Back',
   footer_text:'Momentor · Privacy · Terms',
   word_you:'you',
-  id_ohaeng:'Element',id_animal:'Day Animal',id_nature:'Born Nature',
+  id_ohaeng:'My Nature',id_animal:'My Spirit Animal',id_nature:'My Born Trait',
   topic_love:'Love',topic_wealth:'Wealth',topic_career:'Career',topic_health:'Health',
   score_strong:'Strong Day',score_neutral:'Balanced Day',score_quiet:'Quiet Day',
   tengod_bigyeon:'Rob Wealth',tengod_geopjae:'Competitor',tengod_sikshin:'Eating God',
@@ -1528,7 +1597,7 @@ ko: {
   lbl_notime:'출생 시간을 모릅니다',
   btn_calculate:'내 사주 보기',
   lbl_pillars:'사주 원국 · FOUR PILLARS',
-  lbl_elements:'오행 분석',
+  lbl_elements:'나의 오행 DNA',
   lbl_personality:'성격 분석',
   lbl_fortune:'오늘의 운세',
   lbl_daeun:'대운 흐름',
@@ -1597,7 +1666,7 @@ ko: {
   back_btn:'← 다시 입력',
   footer_text:'Momentor · 개인정보 · 이용약관',
   word_you:'당신',
-  id_ohaeng:'오행',id_animal:'일주 동물',id_nature:'타고난 성향',
+  id_ohaeng:'나의 성질',id_animal:'나의 수호 동물',id_nature:'타고난 기질',
   topic_love:'연애운',topic_wealth:'재물운',topic_career:'직업운',topic_health:'건강운',
   score_strong:'강한 날',score_neutral:'균형 잡힌 날',score_quiet:'조용한 날',
   tengod_bigyeon:'비견',tengod_geopjae:'겁재',tengod_sikshin:'식신',
@@ -3006,11 +3075,14 @@ function renderPillarGrid(chart) {
     const stemRgb = hexToRgb(stemColor);
     const branchRgb = hexToRgb(branchColor);
 
+    const stemTgDesc = isKo ? (TENGOD_DESC_KO[stemTgLabel] || '') : (TENGOD_DESC_EN[stemTgLabel] || '');
+    const branchTgDesc = isKo ? (TENGOD_DESC_KO[branchTgLabel] || '') : (TENGOD_DESC_EN[branchTgLabel] || '');
     return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${stemEl}">
       <div class="pillar-glow" style="background:radial-gradient(circle at center,rgba(${stemRgb},0.12) 0%,transparent 70%)"></div>
       ${isDay ? '<div class="you-badge">YOU</div>' : ''}
       <div class="pillar-label">${labels[i]}</div>
       <div class="pillar-tengod-label">${stemTgLabel}</div>
+      ${stemTgDesc ? `<div class="pillar-tengod-desc">${stemTgDesc}</div>` : ''}
       <div class="pillar-stem-badge">
         <div class="stem-polarity-circle" style="background:rgba(${stemRgb},0.22);box-shadow:0 0 12px rgba(${stemRgb},0.28)">
           ${!isUnknown ? `<span class="polarity-sign">${stemSign}</span>` : ''}
@@ -3026,6 +3098,7 @@ function renderPillarGrid(chart) {
         <div class="branch-label">${branchLabelStr}</div>
       </div>
       <div class="pillar-branch-tengod">${branchTgLabel}</div>
+      ${branchTgDesc ? `<div class="pillar-tengod-desc">${branchTgDesc}</div>` : ''}
       ${stage12 ? `<div class="pillar-12-unsung">${stage12}</div>` : ''}
     </div>`;
   }).join('');
@@ -4776,18 +4849,30 @@ function renderAccordion(stem, isKo, color) {
   ];
   const data = ACCORDION_CONTENT[stem] || {};
   const rgb = hexToRgb(color) || '240,184,96';
+  const isPremium = AppState.isPremium === true;
   return `<div class="dm-accordion" style="--dm-accent-rgb:${rgb}">${sections.map((s,i) => {
     const sec = data[s.key] || {};
     const title = isKo ? (sec.titleKo || s.key) : (sec.titleEn || s.key);
     const body  = isKo ? (sec.bodyKo  || '') : (sec.bodyEn  || '');
     const id = `acc-${stem}-${s.key}`;
-    return `<div class="dm-acc-item" id="${id}">
+    const isFirst = i === 0;
+    const isLocked = !isFirst && !isPremium;
+    if (isLocked) {
+      return `<div class="dm-acc-item dm-acc-locked" id="${id}">
+        <div class="dm-acc-header" onclick="openPayModal()" style="cursor:pointer;">
+          <span class="dm-acc-icon">${s.icon}</span>
+          <span class="dm-acc-title">${title}</span>
+          <span class="dm-acc-lock">🔒</span>
+        </div>
+      </div>`;
+    }
+    return `<div class="dm-acc-item${isFirst?' open':''}" id="${id}">
       <div class="dm-acc-header" onclick="toggleAccordion('${id}')">
         <span class="dm-acc-icon">${s.icon}</span>
         <span class="dm-acc-title">${title}</span>
         <span class="dm-acc-chevron">▼</span>
       </div>
-      <div class="dm-acc-body"><div class="dm-acc-body-inner">${body}</div></div>
+      <div class="dm-acc-body"${isFirst?' style="display:block"':''}}><div class="dm-acc-body-inner">${body}</div></div>
     </div>`;
   }).join('')}</div>`;
 }
@@ -4826,12 +4911,15 @@ function renderDayMaster(chart) {
   if (kwEl) kwEl.style.display = 'none';
 
   // Eyebrow: day pillar
-  el('dm-eyebrow', isKo ? `일주 분석 · ${dm.stem}${dayBranch}` : `YOUR DAY PILLAR · ${dm.stem}${dayBranch}`);
+  el('dm-eyebrow', isKo ? `나는 이런 사람이다 · ${dm.stem}${dayBranch}` : `WHO I AM, AT THE CORE · ${dm.stem}${dayBranch}`);
 
   el('dm-bg-char', dm.stem);
   el('dm-char', dm.stem);
   const dmCharEl = document.getElementById('dm-char');
   if (dmCharEl) { dmCharEl.style.color = color; dmCharEl.style.textShadow = `0 0 30px rgba(${hexToRgb(color)},0.6)`; }
+  const visual = DM_VISUAL[dm.stem] || { emoji: '✨', color: color };
+  const emojiEl = document.getElementById('dm-visual-emoji');
+  if (emojiEl) { emojiEl.textContent = visual.emoji; emojiEl.style.color = visual.color || color; }
 
   // Element label shows full pillar (stem + branch)
   const brIdx = BRANCHES.indexOf(dayBranch);
@@ -4886,31 +4974,59 @@ function renderDaeun(chart) {
   var sec=document.getElementById('daeun-simple-section');if(!sec)return;
   var isKo=AppState.language==='ko';
   var daeun=chart.daeunData.daeun;
-  var desc=isKo?DAEUN_DESC_KO:DAEUN_DESC_EN;
-  var cur=daeun.find(function(d){return d.isCurrent;})||daeun[0];
-  var curL=isKo?'현재 대운':'Current Cycle';
-  var curP=cur?(cur.stem+cur.branch):'-';
-  var curA=cur?(cur.ageStart+'-'+cur.ageEnd+(isKo?'세':' yrs')):'';
+  var isPremium=AppState.isPremium===true;
+  var birthYear=chart.year;
   var dmEl=chart.dayMaster.element;
   var favEl=DM_FAVORABLE[dmEl]||dmEl;
   var ctlEl=Object.keys(CONTROLS).find(function(k){return CONTROLS[k]===dmEl;})||'';
-  var peak=null,low=null,pkSc=-1;
-  daeun.forEach(function(d){
-    var s=(d.element===favEl?2:0)+(d.branchElement===favEl?1:0);
-    if(s>pkSc){pkSc=s;peak=d;}
-    if(!low&&(d.element===ctlEl||d.branchElement===ctlEl)){low=d;}
+  var sameEl=dmEl;
+
+  function getDaeunDesc(d){
+    var el=d.element||d.branchElement;
+    if(el===favEl) return isKo?'기회와 성장의 시기':'A season of opportunity & growth';
+    if(el===sameEl) return isKo?'자신을 돌아보는 시기':'A time for inner reflection';
+    if(el===ctlEl)  return isKo?'단단해지는 시기':'A time to grow stronger';
+    return isKo?'변화와 흐름의 시기':'A season of change & flow';
+  }
+
+  var FREE_COUNT=3;
+  var title=isKo?'대운 타임라인':'10-Year Luck Cycle Timeline';
+  var subtitle=isKo?'당신의 인생은 10년 단위로 흐릅니다':'Your life flows in 10-year chapters';
+  var unlockBtn=isKo?'전체 대운 보기 →':'See Full Timeline →';
+
+  var items=daeun.map(function(d,i){
+    var startYr=birthYear+d.ageStart;
+    var endYr=birthYear+d.ageEnd;
+    var ageStr=isKo?(d.ageStart+'~'+d.ageEnd+'세'):(d.ageStart+'~'+d.ageEnd+' yrs');
+    var period=startYr+'~'+endYr+(isKo?'년':'');
+    var pillar=(d.stem||'')+(d.branch||'');
+    var desc=getDaeunDesc(d);
+    var isCurrent=d.isCurrent;
+    var isLocked=!isPremium&&i>=FREE_COUNT;
+    var blurStyle=isLocked?'filter:blur(4px);pointer-events:none;user-select:none;':'';
+    var glowStyle=isCurrent?'border-color:rgba(232,197,71,0.6);box-shadow:0 0 18px rgba(232,197,71,0.2);':'';
+    return '<div class="daeun-tl-item'+(isCurrent?' daeun-tl-current':'')+'" style="'+glowStyle+blurStyle+'">'
+      +(isCurrent?'<div class="daeun-tl-now">'+(isKo?'현재':'NOW')+'</div>':'')
+      +'<div class="daeun-tl-period">'+period+' <span class="daeun-tl-age">('+ageStr+')</span></div>'
+      +'<div class="daeun-tl-pillar">'+pillar+'</div>'
+      +'<div class="daeun-tl-desc">'+desc+'</div>'
+      +'</div>';
   });
-  if(!low&&daeun.length>1)low=daeun[daeun.length-1];
-  var yr=function(d,e){return chart.year+(e?d.ageEnd:d.ageStart);};
-  var pkPer=peak?(yr(peak,0)+'-'+yr(peak,1)):'-';
-  var pkDKo=peak?(ELEMENT_KR[peak.element]+' 운이 강해지는 시기, 새로운 기회와 성장의 바람이 붑니다.'):'';
-  var pkDEn=peak?(peak.element+' energy rises - winds of opportunity and growth blow your way.'):'';
-  var lwPer=low?(yr(low,0)+'-'+yr(low,1)):'-';
-  var lwDKo=low?(ELEMENT_KR[low.element]+' 기운이 강해지는 조심스러운 시기. 내면을 다지고 쉬어가는 것이 현명합니다.'):'';
-  var lwDEn=low?(low.element+' energy dominates - a season to build inner strength and conserve energy.'):'';
-  var pkL=isKo?'인생 전성기':'Peak Years';
-  var lwL=isKo?'힘든 시기':'Challenging Cycle';
-  sec.innerHTML='<div class="daeun-simple-card"><div class="daeun-header"><h3>'+(isKo?'대운 흐름':'10-Year Luck Cycles')+'</h3></div><p class="daeun-desc">'+desc+'</p><div class="daeun-current-block"><div class="daeun-current-label">'+curL+'</div><div class="daeun-current-pillar">'+curP+'</div><div class="daeun-current-age">'+curA+'</div></div><div class="daeun-highlights"><div class="daeun-peak"><div class="peak-icon">✨</div><div class="peak-label">'+pkL+'</div><div class="peak-period">'+pkPer+'</div><div class="peak-desc">'+(isKo?pkDKo:pkDEn)+'</div></div><div class="daeun-low"><div class="low-icon">🌊</div><div class="low-label">'+lwL+'</div><div class="low-period">'+lwPer+'</div><div class="low-desc">'+(isKo?lwDKo:lwDEn)+'</div></div></div></div>';
+
+  var lockOverlay='';
+  if(!isPremium&&daeun.length>FREE_COUNT){
+    lockOverlay='<div class="daeun-lock-overlay">'
+      +'<div class="daeun-lock-icon">🔒</div>'
+      +'<div class="daeun-lock-msg">'+(isKo?'나머지 대운은 전체 감명에서 확인하세요':'Unlock full timeline with Full Reading')+'</div>'
+      +'<button class="premium-unlock-btn" style="margin-top:12px;padding:10px 20px;font-size:14px;" onclick="openPayModal()">'+unlockBtn+'</button>'
+      +'</div>';
+  }
+
+  sec.innerHTML='<div class="daeun-tl-wrap">'
+    +'<div class="daeun-tl-header"><h3>'+title+'</h3><p class="daeun-tl-sub">'+subtitle+'</p></div>'
+    +'<div class="daeun-tl-list">'+items.join('')+'</div>'
+    +lockOverlay
+    +'</div>';
 }
 
 
