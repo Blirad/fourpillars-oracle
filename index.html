@@ -1363,12 +1363,12 @@
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()" title="Close">✕</button>
     <div class="modal-eyebrow" id="modal-eyebrow">✦ EARLY ACCESS ✦</div>
-    <div class="modal-title" id="modal-title">Your Full Reading Is Ready</div>
+    <div class="modal-title" id="modal-title">Unlock Deep Analysis</div>
     <div class="modal-sub" id="modal-sub">Over 2,000 years of Eastern wisdom, mapped to the exact moment you were born.<br>What's locked isn't filler — it's the part most people spend their whole lives trying to figure out.</div>
         <p class="modal-urgency" id="modal-urgency" style="font-size:12px;color:rgba(232,197,71,0.8);letter-spacing:.05em;margin-top:4px;margin-bottom:16px;"></p>
     <div class="modal-price-tag" id="modal-price">$4.99</div>
     <div class="modal-price-sub" id="modal-price-sub">Less than one coffee. A reading that lasts a lifetime.</div>
-    <button class="btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="handlePayment()" id="modal-pay-btn">Unlock Full Reading →</button>
+    <button class="btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="openPayModal()" id="modal-pay-btn">Unlock Deep Analysis →</button>
     <div class="modal-divider"></div>
     <div class="modal-waitlist-title" id="modal-waitlist-title">Not ready yet? Be first to know - and get a discount.</div>
     <div class="modal-input-row">
@@ -1632,7 +1632,6 @@ en: {
   lbl_daeun:'10-Year Luck Cycles',
   lbl_paid:'Deep Analysis',
   badge_free:'FREE',
-  badge_paid:'FULL READING',
   dm_eyebrow:'YOUR DAY MASTER · Ilgan',
   lbl_strengths:'✦ STRENGTHS',
   lbl_shadows:'↯ SHADOW TRAITS',
@@ -1647,21 +1646,6 @@ en: {
   daeun_current:'CURRENT',
   personality_title:'Personality Analysis',
   fortune_title:'Today\'s Fortune',
-  paid1_hook:'So, [NAME] - let\'s look at the story your chart is trying to tell.',
-  paid1_sub:'Your four pillars contain a pattern underneath the pattern. Most people never see it.',
-  paid1_btn:'Full Life Path Reading · $4.99',
-  paid2_hook:'[NAME], your relationship with money is not what most people think it is.',
-  paid2_sub:'Your Wealth Star sits in an unusual position. The way your financial energy activates in your current decade...',
-  paid2_btn:'Full Wealth & Career Analysis · $4.99',
-  paid3_hook:'Love is where your Day Master gets complicated.',
-  paid3_sub:'Your Relationship Star tells a specific story. The kind of partner who actually reaches you is not what most people would predict.',
-  paid3_btn:'Full Love & Relationship Analysis · $4.99',
-  paid4_hook:'The pillars you were born into shaped you before you had words for it.',
-  paid4_sub:'Your year and month pillars carry the energy of your family of origin. Your elemental balance tells a story about where your body holds stress.',
-  paid4_btn:'Full Family & Health Analysis · $4.99',
-  paid5_hook:'This is the feature that has no equivalent in Western astrology.',
-  paid5_sub:'Your life runs in 10-year chapters. The next decade begins in a few years. What it holds for you is something almost no one can see coming.',
-  paid5_btn:'Unlock My Decade Reading · $4.99',
   modal_eyebrow:'✦ EARLY ACCESS ✦',
   modal_title:'What your chart says about the next 10 years',
   modal_sub:'Your free reading shows the map. This shows you where you actually are on it - and what\'s coming.',
@@ -1671,10 +1655,8 @@ en: {
   trust_b3:'✦ No account. No sign-up. Your birth data never leaves your device.',
   trust_closing:'You don\'t have to believe in destiny. You just need to be curious about the pattern.',
   modal_urgency:'⏳ Early access pricing - $4.99 ends soon',
-  modal_features:['Full Life Path narrative','Wealth & Career blueprint','Love & Relationship deep-dive','Family & Health analysis','10-Year Luck Cycle - your personal seasons, decoded','5-year annual fortune forecast'],
   modal_price:'$4.99',
   modal_price_sub:'Less than one coffee. A reading that lasts a lifetime.',
-  modal_pay_btn:'Unlock Full Reading →',
   modal_waitlist_title:'Not ready yet? Be first to know - and get a discount.',
   modal_notify_btn:'Notify →',
   modal_note:'✓ No spam. No noise. Just your reading, ready.',
@@ -1749,7 +1731,6 @@ ko: {
   lbl_daeun:'대운 흐름',
   lbl_paid:'심층 분석',
   badge_free:'무료',
-  badge_paid:'전체 감명',
   dm_eyebrow:'일간 · DAY MASTER',
   lbl_strengths:'✦ 강점',
   lbl_shadows:'↯ 그림자',
@@ -1764,28 +1745,11 @@ ko: {
   daeun_current:'현재',
   personality_title:'성격 분석',
   fortune_title:'오늘의 운세',
-  paid1_hook:'자, 이제 [NAME]님의 인생 전반 흐름을 살펴볼까요?',
-  paid1_sub:'모든 사주에는 패턴 아래의 패턴이 있습니다. 대부분의 사람들은 결코 보지 못합니다.',
-  paid1_btn:'인생 전반 전체 분석 보기 · ₩6,900',
-  paid2_hook:'자, 이제 [NAME]님의 재물운과 성공운을 살펴볼까요?',
-  paid2_sub:'당신 차트 안의 재성(財星)은 특이한 위치에 있습니다. 현재 대운에서 재물 에너지가 활성화되는 방식은...',
-  paid2_btn:'재물운 & 성공운 전체 분석 보기 · ₩6,900',
-  paid3_hook:'자, 이제 [NAME]님의 연애운과 결혼운을 살펴볼까요?',
-  paid3_sub:'당신 차트의 관성(官星)이 특별한 이야기를 합니다. 실제로 당신에게 닿는 파트너의 유형은 대부분의 예측과 다릅니다.',
-  paid3_btn:'연애운 & 결혼운 전체 분석 보기 · ₩6,900',
-  paid4_hook:'자, 이제 [NAME]님의 가족운과 건강운을 살펴볼까요?',
-  paid4_sub:'년주와 월주는 원가족의 에너지를 담고 있습니다. 당신의 오행 균형은 몸이 스트레스를 어디에 담는지 이야기합니다.',
-  paid4_btn:'가족운 & 건강운 전체 분석 보기 · ₩6,900',
-  paid5_hook:'자, 이제 [NAME]님의 대운 분석을 살펴볼까요?',
-  paid5_sub:'당신의 삶은 10년 단위 챕터로 흐릅니다. 다음 대운이 당신에게 담고 있는 것은 거의 아무도 예측하지 못합니다.',
-  paid5_btn:'10년 대운 전체 보기 · ₩6,900',
   modal_eyebrow:'✦ 얼리 액세스 ✦',
   modal_title:'당신이 궁금해했던 것을 아는 감명.',
   modal_sub:'이미 기둥들을 보셨습니다. 일간을 만나셨습니다. 이제 더 깊이 들어가세요.',
-  modal_features:['인생 전반 흐름 내러티브','재물운 & 성공운 청사진','연애운 & 결혼운 심층 분석','가족운 & 건강운 분석','10년 대운 - 당신만의 인생 계절, 완전 해독','5년 세운 예측'],
   modal_price:'₩6,900',
   modal_price_sub:'커피 한 잔보다 저렴합니다. 평생 이어지는 감명.',
-  modal_pay_btn:'전체 감명 열기 →',
   modal_waitlist_title:'아직 결제가 준비되지 않으셨나요? 할인 혜택과 함께 가장 먼저 알려드릴게요.',
   modal_notify_btn:'알림 받기 →',
   modal_note:'✓ 스팸 없음. 소음 없음. 감명이 준비되면 바로 알려드립니다.',
@@ -2622,7 +2586,6 @@ function renderAll() {
   renderDayMaster(pillars.dayPillar, userInfo.name);
   renderFortune(pillars.dayPillar);
   renderDaeun(pillars);
-  renderPaidSections(userInfo.name, pillars.dayPillar);
 }
 
 function renderHeader(info) {
@@ -2707,44 +2670,6 @@ function renderFiveElements(elements) {
 
 
 
-
-function renderPaidSections(name, dayPillar) {
-  const lang = AppState.language;
-  const displayName = name || t('word_you');
-  const sections = [
-    { hookKey:'paid1_hook', subKey:'paid1_sub', btnKey:'paid1_btn',
-      previewEn:'Your four pillars reveal a specific life trajectory - one that moves through distinct phases of expansion and contraction. The energy of your Day Master creates a particular kind of arc...',
-      previewKo:'당신의 사주는 특정한 인생 궤적을 보여줍니다 - 팽창과 수축의 뚜렷한 단계를 통과하는 궤적. 일간의 에너지는 특별한 종류의 흐름을 만들어냅니다...',
-      hookId:'paid1-hook', subId:'paid1-sub', btnId:'paid1-btn', previewId:'paid1-preview' },
-    { hookKey:'paid2_hook', subKey:'paid2_sub', btnKey:'paid2_btn',
-      previewEn:'The wealth configuration in your chart is unusual. Your Wealth Star sits in a position that creates both exceptional opportunity and specific vulnerability. The years between...',
-      previewKo:'당신 차트의 재물 구조는 특별합니다. 재성이 탁월한 기회와 특정 취약성을 동시에 만드는 위치에 있습니다...',
-      hookId:'paid2-hook', subId:'paid2-sub', btnId:'paid2-btn', previewId:'paid2-preview' },
-    { hookKey:'paid3_hook', subKey:'paid3_sub', btnKey:'paid3_btn',
-      previewEn:'Your relationship patterns are shaped by your Day Master in ways that most conventional relationship advice will never address. The partner who actually reaches you has a specific elemental signature...',
-      previewKo:'당신의 관계 패턴은 대부분의 일반적인 관계 조언이 절대 다루지 않는 방식으로 일간에 의해 형성됩니다...',
-      hookId:'paid3-hook', subId:'paid3-sub', btnId:'paid3-btn', previewId:'paid3-preview' },
-    { hookKey:'paid4_hook', subKey:'paid4_sub', btnKey:'paid4_btn',
-      previewEn:'The energy of your year and month pillars carries information about your family of origin that explains patterns you\'ve probably noticed but never been able to name. Your health...',
-      previewKo:'년주와 월주의 에너지는 당신이 아마도 알아챘지만 이름 붙일 수 없었던 패턴을 설명하는 원가족에 대한 정보를 담고 있습니다...',
-      hookId:'paid4-hook', subId:'paid4-sub', btnId:'paid4-btn', previewId:'paid4-preview' },
-    { hookKey:'paid5_hook', subKey:'paid5_sub', btnKey:'paid5_btn',
-      previewEn:'Your current 10-year cycle governs a decade of specific elemental energy. The pressures, opportunities, and windows that define this chapter of your life are already written in your chart...',
-      previewKo:'현재 대운은 특정한 오행 에너지의 10년을 다스립니다. 이 챕터를 정의하는 압박, 기회, 창문들은 이미 당신의 사주에 쓰여 있습니다...',
-      hookId:'paid5-hook', subId:'paid5-sub', btnId:'paid5-btn', previewId:'paid5-preview' },
-  ];
-  sections.forEach(s => {
-    const hookText = t(s.hookKey).replace('[NAME]',displayName).replace('[name]',displayName);
-    const hookEl = document.getElementById(s.hookId);
-    const subEl = document.getElementById(s.subId);
-    const btnEl = document.getElementById(s.btnId);
-    const previewEl = document.getElementById(s.previewId);
-    if (hookEl) hookEl.textContent = hookText;
-    if (subEl) subEl.textContent = t(s.subKey);
-    if (btnEl) btnEl.textContent = t(s.btnKey);
-    if (previewEl) previewEl.textContent = lang==='ko' ? s.previewKo : s.previewEn;
-  });
-}
 
 function renderIdentityBar(chart) {
   const dm = chart.dayMaster;
@@ -4185,7 +4110,7 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const lockCopy = LOCKED_COPY_EN[s.key];
       const displayTitle = !isKo && lockCopy ? lockCopy.title : title;
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
-      const ctaText  = isKo ? '전체 분석 보기' : 'Unlock Full Reading';
+      const ctaText  = isKo ? '심층 분석 보기' : 'Unlock Deep Analysis';
       const ctaPrice = isKo ? '₩6,900' : '$4.99';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
@@ -4414,7 +4339,7 @@ function renderDaeun(chart) {
 function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
   var isKo=AppState.language==='ko';
-  var btn=isKo?'전체 감명 열기 →':'Unlock Full Reading →';
+  var btn=isKo?'심층 분석 열기 →':'Unlock Deep Analysis →';
   sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
 }
 // ── 결제 설정 (Lemon Squeezy) ──────────────────────────────────────────
@@ -4465,7 +4390,7 @@ function unlockPremiumContent() {
   });
   var lockOverlay = document.getElementById('premium-lock-overlay');
   if (lockOverlay) lockOverlay.style.display = 'none';
-  showToast('🎉 Full Reading unlocked!', 'success');
+  showToast('🎉 Deep Analysis unlocked!', 'success');
   console.log('[Momentor] Premium unlocked');
 }
 
@@ -4507,7 +4432,6 @@ function openModal(type) {
   el('modal-sub', L.modal_sub);
   el('modal-price', L.modal_price);
   el('modal-price-sub', L.modal_price_sub);
-  el('modal-pay-btn', L.modal_pay_btn);
   el('modal-waitlist-title', L.modal_waitlist_title);
   el('modal-notify-btn', L.modal_notify_btn);
   el('modal-note', L.modal_note);
