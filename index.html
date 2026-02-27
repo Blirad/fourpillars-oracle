@@ -4357,6 +4357,115 @@ function renderDaeun(chart) {
         ${isKo ? '🔓 전체 대운 보기' : '🔓 Unlock Full Cycles'}
       </button>` : ''}
     </div>`;
+
+  renderDaeunDetail(chart);
+}
+
+function renderDaeunDetail(chart) {
+  var sec = document.getElementById('daeun-simple-section');
+  if (!sec) return;
+  var isKo = AppState.language === 'ko';
+  var daeun = chart.daeunData.daeun;
+  var birthYear = chart.year;
+  var dmEl = chart.dayMaster.element;
+  var isPrem = AppState.isPremium;
+
+  var ELEM_CHAR = {Wood:'木',Fire:'火',Earth:'土',Metal:'金',Water:'水'};
+
+  function getRelation(dEl) {
+    if (dEl === dmEl) return 'same';
+    if (PRODUCES[dEl] === dmEl) return 'feeds';
+    if (CONTROLS[dEl] === dmEl) return 'controls';
+    if (PRODUCES[dmEl] === dEl) return 'gives';
+    if (CONTROLS[dmEl] === dEl) return 'dominates';
+    return 'same';
+  }
+
+  function getRelationLabel(rel) {
+    var labels = {
+      feeds:     isKo ? '生 — 에너지 충전' : '生 — Feeds Your Energy',
+      controls:  isKo ? '剋 — 압박과 변화' : '剋 — Pressure & Change',
+      same:      isKo ? '同 — 본질 강화'   : '同 — Amplifies Core Nature',
+      gives:     isKo ? '生出 — 에너지 방출' : '生出 — You Give Energy',
+      dominates: isKo ? '剋出 — 주도권 장악' : '剋出 — You Take Control',
+    };
+    return labels[rel] || '';
+  }
+
+  function getDesc(rel) {
+    var map = {
+      feeds:     isKo
+        ? '이 시기는 당신의 에너지를 충전하는 시기입니다. 새로운 시작, 성장, 기회가 열립니다.'
+        : 'This cycle feeds your core energy. Expansion, new beginnings, and opportunity flow naturally.',
+      controls:  isKo
+        ? '이 시기는 압박과 변화의 시기입니다. 저항하기보다 유연하게 대응하는 것이 핵심입니다.'
+        : 'This cycle tests and refines you. Flexibility over resistance is the key strategy.',
+      same:      isKo
+        ? '이 시기는 당신의 본질이 강화되는 시기입니다. 자신의 강점을 발휘할 기회.'
+        : 'This cycle amplifies your core nature. Your strengths find their fullest expression.',
+      gives:     isKo
+        ? '이 시기는 에너지를 쏟는 시기입니다. 창의와 표현, 그러나 과소비 주의.'
+        : 'This cycle calls for giving and creating. Channel your energy wisely.',
+      dominates: isKo
+        ? '이 시기는 당신이 주도권을 쥐는 시기입니다. 리더십과 성취의 기회.'
+        : 'This cycle puts you in control. Leadership and achievement come naturally.',
+    };
+    return map[rel] || '';
+  }
+
+  var items = daeun.map(function(d, i) {
+    var startYear = birthYear + d.ageStart;
+    var endYear   = birthYear + d.ageEnd;
+    var rel       = getRelation(d.element);
+    var relLabel  = getRelationLabel(rel);
+    var desc      = getDesc(rel);
+    var elColor   = (ELEMENT_COLORS && ELEMENT_COLORS[d.element]) || '#a8a0c8';
+    var isUnlocked = isPrem || d.isCurrent;
+    var id        = 'daeun-detail-' + i;
+    var ageStr    = isKo ? ('만 ' + d.ageStart + '–' + d.ageEnd + '세') : ('Age ' + d.ageStart + '–' + d.ageEnd);
+    var yearRange = startYear + '–' + endYear;
+    var char      = ELEM_CHAR[d.element] || '●';
+    var curBadge  = d.isCurrent
+      ? '<span style="font-size:11px;background:rgba(232,197,71,0.18);color:var(--gold);border-radius:4px;padding:1px 6px;margin-left:6px">' + (isKo?'현재':'NOW') + '</span>'
+      : '';
+
+    if (isUnlocked) {
+      return '<div class="dm-acc-item" id="' + id + '">'
+        + '<div class="dm-acc-header" onclick="(function(el){el.classList.toggle(\'open\');})(document.getElementById(\'' + id + '\'))">'
+          + '<span class="dm-acc-icon" style="color:' + elColor + '">' + char + '</span>'
+          + '<span class="dm-acc-title">'
+            + '<span style="opacity:0.65;font-size:13px">' + yearRange + ' · ' + ageStr + '</span>'
+            + ' ' + d.stem + d.branch + curBadge
+          + '</span>'
+          + '<span class="dm-acc-chevron">▼</span>'
+        + '</div>'
+        + '<div class="dm-acc-body"><div class="dm-acc-body-inner">'
+          + '<span style="font-size:12px;font-weight:700;color:' + elColor + ';letter-spacing:.05em">' + relLabel + '</span>\n' + desc
+        + '</div></div>'
+        + '</div>';
+    } else {
+      return '<div class="dm-acc-item dm-acc-locked" onclick="openPayModal()">'
+        + '<div class="dm-acc-header" style="pointer-events:none">'
+          + '<span class="dm-acc-icon" style="color:' + elColor + '">' + char + '</span>'
+          + '<span class="dm-acc-title">'
+            + '<span style="opacity:0.65;font-size:13px">' + yearRange + ' · ' + ageStr + '</span>'
+            + ' ' + d.stem + d.branch
+          + '</span>'
+          + '<span class="dm-acc-lock">🔒</span>'
+        + '</div>'
+        + '</div>';
+    }
+  }).join('');
+
+  var detailDiv = document.createElement('div');
+  detailDiv.id = 'daeun-detail-section';
+  detailDiv.innerHTML = '<div style="margin-top:28px">'
+    + '<div class="section-divider">' + (isKo ? '시기별 상세 분석' : 'Cycle-by-Cycle Analysis') + '</div>'
+    + '<div class="dm-accordion">' + items + '</div>'
+    + '</div>';
+  var prev = document.getElementById('daeun-detail-section');
+  if (prev) prev.remove();
+  sec.appendChild(detailDiv);
 }
 
 
