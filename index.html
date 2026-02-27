@@ -1710,10 +1710,10 @@ en: {
   tengod_pyeongin:'Indirect Resource',tengod_jeongin:'Direct Resource',
 },
 ko: {
-  app_tagline:'당신의 운명, 해독됩니다.',
-  hero_eyebrow:'당신이 태어난 그 순간',
-  hero_headline:'<em>518,400</em>가지 가능한 운명 중,<br>이것이 바로 당신의 것입니다.',
-  hero_sub:'사주팔자 — 1,500년의 동아시아 지혜.<br>당신의 생년월일이 말해주는 성격, 운명, 인생의 흐름.',
+  app_tagline:'당신의 운명, 이미 새겨져 있습니다.',
+  hero_eyebrow:'태어난 그 순간, 모든 것이 결정됐다',
+  hero_headline:'태어나는 순간,<br>당신의 패턴은 이미 <em>새겨졌습니다</em>.',
+  hero_sub:'사주는 2,000년간 정제된 동아시아의 시스템입니다 — 당신의 성격, 흐름, 인생의 방향이 생년월일 속에 이미 담겨 있습니다.<br>당신이 될 수 있는 사람이 아닙니다. <em>당신이 이미 누구인지.</em>',
   hero_cta:'내 운명 보기 →',
   step1_text:'생년월일<br>입력',
   step2_text:'사주<br>계산',
@@ -2619,7 +2619,7 @@ function renderHeader(info) {
   const badgeEl = document.getElementById('results-trust-badge');
   const badgeText = document.getElementById('results-trust-text');
   if (badgeEl && badgeText && info.name) {
-    const isKo = (document.documentElement.lang === 'ko' || (typeof AppState !== 'undefined' && AppState.lang === 'ko'));
+    const isKo = (document.documentElement.lang === 'ko' || (typeof AppState !== 'undefined' && AppState.language === 'ko'));
     const monthNames = isKo
       ? ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
       : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
