@@ -1218,23 +1218,19 @@
       <!-- Birth Time -->
       <div class="form-group" id="time-group">
         <label class="form-label" id="lbl-birthtime">BIRTH TIME</label>
-        <div class="form-row form-row-2" id="time-inputs">
-          <select id="inp-hour" class="form-control">
+        <div class="form-row" style="display:flex;align-items:center;gap:8px;" id="time-inputs">
+          <select id="inp-hour" class="form-control" style="flex:1">
             <option value="">Hour (0-23)</option>
           </select>
-          <select id="inp-minute" class="form-control">
+          <select id="inp-minute" class="form-control" style="flex:1">
             <option value="">Minute (0-59)</option>
           </select>
+          <label style="display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;color:var(--text-secondary);font-size:13px;flex-shrink:0">
+            <input type="checkbox" id="chk-notime" onchange="toggleUnknownTime(this.checked)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--gold)">
+            <span id="lbl-notime">모름</span>
+          </label>
         </div>
         <div class="form-error" id="err-time"></div>
-      </div>
-
-      <!-- Unknown time toggle -->
-      <div class="form-group">
-        <label class="toggle-row" for="chk-notime">
-          <input type="checkbox" id="chk-notime" onchange="toggleUnknownTime(this.checked)">
-          <span class="toggle-label" id="lbl-notime">I don't know my birth time</span>
-        </label>
       </div>
 
       <!-- Submit -->
@@ -1258,6 +1254,7 @@
     </div>
     <div class="results-name" id="results-name-display"></div>
     <div class="results-date" id="results-date-display"></div>
+    <div id="notime-badge" style="display:none;margin-top:6px;font-size:11px;color:var(--text-muted);opacity:0.7;letter-spacing:.04em"></div>
   </div>
 
   <!-- IDENTITY BAR -->
@@ -1397,7 +1394,6 @@
     <div class="modal-title" id="modal-title">Your Full Reading Is Ready</div>
     <div class="modal-sub" id="modal-sub">Over 2,000 years of Eastern wisdom, mapped to the exact moment you were born.<br>What's locked isn't filler — it's the part most people spend their whole lives trying to figure out.</div>
         <p class="modal-urgency" id="modal-urgency" style="font-size:12px;color:rgba(232,197,71,0.8);letter-spacing:.05em;margin-top:4px;margin-bottom:16px;"></p>
-    <ul class="modal-features" id="modal-features"></ul>
     <div class="modal-price-tag" id="modal-price">$4.99</div>
     <div class="modal-price-sub" id="modal-price-sub">Less than one coffee. A reading that lasts a lifetime.</div>
     <button class="btn-primary" style="width:100%;justify-content:center;margin-bottom:12px;" onclick="handlePayment()" id="modal-pay-btn">Unlock Full Reading →</button>
@@ -1655,7 +1651,7 @@ en: {
   gender_female:'♀ Female',
   lbl_birthdate:'DATE OF BIRTH',
   lbl_birthtime:'BIRTH TIME',
-  lbl_notime:'I don\'t know my birth time',
+  lbl_notime:'Unknown',
   btn_calculate:'Reveal My Chart →',
   lbl_pillars:'FOUR PILLARS · Saju Paljja',
   lbl_elements:'My Elemental DNA',
@@ -1774,7 +1770,7 @@ ko: {
   gender_female:'♀ 여성',
   lbl_birthdate:'생년월일',
   lbl_birthtime:'태어난 시각',
-  lbl_notime:'출생 시간을 모릅니다',
+  lbl_notime:'모름',
   btn_calculate:'내 사주 보기',
   lbl_pillars:'사주 원국 · FOUR PILLARS',
   lbl_elements:'나의 오행 DNA',
@@ -2296,7 +2292,9 @@ function buildFullChart(year, month, day, hour, minute, gender, noTime) {
   const dPillar = calcDayPillar(year, month, day);
   let hPillar;
   if (noTime) {
-    hPillar = { stem: '?', branch: '?', element: 'Water', branchElement: 'Water', unknown: true };
+    // 오시(午時) = 12:00 as default when time unknown
+    hPillar = calcHourPillar(dPillar, 12);
+    hPillar = Object.assign({}, hPillar, { noTimeApprox: true });
   } else {
     hPillar = calcHourPillar(dPillar, hour);
   }
@@ -3002,6 +3000,12 @@ function applyLanguage() {
   el('lbl-birthdate', L.lbl_birthdate); el('lbl-birthtime', L.lbl_birthtime);
   el('lbl-notime', L.lbl_notime); el('btn-calc-text', L.btn_calculate);
 
+  // notime badge (update if visible)
+  const notimeBadgeEl = document.getElementById('notime-badge');
+  if (notimeBadgeEl && notimeBadgeEl.style.display !== 'none') {
+    notimeBadgeEl.textContent = lang === 'ko' ? '시각 미입력 · 일부 분석 제한됨' : 'Time unknown · analysis limited';
+  }
+
   // Results labels
   el('lbl-pillars', L.lbl_pillars);
   el('lbl-elements', L.lbl_elements);
@@ -3161,11 +3165,22 @@ function renderResults(chart) {
   document.getElementById('section-hero').style.display = 'none';
   document.getElementById('section-input').style.display = 'none';
   resultsSection.classList.add('visible');
+  const isKo = AppState.language === 'ko';
 
   // Header info
   el('results-name-display', AppState.userName);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? ' (time unknown)' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
+  el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? '' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
+  // noTime badge
+  const notimeBadge = document.getElementById('notime-badge');
+  if (notimeBadge) {
+    if (chart.noTime) {
+      notimeBadge.textContent = isKo ? '시각 미입력 · 일부 분석 제한됨' : 'Time unknown · analysis limited';
+      notimeBadge.style.display = 'block';
+    } else {
+      notimeBadge.style.display = 'none';
+    }
+  }
 
   // 1. Identity bar
   renderIdentityBar(chart);
@@ -3297,21 +3312,16 @@ function renderPillarGrid(chart) {
       ${stemTgDesc ? `<div class="pillar-tengod-desc">${stemTgDesc}</div>` : ''}
       <div class="pillar-stem-badge">
         <div class="stem-polarity-circle" style="background:rgba(${stemRgb},0.22);box-shadow:0 0 12px rgba(${stemRgb},0.28)">
-          ${!isUnknown ? `<span class="polarity-sign">${stemSign}</span>` : ''}
           <span class="pillar-stem-char" style="color:${stemColor}">${stem}</span>
         </div>
-        <div class="stem-label">${stemLabelStr}</div>
       </div>
       <div class="pillar-branch-badge">
         <div class="branch-polarity-circle" style="background:rgba(${branchRgb},0.18);box-shadow:0 0 10px rgba(${branchRgb},0.22)">
-          ${!isUnknown ? `<span class="polarity-sign">${branchSign}</span>` : ''}
           <span class="pillar-branch-char" style="color:${branchColor}">${branch}</span>
         </div>
-        <div class="branch-label">${branchLabelStr}</div>
       </div>
       <div class="pillar-branch-tengod">${branchTgLabel}</div>
       ${branchTgDesc ? `<div class="pillar-tengod-desc">${branchTgDesc}</div>` : ''}
-      ${stage12 ? `<div class="pillar-12-unsung">${stage12}</div>` : ''}
     </div>`;
   }).join('');
 }
@@ -4440,14 +4450,8 @@ function renderDaeun(chart) {
 function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
   var isKo=AppState.language==='ko';
-  var title=isKo?'당신의 운명, 더 깊이 읽기':'You\'ve seen the structure. Now read the story.';
-  var sub=isKo?'사주팔자가 말하는 당신의 진짜 이야기':'Your Four Pillars contain a pattern beneath the pattern. Most people never see it.';
-  var price=isKo?'₩6,900':'$4.99';
-  var priceSub=isKo?'전체 감명 • 평생 열람':'Full Reading · Lifetime Access';
   var btn=isKo?'전체 감명 열기 →':'Unlock Full Reading →';
-  var reas=isKo?'수천 년의 지혜, 지금 당신의 이야기로':'Millennia of wisdom, now your story.';
-  var feats=isKo?['🔮 <strong>인생 심층 분석</strong> - 당신만을 위한 전체 사주 내러티브 (맞춤 종합 감명)','✨ <strong>대운 상세 분석</strong> - 10년 단위 전체 풀이 + 개운법 + 현재 대운의 핵심','💕 <strong>연애 &amp; 결혼운</strong> - 어떤 사람과 맞고, 언제 인연이 오는가','💰 <strong>재물 &amp; 직업운</strong> - 당신이 돈 버는 방식과 커리어의 정점','👨‍👩‍👧 <strong>가족 &amp; 건강</strong> - 부모 인연, 자녀운, 몸이 말하는 신호']:['🔮 <strong>Life Deep Analysis</strong> - Your full saju narrative, written only for you','✨ <strong>Full Daeun Analysis</strong> - All 10-year cycles decoded + remedies + what your current decade means','💕 <strong>Love &amp; Marriage</strong> - The type of person who actually reaches you. When the timing opens.','💰 <strong>Wealth &amp; Career</strong> - How your chart makes money. Where your career peaks - and when.','👨‍👩‍👧 <strong>Family &amp; Health</strong> - The story your year and month pillars carry. What your body is trying to tell you.'];
-  sec.innerHTML='<div class="premium-header"><div class="premium-lock-icon">🔮</div><h2 class="premium-title">'+title+'</h2><p class="premium-subtitle">'+sub+'</p></div><ul class="premium-features">'+feats.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul><div class="premium-cta-block"><div class="premium-price">'+price+'</div><div class="premium-price-sub">'+priceSub+'</div><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button><p class="premium-reassure">'+reas+'</p></div>';
+  sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
 }
 function openPayModal(){openModal('premium');}
 
