@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-02-27T07:42:17.184Z",
+  "htmlSize": 440639,
+  "elements": {
+    "#birth-form": {
+      "present": false,
+      "type": "id",
+      "value": "birth-form"
+    },
+    "#results": {
+      "present": false,
+      "type": "id",
+      "value": "results"
+    },
+    ".dm-acc-body": {
+      "present": true,
+      "type": "class",
+      "value": "dm-acc-body"
+    },
+    "fn:openPayModal": {
+      "present": true,
+      "type": "function",
+      "value": "openPayModal"
+    },
+    "fn:showToast": {
+      "present": true,
+      "type": "function",
+      "value": "showToast"
+    },
+    "fn:toggleAccordionMore": {
+      "present": true,
+      "type": "function",
+      "value": "toggleAccordionMore"
+    },
+    "#results-trust-badge / .results-trust-badge": {
+      "present": true,
+      "type": "id_or_class",
+      "value": "results-trust-badge"
+    }
+  }
+}
