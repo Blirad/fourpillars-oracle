@@ -5898,7 +5898,7 @@ const SEXAGENARY_CYCLE = (function() {
   return cycle;
 })();
 
-function getDayPillar(date) {
+function getDayPillarByDate(date) {
   // 기준일 2024-01-01 = 甲子(0번)
   var BASE = new Date('2024-01-01T00:00:00Z');
   var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -5957,7 +5957,7 @@ function renderDailyEnergySection(chart) {
   section.style.display = '';
 
   var today = new Date();
-  var pillar = getDayPillar(today);
+  var pillar = getDayPillarByDate(today);
   var level = getDayEnergyLevel(pillar);
   var badge = getDayEnergyBadge(level);
   var msgs = DAILY_MESSAGES[pillar.element] || DAILY_MESSAGES['Earth'];
@@ -6128,7 +6128,7 @@ function calculateCompatibility() {
 
   // Calculate their day pillar
   var theirDate = new Date(year, month - 1, day);
-  var theirPillar = getDayPillar(theirDate);
+  var theirPillar = getDayPillarByDate(theirDate);
 
   // My pillar
   var myStem = myChart.dayMaster.stem;
