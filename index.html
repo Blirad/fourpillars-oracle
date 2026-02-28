@@ -293,8 +293,8 @@
       border:1px solid var(--card-border);
       border-radius:var(--radius-md);
       backdrop-filter:blur(20px);
-      padding:18px 12px;text-align:center;
-      position:relative;overflow:hidden;
+      padding:18px 12px 20px;text-align:center;
+      position:relative;
       transition:transform .25s,box-shadow .25s;
       cursor:default;
     }
@@ -313,6 +313,10 @@
       font-size:9px;letter-spacing:.12em;
       color:var(--text-muted);text-transform:uppercase;
       margin-bottom:10px;
+    }
+    .pillar-label-sub{
+      font-size:10px;color:var(--gold);letter-spacing:.06em;
+      text-transform:none;margin-top:3px;font-weight:400;
     }
     .you-badge{
       display:inline-block;
@@ -3791,7 +3795,7 @@ function renderPillarGrid(chart) {
     return `<div class="pillar-card${isDay?' day-pillar':''}" data-element="${stemEl}">
       <div class="pillar-glow" style="background:radial-gradient(circle at center,rgba(${stemRgb},0.12) 0%,transparent 70%)"></div>
       ${isDay ? '<div class="you-badge">YOU</div>' : ''}
-      <div class="pillar-label">${labels[i]}</div>
+      <div class="pillar-label">${labels[i]}${isDay ? `<div class="pillar-label-sub">${isKo ? '나를 나타내는 기둥' : 'Your Core Pillar'}</div>` : ''}</div>
       <div class="pillar-tengod-label">${stemTgLabel}</div>
       ${stemTgDesc ? `<div class="pillar-tengod-desc">${stemTgDesc}</div>` : ''}
       <div class="pillar-stem-badge">
