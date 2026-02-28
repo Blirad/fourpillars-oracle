@@ -1070,6 +1070,265 @@
   .share-native-btn:hover{background:rgba(255,255,255,0.12);}
   .share-caption-hint{text-align:center;font-size:11px;color:var(--text-muted);letter-spacing:0.03em;}
   .dm-personality-intro{margin-bottom:12px;font-size:14px;color:var(--text-secondary);line-height:1.9;}
+
+  /* ═══════════════════════════════════════
+     V4 ADDITIONS: ONBOARDING + SUBSCRIPTION + DAILY ENERGY + COMPAT
+     ═══════════════════════════════════════ */
+
+  /* Onboarding Email Modal */
+  #onboarding-email-overlay {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(10,6,18,0.92); backdrop-filter:blur(12px);
+    align-items:center; justify-content:center; padding:20px;
+  }
+  #onboarding-email-overlay.open { display:flex; }
+  .onboarding-box {
+    background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);
+    border-radius:24px; padding:40px 32px; max-width:420px; width:100%;
+    text-align:center; animation:fadeInUp .4s ease;
+  }
+  .onboarding-eyebrow { font-size:11px; font-weight:700; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--gold); margin-bottom:16px; }
+  .onboarding-title { font-family:var(--font-serif); font-size:26px; font-weight:600;
+    color:var(--text-primary); margin-bottom:10px; line-height:1.3; }
+  .onboarding-sub { font-size:14px; color:var(--text-secondary); margin-bottom:24px; line-height:1.6; }
+  .onboarding-input {
+    width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+    border-radius:12px; padding:16px 20px; color:var(--text-primary); font-size:16px;
+    margin-bottom:8px; font-family:var(--font-sans); outline:none; transition:border-color .2s;
+  }
+  .onboarding-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(232,197,71,0.12); }
+  .onboarding-input::placeholder { color:var(--text-muted); }
+  .onboarding-helper { font-size:12px; color:var(--text-muted); margin-bottom:20px; font-style:italic; }
+  .onboarding-privacy { font-size:11px; color:var(--text-muted); margin-top:12px; }
+  .onboarding-skip { font-size:12px; color:var(--text-muted); cursor:pointer;
+    text-decoration:underline; margin-top:14px; display:block; }
+  .onboarding-skip:hover { color:var(--text-secondary); }
+  .email-confirm-banner {
+    position:fixed; top:0; left:0; right:0; z-index:300;
+    background:rgba(212,165,116,0.15); border-bottom:1px solid rgba(212,165,116,0.3);
+    padding:10px 16px; display:flex; align-items:center; justify-content:space-between;
+    font-size:13px; color:var(--text-secondary); backdrop-filter:blur(10px);
+  }
+  .email-confirm-banner button {
+    background:none; border:none; color:var(--text-muted); cursor:pointer;
+    font-size:16px; padding:0 4px;
+  }
+
+  /* Subscription Tier Modal */
+  #subscription-modal-overlay {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(10,6,18,0.95); backdrop-filter:blur(16px);
+    align-items:flex-start; justify-content:center;
+    padding:20px; overflow-y:auto;
+  }
+  #subscription-modal-overlay.open { display:flex; }
+  .sub-modal-box {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);
+    border-radius:28px; padding:40px 28px; max-width:520px; width:100%;
+    text-align:center; animation:fadeInUp .4s ease; margin:auto;
+  }
+  .sub-modal-close {
+    position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.08);
+    border:none; color:var(--text-secondary); font-size:18px; cursor:pointer;
+    border-radius:50%; width:32px; height:32px; line-height:32px; text-align:center;
+  }
+  .sub-modal-headline { font-family:var(--font-serif); font-size:24px; font-weight:600;
+    color:var(--text-primary); margin-bottom:8px; }
+  .sub-modal-sub { font-size:14px; color:var(--text-secondary); margin-bottom:32px; }
+  .tier-grid { display:flex; flex-direction:column; gap:16px; }
+  .tier-card {
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);
+    border-radius:20px; padding:24px; text-align:left; position:relative;
+    transition:border-color .2s, transform .2s;
+  }
+  .tier-card:hover { border-color:rgba(255,255,255,0.22); transform:translateY(-2px); }
+  .tier-card.featured { border-color:rgba(212,165,116,0.5); background:rgba(212,165,116,0.06); }
+  .tier-badge {
+    position:absolute; top:-10px; right:20px;
+    background:linear-gradient(135deg,#d4a574,#c49060); color:#0a0612;
+    font-size:10px; font-weight:700; letter-spacing:.08em; padding:3px 10px;
+    border-radius:50px; text-transform:uppercase;
+  }
+  .tier-name { font-family:var(--font-serif); font-size:22px; font-weight:700;
+    color:var(--gold); margin-bottom:4px; }
+  .tier-tagline { font-size:13px; color:var(--text-secondary); margin-bottom:16px;
+    font-style:italic; line-height:1.5; }
+  .tier-price { font-size:32px; font-weight:700; color:var(--text-primary); margin-bottom:4px; }
+  .tier-price span { font-size:14px; font-weight:400; color:var(--text-muted); }
+  .tier-features { list-style:none; margin:14px 0 20px; }
+  .tier-features li { font-size:13px; color:var(--text-secondary); padding:5px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05); }
+  .tier-features li::before { content:'✦ '; color:var(--gold); }
+  .tier-features li:last-child { border-bottom:none; }
+  .tier-cta { width:100%; padding:14px; border-radius:50px; border:none; cursor:pointer;
+    font-size:15px; font-weight:600; font-family:var(--font-sans); transition:all .2s; }
+  .tier-cta-gold { background:linear-gradient(135deg,#d4a574,#c49060); color:#0a0612; }
+  .tier-cta-gold:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  .tier-cta-outline { background:transparent; border:1px solid rgba(255,255,255,0.2);
+    color:var(--text-primary); }
+  .tier-cta-outline:hover { border-color:rgba(255,255,255,0.4); background:rgba(255,255,255,0.05); }
+  .tier-cta-free { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+    color:var(--text-secondary); }
+  .sub-trust { margin-top:24px; font-size:12px; color:var(--text-muted); line-height:1.8; }
+  .sub-anchor { margin-top:8px; font-size:11px; color:var(--text-muted); font-style:italic; }
+
+  /* Daily Energy Section */
+  #daily-energy-section {
+    margin:24px 0; padding:0 0 4px;
+  }
+  .de-card {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10);
+    border-radius:20px; padding:28px 24px; position:relative; overflow:hidden;
+  }
+  .de-label { font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--text-muted); margin-bottom:4px; }
+  .de-date { font-size:12px; color:var(--text-muted); margin-bottom:20px; }
+  .de-pillar { font-family:var(--font-serif); font-size:56px; font-weight:700;
+    color:var(--gold); line-height:1; margin-bottom:4px; }
+  .de-pillar-name { font-size:20px; color:var(--text-secondary); margin-bottom:16px; font-style:italic; }
+  .de-energy-badge {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 14px; border-radius:50px; font-size:12px; font-weight:700;
+    letter-spacing:.06em; margin-bottom:18px;
+  }
+  .de-energy-low { background:rgba(96,180,250,0.15); color:#60b4fa; border:1px solid rgba(96,180,250,0.3); }
+  .de-energy-medium { background:rgba(93,232,160,0.15); color:#5de8a0; border:1px solid rgba(93,232,160,0.3); }
+  .de-energy-high { background:rgba(232,197,71,0.15); color:var(--gold); border:1px solid rgba(232,197,71,0.3); }
+  .de-energy-intense { background:rgba(255,126,179,0.15); color:#ff7eb3; border:1px solid rgba(255,126,179,0.3); }
+  .de-message { font-size:14px; color:var(--text-secondary); line-height:1.85; margin-bottom:16px; }
+  .de-word { font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--text-muted); }
+  .de-word span { color:var(--gold); }
+  .de-blur-overlay {
+    position:absolute; bottom:0; left:0; right:0;
+    background:linear-gradient(transparent 0%, rgba(10,6,18,0.97) 70%);
+    padding:60px 24px 28px; display:flex; flex-direction:column;
+    align-items:center; text-align:center;
+  }
+  .de-unlock-text { font-size:13px; color:var(--text-secondary); margin-bottom:12px; }
+  .de-unlock-btn {
+    padding:11px 28px; background:linear-gradient(135deg,#d4a574,#c49060);
+    border:none; border-radius:50px; color:#0a0612; font-size:14px; font-weight:700;
+    cursor:pointer; font-family:var(--font-sans); transition:all .2s;
+  }
+  .de-unlock-btn:hover { filter:brightness(1.1); transform:translateY(-1px); }
+
+  /* Compatibility Section */
+  #compat-modal-overlay {
+    display:none; position:fixed; inset:0; z-index:200;
+    background:rgba(10,6,18,0.95); backdrop-filter:blur(16px);
+    align-items:flex-start; justify-content:center;
+    padding:20px; overflow-y:auto;
+  }
+  #compat-modal-overlay.open { display:flex; }
+  .compat-box {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.10);
+    border-radius:24px; padding:36px 28px; max-width:480px; width:100%;
+    animation:fadeInUp .4s ease; margin:auto;
+  }
+  .compat-title { font-family:var(--font-serif); font-size:26px; font-weight:700;
+    color:var(--text-primary); margin-bottom:6px; }
+  .compat-sub { font-size:14px; color:var(--text-secondary); margin-bottom:28px; line-height:1.6; }
+  .compat-section-label { font-size:11px; font-weight:700; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--text-muted); margin-bottom:10px; }
+  .compat-my-card {
+    background:rgba(212,165,116,0.08); border:1px solid rgba(212,165,116,0.2);
+    border-radius:14px; padding:14px 18px; margin-bottom:22px;
+    font-size:14px; color:var(--text-secondary);
+  }
+  .compat-my-card strong { color:var(--gold); font-family:var(--font-serif); font-size:18px; }
+  .compat-selects { display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px; margin-bottom:16px; }
+  .compat-select {
+    background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px; padding:12px 10px; color:var(--text-primary);
+    font-size:14px; font-family:var(--font-sans); outline:none;
+    appearance:none; -webkit-appearance:none; cursor:pointer;
+  }
+  .compat-select:focus { border-color:var(--gold); }
+  .compat-name-input {
+    width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
+    border-radius:10px; padding:12px 16px; color:var(--text-primary); font-size:15px;
+    font-family:var(--font-sans); outline:none; margin-bottom:20px;
+  }
+  .compat-name-input:focus { border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,165,116,0.1); }
+  .compat-name-input::placeholder { color:var(--text-muted); }
+  .compat-close { float:right; background:none; border:none; color:var(--text-muted);
+    font-size:20px; cursor:pointer; padding:0; }
+
+  /* Compatibility Result */
+  .compat-result-section { margin-top:24px; }
+  .compat-pillars-row {
+    display:flex; align-items:center; justify-content:center; gap:16px;
+    margin:20px 0; font-family:var(--font-serif);
+  }
+  .compat-pillar-me, .compat-pillar-them {
+    font-size:40px; color:var(--gold); font-weight:700; text-align:center;
+  }
+  .compat-pillar-me span, .compat-pillar-them span {
+    display:block; font-size:13px; color:var(--text-muted); font-family:var(--font-sans);
+    font-weight:400; margin-top:4px;
+  }
+  .compat-heart { font-size:28px; color:var(--rose); }
+  .compat-score-label { font-size:12px; text-transform:uppercase; letter-spacing:.1em;
+    color:var(--text-muted); margin-bottom:8px; }
+  .compat-score-main { font-family:var(--font-serif); font-size:52px; font-weight:700;
+    color:var(--gold); }
+  .compat-score-bar-row { display:flex; flex-direction:column; gap:10px; margin:20px 0; }
+  .compat-bar-label { font-size:12px; color:var(--text-secondary);
+    display:flex; justify-content:space-between; margin-bottom:4px; }
+  .compat-bar-track {
+    height:8px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden;
+  }
+  .compat-bar-fill { height:100%; border-radius:999px; transition:width .8s ease; }
+  .compat-interpretation { font-size:14px; color:var(--text-secondary);
+    line-height:1.85; margin:20px 0; font-style:italic; }
+  .compat-share-btn {
+    width:100%; padding:14px; background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.15); border-radius:50px;
+    color:var(--text-primary); font-size:15px; font-weight:600;
+    cursor:pointer; font-family:var(--font-sans); transition:all .2s; margin-top:4px;
+  }
+  .compat-share-btn:hover { background:rgba(255,255,255,0.12); }
+
+  /* Welcome back email display */
+  .wb-email { font-size:12px; color:var(--text-muted); margin-top:-6px; margin-bottom:20px; }
+
+  /* Subscription inline gate (results page) */
+  .v4-gate-block {
+    position:relative; margin:24px 0; border-radius:20px; overflow:hidden;
+    background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);
+  }
+  .v4-gate-blur-content {
+    padding:24px; filter:blur(4px); user-select:none; pointer-events:none;
+    opacity:0.5; font-size:14px; color:var(--text-secondary); line-height:1.8;
+  }
+  .v4-gate-overlay {
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 0%, rgba(10,6,18,0.97) 55%);
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+    padding:32px 24px; text-align:center;
+  }
+  .v4-gate-title { font-family:var(--font-serif); font-size:28px; font-weight:700;
+    color:var(--gold); margin-bottom:10px; }
+  .v4-gate-features { list-style:none; margin:0 0 20px; }
+  .v4-gate-features li { font-size:13px; color:var(--text-secondary); padding:3px 0; }
+  .v4-gate-features li::before { content:'✓ '; color:var(--gold); }
+  .v4-gate-btn-plus {
+    width:100%; max-width:320px; padding:15px; border:none; border-radius:50px;
+    background:linear-gradient(135deg,#d4a574,#c49060); color:#0a0612;
+    font-size:16px; font-weight:700; cursor:pointer; font-family:var(--font-sans);
+    margin-bottom:10px; transition:all .2s; animation:pulse 2s ease-in-out infinite;
+  }
+  .v4-gate-btn-plus:hover { filter:brightness(1.1); animation:none; transform:translateY(-1px); }
+  .v4-gate-btn-pro {
+    width:100%; max-width:320px; padding:13px; border:1px solid rgba(255,255,255,0.2);
+    border-radius:50px; background:transparent; color:var(--text-primary);
+    font-size:14px; font-weight:600; cursor:pointer; font-family:var(--font-sans);
+    transition:all .2s;
+  }
+  .v4-gate-btn-pro:hover { border-color:rgba(255,255,255,0.4); }
+  .v4-gate-note { font-size:11px; color:var(--text-muted); margin-top:10px; }
   </style>
 </head>
 <body>
@@ -1246,6 +1505,7 @@
   <div id="welcome-back-section" style="display:none;" class="welcome-back-wrap">
     <p class="welcome-back-emoji">✨</p>
     <h2 id="welcome-back-title">Welcome back</h2>
+    <p class="wb-email" id="welcome-back-email" style="display:none;"></p>
     <p id="welcome-back-sub">Your chart is ready.</p>
     <div class="welcome-back-btns">
       <button class="btn-primary" onclick="viewSavedChart()" id="btn-view-chart"><span id="btn-view-chart-text">View My Chart</span></button>
@@ -1388,6 +1648,54 @@
   <!-- DAEUN ANALYSIS ACCORDION -->
   <div id="daeun-analysis-section" class="daeun-timeline-section reveal-section"></div>
 
+  <!-- DAILY ENERGY SECTION (V4) -->
+  <div id="daily-energy-section" style="display:none;">
+    <div class="de-card" id="de-card">
+      <div class="de-label">TODAY'S ENERGY</div>
+      <div class="de-date" id="de-date"></div>
+      <div class="de-pillar" id="de-pillar">甲寅</div>
+      <div class="de-pillar-name" id="de-pillar-name">Wood Tiger</div>
+      <div class="de-energy-badge de-energy-high" id="de-energy-badge">⚡ High Energy</div>
+      <div class="de-message" id="de-message">
+        Today, the Tiger's wood energy sparks initiative. Best for starting new projects, bold conversations, and creative leaps. Push what you've been delaying.
+      </div>
+      <div class="de-word">DAILY WORD: <span id="de-word">Initiative</span></div>
+      <!-- Blur overlay for free users (shown/hidden by JS) -->
+      <div class="de-blur-overlay" id="de-blur-overlay" style="display:none;">
+        <div class="de-unlock-text">✨ Upgrade to Plus for personalized daily energy — how today's energy interacts with <em>your</em> chart.</div>
+        <button class="de-unlock-btn" onclick="openSubscriptionModal('plus')">Unlock Plus — $6.99/mo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPATIBILITY TRIGGER (V4) -->
+  <div id="compat-trigger-section" style="display:none; margin:20px 0;">
+    <button class="compat-share-btn" onclick="openCompatModal()" style="font-size:14px;">
+      ♡ Check Compatibility
+    </button>
+  </div>
+
+  <!-- V4 SUBSCRIPTION GATE (inline, below results) -->
+  <div id="v4-gate-section" style="display:none;">
+    <div class="v4-gate-block">
+      <div class="v4-gate-blur-content">
+        Your chart reveals patterns most people spend a lifetime trying to understand. The relationship between your day master and your luck cycles shows exactly when — and how — your energy peaks. This is where your destiny becomes actionable...
+      </div>
+      <div class="v4-gate-overlay">
+        <div class="v4-gate-title">✦ Go Deeper ✦</div>
+        <ul class="v4-gate-features">
+          <li>AI-powered daily energy, refreshed every morning</li>
+          <li>Full destiny analysis — 2,000+ words</li>
+          <li>Compatibility matching (궁합)</li>
+          <li>Grand Fortune Cycles (大運)</li>
+        </ul>
+        <button class="v4-gate-btn-plus" onclick="openSubscriptionModal('plus')">✨ Start Plus — $6.99/mo →</button>
+        <button class="v4-gate-btn-pro" onclick="openSubscriptionModal('pro')">🔓 Try Pro — $12.99/mo →</button>
+        <div class="v4-gate-note">Cancel anytime · Secure payment by Lemon Squeezy</div>
+      </div>
+    </div>
+  </div>
+
   <div style="text-align:center;padding:20px 0 10px;">
     <span class="try-another-link" id="try-another-link" onclick="startOver()">Try another person →</span>
   </div>
@@ -1402,6 +1710,149 @@
 </footer>
 
 </div><!-- /app -->
+
+<!-- V4: ONBOARDING EMAIL MODAL -->
+<div id="onboarding-email-overlay">
+  <div class="onboarding-box">
+    <div class="onboarding-eyebrow">✦ BEGIN YOUR JOURNEY</div>
+    <div class="onboarding-title" id="ob-title">Where should we send your chart?</div>
+    <div class="onboarding-sub" id="ob-sub">We'll save your reading across all your devices.</div>
+    <input type="email" id="ob-email-input" class="onboarding-input"
+      placeholder="you@somewhere.com" autocomplete="email"
+      onkeydown="if(event.key==='Enter') handleOnboardingEmail()">
+    <div class="onboarding-helper">🔒 We'll send a magic link — no password needed, ever.</div>
+    <button class="btn-primary" style="width:100%;justify-content:center;" onclick="handleOnboardingEmail()">Send My Link →</button>
+    <div class="onboarding-privacy">🔒 We don't sell data. We don't believe in it.</div>
+    <span class="onboarding-skip" onclick="skipOnboardingEmail()">Skip for now — continue without saving</span>
+  </div>
+</div>
+
+<!-- V4: SUBSCRIPTION MODAL -->
+<div id="subscription-modal-overlay" onclick="closeSubModalIfOverlay(event)">
+  <div class="sub-modal-box" style="position:relative;">
+    <button class="sub-modal-close" onclick="closeSubscriptionModal()">✕</button>
+    <div class="sub-modal-headline" id="sm-headline">"Your birth chart doesn't expire.<br>Neither should your insight."</div>
+    <div class="sub-modal-sub">Choose how deep you want to go.</div>
+    <div class="tier-grid">
+      <!-- FREE -->
+      <div class="tier-card">
+        <div class="tier-name">Peek Inside</div>
+        <div class="tier-tagline">Your four pillars. Your foundation. The beginning.</div>
+        <div class="tier-price">$0 <span>/ forever</span></div>
+        <ul class="tier-features">
+          <li>Full Bazi birth chart (四柱命盤)</li>
+          <li>Core personality reading</li>
+          <li>Dominant element &amp; energy type</li>
+          <li>One-time life path summary</li>
+        </ul>
+        <button class="tier-cta tier-cta-free">Start Free — No Card Needed</button>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;">Always free. No expiration.</div>
+      </div>
+      <!-- PLUS -->
+      <div class="tier-card featured" id="tier-plus-card">
+        <div class="tier-badge">Most Popular</div>
+        <div class="tier-name">Feel the Shift</div>
+        <div class="tier-tagline">Live with your chart. Every day holds a different energy — know yours before it arrives.</div>
+        <div class="tier-price">$6.99 <span>/ month</span></div>
+        <ul class="tier-features">
+          <li>Everything in Free</li>
+          <li>AI-powered deep analysis — Claude reads your chart</li>
+          <li>Daily Energy — your personal forecast, every morning</li>
+          <li>Grand Fortune Cycles (大運) — know your decade</li>
+          <li>Unlimited chart saves across devices</li>
+        </ul>
+        <button class="tier-cta tier-cta-gold" onclick="openPayModal()">Unlock Plus — $6.99/mo</button>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;">Less than a coffee a week. Cancel anytime.</div>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:4px;font-style:italic;">"I check my daily energy before I check my email." — @stellakim_nyc</div>
+      </div>
+      <!-- PRO -->
+      <div class="tier-card" id="tier-pro-card">
+        <div class="tier-badge" style="background:rgba(155,127,212,0.8);color:#fff;">Full Access</div>
+        <div class="tier-name">Know Before It Happens</div>
+        <div class="tier-tagline">Your destiny — and everyone in it. Go beyond self-discovery.</div>
+        <div class="tier-price">$12.99 <span>/ month</span></div>
+        <ul class="tier-features">
+          <li>Everything in Plus</li>
+          <li>Compatibility (궁합) — full analysis with anyone</li>
+          <li>Monthly Destiny Report — a curated letter from your chart</li>
+          <li>Unlimited AI Q&amp;A — ask anything, anytime</li>
+          <li>Shareable Insight Cards — born for virality</li>
+        </ul>
+        <button class="tier-cta tier-cta-outline" onclick="openPayModal()">Go Pro — $12.99/mo</button>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;">$12.99/mo · Billed monthly · Cancel anytime</div>
+      </div>
+    </div>
+    <div class="sub-trust">
+      🔒 Secure checkout via Lemon Squeezy<br>
+      💫 Eastern wisdom. Modern privacy. Your data is yours.<br>
+      ↩ Not feeling it? Cancel in one tap — no forms, no friction.
+    </div>
+    <div class="sub-anchor">Co-Star is $8.99. But it doesn't know your Bazi.</div>
+  </div>
+</div>
+
+<!-- V4: COMPATIBILITY MODAL -->
+<div id="compat-modal-overlay" onclick="closeCompatModalIfOverlay(event)">
+  <div class="compat-box">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+      <div class="compat-title">♡ Compatibility</div>
+      <button class="compat-close" onclick="closeCompatModal()">✕</button>
+    </div>
+    <div class="compat-sub" id="compat-sub">Every connection has a reason. Yours just became readable.</div>
+
+    <!-- Input screen -->
+    <div id="compat-input-screen">
+      <div class="compat-section-label">YOUR PROFILE</div>
+      <div class="compat-my-card" id="compat-my-card">
+        <strong id="compat-my-pillar">辛未</strong> · <span id="compat-my-desc">Metal Goat</span>
+      </div>
+      <div class="compat-section-label" style="margin-bottom:8px;">THEIR BIRTH DATE</div>
+      <div class="compat-selects">
+        <select class="compat-select" id="compat-month">
+          <option value="">Month</option>
+          <option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option>
+          <option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option>
+          <option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option>
+          <option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option>
+        </select>
+        <select class="compat-select" id="compat-day">
+          <option value="">Day</option>
+          <!-- filled by JS -->
+        </select>
+        <select class="compat-select" id="compat-year">
+          <option value="">Year</option>
+          <!-- filled by JS -->
+        </select>
+      </div>
+      <div class="compat-section-label" style="margin-bottom:8px;">THEIR NAME (OPTIONAL)</div>
+      <input type="text" class="compat-name-input" id="compat-name" placeholder="e.g. Alex">
+      <button class="tier-cta tier-cta-gold" style="width:100%;" onclick="calculateCompatibility()">♡ Reveal Compatibility →</button>
+    </div>
+
+    <!-- Result screen -->
+    <div id="compat-result-screen" style="display:none;" class="compat-result-section">
+      <div class="compat-pillars-row">
+        <div class="compat-pillar-me">
+          <span id="cr-my-pillar">辛未</span>
+          <span id="cr-my-name">Me</span>
+        </div>
+        <div class="compat-heart">♡</div>
+        <div class="compat-pillar-them">
+          <span id="cr-their-pillar">甲子</span>
+          <span id="cr-their-name">Alex</span>
+        </div>
+      </div>
+      <div class="compat-score-label">OVERALL COMPATIBILITY</div>
+      <div class="compat-score-main" id="cr-score">82%</div>
+      <div class="compat-score-bar-row" id="cr-bars"></div>
+      <div class="compat-interpretation" id="cr-interpretation"></div>
+      <button class="compat-share-btn" onclick="shareCompatCard()">📤 Share Compatibility Card</button>
+      <div style="text-align:center;margin-top:14px;">
+        <span class="try-another-link" onclick="resetCompatModal()">Try another person →</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- UNLOCK MODAL -->
 <div id="modal-overlay" onclick="closeModalIfOverlay(event)">
@@ -5419,11 +5870,406 @@ async function nativeShare() {
   }, 'image/png');
 }
 
+// ═══════════════════════════════════════════════
+// SECTION V4: MOMENTOR V4 — Phase 1+2 Additions
+// ═══════════════════════════════════════════════
+
+// ── 60갑자 일주 계산 ──────────────────────────
+const SEXAGENARY_CYCLE = (function() {
+  const stems = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+  const branches = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const stemElem = ['Wood','Wood','Fire','Fire','Earth','Earth','Metal','Metal','Water','Water'];
+  const branchAnimal = ['Rat','Ox','Tiger','Rabbit','Dragon','Snake','Horse','Goat','Monkey','Rooster','Dog','Pig'];
+  var cycle = [];
+  for (var i = 0; i < 60; i++) {
+    var s = i % 10, b = i % 12;
+    cycle.push({
+      stem: stems[s], branch: branches[b],
+      element: stemElem[s],
+      english: stemElem[s] + ' ' + branchAnimal[b]
+    });
+  }
+  return cycle;
+})();
+
+function getDayPillar(date) {
+  var BASE = new Date('1924-01-01T00:00:00Z');
+  var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  var diff = Math.round((d - BASE) / 86400000);
+  var index = ((diff % 60) + 60) % 60;
+  return SEXAGENARY_CYCLE[index];
+}
+
+function getDayEnergyLevel(pillar) {
+  // 오행별 에너지 레벨 (간단 룰)
+  var fireElems = { Fire: 'intense', Wood: 'high', Earth: 'medium', Metal: 'medium', Water: 'low' };
+  return fireElems[pillar.element] || 'medium';
+}
+
+function getDayEnergyBadge(level) {
+  var map = {
+    low:    { cls:'de-energy-low',    text:'💧 Reflective Day' },
+    medium: { cls:'de-energy-medium', text:'🌿 Steady Flow' },
+    high:   { cls:'de-energy-high',   text:'⚡ High Energy' },
+    intense:{ cls:'de-energy-intense',text:'🔥 Power Surge' }
+  };
+  return map[level] || map['medium'];
+}
+
+var DAILY_MESSAGES = {
+  Wood:  { message: "Wood energy awakens initiative and growth. This is a day to plant seeds — in relationships, projects, or ideas. The momentum is yours to direct.", word: "Growth" },
+  Fire:  { message: "Fire burns brightest today. Visibility, passion, and bold action are your allies. Say what you mean. Move toward what excites you.", word: "Ignite" },
+  Earth: { message: "Earth energy grounds and nurtures. Slow down enough to notice what's solid in your life. Trust is built in moments like this.", word: "Grounded" },
+  Metal: { message: "Metal's clarity is your weapon today. Cut through confusion, finish half-done things, and speak with precision. Structure serves you now.", word: "Decisive" },
+  Water: { message: "Water flows — so should you. Let ideas arrive without forcing them. This is a day for receiving, not pushing. Listen more than you speak.", word: "Receptive" }
+};
+
+function renderDailyEnergySection(chart) {
+  var section = document.getElementById('daily-energy-section');
+  if (!section) return;
+  section.style.display = '';
+
+  var today = new Date();
+  var pillar = getDayPillar(today);
+  var level = getDayEnergyLevel(pillar);
+  var badge = getDayEnergyBadge(level);
+  var msgs = DAILY_MESSAGES[pillar.element] || DAILY_MESSAGES['Earth'];
+
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dateStr = months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
+
+  document.getElementById('de-date').textContent = dateStr;
+  document.getElementById('de-pillar').textContent = pillar.stem + pillar.branch;
+  document.getElementById('de-pillar-name').textContent = pillar.english;
+
+  var badgeEl = document.getElementById('de-energy-badge');
+  badgeEl.className = 'de-energy-badge ' + badge.cls;
+  badgeEl.textContent = badge.text;
+
+  document.getElementById('de-message').textContent = msgs.message;
+  document.getElementById('de-word').textContent = msgs.word;
+
+  // Free users: show blur overlay
+  var blurEl = document.getElementById('de-blur-overlay');
+  if (blurEl) {
+    blurEl.style.display = AppState.isPremium ? 'none' : '';
+    // Add extra bottom padding when blur shown
+    var card = document.getElementById('de-card');
+    if (card) card.style.paddingBottom = AppState.isPremium ? '28px' : '120px';
+  }
+}
+
+// ── 온보딩 이메일 모달 ──────────────────────────
+function showOnboardingEmailModal() {
+  var overlay = document.getElementById('onboarding-email-overlay');
+  if (overlay) overlay.classList.add('open');
+}
+
+function closeOnboardingEmailModal() {
+  var overlay = document.getElementById('onboarding-email-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function handleOnboardingEmail() {
+  var input = document.getElementById('ob-email-input');
+  var email = input ? input.value.trim() : '';
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email || !emailRe.test(email)) {
+    showToast('Please enter a valid email address.', 'error');
+    return;
+  }
+  localStorage.setItem('momentor_email', email);
+  closeOnboardingEmailModal();
+  showEmailBanner(email);
+  // Proceed to birth input
+  smoothScrollTo('section-input');
+}
+
+function skipOnboardingEmail() {
+  closeOnboardingEmailModal();
+  smoothScrollTo('section-input');
+}
+
+function showEmailBanner(email) {
+  var existing = document.getElementById('email-confirm-banner');
+  if (existing) existing.remove();
+  var banner = document.createElement('div');
+  banner.id = 'email-confirm-banner';
+  banner.className = 'email-confirm-banner';
+  banner.innerHTML = '✉️ Check <strong style="margin:0 4px;">' + email + '</strong> to save your reading across devices <button onclick="this.parentElement.remove()">✕</button>';
+  document.body.prepend(banner);
+}
+
+// ── 구독 모달 ──────────────────────────
+function openSubscriptionModal(tier) {
+  var overlay = document.getElementById('subscription-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  // Highlight the selected tier
+  var plusCard = document.getElementById('tier-plus-card');
+  var proCard = document.getElementById('tier-pro-card');
+  if (plusCard) plusCard.style.borderColor = tier === 'plus' ? 'rgba(212,165,116,0.7)' : '';
+  if (proCard) proCard.style.borderColor = tier === 'pro' ? 'rgba(155,127,212,0.7)' : '';
+}
+
+function closeSubscriptionModal() {
+  var overlay = document.getElementById('subscription-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function closeSubModalIfOverlay(e) {
+  if (e.target.id === 'subscription-modal-overlay') closeSubscriptionModal();
+}
+
+// ── 궁합 모달 ──────────────────────────
+function openCompatModal() {
+  // Pro required check
+  if (!AppState.isPremium) {
+    openSubscriptionModal('pro');
+    showToast('Compatibility requires a Pro subscription.', 'info');
+    return;
+  }
+  var overlay = document.getElementById('compat-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+
+  // Populate my info
+  var chart = AppState.chart;
+  if (chart) {
+    var stem = chart.dayMaster.stem;
+    var branch = chart.pillars.day.branch;
+    document.getElementById('compat-my-pillar').textContent = stem + branch;
+    var elemIdx = STEMS.indexOf(stem);
+    var elemName = elemIdx >= 0 ? STEM_ELEMENTS[elemIdx] : '';
+    var branchIdx = BRANCHES.indexOf(branch);
+    var animalName = branchIdx >= 0 ? BRANCH_ANIMALS[branchIdx] : '';
+    document.getElementById('compat-my-desc').textContent = elemName + ' ' + animalName;
+  }
+
+  // Fill year options
+  var yearSel = document.getElementById('compat-year');
+  if (yearSel && yearSel.options.length <= 1) {
+    for (var y = 2010; y >= 1950; y--) {
+      var opt = document.createElement('option');
+      opt.value = y; opt.textContent = y;
+      yearSel.appendChild(opt);
+    }
+  }
+  // Fill day options
+  var daySel = document.getElementById('compat-day');
+  if (daySel && daySel.options.length <= 1) {
+    for (var d = 1; d <= 31; d++) {
+      var opt2 = document.createElement('option');
+      opt2.value = d; opt2.textContent = d;
+      daySel.appendChild(opt2);
+    }
+  }
+}
+
+function closeCompatModal() {
+  var overlay = document.getElementById('compat-modal-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function closeCompatModalIfOverlay(e) {
+  if (e.target.id === 'compat-modal-overlay') closeCompatModal();
+}
+
+function resetCompatModal() {
+  document.getElementById('compat-input-screen').style.display = '';
+  document.getElementById('compat-result-screen').style.display = 'none';
+  document.getElementById('compat-month').value = '';
+  document.getElementById('compat-day').value = '';
+  document.getElementById('compat-year').value = '';
+  document.getElementById('compat-name').value = '';
+}
+
+function calculateCompatibility() {
+  var month = parseInt(document.getElementById('compat-month').value);
+  var day = parseInt(document.getElementById('compat-day').value);
+  var year = parseInt(document.getElementById('compat-year').value);
+  var name = (document.getElementById('compat-name').value || '').trim() || 'Them';
+
+  if (!month || !day || !year) {
+    showToast('Please select a complete birth date.', 'error');
+    return;
+  }
+
+  var myChart = AppState.chart;
+  if (!myChart) { showToast('Please calculate your chart first.', 'error'); return; }
+
+  // Calculate their day pillar
+  var theirDate = new Date(year, month - 1, day);
+  var theirPillar = getDayPillar(theirDate);
+
+  // My pillar
+  var myStem = myChart.dayMaster.stem;
+  var myBranch = myChart.pillars.day.branch;
+  var myElemIdx = STEMS.indexOf(myStem);
+  var myElem = myElemIdx >= 0 ? STEM_ELEMENTS[myElemIdx] : 'Earth';
+  var theirStemIdx = STEMS.indexOf(theirPillar.stem);
+  var theirElem = theirStemIdx >= 0 ? STEM_ELEMENTS[theirStemIdx] : 'Earth';
+
+  // Static compatibility scoring (Phase 3 will have AI)
+  var scores = computeCompatScores(myElem, theirElem);
+
+  // Show result
+  document.getElementById('compat-input-screen').style.display = 'none';
+  var resultScreen = document.getElementById('compat-result-screen');
+  resultScreen.style.display = '';
+
+  document.getElementById('cr-my-pillar').textContent = myStem + myBranch;
+  document.getElementById('cr-my-name').textContent = AppState.userName || 'Me';
+  document.getElementById('cr-their-pillar').textContent = theirPillar.stem + theirPillar.branch;
+  document.getElementById('cr-their-name').textContent = name;
+  document.getElementById('cr-score').textContent = scores.overall + '%';
+
+  // Bars
+  var bars = [
+    { label: 'Love', val: scores.love },
+    { label: 'Work', val: scores.work },
+    { label: 'Growth', val: scores.growth }
+  ];
+  var barColors = { Love:'#e88fa0', Work:'#d4a574', Growth:'#5de8a0' };
+  document.getElementById('cr-bars').innerHTML = bars.map(function(b) {
+    return '<div>' +
+      '<div class="compat-bar-label"><span>' + b.label + '</span><span>' + b.val + '%</span></div>' +
+      '<div class="compat-bar-track"><div class="compat-bar-fill" style="width:' + b.val + '%;background:' + (barColors[b.label]||'#d4a574') + ';"></div></div>' +
+      '</div>';
+  }).join('');
+
+  // Interpretation
+  document.getElementById('cr-interpretation').textContent = getCompatInterpretation(myElem, theirElem, scores.overall);
+
+  // Store for share
+  window._lastCompatData = { myPillar: myStem+myBranch, theirPillar: theirPillar.stem+theirPillar.branch, score: scores.overall, name: name };
+}
+
+// Element relationship scoring
+var ELEM_RELATION = {
+  'Wood-Wood':   { ov:72, love:70, work:75, growth:70 },
+  'Wood-Fire':   { ov:88, love:90, work:82, growth:92 },
+  'Wood-Earth':  { ov:58, love:55, work:60, growth:60 },
+  'Wood-Metal':  { ov:45, love:42, work:50, growth:42 },
+  'Wood-Water':  { ov:82, love:85, work:78, growth:84 },
+  'Fire-Wood':   { ov:88, love:90, work:82, growth:92 },
+  'Fire-Fire':   { ov:65, love:70, work:58, growth:68 },
+  'Fire-Earth':  { ov:80, love:78, work:82, growth:80 },
+  'Fire-Metal':  { ov:52, love:48, work:55, growth:54 },
+  'Fire-Water':  { ov:40, love:38, work:44, growth:40 },
+  'Earth-Wood':  { ov:58, love:55, work:60, growth:60 },
+  'Earth-Fire':  { ov:80, love:78, work:82, growth:80 },
+  'Earth-Earth': { ov:70, love:68, work:72, growth:70 },
+  'Earth-Metal': { ov:85, love:82, work:88, growth:84 },
+  'Earth-Water': { ov:55, love:52, work:58, growth:56 },
+  'Metal-Wood':  { ov:45, love:42, work:50, growth:42 },
+  'Metal-Fire':  { ov:52, love:48, work:55, growth:54 },
+  'Metal-Earth': { ov:85, love:82, work:88, growth:84 },
+  'Metal-Metal': { ov:62, love:60, work:65, growth:62 },
+  'Metal-Water': { ov:88, love:90, work:85, growth:88 },
+  'Water-Wood':  { ov:82, love:85, work:78, growth:84 },
+  'Water-Fire':  { ov:40, love:38, work:44, growth:40 },
+  'Water-Earth': { ov:55, love:52, work:58, growth:56 },
+  'Water-Metal': { ov:88, love:90, work:85, growth:88 },
+  'Water-Water': { ov:68, love:72, work:62, growth:70 }
+};
+
+function computeCompatScores(myElem, theirElem) {
+  var key = myElem + '-' + theirElem;
+  var base = ELEM_RELATION[key] || { ov:65, love:63, work:67, growth:65 };
+  return { overall: base.ov, love: base.love, work: base.work, growth: base.growth };
+}
+
+var COMPAT_INTERPRETATIONS = {
+  high: function(myE, theirE) {
+    return myE + ' and ' + theirE + ' share a natural harmony — one that doesn\'t require effort to feel. Your energies amplify each other in ways that create both warmth and momentum. Together, you build more than you could alone.';
+  },
+  medium: function(myE, theirE) {
+    return myE + ' and ' + theirE + ' create a dynamic tension. There\'s genuine attraction, but also places where your energies diverge. This is a relationship that grows through honest communication and respect for difference.';
+  },
+  low: function(myE, theirE) {
+    return myE + ' meets ' + theirE + ' with friction. This doesn\'t mean impossibility — it means intention is required. The challenges between you can forge something rare, if both people are willing to do the work.';
+  }
+};
+
+function getCompatInterpretation(myElem, theirElem, score) {
+  if (score >= 78) return COMPAT_INTERPRETATIONS.high(myElem, theirElem);
+  if (score >= 58) return COMPAT_INTERPRETATIONS.medium(myElem, theirElem);
+  return COMPAT_INTERPRETATIONS.low(myElem, theirElem);
+}
+
+function shareCompatCard() {
+  var data = window._lastCompatData;
+  if (!data) { showToast('No compatibility data to share.', 'error'); return; }
+  var text = 'Our cosmic compatibility: ' + data.score + '%!\n' + data.myPillar + ' + ' + data.theirPillar + '\nAnalyzed by Momentor · momentor.app';
+  if (navigator.share) {
+    navigator.share({ title: 'Momentor — Cosmic Compatibility', text: text, url: 'https://momentor.app' })
+      .catch(function(){});
+  } else {
+    // Fallback: copy to clipboard
+    navigator.clipboard && navigator.clipboard.writeText(text)
+      .then(function() { showToast('Copied to clipboard!', 'success'); })
+      .catch(function() { showToast('Share: ' + text, 'info'); });
+  }
+}
+
+// ── Welcome Back 개선: 이메일 표시 ──────────────────────────
+(function patchShowWelcomeBack() {
+  var _orig = window.showWelcomeBack;
+  if (typeof _orig !== 'function') return;
+  window.showWelcomeBack = function(userData) {
+    _orig(userData);
+    var emailEl = document.getElementById('welcome-back-email');
+    var savedEmail = localStorage.getItem('momentor_email');
+    var name = userData.name || '';
+    if (emailEl && savedEmail) {
+      emailEl.textContent = (name ? 'Welcome back, ' + name + ' · ' : '') + savedEmail;
+      emailEl.style.display = '';
+    } else if (emailEl) {
+      emailEl.style.display = 'none';
+    }
+  };
+})();
+
+// ── Results 페이지: V4 섹션 표시 ──────────────────────────
+(function patchRenderResults() {
+  var _origRender = window.renderResults;
+  if (typeof _origRender !== 'function') return;
+  window.renderResults = function(chart) {
+    _origRender.apply(this, arguments);
+    // Show daily energy section
+    renderDailyEnergySection(chart);
+    // Show compat trigger
+    var compatTrigger = document.getElementById('compat-trigger-section');
+    if (compatTrigger) compatTrigger.style.display = '';
+    // Show V4 gate (only for free users)
+    var gateSection = document.getElementById('v4-gate-section');
+    if (gateSection) gateSection.style.display = AppState.isPremium ? 'none' : '';
+  };
+})();
+
+// ── Hero CTA: 온보딩 이메일 모달으로 변경 ──────────────────────────
+(function patchHeroCta() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var heroCta = document.getElementById('hero-cta');
+    if (heroCta) {
+      heroCta.onclick = function() {
+        var email = localStorage.getItem('momentor_email');
+        if (!email) {
+          showOnboardingEmailModal();
+        } else {
+          smoothScrollTo('section-input');
+        }
+      };
+    }
+  });
+})();
+
 </script>
 <div id="sticky-cta-bar" class="sticky-cta-bar" style="display:none;">
   <div class="sticky-cta-inner">
     <span class="sticky-cta-text" id="sticky-cta-text">✦ Your Full Reading</span>
-    <button class="sticky-cta-btn" id="sticky-cta-btn" onclick="openPayModal()">$4.99 · Unlock →</button>
+    <button class="sticky-cta-btn" id="sticky-cta-btn" onclick="openSubscriptionModal('plus')">$6.99/mo · Unlock →</button>
     <button class="sticky-cta-close" onclick="document.getElementById('sticky-cta-bar').style.display='none'" title="Dismiss">✕</button>
   </div>
 </div>
