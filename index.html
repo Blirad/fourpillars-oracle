@@ -3644,7 +3644,7 @@ function renderResults(chart) {
         var isKoS = AppState.language === 'ko';
         var stemS = AppState.chart && AppState.chart.dayMaster ? AppState.chart.dayMaster.stem : '';
         document.getElementById('sticky-cta-text').textContent =
-          isKoS ? `✦ ${stemS}${stemS?'의':''} 전체 감명` : `✦ ${stemS ? stemS+' · ' : ''}Full Reading`;
+          isKoS ? `✦ ${stemS ? stemS+' · ' : ''}풀 리딩 잠금 해제` : `✦ ${stemS ? stemS+' · ' : ''}Full Reading`;
         document.getElementById('sticky-cta-btn').textContent =
           isKoS ? '₩6,900 · 열기 →' : '$4.99 · See What\'s Coming →';
         bar.style.display = 'block';
