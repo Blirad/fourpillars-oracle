@@ -191,7 +191,7 @@
       border:1px solid rgba(255,255,255,.1);
       border-radius:10px;
       color:var(--text-primary);
-      font-size:15px;padding:12px 14px;
+      font-size:16px;padding:12px 14px;
       font-family:var(--font-sans);
       transition:border-color .2s;
       -webkit-appearance:none;appearance:none;
@@ -1248,7 +1248,7 @@
   .compat-select:focus { border-color:var(--gold); }
   .compat-name-input {
     width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
-    border-radius:10px; padding:12px 16px; color:var(--text-primary); font-size:15px;
+    border-radius:10px; padding:12px 16px; color:var(--text-primary); font-size:16px;
     font-family:var(--font-sans); outline:none; margin-bottom:20px;
   }
   .compat-name-input:focus { border-color:var(--gold); box-shadow:0 0 0 2px rgba(212,165,116,0.1); }
@@ -5169,9 +5169,14 @@ function unlockPremiumContent() {
 
 function checkPaymentReturn() {
   var params = new URLSearchParams(window.location.search);
+  // 서버 검증 전 임시 방어: URL 파라미터만으로는 잠금 해제 불가
+  // Lemon Squeezy 웹훅 완료 후 실제 검증 로직으로 교체 예정
   if (params.get('payment') === 'success') {
-    unlockPremiumContent();
-    window.history.replaceState({}, '', window.location.pathname);
+    // URL에서 즉시 파라미터 제거 (재사용 방지)
+    const cleanUrl = window.location.pathname;
+    window.history.replaceState({}, '', cleanUrl);
+    // 결제 완료 토스트만 표시 (실제 잠금 해제는 LS 웹훅 대기)
+    showToast('info', '✨', AppState.language === 'ko' ? '결제 확인 중입니다. 잠시 후 잠금이 해제됩니다.' : 'Verifying payment… your reading will unlock shortly.');
   } else if (params.get('payment') === 'cancel') {
     console.log('[Momentor] 결제 취소됨');
     window.history.replaceState({}, '', window.location.pathname);
@@ -5893,7 +5898,8 @@ const SEXAGENARY_CYCLE = (function() {
 })();
 
 function getDayPillar(date) {
-  var BASE = new Date('1924-01-01T00:00:00Z');
+  // 기준일 2024-01-01 = 甲子(0번)
+  var BASE = new Date('2024-01-01T00:00:00Z');
   var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   var diff = Math.round((d - BASE) / 86400000);
   var index = ((diff % 60) + 60) % 60;
@@ -5917,11 +5923,31 @@ function getDayEnergyBadge(level) {
 }
 
 var DAILY_MESSAGES = {
-  Wood:  { message: "Wood energy awakens initiative and growth. This is a day to plant seeds — in relationships, projects, or ideas. The momentum is yours to direct.", word: "Growth" },
-  Fire:  { message: "Fire burns brightest today. Visibility, passion, and bold action are your allies. Say what you mean. Move toward what excites you.", word: "Ignite" },
-  Earth: { message: "Earth energy grounds and nurtures. Slow down enough to notice what's solid in your life. Trust is built in moments like this.", word: "Grounded" },
-  Metal: { message: "Metal's clarity is your weapon today. Cut through confusion, finish half-done things, and speak with precision. Structure serves you now.", word: "Decisive" },
-  Water: { message: "Water flows — so should you. Let ideas arrive without forcing them. This is a day for receiving, not pushing. Listen more than you speak.", word: "Receptive" }
+  Wood:  {
+    en: "Wood energy flows today — ideal for growth, new beginnings, and creative expansion.",
+    ko: "오늘은 木의 기운 — 성장, 새로운 시작, 창의적 확장에 유리한 날.",
+    word: "Growth"
+  },
+  Fire:  {
+    en: "Fire energy ignites today — passion, visibility, and bold action are favored.",
+    ko: "오늘은 火의 기운 — 열정, 주목, 대담한 행동이 빛을 발하는 날.",
+    word: "Ignite"
+  },
+  Earth: {
+    en: "Earth energy grounds today — focus on stability, relationships, and practical matters.",
+    ko: "오늘은 土의 기운 — 안정, 관계, 현실적인 문제에 집중하는 날.",
+    word: "Grounded"
+  },
+  Metal: {
+    en: "Metal energy sharpens today — precision, decision-making, and letting go.",
+    ko: "오늘은 金의 기운 — 정밀함, 결단, 비워내기에 좋은 날.",
+    word: "Decisive"
+  },
+  Water: {
+    en: "Water energy deepens today — reflection, intuition, and going with the flow.",
+    ko: "오늘은 水의 기운 — 성찰, 직관, 흐름에 맡기는 날.",
+    word: "Receptive"
+  }
 };
 
 function renderDailyEnergySection(chart) {
@@ -5934,6 +5960,7 @@ function renderDailyEnergySection(chart) {
   var level = getDayEnergyLevel(pillar);
   var badge = getDayEnergyBadge(level);
   var msgs = DAILY_MESSAGES[pillar.element] || DAILY_MESSAGES['Earth'];
+  var lang = (AppState && AppState.language === 'ko') ? 'ko' : 'en';
 
   var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   var dateStr = months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
@@ -5946,7 +5973,7 @@ function renderDailyEnergySection(chart) {
   badgeEl.className = 'de-energy-badge ' + badge.cls;
   badgeEl.textContent = badge.text;
 
-  document.getElementById('de-message').textContent = msgs.message;
+  document.getElementById('de-message').textContent = msgs[lang] || msgs.en;
   document.getElementById('de-word').textContent = msgs.word;
 
   // Free users: show blur overlay
