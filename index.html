@@ -1511,9 +1511,8 @@
 
   <!-- Step Indicator -->
   <div class="step-indicator-bar" id="step-indicator-bar">
-    <div class="step-dot active" id="sdot-1">1</div>
-    <div class="step-line" id="sline-1"></div>
-    <div class="step-dot" id="sdot-2">2</div>
+    <div class="step-dot active" id="sdot-1"></div>
+    <div class="step-dot" id="sdot-2"></div>
   </div>
 
   <!-- STEP 1: Name + Birth Date + Gender -->
@@ -3634,19 +3633,23 @@ function initForm() {
 
 // ─── 2-STEP FORM NAV ───
 function goFormStep2() {
+  const name = document.getElementById('inp-name').value.trim();
   const year = document.getElementById('inp-year').value;
   const month = document.getElementById('inp-month').value;
   const day = document.getElementById('inp-day').value;
+  if (!name) { showToast('이름을 입력해주세요', 'error'); return; }
   if (!year || !month || !day) {
     showToast('생년월일을 모두 입력해주세요 📅', 'error');
     return;
   }
-  document.getElementById('step-form-1').style.display = 'none';
-  document.getElementById('step-form-2').style.display = 'block';
+  const sf1 = document.getElementById('step-form-1');
+  const sf2 = document.getElementById('step-form-2');
+  sf1.style.display = 'none';
+  sf2.style.display = 'block';
+  sf2.style.opacity = '0';
+  requestAnimationFrame(() => { sf2.style.transition = 'opacity .35s ease'; sf2.style.opacity = '1'; });
   const d1 = document.getElementById('sdot-1');
-  if (d1) { d1.classList.remove('active'); d1.classList.add('done'); d1.textContent = '✓'; }
-  const l1 = document.getElementById('sline-1');
-  if (l1) l1.classList.add('done');
+  if (d1) { d1.classList.remove('active'); d1.classList.add('done'); }
   const d2 = document.getElementById('sdot-2');
   if (d2) d2.classList.add('active');
   window.scrollTo(0, 0);
@@ -3656,9 +3659,7 @@ function goFormStep1() {
   document.getElementById('step-form-2').style.display = 'none';
   document.getElementById('step-form-1').style.display = 'block';
   const d1 = document.getElementById('sdot-1');
-  if (d1) { d1.classList.add('active'); d1.classList.remove('done'); d1.textContent = '1'; }
-  const l1 = document.getElementById('sline-1');
-  if (l1) l1.classList.remove('done');
+  if (d1) { d1.classList.add('active'); d1.classList.remove('done'); }
   const d2 = document.getElementById('sdot-2');
   if (d2) d2.classList.remove('active');
   window.scrollTo(0, 0);
