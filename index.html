@@ -495,11 +495,10 @@
       margin-bottom:16px;overflow:hidden;
     }
     .paid-preview{
-      padding:24px;filter:blur(6px);
+      padding:24px;
       pointer-events:none;user-select:none;
-      brightness:.6;
-      -webkit-filter:blur(6px) brightness(.6);
-      filter:blur(6px) brightness(.6);
+      -webkit-mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);
+      mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);
     }
     .paid-preview-text{font-size:14px;color:var(--text-secondary);line-height:1.9;}
     .paid-lock{
@@ -951,7 +950,7 @@
     .daeun-tl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin:16px 0;}
     .daeun-tl-item{position:relative;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px 12px;text-align:center;}
     .daeun-tl-item.current{border-color:rgba(232,197,71,0.6);box-shadow:0 0 16px rgba(232,197,71,0.15);}
-    .daeun-tl-item.locked{filter:blur(3px);pointer-events:none;}
+    .daeun-tl-item.locked{-webkit-mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);pointer-events:none;}
     .daeun-tl-blur-overlay{position:absolute;inset:0;border-radius:12px;cursor:pointer;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:20px;}
     .daeun-tl-year{font-size:12px;font-weight:700;margin-bottom:2px;}
     .daeun-tl-age{font-size:10px;color:rgba(255,255,255,0.4);margin-bottom:6px;}
@@ -1029,7 +1028,7 @@
   .dm-acc-title{flex:1;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:rgba(255,255,255,0.9);line-height:1.3;}
   .dm-acc-chevron{font-size:12px;color:rgba(255,255,255,0.4);transition:transform .3s;}
   .dm-acc-item.open .dm-acc-chevron{transform:rotate(180deg);}
-  .dm-acc-locked{opacity:0.75;}
+  .dm-acc-locked{opacity:0.75;-webkit-mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);mask-image:linear-gradient(to bottom, black 0%, black 35%, transparent 85%);pointer-events:none;}
   .dm-acc-locked:hover{border-color:rgba(var(--dm-accent-rgb,240,184,96),0.5);box-shadow:0 0 16px rgba(var(--dm-accent-rgb,240,184,96),0.15);opacity:1;}
   .dm-acc-lock{margin-left:auto;font-size:14px;}
   .dm-acc-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(0.4,0,0.2,1);}
@@ -1362,6 +1361,47 @@
   }
   .v4-gate-btn-pro:hover { border-color:rgba(255,255,255,0.4); }
   .v4-gate-note { font-size:11px; color:var(--text-muted); margin-top:10px; }
+
+  /* ─── STEP INDICATOR ─── */
+  .step-indicator-bar{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px 20px 0;}
+  .step-dot{width:6px;height:6px;border-radius:50%;background:rgba(232,197,71,0.3);display:inline-block;transition:background .3s;}
+  .step-dot.active{background:var(--gold);}
+  .step-dot.done{background:var(--gold);}
+  .step-line{flex:1;height:1px;max-width:48px;background:rgba(255,255,255,.1);margin:0 4px;transition:background .3s;}
+  .step-line.done{background:rgba(232,197,71,.4);}
+
+  /* ─── GENDER BUTTON (2-step style) ─── */
+  .gender-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .gender-btn-2{padding:14px 10px;border-radius:12px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:var(--text-secondary);cursor:pointer;transition:all .25s;font-family:var(--font-sans);text-align:center;min-height:52px;}
+  .gender-btn-2:hover{background:rgba(255,255,255,.07);}
+  .gender-btn-2.active{border-color:rgba(232,197,71,.5);background:rgba(232,197,71,.08);color:var(--text-primary);}
+  .gender-emoji{font-size:20px;display:block;margin-bottom:3px;}
+  .gender-label-main{font-size:13px;font-weight:700;display:block;}
+  .gender-sublabel{font-size:11px;color:var(--text-muted);display:block;margin-top:1px;}
+
+  /* ─── MICROCOPY ─── */
+  .microcopy{text-align:center;font-size:12px;color:var(--text-muted);margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:6px;}
+  .microcopy::before,.microcopy::after{content:'';display:block;width:20px;height:1px;background:rgba(255,255,255,.1);}
+
+  /* ─── TOUCH TARGETS ─── */
+  .form-control{min-height:52px;}
+  .btn-primary{min-height:52px;}
+  .gender-btn{min-height:52px;}
+
+  /* ─── INLINE WAITLIST SECTION ─── */
+  .inline-waitlist-section{background:linear-gradient(135deg,rgba(240,184,96,.06) 0%,rgba(155,127,212,.04) 100%);border:1px solid rgba(232,197,71,.25);border-radius:var(--radius-lg);padding:24px 20px;margin:24px 16px;text-align:center;}
+  .inline-waitlist-icon{font-size:32px;margin-bottom:10px;}
+  .inline-waitlist-title{font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--text-primary);margin-bottom:6px;}
+  .inline-waitlist-sub{font-size:13px;color:var(--text-secondary);line-height:1.6;margin-bottom:16px;}
+  .inline-waitlist-form{display:flex;gap:8px;}
+  .inline-waitlist-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--text-primary);font-size:15px;padding:11px 14px;font-family:var(--font-sans);}
+  .inline-waitlist-input:focus{outline:none;border-color:rgba(232,197,71,.4);}
+  .inline-waitlist-input::placeholder{color:var(--text-muted);}
+  .inline-waitlist-submit{padding:11px 18px;background:linear-gradient(135deg,var(--gold),var(--gold-soft));border:none;border-radius:10px;color:#1a1020;font-weight:700;font-size:14px;cursor:pointer;font-family:var(--font-sans);white-space:nowrap;}
+  .inline-waitlist-note{font-size:11px;color:var(--text-muted);margin-top:10px;}
+
+  /* ─── STEP FORM SECTION ─── */
+  #step-form-1,#step-form-2{max-width:520px;margin:0 auto;padding:0 16px 60px;}
   </style>
 </head>
 <body>
@@ -1468,10 +1508,20 @@
 
 <!-- INPUT FORM SECTION -->
 <section id="section-input">
-  <div class="form-section">
+
+  <!-- Step Indicator -->
+  <div class="step-indicator-bar" id="step-indicator-bar">
+    <div class="step-dot active" id="sdot-1">1</div>
+    <div class="step-line" id="sline-1"></div>
+    <div class="step-dot" id="sdot-2">2</div>
+  </div>
+
+  <!-- STEP 1: Name + Birth Date + Gender -->
+  <div id="step-form-1">
     <div class="form-card">
-      <div class="form-title" id="form-title">Enter Your Birth Information</div>
-      <div class="form-subtitle" id="form-subtitle">All fields are required for your complete Four Pillars chart</div>
+      <div class="form-eyebrow" style="font-size:10px;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px;" id="step1-eyebrow">STEP 1 OF 2</div>
+      <div class="form-title" id="form-title">언제 태어나셨나요?</div>
+      <div class="form-subtitle" id="form-subtitle">생년월일과 성별을 입력해주세요</div>
 
       <!-- Name -->
       <div class="form-group">
@@ -1480,43 +1530,57 @@
         <div class="form-error" id="err-name"></div>
       </div>
 
-      <!-- Gender -->
-      <div class="form-group">
-        <label class="form-label" id="lbl-gender">GENDER</label>
-        <div class="gender-row">
-          <button type="button" class="gender-btn active" id="btn-male" data-gender="M" onclick="selectGender('M')">♂ Male</button>
-          <button type="button" class="gender-btn" id="btn-female" data-gender="F" onclick="selectGender('F')">♀ Female</button>
-        </div>
-        <div class="form-error" id="err-gender"></div>
-      </div>
-
-      <!-- Birth Date -->
+      <!-- Birth Date (number inputs) -->
       <div class="form-group">
         <label class="form-label" id="lbl-birthdate">DATE OF BIRTH</label>
         <div class="form-row form-row-3">
-          <select id="inp-year" class="form-control">
-            <option value="">Year</option>
-          </select>
-          <select id="inp-month" class="form-control">
-            <option value="">Month</option>
-          </select>
-          <select id="inp-day" class="form-control">
-            <option value="">Day</option>
-          </select>
+          <input type="number" inputmode="numeric" id="inp-year" class="form-control" placeholder="Year" min="1900" max="2025" style="text-align:center;">
+          <input type="number" inputmode="numeric" id="inp-month" class="form-control" placeholder="MM" min="1" max="12" style="text-align:center;">
+          <input type="number" inputmode="numeric" id="inp-day" class="form-control" placeholder="DD" min="1" max="31" style="text-align:center;">
         </div>
         <div class="form-error" id="err-date"></div>
       </div>
 
-      <!-- Birth Time -->
+      <!-- Gender (updated labels) -->
+      <div class="form-group">
+        <label class="form-label" id="lbl-gender">음양의 기운</label>
+        <div class="gender-grid-2">
+          <button type="button" class="gender-btn-2 active" id="btn-male" data-gender="M" onclick="selectGender('M')">
+            <span class="gender-emoji">☀️</span>
+            <span class="gender-label-main" id="gender-male-label">양(陽) · 남성</span>
+            <span class="gender-sublabel" id="gender-male-sub">Yang · Male</span>
+          </button>
+          <button type="button" class="gender-btn-2" id="btn-female" data-gender="F" onclick="selectGender('F')">
+            <span class="gender-emoji">🌙</span>
+            <span class="gender-label-main" id="gender-female-label">음(陰) · 여성</span>
+            <span class="gender-sublabel" id="gender-female-sub">Yin · Female</span>
+          </button>
+        </div>
+        <div class="form-error" id="err-gender"></div>
+      </div>
+
+      <div class="microcopy" id="step1-microcopy">518,400가지 운명 중 당신의 것을 찾아드립니다</div>
+      <div class="form-cta">
+        <button class="btn-primary" id="btn-step1-next" onclick="goFormStep2()" style="width:100%;justify-content:center;">
+          <span id="btn-step1-text">다음 단계로 →</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: Birth Time + Submit -->
+  <div id="step-form-2" style="display:none;">
+    <div class="form-card">
+      <div class="form-eyebrow" style="font-size:10px;letter-spacing:.18em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px;" id="step2-eyebrow">STEP 2 OF 2</div>
+      <div class="form-title" id="form-title-2">태어난 시간을 알고 계신가요?</div>
+      <div class="form-subtitle" id="form-subtitle-2">시간을 알수록 더 정확한 분석이 가능합니다</div>
+
+      <!-- Birth Time (number inputs) -->
       <div class="form-group" id="time-group">
         <label class="form-label" id="lbl-birthtime">BIRTH TIME</label>
         <div class="form-row" style="display:flex;align-items:center;gap:8px;" id="time-inputs">
-          <select id="inp-hour" class="form-control" style="flex:1">
-            <option value="">Hour (0-23)</option>
-          </select>
-          <select id="inp-minute" class="form-control" style="flex:1">
-            <option value="">Minute (0-59)</option>
-          </select>
+          <input type="number" inputmode="numeric" id="inp-hour" class="form-control" placeholder="HH (0-23)" min="0" max="23" style="flex:1;text-align:center;">
+          <input type="number" inputmode="numeric" id="inp-minute" class="form-control" placeholder="MM (0-59)" min="0" max="59" style="flex:1;text-align:center;">
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;color:var(--text-secondary);font-size:13px;flex-shrink:0">
             <input type="checkbox" id="chk-notime" onchange="toggleUnknownTime(this.checked)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--gold)">
             <span id="lbl-notime">모름</span>
@@ -1525,11 +1589,14 @@
         <div class="form-error" id="err-time"></div>
       </div>
 
-      <!-- Submit -->
+      <div class="microcopy" id="step2-microcopy">시간 없이도 분석 가능합니다 · 추후 업데이트 가능</div>
       <div class="form-cta">
-        <button class="btn-primary" id="btn-calculate" onclick="calculateChart()">
-          <span id="btn-calc-text">Reveal My Chart →</span>
+        <button class="btn-primary" id="btn-calculate" onclick="calculateChart()" style="width:100%;justify-content:center;">
+          <span id="btn-calc-text">✦ 나의 사주 분석하기</span>
         </button>
+      </div>
+      <div style="margin-top:10px;text-align:center;">
+        <button onclick="goFormStep1()" style="background:none;border:1px solid rgba(255,255,255,.15);color:var(--text-secondary);border-radius:14px;padding:13px 28px;font-size:14px;cursor:pointer;font-family:var(--font-sans);font-weight:600;width:100%;">← 이전으로</button>
       </div>
     </div>
   </div>
@@ -1560,6 +1627,43 @@
     <div class="results-date" id="results-date-display"></div>
     <div id="results-hook-text" style="font-size:15px;color:var(--text-secondary);font-style:italic;text-align:center;margin-bottom:16px;display:none;"></div>
     <div id="notime-badge" style="display:none;margin-top:6px;font-size:11px;color:var(--text-muted);opacity:0.7;letter-spacing:.04em"></div>
+  </div>
+
+  <!-- DAY MASTER REVEAL (최상단) -->
+  <div id="day-master-card" class="day-master-card">
+    <div class="dm-bg-char" id="dm-bg-char"></div>
+    <div class="dm-eyebrow" id="dm-eyebrow">YOUR DAY PILLAR · 일주</div>
+    <div class="dm-char-row">
+      <div class="dm-visual-wrap">
+        <div class="dm-bg-char" id="dm-bg-char-inner"></div>
+        <div class="dm-char" id="dm-char"></div>
+        <div class="dm-visual-emoji" id="dm-visual-emoji"></div>
+      </div>
+      <div class="dm-char-info">
+        <div class="dm-eyebrow-inner" id="dm-eyebrow-inner"></div>
+        <div class="dm-element-name" id="dm-element-name"></div>
+        <div class="dm-title" id="dm-title-text"></div>
+      </div>
+    </div>
+    <div class="dm-body" id="dm-body"></div>
+    <div class="dm-strengths-shadows">
+      <div class="dm-ss-card">
+        <div class="dm-ss-title" id="lbl-strengths" style="color:var(--wood)">✦ STRENGTHS</div>
+        <ul class="dm-ss-list" id="dm-strengths"></ul>
+      </div>
+      <div class="dm-ss-card">
+        <div class="dm-ss-title" id="lbl-shadows" style="color:var(--fire)">↯ SHADOW TRAITS</div>
+        <ul class="dm-ss-list" id="dm-shadows"></ul>
+      </div>
+    </div>
+    <div class="dm-keywords" id="dm-keywords"></div>
+    <!-- 공유 버튼 -->
+    <div class="dm-share-row" id="dm-share-row">
+      <button class="dm-share-btn" id="dm-share-btn" onclick="openShareModal()">
+        <span class="dm-share-icon">↗</span>
+        <span class="dm-share-label" id="dm-share-label">Share My Chart</span>
+      </button>
+    </div>
   </div>
 
   <!-- IDENTITY BAR -->
@@ -1602,43 +1706,6 @@
   <!-- ELEMENT INTERPRETATION -->
   <div id="element-interpretation" style="margin-bottom:24px;"></div>
 
-  <!-- DAY MASTER REVEAL -->
-  <div id="day-master-card" class="day-master-card">
-    <div class="dm-bg-char" id="dm-bg-char"></div>
-    <div class="dm-eyebrow" id="dm-eyebrow">YOUR DAY PILLAR · 일주</div>
-    <div class="dm-char-row">
-      <div class="dm-visual-wrap">
-        <div class="dm-bg-char" id="dm-bg-char-inner"></div>
-        <div class="dm-char" id="dm-char"></div>
-        <div class="dm-visual-emoji" id="dm-visual-emoji"></div>
-      </div>
-      <div class="dm-char-info">
-        <div class="dm-eyebrow-inner" id="dm-eyebrow-inner"></div>
-        <div class="dm-element-name" id="dm-element-name"></div>
-        <div class="dm-title" id="dm-title-text"></div>
-      </div>
-    </div>
-    <div class="dm-body" id="dm-body"></div>
-    <div class="dm-strengths-shadows">
-      <div class="dm-ss-card">
-        <div class="dm-ss-title" id="lbl-strengths" style="color:var(--wood)">✦ STRENGTHS</div>
-        <ul class="dm-ss-list" id="dm-strengths"></ul>
-      </div>
-      <div class="dm-ss-card">
-        <div class="dm-ss-title" id="lbl-shadows" style="color:var(--fire)">↯ SHADOW TRAITS</div>
-        <ul class="dm-ss-list" id="dm-shadows"></ul>
-      </div>
-    </div>
-    <div class="dm-keywords" id="dm-keywords"></div>
-    <!-- 공유 버튼 -->
-    <div class="dm-share-row" id="dm-share-row">
-      <button class="dm-share-btn" id="dm-share-btn" onclick="openShareModal()">
-        <span class="dm-share-icon">↗</span>
-        <span class="dm-share-label" id="dm-share-label">Share My Chart</span>
-      </button>
-    </div>
-  </div>
-
   <!-- 공유 모달 -->
   <div id="share-modal-overlay" onclick="closeShareModalIfOverlay(event)"
     style="display:none;position:fixed;inset:0;z-index:250;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;">
@@ -1678,6 +1745,18 @@
     <!-- Filled by renderAllPaid() -->
   </div>
 
+  <!-- INLINE WAITLIST SECTION -->
+  <div class="inline-waitlist-section" id="inline-waitlist-section">
+    <div class="inline-waitlist-icon">🌙</div>
+    <div class="inline-waitlist-title" id="iwl-title">전체 분석 리포트 예약</div>
+    <div class="inline-waitlist-sub" id="iwl-sub">연애운, 재물운, 직업운, 10년 대운 전체 분석<br>얼리버드 50% 할인 · 지금 예약하세요</div>
+    <div class="inline-waitlist-form">
+      <input type="email" class="inline-waitlist-input" id="inline-waitlist-email" placeholder="이메일을 입력하세요">
+      <button class="inline-waitlist-submit" onclick="submitInlineWaitlist()">예약</button>
+    </div>
+    <div class="inline-waitlist-note" id="iwl-note">🔒 스팸 없음 · 언제든 구독 취소 가능</div>
+  </div>
+
   <!-- DAEUN UNIFIED SECTION -->
   <div id="daeun-unified-section" class="reveal-section"></div>
 
@@ -1715,12 +1794,12 @@
         Your chart reveals patterns most people spend a lifetime trying to understand. The relationship between your day master and your luck cycles shows exactly when — and how — your energy peaks. This is where your destiny becomes actionable...
       </div>
       <div class="v4-gate-overlay">
-        <div class="v4-gate-title">✦ Go Deeper ✦</div>
+        <div class="v4-gate-title" id="v4-gate-title">✦ Go Deeper ✦</div>
         <ul class="v4-gate-features">
           <li id="v4-feat-daily">AI-powered daily energy, refreshed every morning</li>
-          <li>Full destiny analysis — 2,000+ words</li>
-          <li>Compatibility matching (궁합)</li>
-          <li>Grand Fortune Cycles (大運)</li>
+          <li id="v4-feat-destiny">Full destiny analysis — 2,000+ words</li>
+          <li id="v4-feat-compat">Compatibility matching (궁합)</li>
+          <li id="v4-feat-daeun">Grand Fortune Cycles (大運)</li>
         </ul>
         <button class="v4-gate-btn-plus" id="v4-btn-plus" onclick="openSubscriptionModal('plus')">✨ Start Plus — $6.99/mo →</button>
         <button class="v4-gate-btn-pro" id="v4-btn-pro" onclick="openSubscriptionModal('pro')">🔓 Try Pro — $12.99/mo →</button>
@@ -2147,9 +2226,9 @@ en: {
   form_title:'Enter Your Birth Information',
   form_subtitle:'Your birth details contain a pattern most people never discover.',
   lbl_name:'YOUR NAME',
-  lbl_gender:'GENDER',
-  gender_male:'♂ Male',
-  gender_female:'♀ Female',
+  lbl_gender:'YIN & YANG',
+  gender_male:'☀️ Yang · Male',
+  gender_female:'🌙 Yin · Female',
   lbl_birthdate:'DATE OF BIRTH',
   lbl_birthtime:'BIRTH TIME',
   lbl_notime:'Unknown',
@@ -2251,9 +2330,9 @@ ko: {
   form_title:'생년월일시를 입력하세요',
   form_subtitle:'당신의 생년월일에는 대부분이 평생 발견하지 못하는 패턴이 담겨 있어요.',
   lbl_name:'이름',
-  lbl_gender:'성별',
-  gender_male:'♂ 남성',
-  gender_female:'♀ 여성',
+  lbl_gender:'음양의 기운',
+  gender_male:'☀️ 양(陽) · 남성',
+  gender_female:'🌙 음(陰) · 여성',
   lbl_birthdate:'생년월일',
   lbl_birthtime:'태어난 시각',
   lbl_notime:'모름',
@@ -3440,7 +3519,13 @@ function applyLanguage() {
   // Form
   el('form-title', L.form_title); el('form-subtitle', L.form_subtitle);
   el('lbl-name', L.lbl_name); el('lbl-gender', L.lbl_gender);
-  el('btn-male', L.gender_male); el('btn-female', L.gender_female);
+  if (lang === 'ko') {
+    el('gender-male-label', '양(陽) · 남성'); el('gender-male-sub', 'Yang · Male');
+    el('gender-female-label', '음(陰) · 여성'); el('gender-female-sub', 'Yin · Female');
+  } else {
+    el('gender-male-label', 'Yang · Male'); el('gender-male-sub', '陽');
+    el('gender-female-label', 'Yin · Female'); el('gender-female-sub', '陰');
+  }
   el('lbl-birthdate', L.lbl_birthdate); el('lbl-birthtime', L.lbl_birthtime);
   el('lbl-notime', L.lbl_notime); el('btn-calc-text', L.btn_calculate);
 
@@ -3485,7 +3570,11 @@ function applyLanguage() {
   el('tier-pro-note', isKo ? '$12.99/월 · 월간 청구 · 언제든 취소 가능' : '$12.99/mo · Billed monthly · Cancel anytime');
   el('tier-plus-daily-feat', isKo ? '매일 아침 갱신되는 AI 일일 에너지' : 'Daily Energy — your personal forecast, every morning');
   // V4 gate section
+  el('v4-gate-title', isKo ? '✦ 더 깊이 들어가기 ✦' : '✦ Go Deeper ✦');
   el('v4-feat-daily', isKo ? '매일 아침 갱신되는 AI 일일 에너지' : 'AI-powered daily energy, refreshed every morning');
+  el('v4-feat-destiny', isKo ? '심층 운명 분석 — 2,000자 이상' : 'Full destiny analysis — 2,000+ words');
+  el('v4-feat-compat', isKo ? '궁합 매칭 (상성 분석)' : 'Compatibility matching (궁합)');
+  el('v4-feat-daeun', isKo ? '대운 흐름 — 당신의 10년을 알다' : 'Grand Fortune Cycles (大運)');
   const v4Plus = document.getElementById('v4-btn-plus');
   if (v4Plus) v4Plus.textContent = isKo ? '✨ Plus 시작 — $6.99/월 →' : '✨ Start Plus — $6.99/mo →';
   const v4Pro = document.getElementById('v4-btn-pro');
@@ -3513,7 +3602,7 @@ function applyLanguage() {
   const obEmail = document.getElementById('ob-email-input');
   if (obEmail) obEmail.placeholder = isKo ? '이메일 주소 입력' : 'Enter your email';
   const obTitle = document.getElementById('ob-title');
-  if (obTitle) obTitle.textContent = isKo ? '생년월일을 입력해주세요' : obTitle.textContent;
+  if (obTitle) obTitle.textContent = isKo ? '차트를 어디로 보내드릴까요?' : 'Where should we send your chart?';
 
   // If chart exists, re-render language-dependent content
   if (AppState.chart) {
@@ -3540,43 +3629,39 @@ function shtml(id, html) {
 // SECTION H: FORM INITIALIZATION
 // ═══════════════════════════════════════════════
 function initForm() {
-  // Populate year dropdown
-  const yearSel = document.getElementById('inp-year');
-  const cy = new Date().getFullYear();
-  for (let y = cy; y >= 1900; y--) {
-    const o = document.createElement('option');
-    o.value = y; o.textContent = y;
-    yearSel.appendChild(o);
+  // Inputs are now number inputs — no dropdown population needed
+}
+
+// ─── 2-STEP FORM NAV ───
+function goFormStep2() {
+  const year = document.getElementById('inp-year').value;
+  const month = document.getElementById('inp-month').value;
+  const day = document.getElementById('inp-day').value;
+  if (!year || !month || !day) {
+    showToast('생년월일을 모두 입력해주세요 📅', 'error');
+    return;
   }
-  // Months
-  const monthSel = document.getElementById('inp-month');
-  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  monthNames.forEach((m,i) => {
-    const o = document.createElement('option');
-    o.value = i+1; o.textContent = `${i+1} - ${m}`;
-    monthSel.appendChild(o);
-  });
-  // Days
-  const daySel = document.getElementById('inp-day');
-  for (let d = 1; d <= 31; d++) {
-    const o = document.createElement('option');
-    o.value = d; o.textContent = d;
-    daySel.appendChild(o);
-  }
-  // Hours
-  const hourSel = document.getElementById('inp-hour');
-  for (let h = 0; h < 24; h++) {
-    const o = document.createElement('option');
-    o.value = h; o.textContent = `${String(h).padStart(2,'0')}:00`;
-    hourSel.appendChild(o);
-  }
-  // Minutes
-  const minSel = document.getElementById('inp-minute');
-  for (let m = 0; m < 60; m++) {
-    const o = document.createElement('option');
-    o.value = m; o.textContent = String(m).padStart(2,'0');
-    minSel.appendChild(o);
-  }
+  document.getElementById('step-form-1').style.display = 'none';
+  document.getElementById('step-form-2').style.display = 'block';
+  const d1 = document.getElementById('sdot-1');
+  if (d1) { d1.classList.remove('active'); d1.classList.add('done'); d1.textContent = '✓'; }
+  const l1 = document.getElementById('sline-1');
+  if (l1) l1.classList.add('done');
+  const d2 = document.getElementById('sdot-2');
+  if (d2) d2.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function goFormStep1() {
+  document.getElementById('step-form-2').style.display = 'none';
+  document.getElementById('step-form-1').style.display = 'block';
+  const d1 = document.getElementById('sdot-1');
+  if (d1) { d1.classList.add('active'); d1.classList.remove('done'); d1.textContent = '1'; }
+  const l1 = document.getElementById('sline-1');
+  if (l1) l1.classList.remove('done');
+  const d2 = document.getElementById('sdot-2');
+  if (d2) d2.classList.remove('active');
+  window.scrollTo(0, 0);
 }
 
 function selectGender(g) {
@@ -3677,7 +3762,7 @@ function renderResults(chart) {
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? '' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
   const hookEl = document.getElementById('results-hook-text');
-  if (hookEl) { hookEl.textContent = isKo ? '당신이 태어난 그 순간은 우연이 아니에요. 그 의미를 알아보세요.' : 'You were born at exactly the right time. Here\'s what it means.'; hookEl.style.display = 'block'; }
+  if (hookEl) { hookEl.textContent = isKo ? '당신이 태어난 그 순간은 우연이 아니에요. 그 의미를 알아보세요.' : 'Your birth wasn\'t random. Here\'s what the pattern reveals.'; hookEl.style.display = 'block'; }
   // noTime badge
   const notimeBadge = document.getElementById('notime-badge');
   if (notimeBadge) {
@@ -3718,20 +3803,31 @@ function renderResults(chart) {
     }
   }, 200);
 
-  // Sticky CTA bar after 35 seconds
+  // Sticky CTA: scroll 40% OR 15s (whichever comes first)
   if (!AppState.isPremium) {
-    setTimeout(function() {
+    var stickyCTAShown = false;
+    function showStickyCTABar() {
+      if (stickyCTAShown || AppState.isPremium) return;
+      stickyCTAShown = true;
       var bar = document.getElementById('sticky-cta-bar');
-      if (bar && !AppState.isPremium) {
+      if (bar) {
         var isKoS = AppState.language === 'ko';
         var stemS = AppState.chart && AppState.chart.dayMaster ? AppState.chart.dayMaster.stem : '';
         document.getElementById('sticky-cta-text').textContent =
           isKoS ? `✦ ${stemS ? stemS+' · ' : ''}풀 리딩 잠금 해제` : `✦ ${stemS ? stemS+' · ' : ''}Full Reading`;
         document.getElementById('sticky-cta-btn').textContent =
-          isKoS ? '$6.99/월 · 전체 열기 →' : '$6.99/mo · Unlock Everything →';
+          isKoS ? '예약하기 — 50% 할인 →' : 'Reserve — 50% Off →';
         bar.style.display = 'block';
       }
-    }, 35000);
+      window.removeEventListener('scroll', onScrollStickyCTA, {passive:true});
+    }
+    function onScrollStickyCTA() {
+      var scrolled = window.scrollY;
+      var total = document.documentElement.scrollHeight - window.innerHeight;
+      if (total > 0 && scrolled / total >= 0.4) showStickyCTABar();
+    }
+    window.addEventListener('scroll', onScrollStickyCTA, {passive:true});
+    setTimeout(showStickyCTABar, 15000);
   }
 
   // 9. Premium section
@@ -4729,7 +4825,7 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
       const ctaText  = isKo ? '평생 당신 안에서 작동해온 또 다른 당신 — $6.99/월로 마침내 만나보세요.' : 'The version of you that\'s been running in the background your whole life — $6.99/mo to finally meet them.';
       const ctaHint  = isKo ? '한 번의 구독. 모든 것이 열립니다.' : 'One reading. Everything unlocked.';
-      const teaserText = isKo ? '대부분의 사람들이 수십 년이 지나야 깨닫는 것들이에요.' : 'This is the part most people spend decades figuring out.';
+      const teaserText = isKo ? '대부분의 사람들이 수십 년이 지나야 깨닫는 것들이에요.' : 'Most people spend decades figuring this out. You don\'t have to.';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
           <span class="dm-acc-icon">${s.icon}</span>
@@ -5826,6 +5922,33 @@ const PREMIUM_CONTENT = {
 
 };
 
+function scrollToInlineWaitlist() {
+  document.getElementById('sticky-cta-bar').style.display = 'none';
+  const sec = document.getElementById('inline-waitlist-section');
+  if (sec) {
+    sec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function() {
+      var inp = document.getElementById('inline-waitlist-email');
+      if (inp) inp.focus();
+    }, 600);
+  }
+}
+
+function submitInlineWaitlist() {
+  const L = I18N[AppState.language] || I18N.en;
+  const email = document.getElementById('inline-waitlist-email').value.trim();
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    showToast(L.toast_email_invalid || '올바른 이메일을 입력해주세요', 'error'); return;
+  }
+  if (AppState.waitlist.includes(email)) {
+    showToast(L.toast_waitlist_dup || '이미 등록되어 있습니다!', 'info'); return;
+  }
+  AppState.waitlist.push(email);
+  localStorage.setItem('momentor_waitlist', JSON.stringify(AppState.waitlist));
+  showToast(L.toast_waitlist_ok || '🌙 예약 완료! 오픈 시 알려드릴게요', 'success');
+  document.getElementById('inline-waitlist-email').value = '';
+}
+
 function joinWaitlist() {
   const L = I18N[AppState.language] || I18N.en;
   const email = document.getElementById('modal-email').value.trim();
@@ -6649,7 +6772,7 @@ function shareCompatCard() {
 <div id="sticky-cta-bar" class="sticky-cta-bar" style="display:none;">
   <div class="sticky-cta-inner">
     <span class="sticky-cta-text" id="sticky-cta-text">✦ Your Full Reading</span>
-    <button class="sticky-cta-btn" id="sticky-cta-btn" onclick="openSubscriptionModal('plus')">$6.99/mo · Unlock →</button>
+    <button class="sticky-cta-btn" id="sticky-cta-btn" onclick="scrollToInlineWaitlist()">$6.99/mo · Unlock →</button>
     <button class="sticky-cta-close" onclick="document.getElementById('sticky-cta-bar').style.display='none'" title="Dismiss">✕</button>
   </div>
 </div>
