@@ -233,6 +233,17 @@
     .form-cta{margin-top:24px;text-align:center;}
     .form-cta .btn-primary{width:100%;justify-content:center;font-size:16px;padding:16px;}
     .time-disabled{opacity:.4;pointer-events:none;}
+    .welcome-back-wrap{max-width:480px;margin:40px auto;padding:40px 32px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;text-align:center;animation:fadeIn 0.4s ease;}
+    .welcome-back-emoji{font-size:48px;margin:0 0 16px;}
+    .welcome-back-wrap h2{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--gold);margin:0 0 12px;}
+    .welcome-back-wrap p{color:var(--text-secondary);font-size:15px;margin:0 0 28px;}
+    .welcome-back-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+    .welcome-back-btns .btn-primary{flex:1;min-width:140px;justify-content:center;}
+    .ghost-btn{flex:1;min-width:140px;padding:12px 20px;background:transparent;border:1px solid rgba(255,255,255,0.3);border-radius:8px;color:var(--text-secondary);font-size:14px;cursor:pointer;transition:all 0.2s;letter-spacing:0.5px;}
+    .ghost-btn:hover{border-color:rgba(255,255,255,0.6);color:#fff;}
+    .try-another-link{display:inline-block;margin-top:16px;font-size:13px;color:var(--text-secondary);cursor:pointer;text-decoration:underline;opacity:0.7;}
+    .try-another-link:hover{opacity:1;}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
     /* RESULTS */
     #section-results{display:none;padding:0 16px calc(40px + 80px);max-width:900px;margin:0 auto;}
@@ -1230,6 +1241,17 @@
       </div>
     </div>
   </div>
+
+  <!-- WELCOME BACK SECTION -->
+  <div id="welcome-back-section" style="display:none;" class="welcome-back-wrap">
+    <p class="welcome-back-emoji">✨</p>
+    <h2 id="welcome-back-title">Welcome back</h2>
+    <p id="welcome-back-sub">Your chart is ready.</p>
+    <div class="welcome-back-btns">
+      <button class="btn-primary" onclick="viewSavedChart()" id="btn-view-chart"><span id="btn-view-chart-text">View My Chart</span></button>
+      <button class="ghost-btn" onclick="startOver()" id="btn-start-over"><span id="btn-start-over-text">Start Over</span></button>
+    </div>
+  </div>
 </section>
 
 <!-- RESULTS SECTION -->
@@ -1366,6 +1388,9 @@
   <!-- DAEUN ANALYSIS ACCORDION -->
   <div id="daeun-analysis-section" class="daeun-timeline-section reveal-section"></div>
 
+  <div style="text-align:center;padding:20px 0 10px;">
+    <span class="try-another-link" id="try-another-link" onclick="startOver()">Try another person →</span>
+  </div>
 </section><!-- /results -->
 
 </main>
@@ -1693,6 +1718,11 @@ en: {
   toast_payment_info:'Payment integration coming soon. Join the waitlist for early access!',
   toast_calc_ok:'✓ Your chart is ready.',
   toast_copy_ok:'✓ Link copied - share your chart!',
+  welcome_back_title:'Welcome back',
+  welcome_back_sub:'Your chart is ready.',
+  view_chart:'View My Chart',
+  start_over:'Start Over',
+  try_another:'Try another person →',
   daily_flow_title:"Today's Flow",
   daeun_peak:'Peak Years',daeun_low:'Challenging Cycle',
 
@@ -1792,6 +1822,11 @@ ko: {
   trust_closing:'운명을 믿을 필요는 없습니다. 왜 같은 패턴이 계속 반복되는지 궁금하기만 하면 됩니다.',
   toast_calc_ok:'✓ 사주가 완성되었습니다.',
   toast_copy_ok:'✓ 링크가 복사되었습니다 - 차트를 공유하세요!',
+  welcome_back_title:'돌아오셨군요',
+  welcome_back_sub:'차트가 준비되어 있습니다.',
+  view_chart:'차트 보기',
+  start_over:'다시 입력하기',
+  try_another:'다른 사람으로 다시 입력 →',
   daily_flow_title:'오늘의 흐름',
   daeun_peak:'인생 전성기',daeun_low:'힘든 시기',
 
@@ -2940,6 +2975,15 @@ function applyLanguage() {
   el('btn-back', L.back_btn);
   el('footer-text', L.footer_text);
 
+  // Welcome back section i18n
+  const wbSection = document.getElementById('welcome-back-section');
+  if (wbSection && wbSection.style.display !== 'none') {
+    const savedUser = loadUserData();
+    if (savedUser) showWelcomeBack(savedUser);
+  }
+  const tryLink = document.getElementById('try-another-link');
+  if (tryLink) tryLink.textContent = L.try_another || 'Try another person →';
+
   // If chart exists, re-render language-dependent content
   if (AppState.chart) {
     renderIdentityBar(AppState.chart);
@@ -3055,6 +3099,17 @@ function calculateChart() {
   if (!valid) return;
 
   AppState.userName = name;
+
+  // Save user data to localStorage
+  saveUserData({
+    name,
+    birthYear: year,
+    birthMonth: month,
+    birthDay: day,
+    birthHour: noTime ? null : hour,
+    birthMinute: noTime ? null : minute,
+    gender: AppState.userGender
+  });
 
   try {
     const chart = buildFullChart(year, month, day, hour, minute, AppState.userGender, noTime);
@@ -5059,6 +5114,67 @@ function selfTest() {
 // ═══════════════════════════════════════════════
 // SECTION O: INITIALIZATION
 // ═══════════════════════════════════════════════
+// ═══════════════════════════════════════════════
+// USER DATA PERSISTENCE
+// ═══════════════════════════════════════════════
+function saveUserData(data) {
+  localStorage.setItem('momentor_user', JSON.stringify({...data, savedAt: Date.now()}));
+}
+
+function loadUserData() {
+  try { return JSON.parse(localStorage.getItem('momentor_user')); } catch(e) { return null; }
+}
+
+function clearUserData() {
+  localStorage.removeItem('momentor_user');
+}
+
+function showWelcomeBack(userData) {
+  const L = I18N[AppState.language] || I18N.en;
+  const name = userData.name;
+  const titleEl = document.getElementById('welcome-back-title');
+  const subEl = document.getElementById('welcome-back-sub');
+  const btnView = document.getElementById('btn-view-chart-text');
+  const btnOver = document.getElementById('btn-start-over-text');
+  const tryLink = document.getElementById('try-another-link');
+  if (titleEl) titleEl.textContent = name ? (L.welcome_back_title + ', ' + name) : L.welcome_back_title;
+  if (subEl) subEl.textContent = L.welcome_back_sub;
+  if (btnView) btnView.textContent = L.view_chart;
+  if (btnOver) btnOver.textContent = L.start_over;
+  if (tryLink) tryLink.textContent = L.try_another;
+  document.getElementById('section-input').querySelector('.form-card').style.display = 'none';
+  document.getElementById('welcome-back-section').style.display = '';
+}
+
+function viewSavedChart() {
+  const userData = loadUserData();
+  if (!userData) { startOver(); return; }
+  const noTime = !userData.birthHour && userData.birthHour !== 0;
+  const hour = noTime ? 12 : (userData.birthHour || 0);
+  const minute = noTime ? 0 : (userData.birthMinute || 0);
+  AppState.userName = userData.name || '';
+  AppState.userGender = userData.gender || 'M';
+  try {
+    const chart = buildFullChart(userData.birthYear, userData.birthMonth, userData.birthDay, hour, minute, AppState.userGender, noTime);
+    AppState.chart = chart;
+    renderResults(chart);
+    showToast(t('toast_calc_ok'), 'success');
+    smoothScrollTo('section-results');
+  } catch(e) {
+    showToast('Calculation error.', 'error');
+  }
+}
+
+function startOver() {
+  clearUserData();
+  document.getElementById('welcome-back-section').style.display = 'none';
+  document.getElementById('section-input').querySelector('.form-card').style.display = '';
+  document.getElementById('section-results').classList.remove('visible');
+  document.getElementById('section-hero').style.display = '';
+  document.getElementById('section-input').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 function init() {
   if (localStorage.getItem('momentor_premium') === '1') AppState.isPremium = true;
   initForm();
@@ -5078,6 +5194,13 @@ function init() {
     b.classList.toggle('active', b.dataset.lang === AppState.language);
   });
   applyLanguage();
+
+  // Check for saved user data → show Welcome Back
+  const savedUser = loadUserData();
+  if (savedUser) {
+    showWelcomeBack(savedUser);
+  }
+
   selfTest();
 }
 
