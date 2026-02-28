@@ -1558,6 +1558,7 @@
     </div>
     <div class="results-name" id="results-name-display"></div>
     <div class="results-date" id="results-date-display"></div>
+    <div id="results-hook-text" style="font-size:15px;color:var(--text-secondary);font-style:italic;text-align:center;margin-bottom:16px;display:none;"></div>
     <div id="notime-badge" style="display:none;margin-top:6px;font-size:11px;color:var(--text-muted);opacity:0.7;letter-spacing:.04em"></div>
   </div>
 
@@ -2144,7 +2145,7 @@ en: {
   t3_author:'- Yuki B., Berlin · 庚金 Day Master',
   social_count:'✦ Already used by 12,000+ people - join them →',
   form_title:'Enter Your Birth Information',
-  form_subtitle:'All fields required for your complete Four Pillars chart',
+  form_subtitle:'Your birth details contain a pattern most people never discover.',
   lbl_name:'YOUR NAME',
   lbl_gender:'GENDER',
   gender_male:'♂ Male',
@@ -2153,8 +2154,8 @@ en: {
   lbl_birthtime:'BIRTH TIME',
   lbl_notime:'Unknown',
   btn_calculate:'Reveal My Chart →',
-  lbl_pillars:'FOUR PILLARS · Saju Paljja',
-  lbl_elements:'My Elemental DNA',
+  lbl_pillars:'THE BLUEPRINT OF YOU',
+  lbl_elements:'What You\'re Made Of',
   lbl_personality:'Personality Analysis',
   lbl_fortune:'Today\'s Fortune',
   lbl_daeun:'10-Year Luck Cycles',
@@ -2248,7 +2249,7 @@ ko: {
   t3_author:'- Yuki B., 베를린 · 庚金 일간',
   social_count:'✦ 이미 12,000명 이상이 자신의 패턴을 발견했습니다 — 당신도 →',
   form_title:'생년월일시를 입력하세요',
-  form_subtitle:'완전한 사주 차트를 위해 모든 항목이 필요합니다',
+  form_subtitle:'당신의 생년월일에는 대부분이 평생 발견하지 못하는 패턴이 담겨 있어요.',
   lbl_name:'이름',
   lbl_gender:'성별',
   gender_male:'♂ 남성',
@@ -2257,8 +2258,8 @@ ko: {
   lbl_birthtime:'태어난 시각',
   lbl_notime:'모름',
   btn_calculate:'내 사주 보기 →',
-  lbl_pillars:'사주 원국 · FOUR PILLARS',
-  lbl_elements:'나의 오행 DNA',
+  lbl_pillars:'당신을 이루는 네 기둥',
+  lbl_elements:'나를 구성하는 오행',
   lbl_personality:'성격 분석',
   lbl_fortune:'오늘의 에너지',
   lbl_daeun:'대운 흐름 · 10년 주기',
@@ -3675,6 +3676,8 @@ function renderResults(chart) {
   el('results-name-display', AppState.userName);
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   el('results-date-display', `${chart.year} ${months[chart.month-1]} ${chart.day}${chart.noTime ? '' : ` · ${String(chart.hour).padStart(2,'0')}:${String(chart.minute||0).padStart(2,'0')}`}`);
+  const hookEl = document.getElementById('results-hook-text');
+  if (hookEl) { hookEl.textContent = isKo ? '당신이 태어난 그 순간은 우연이 아니에요. 그 의미를 알아보세요.' : 'You were born at exactly the right time. Here\'s what it means.'; hookEl.style.display = 'block'; }
   // noTime badge
   const notimeBadge = document.getElementById('notime-badge');
   if (notimeBadge) {
@@ -4724,14 +4727,16 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const lockCopy = LOCKED_COPY_EN[s.key];
       const displayTitle = !isKo && lockCopy ? lockCopy.title : title;
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
-      const ctaText  = isKo ? '🔓 심층 분석 8개 전체 열기 — $6.99/월' : '🔓 Unlock All 8 Deep Analyses — $6.99/mo';
-      const ctaHint  = isKo ? '구독 한 번으로 아래 모든 분석이 열립니다' : 'One subscription unlocks everything below';
+      const ctaText  = isKo ? '평생 당신 안에서 작동해온 또 다른 당신 — $6.99/월로 마침내 만나보세요.' : 'The version of you that\'s been running in the background your whole life — $6.99/mo to finally meet them.';
+      const ctaHint  = isKo ? '한 번의 구독. 모든 것이 열립니다.' : 'One reading. Everything unlocked.';
+      const teaserText = isKo ? '대부분의 사람들이 수십 년이 지나야 깨닫는 것들이에요.' : 'This is the part most people spend decades figuring out.';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
           <span class="dm-acc-icon">${s.icon}</span>
           <span class="dm-acc-title">${displayTitle}</span>
           <span class="dm-acc-chevron">▼</span>
         </div>
+        <div style="font-size:11px;color:var(--text-muted);font-style:italic;margin-top:4px;padding:0 16px 8px;">${teaserText}</div>
         <div class="dm-acc-preview-body" id="${id}-preview">
           <div class="dm-acc-preview-inner">
             <div class="dm-acc-preview-text">${displayPreview.replace(/\n/g,'<br>')}</div>
