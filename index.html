@@ -568,7 +568,7 @@
       flex:1;background:rgba(255,255,255,.06);
       border:1px solid rgba(255,255,255,.12);
       border-radius:10px;color:var(--text-primary);
-      font-size:14px;padding:11px 14px;
+      font-size:16px;padding:11px 14px;
       font-family:var(--font-sans);
     }
     .modal-input:focus{outline:none;border-color:rgba(232,197,71,.4);}
@@ -1242,7 +1242,7 @@
   .compat-select {
     background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12);
     border-radius:10px; padding:12px 10px; color:var(--text-primary);
-    font-size:14px; font-family:var(--font-sans); outline:none;
+    font-size:16px; font-family:var(--font-sans); outline:none;
     appearance:none; -webkit-appearance:none; cursor:pointer;
   }
   .compat-select:focus { border-color:var(--gold); }
@@ -5151,7 +5151,8 @@ function openPayModal() {
 const PREMIUM_KEY = 'momentor_premium';
 const PREMIUM_TIMESTAMP_KEY = 'momentor_premium_ts';
 
-function unlockPremiumContent() {
+// 결제 관련 핵심 함수 — 전역(window) 노출 차단 (const로 블록 스코프 유지)
+const unlockPremiumContent = function() {
   localStorage.setItem(PREMIUM_KEY, '1');
   localStorage.setItem(PREMIUM_TIMESTAMP_KEY, Date.now().toString());
   AppState.isPremium = true;
@@ -5165,7 +5166,7 @@ function unlockPremiumContent() {
   if (lockOverlay) lockOverlay.style.display = 'none';
   showToast('🎉 Deep Analysis unlocked!', 'success');
   console.log('[Momentor] Premium unlocked');
-}
+};
 
 function checkPaymentReturn() {
   var params = new URLSearchParams(window.location.search);
@@ -5183,6 +5184,7 @@ function checkPaymentReturn() {
   }
 }
 
+// ⚠️ MVP 임시: localStorage 기반 프리미엄 상태 — Knox 웹훅 검증 완료 후 서버 토큰 방식으로 교체 필요
 function restorePremiumState() {
   if (localStorage.getItem(PREMIUM_KEY) === '1') {
     AppState.isPremium = true;
@@ -5255,17 +5257,16 @@ function closeModalIfOverlay(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 
-function unlockPremium() {
-  AppState.isPremium = true;
-  localStorage.setItem('momentor_premium', '1');
+// unlockPremium: unlockPremiumContent와 통합 — 전역 노출 차단
+const unlockPremium = function() {
+  unlockPremiumContent();
   closeModal();
-  var bar=document.getElementById('sticky-cta-bar'); if(bar) bar.style.display='none';
-  showToast(AppState.language === 'ko' ? '🔮 결제 완료!' : '🔮 Payment complete!', 'success');
-}
+};
 
-function handlePayment() {
+// handlePayment: 전역 노출 차단 (onclick에서 직접 호출 없음)
+const handlePayment = function() {
   unlockPremium();
-}
+};
 
 const DM_SUBTITLES = {
   '甲': {
