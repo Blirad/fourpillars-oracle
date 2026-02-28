@@ -3702,7 +3702,7 @@ function renderResults(chart) {
         document.getElementById('sticky-cta-text').textContent =
           isKoS ? `✦ ${stemS ? stemS+' · ' : ''}풀 리딩 잠금 해제` : `✦ ${stemS ? stemS+' · ' : ''}Full Reading`;
         document.getElementById('sticky-cta-btn').textContent =
-          isKoS ? '₩6,900 · 열기 →' : '$4.99 · See What\'s Coming →';
+          isKoS ? '$6.99/월 · 전체 열기 →' : '$6.99/mo · Unlock Everything →';
         bar.style.display = 'block';
       }
     }, 35000);
@@ -4702,8 +4702,8 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
       const lockCopy = LOCKED_COPY_EN[s.key];
       const displayTitle = !isKo && lockCopy ? lockCopy.title : title;
       const displayPreview = !isKo && lockCopy ? lockCopy.preview : (previewText || '');
-      const ctaText  = isKo ? '내 심층 분석 열기 →' : 'Unlock My Reading';
-      const ctaPrice = isKo ? '₩6,900' : '$4.99';
+      const ctaText  = isKo ? '🔓 심층 분석 8개 전체 열기 — $6.99/월' : '🔓 Unlock All 8 Deep Analyses — $6.99/mo';
+      const ctaHint  = isKo ? '구독 한 번으로 아래 모든 분석이 열립니다' : 'One subscription unlocks everything below';
       return `<div class="dm-acc-item dm-acc-locked" id="${id}">
         <div class="dm-acc-header" onclick="toggleLockedPreview('${id}')" style="cursor:pointer;">
           <span class="dm-acc-icon">${s.icon}</span>
@@ -4716,10 +4716,9 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
             <div class="dm-acc-preview-fade"></div>
           </div>
           <div style="padding:0 16px;">
+            <p style="font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:8px;">${ctaHint}</p>
             <button class="dm-acc-lock-cta" onclick="openPayModal()">
-              <span class="dm-acc-lock-cta-icon">🔒</span>
               <span class="dm-acc-lock-cta-text">${ctaText}</span>
-              <span class="dm-acc-lock-cta-price">${ctaPrice}</span>
             </button>
           </div>
         </div>
