@@ -1595,7 +1595,6 @@
         <div class="dm-eyebrow-inner" id="dm-eyebrow-inner"></div>
         <div class="dm-element-name" id="dm-element-name"></div>
         <div class="dm-title" id="dm-title-text"></div>
-        <div class="dm-oneliner" id="dm-oneliner"></div>
       </div>
     </div>
     <div class="dm-body" id="dm-body"></div>
@@ -4689,7 +4688,7 @@ function renderAccordion(stem, isKo, color, personalityOverride) {
     const id = `acc-${stem}-${s.key}`;
     const isCoreSection = CORE_SECTIONS.includes(s.key);
     const isLocked = !isCoreSection && !isPremium;
-    const freeBadge = s.key === 'weakness' ? `<span class="acc-free-badge">FREE</span>` : '';
+    const freeBadge = '';
     if (isLocked) {
       const rawBody = body || '';
       const previewLength = 140;
@@ -4851,19 +4850,13 @@ function renderDayMaster(chart) {
   const identityText = identity ? (isKo ? identity.ko : identity.en) : (isKo ? dmContent.symbol_ko : dmContent.symbol_en);
   el('dm-title-text', identityText);
 
-  // ── ONELINER (stem essence) ──
-  el('dm-oneliner', isKo ? dmContent.essence_ko : dmContent.essence_en);
-
   // ── BODY ──
   const bodyEl = document.getElementById('dm-body');
   if (bodyEl) {
-    const traits = isKo ? dmContent.traits_ko : dmContent.traits_en;
-    const tagline = isKo ? dmContent.tagline_ko : dmContent.tagline_en;
-
-    // Build personality intro without mutating ACCORDION_CONTENT
+    // Build personality body without traits intro (traits data retained but not rendered)
     const personalityData = (ACCORDION_CONTENT[dm.stem] || {}).personality || {};
-    const personalityBodyKo = `<p class="dm-personality-intro">${isKo ? dmContent.traits_ko : ''}</p>${personalityData.bodyKo || ''}${dmContent.tagline_ko ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_ko}</p>` : ''}`;
-    const personalityBodyEn = `<p class="dm-personality-intro">${!isKo ? dmContent.traits_en : ''}</p>${personalityData.bodyEn || ''}${dmContent.tagline_en ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_en}</p>` : ''}`;
+    const personalityBodyKo = `${personalityData.bodyKo || ''}${dmContent.tagline_ko ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_ko}</p>` : ''}`;
+    const personalityBodyEn = `${personalityData.bodyEn || ''}${dmContent.tagline_en ? `<p style="margin-top:12px;font-style:italic;border-left:3px solid ${color};padding-left:10px">${dmContent.tagline_en}</p>` : ''}`;
     // Pass overrides to renderAccordion without touching global ACCORDION_CONTENT
     const personalityOverride = {bodyKo: personalityBodyKo, bodyEn: personalityBodyEn,
       titleKo: personalityData.titleKo, titleEn: personalityData.titleEn};
