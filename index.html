@@ -1662,15 +1662,15 @@
       <div class="de-word">DAILY WORD: <span id="de-word">Initiative</span></div>
       <!-- Blur overlay for free users (shown/hidden by JS) -->
       <div class="de-blur-overlay" id="de-blur-overlay" style="display:none;">
-        <div class="de-unlock-text">✨ Upgrade to Plus for personalized daily energy — how today's energy interacts with <em>your</em> chart.</div>
-        <button class="de-unlock-btn" onclick="openSubscriptionModal('plus')">Unlock Plus — $6.99/mo</button>
+        <div class="de-unlock-text" id="de-unlock-text">✨ Upgrade to Plus for personalized daily energy — how today's energy interacts with <em>your</em> chart.</div>
+        <button class="de-unlock-btn" id="de-unlock-btn" onclick="openSubscriptionModal('plus')">Unlock Plus — $6.99/mo</button>
       </div>
     </div>
   </div>
 
   <!-- COMPATIBILITY TRIGGER (V4) -->
   <div id="compat-trigger-section" style="display:none; margin:20px 0;">
-    <button class="compat-share-btn" onclick="openCompatModal()" style="font-size:14px;">
+    <button class="compat-share-btn" id="compat-trigger-btn" onclick="openCompatModal()" style="font-size:14px;">
       ♡ Check Compatibility
     </button>
   </div>
@@ -1684,14 +1684,14 @@
       <div class="v4-gate-overlay">
         <div class="v4-gate-title">✦ Go Deeper ✦</div>
         <ul class="v4-gate-features">
-          <li>AI-powered daily energy, refreshed every morning</li>
+          <li id="v4-feat-daily">AI-powered daily energy, refreshed every morning</li>
           <li>Full destiny analysis — 2,000+ words</li>
           <li>Compatibility matching (궁합)</li>
           <li>Grand Fortune Cycles (大運)</li>
         </ul>
-        <button class="v4-gate-btn-plus" onclick="openSubscriptionModal('plus')">✨ Start Plus — $6.99/mo →</button>
-        <button class="v4-gate-btn-pro" onclick="openSubscriptionModal('pro')">🔓 Try Pro — $12.99/mo →</button>
-        <div class="v4-gate-note">Cancel anytime · Secure payment by Lemon Squeezy</div>
+        <button class="v4-gate-btn-plus" id="v4-btn-plus" onclick="openSubscriptionModal('plus')">✨ Start Plus — $6.99/mo →</button>
+        <button class="v4-gate-btn-pro" id="v4-btn-pro" onclick="openSubscriptionModal('pro')">🔓 Try Pro — $12.99/mo →</button>
+        <div class="v4-gate-note" id="v4-gate-note">Cancel anytime · Secure payment by Lemon Squeezy</div>
       </div>
     </div>
   </div>
@@ -1718,12 +1718,12 @@
     <div class="onboarding-title" id="ob-title">Where should we send your chart?</div>
     <div class="onboarding-sub" id="ob-sub">We'll save your reading across all your devices.</div>
     <input type="email" id="ob-email-input" class="onboarding-input"
-      placeholder="you@somewhere.com" autocomplete="email"
+      placeholder="Enter your email" autocomplete="email"
       onkeydown="if(event.key==='Enter') handleOnboardingEmail()">
-    <div class="onboarding-helper">🔒 We'll send a magic link — no password needed, ever.</div>
-    <button class="btn-primary" style="width:100%;justify-content:center;" onclick="handleOnboardingEmail()">Send My Link →</button>
+    <div class="onboarding-helper" id="ob-helper">🔒 We'll send a magic link — no password needed, ever.</div>
+    <button class="btn-primary" style="width:100%;justify-content:center;" id="ob-send-btn" onclick="handleOnboardingEmail()">Send My Link →</button>
     <div class="onboarding-privacy">🔒 We don't sell data. We don't believe in it.</div>
-    <span class="onboarding-skip" onclick="skipOnboardingEmail()">Skip for now — continue without saving</span>
+    <span class="onboarding-skip" id="ob-skip" onclick="skipOnboardingEmail()">Skip for now — continue without saving</span>
   </div>
 </div>
 
@@ -1736,7 +1736,7 @@
     <div class="tier-grid">
       <!-- FREE -->
       <div class="tier-card">
-        <div class="tier-name">Peek Inside</div>
+        <div class="tier-name" id="tier-free-name">Peek Inside</div>
         <div class="tier-tagline">Your four pillars. Your foundation. The beginning.</div>
         <div class="tier-price">$0 <span>/ forever</span></div>
         <ul class="tier-features">
@@ -1751,24 +1751,24 @@
       <!-- PLUS -->
       <div class="tier-card featured" id="tier-plus-card">
         <div class="tier-badge">Most Popular</div>
-        <div class="tier-name">Feel the Shift</div>
+        <div class="tier-name" id="tier-plus-name">Feel the Shift</div>
         <div class="tier-tagline">Live with your chart. Every day holds a different energy — know yours before it arrives.</div>
         <div class="tier-price">$6.99 <span>/ month</span></div>
         <ul class="tier-features">
           <li>Everything in Free</li>
           <li>AI-powered deep analysis — Claude reads your chart</li>
-          <li>Daily Energy — your personal forecast, every morning</li>
+          <li id="tier-plus-daily-feat">Daily Energy — your personal forecast, every morning</li>
           <li>Grand Fortune Cycles (大運) — know your decade</li>
           <li>Unlimited chart saves across devices</li>
         </ul>
-        <button class="tier-cta tier-cta-gold" onclick="openPayModal()">Unlock Plus — $6.99/mo</button>
-        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;">Less than a coffee a week. Cancel anytime.</div>
+        <button class="tier-cta tier-cta-gold" id="tier-plus-cta" onclick="openPayModal()">Unlock Plus — $6.99/mo</button>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;" id="tier-plus-note">Less than a coffee a week. Cancel anytime.</div>
         <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:4px;font-style:italic;">"I check my daily energy before I check my email." — @stellakim_nyc</div>
       </div>
       <!-- PRO -->
       <div class="tier-card" id="tier-pro-card">
         <div class="tier-badge" style="background:rgba(155,127,212,0.8);color:#fff;">Full Access</div>
-        <div class="tier-name">Know Before It Happens</div>
+        <div class="tier-name" id="tier-pro-name">Know Before It Happens</div>
         <div class="tier-tagline">Your destiny — and everyone in it. Go beyond self-discovery.</div>
         <div class="tier-price">$12.99 <span>/ month</span></div>
         <ul class="tier-features">
@@ -1778,8 +1778,8 @@
           <li>Unlimited AI Q&amp;A — ask anything, anytime</li>
           <li>Shareable Insight Cards — born for virality</li>
         </ul>
-        <button class="tier-cta tier-cta-outline" onclick="openPayModal()">Go Pro — $12.99/mo</button>
-        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;">$12.99/mo · Billed monthly · Cancel anytime</div>
+        <button class="tier-cta tier-cta-outline" id="tier-pro-cta" onclick="openPayModal()">Go Pro — $12.99/mo</button>
+        <div style="font-size:11px;color:var(--text-muted);text-align:center;margin-top:8px;font-style:italic;" id="tier-pro-note">$12.99/mo · Billed monthly · Cancel anytime</div>
       </div>
     </div>
     <div class="sub-trust">
@@ -1795,7 +1795,7 @@
 <div id="compat-modal-overlay" onclick="closeCompatModalIfOverlay(event)">
   <div class="compat-box">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
-      <div class="compat-title">♡ Compatibility</div>
+      <div class="compat-title" id="compat-modal-title">♡ Compatibility</div>
       <button class="compat-close" onclick="closeCompatModal()">✕</button>
     </div>
     <div class="compat-sub" id="compat-sub">Every connection has a reason. Yours just became readable.</div>
@@ -1826,7 +1826,7 @@
       </div>
       <div class="compat-section-label" style="margin-bottom:8px;">THEIR NAME (OPTIONAL)</div>
       <input type="text" class="compat-name-input" id="compat-name" placeholder="e.g. Alex">
-      <button class="tier-cta tier-cta-gold" style="width:100%;" onclick="calculateCompatibility()">♡ Reveal Compatibility →</button>
+      <button class="tier-cta tier-cta-gold" id="compat-reveal-btn" style="width:100%;" onclick="calculateCompatibility()">♡ Reveal Compatibility →</button>
     </div>
 
     <!-- Result screen -->
@@ -1842,11 +1842,11 @@
           <span id="cr-their-name">Alex</span>
         </div>
       </div>
-      <div class="compat-score-label">OVERALL COMPATIBILITY</div>
+      <div class="compat-score-label" id="compat-overall-label">OVERALL COMPATIBILITY</div>
       <div class="compat-score-main" id="cr-score">82%</div>
       <div class="compat-score-bar-row" id="cr-bars"></div>
       <div class="compat-interpretation" id="cr-interpretation"></div>
-      <button class="compat-share-btn" onclick="shareCompatCard()">📤 Share Compatibility Card</button>
+      <button class="compat-share-btn" id="compat-share-btn" onclick="shareCompatCard()">📤 Share Compatibility Card</button>
       <div style="text-align:center;margin-top:14px;">
         <span class="try-another-link" onclick="resetCompatModal()">Try another person →</span>
       </div>
@@ -3434,6 +3434,47 @@ function applyLanguage() {
   }
   const tryLink = document.getElementById('try-another-link');
   if (tryLink) tryLink.textContent = L.try_another || 'Try another person →';
+
+  // V4 i18n — subscription modal tiers
+  const isKo = lang === 'ko';
+  el('tier-free-name', isKo ? '살짝 들여다보기' : 'Peek Inside');
+  el('tier-plus-name', isKo ? '변화를 느껴보세요' : 'Feel the Shift');
+  el('tier-pro-name', isKo ? '일어나기 전에 알아보세요' : 'Know Before It Happens');
+  el('tier-plus-cta', isKo ? 'Plus 열기 — $6.99/월' : 'Unlock Plus — $6.99/mo');
+  el('tier-pro-cta', isKo ? 'Pro 시작 — $12.99/월' : 'Go Pro — $12.99/mo');
+  el('tier-plus-note', isKo ? '커피 한 잔보다 저렴해요. 언제든 취소 가능.' : 'Less than a coffee a week. Cancel anytime.');
+  el('tier-pro-note', isKo ? '$12.99/월 · 월간 청구 · 언제든 취소 가능' : '$12.99/mo · Billed monthly · Cancel anytime');
+  el('tier-plus-daily-feat', isKo ? '매일 아침 갱신되는 AI 일일 에너지' : 'Daily Energy — your personal forecast, every morning');
+  // V4 gate section
+  el('v4-feat-daily', isKo ? '매일 아침 갱신되는 AI 일일 에너지' : 'AI-powered daily energy, refreshed every morning');
+  const v4Plus = document.getElementById('v4-btn-plus');
+  if (v4Plus) v4Plus.textContent = isKo ? '✨ Plus 시작 — $6.99/월 →' : '✨ Start Plus — $6.99/mo →';
+  const v4Pro = document.getElementById('v4-btn-pro');
+  if (v4Pro) v4Pro.textContent = isKo ? '🔓 Pro 체험 — $12.99/월 →' : '🔓 Try Pro — $12.99/mo →';
+  el('v4-gate-note', isKo ? '언제든 취소 가능 · 안전한 결제 by Lemon Squeezy' : 'Cancel anytime · Secure payment by Lemon Squeezy');
+  // Daily energy section
+  const deUnlockBtn = document.getElementById('de-unlock-btn');
+  if (deUnlockBtn) deUnlockBtn.textContent = isKo ? 'Plus 열기 — $6.99/월' : 'Unlock Plus — $6.99/mo';
+  const deUnlockText = document.getElementById('de-unlock-text');
+  if (deUnlockText) deUnlockText.innerHTML = isKo
+    ? '✨ 오늘의 에너지가 내 차트와 어떻게 상호작용하는지, Plus로 업그레이드하여 확인하세요.'
+    : '✨ Upgrade to Plus for personalized daily energy — how today\'s energy interacts with <em>your</em> chart.';
+  // Compatibility trigger
+  const compatTriggerBtn = document.getElementById('compat-trigger-btn');
+  if (compatTriggerBtn) compatTriggerBtn.textContent = isKo ? '♡ 궁합 보기' : '♡ Check Compatibility';
+  // Compatibility modal
+  el('compat-modal-title', isKo ? '♡ 궁합' : '♡ Compatibility');
+  el('compat-reveal-btn', isKo ? '♡ 궁합 확인하기 →' : '♡ Reveal Compatibility →');
+  el('compat-overall-label', isKo ? '종합 궁합' : 'OVERALL COMPATIBILITY');
+  el('compat-share-btn', isKo ? '📤 궁합 카드 공유' : '📤 Share Compatibility Card');
+  // Onboarding modal
+  el('ob-helper', isKo ? '🔒 매직 링크를 보내드려요 — 비밀번호 없이 로그인하세요.' : '🔒 We\'ll send a magic link — no password needed, ever.');
+  el('ob-send-btn', isKo ? '매직 링크 보내기' : 'Send My Link →');
+  el('ob-skip', isKo ? '나중에 하기 — 저장 없이 계속' : 'Skip for now — continue without saving');
+  const obEmail = document.getElementById('ob-email-input');
+  if (obEmail) obEmail.placeholder = isKo ? '이메일 주소 입력' : 'Enter your email';
+  const obTitle = document.getElementById('ob-title');
+  if (obTitle) obTitle.textContent = isKo ? '생년월일을 입력해주세요' : obTitle.textContent;
 
   // If chart exists, re-render language-dependent content
   if (AppState.chart) {
@@ -5966,9 +6007,16 @@ function renderDailyEnergySection(chart) {
   var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   var dateStr = months[today.getMonth()] + ' ' + today.getDate() + ', ' + today.getFullYear();
 
+  var isKoDE = lang === 'ko';
   document.getElementById('de-date').textContent = dateStr;
   document.getElementById('de-pillar').textContent = pillar.stem + pillar.branch;
-  document.getElementById('de-pillar-name').textContent = pillar.english;
+  document.getElementById('de-pillar-name').textContent = isKoDE ? (pillar.korean || pillar.english) : pillar.english;
+  // Update section header label
+  var deLabelEl = document.getElementById('de-section-header');
+  if (deLabelEl) deLabelEl.textContent = isKoDE ? '오늘의 에너지' : 'Daily Energy';
+  // de-label (TODAY'S ENERGY badge text)
+  var deLabelCard = document.querySelector('#de-card .de-label');
+  if (deLabelCard) deLabelCard.textContent = isKoDE ? '오늘의 일주' : "TODAY'S ENERGY";
 
   var badgeEl = document.getElementById('de-energy-badge');
   badgeEl.className = 'de-energy-badge ' + badge.cls;
@@ -5976,6 +6024,13 @@ function renderDailyEnergySection(chart) {
 
   document.getElementById('de-message').textContent = msgs[lang] || msgs.en;
   document.getElementById('de-word').textContent = msgs.word;
+  // Unlock button text
+  var deUnlockBtn = document.getElementById('de-unlock-btn');
+  if (deUnlockBtn) deUnlockBtn.textContent = isKoDE ? 'Plus 열기 — $6.99/월' : 'Unlock Plus — $6.99/mo';
+  var deUnlockText = document.getElementById('de-unlock-text');
+  if (deUnlockText) deUnlockText.innerHTML = isKoDE
+    ? '✨ 오늘의 에너지가 내 차트와 어떻게 상호작용하는지, Plus로 업그레이드하여 확인하세요.'
+    : '✨ Upgrade to Plus for personalized daily energy — how today\'s energy interacts with <em>your</em> chart.';
 
   // Free users: show blur overlay
   var blurEl = document.getElementById('de-blur-overlay');
@@ -6153,21 +6208,25 @@ function calculateCompatibility() {
   document.getElementById('cr-score').textContent = scores.overall + '%';
 
   // Bars
+  var isKoC = AppState.language === 'ko';
   var bars = [
-    { label: 'Love', val: scores.love },
-    { label: 'Work', val: scores.work },
-    { label: 'Growth', val: scores.growth }
+    { label: isKoC ? '연애' : 'Love', val: scores.love },
+    { label: isKoC ? '직업' : 'Work', val: scores.work },
+    { label: isKoC ? '성장' : 'Growth', val: scores.growth }
   ];
-  var barColors = { Love:'#e88fa0', Work:'#d4a574', Growth:'#5de8a0' };
+  var barColors = { Love:'#e88fa0', '연애':'#e88fa0', Work:'#d4a574', '직업':'#d4a574', Growth:'#5de8a0', '성장':'#5de8a0' };
+  document.getElementById('compat-overall-label').textContent = isKoC ? '종합 궁합' : 'OVERALL COMPATIBILITY';
   document.getElementById('cr-bars').innerHTML = bars.map(function(b) {
     return '<div>' +
       '<div class="compat-bar-label"><span>' + b.label + '</span><span>' + b.val + '%</span></div>' +
       '<div class="compat-bar-track"><div class="compat-bar-fill" style="width:' + b.val + '%;background:' + (barColors[b.label]||'#d4a574') + ';"></div></div>' +
       '</div>';
   }).join('');
+  var compatShareBtn = document.getElementById('compat-share-btn');
+  if (compatShareBtn) compatShareBtn.textContent = isKoC ? '📤 궁합 카드 공유' : '📤 Share Compatibility Card';
 
   // Interpretation
-  document.getElementById('cr-interpretation').textContent = getCompatInterpretation(myElem, theirElem, scores.overall);
+  document.getElementById('cr-interpretation').textContent = getCompatInterpretation(myElem, theirElem, scores.overall, isKoC);
 
   // Store for share
   window._lastCompatData = { myPillar: myStem+myBranch, theirPillar: theirPillar.stem+theirPillar.branch, score: scores.overall, name: name };
@@ -6217,10 +6276,24 @@ var COMPAT_INTERPRETATIONS = {
   },
   low: function(myE, theirE) {
     return myE + ' meets ' + theirE + ' with friction. This doesn\'t mean impossibility — it means intention is required. The challenges between you can forge something rare, if both people are willing to do the work.';
+  },
+  high_ko: function(myE, theirE) {
+    return myE + '과(와) ' + theirE + '는 자연스러운 조화를 이룹니다 — 애쓰지 않아도 느껴지는 흐름. 서로의 에너지가 온기와 추진력을 동시에 만들어냅니다. 함께라면 혼자보다 더 많은 것을 이룰 수 있습니다.';
+  },
+  medium_ko: function(myE, theirE) {
+    return myE + '과(와) ' + theirE + '는 역동적인 긴장감을 만들어냅니다. 진짜 끌림이 있지만, 에너지가 갈라지는 지점도 있습니다. 솔직한 소통과 차이에 대한 존중이 이 관계를 성장시킵니다.';
+  },
+  low_ko: function(myE, theirE) {
+    return myE + '과(와) ' + theirE + '는 마찰을 일으킵니다. 불가능하다는 뜻이 아닙니다 — 의도적인 노력이 필요하다는 뜻입니다. 두 사람이 함께 노력한다면, 이 마찰이 오히려 특별한 무언가를 만들어낼 수 있습니다.';
   }
 };
 
-function getCompatInterpretation(myElem, theirElem, score) {
+function getCompatInterpretation(myElem, theirElem, score, isKo) {
+  if (isKo) {
+    if (score >= 78) return COMPAT_INTERPRETATIONS.high_ko(myElem, theirElem);
+    if (score >= 58) return COMPAT_INTERPRETATIONS.medium_ko(myElem, theirElem);
+    return COMPAT_INTERPRETATIONS.low_ko(myElem, theirElem);
+  }
   if (score >= 78) return COMPAT_INTERPRETATIONS.high(myElem, theirElem);
   if (score >= 58) return COMPAT_INTERPRETATIONS.medium(myElem, theirElem);
   return COMPAT_INTERPRETATIONS.low(myElem, theirElem);
