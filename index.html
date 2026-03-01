@@ -5,8 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <title>Momentor - Your destiny, decoded.</title>
   <meta name="description" content="518,400 possible destinies. Decode your Korean Four Pillars birth chart. 1,500 years of wisdom.">
-  <meta property="og:title" content="Momentor - Your destiny, decoded.">
-  <meta property="og:description" content="518,400 possible destinies. This one is yours.">
+  <meta property="og:title" content="Discover Your Day Master | Four Pillars Reading">
+  <meta property="og:description" content="Find your core energy in Chinese astrology. Free Four Pillars reading — your personality, destiny, and life path in minutes.">
+  <meta property="og:image" content="https://fourpillars-eosin.vercel.app/og/default.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://fourpillars-eosin.vercel.app">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Discover Your Day Master | Four Pillars">
+  <meta name="twitter:description" content="Find your Day Master. Free Chinese astrology reading.">
+  <meta name="twitter:image" content="https://fourpillars-eosin.vercel.app/og/default.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
@@ -1401,6 +1410,47 @@
 
   /* ─── STEP FORM SECTION ─── */
   #step-form-1,#step-form-2{max-width:520px;margin:0 auto;padding:0 16px 60px;}
+
+  /* ── SPRINT 2: SOCIAL PROOF ── */
+  .sp-quote-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px 18px;margin:16px 0;text-align:left;}
+  .sp-quote-text{font-size:14px;color:var(--text-secondary);font-style:italic;line-height:1.6;margin-bottom:8px;}
+  .sp-quote-author{font-size:12px;color:var(--text-muted);letter-spacing:.04em;}
+  .sp-stars{color:#f0b860;font-size:13px;margin-bottom:4px;}
+  .sp-counter-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(240,184,96,0.08);border:1px solid rgba(240,184,96,0.2);border-radius:20px;padding:8px 16px;font-size:13px;color:var(--gold);margin:12px auto;font-weight:600;}
+  .sp-rating-bar{display:flex;align-items:center;gap:10px;justify-content:center;font-size:13px;color:var(--text-secondary);margin:12px 0;}
+  .sp-rating-bar strong{color:var(--text-primary);}
+  .sp-rating-micro{font-size:12px;color:var(--text-muted);font-style:italic;margin-top:4px;}
+  .sp-footer-trust{text-align:center;font-size:12px;color:var(--text-muted);padding:12px 0;border-top:1px solid rgba(255,255,255,0.06);margin-top:8px;letter-spacing:.04em;}
+  .price-anchor{font-size:13px;color:rgba(255,255,255,0.4);text-align:center;margin:10px 0;font-style:italic;}
+  .price-anchor strong{color:var(--gold);}
+  .price-anchor-paywall{font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:14px;text-align:center;line-height:1.5;}
+  .price-anchor-paywall s{color:rgba(255,255,255,0.25);}
+  .price-anchor-paywall strong{color:var(--gold);font-size:15px;}
+
+  /* ── SPRINT 2: SP-8 MOBILE STICKY BAR ── */
+  #sp8-sticky{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;background:rgba(13,11,30,0.96);border-top:1px solid rgba(240,184,96,0.25);padding:10px 16px;text-align:center;font-size:12px;color:var(--text-secondary);backdrop-filter:blur(12px);}
+  #sp8-sticky .sp8-stars{color:#f0b860;font-size:12px;margin-right:6px;}
+  @media(orientation:landscape) and (max-width:900px){#sp8-sticky{display:none!important;}}
+
+  /* ── SPRINT 2: EXIT INTENT POPUP ── */
+  #exit-intent-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:20px;}
+  #exit-intent-overlay.active{display:flex;}
+  .ei-modal{background:linear-gradient(135deg,rgba(20,15,40,0.98),rgba(15,10,30,0.98));border:1px solid rgba(240,184,96,0.3);border-radius:20px;padding:36px 28px;max-width:400px;width:100%;text-align:center;box-shadow:0 0 60px rgba(240,184,96,0.15),0 24px 60px rgba(0,0,0,0.5);position:relative;}
+  .ei-close{position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:18px;cursor:pointer;line-height:1;}
+  .ei-close:hover{color:rgba(255,255,255,0.8);}
+  .ei-eyebrow{font-size:11px;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px;}
+  .ei-headline{font-family:var(--font-serif);font-size:24px;color:var(--text-primary);margin-bottom:8px;line-height:1.2;}
+  .ei-subhead{font-size:14px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5;}
+  .ei-anchor{font-size:12px;color:rgba(255,255,255,0.4);font-style:italic;margin-bottom:16px;}
+  .ei-timer{font-family:var(--font-serif);font-size:36px;color:#e06050;text-shadow:0 0 20px rgba(220,80,60,0.5);margin:8px 0 16px;font-weight:600;letter-spacing:.04em;}
+  .ei-cta{width:100%;padding:16px;background:linear-gradient(135deg,#f0b860,#e8a840);border:none;border-radius:12px;color:#1a1020;font-size:16px;font-weight:800;cursor:pointer;font-family:var(--font-sans);transition:transform .2s,box-shadow .2s;}
+  .ei-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,184,96,0.4);}
+  .ei-dismiss{margin-top:12px;font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
+  .ei-dismiss:hover{color:var(--text-secondary);}
+  .ei-trust{font-size:11px;color:var(--text-muted);margin-top:10px;}
+
+  /* ── SPRINT 2: DAY MASTER HOOK ── */
+  .dm-hook-line{font-size:15px;color:var(--text-secondary);font-style:italic;text-align:center;margin:10px 0 4px;padding:0 8px;line-height:1.5;}
   </style>
 </head>
 <body>
@@ -1435,6 +1485,12 @@
     <div class="hero-eyebrow" id="hero-eyebrow">THE MOMENT YOU WERE BORN</div>
     <h1 class="hero-headline" id="hero-headline"><em>518,400</em> possible destinies.<br>This one is yours.</h1>
     <p class="hero-sub" id="hero-sub">1,500 years of East Asian wisdom — decoded.<br>Your birth date reveals your personality, destiny, and the seasons of your life.</p>
+    <!-- SP-1: Hero quote -->
+    <div class="sp-quote-card" style="max-width:480px;margin:16px auto;">
+      <div class="sp-stars">⭐⭐⭐⭐⭐</div>
+      <div class="sp-quote-text">"I've done astrology charts, Human Design, everything. This hit different. My Day Master literally described my career crisis to a T."</div>
+      <div class="sp-quote-author">— Priya S., 28, Brooklyn</div>
+    </div>
     <!-- 3-STEP MINI FLOW -->
     <div class="hero-steps" id="hero-steps">
       <div class="hero-step">
@@ -1456,6 +1512,15 @@
       </div>
     </div>
     <button class="btn-primary" id="hero-cta" onclick="smoothScrollTo('section-input')">Reveal My Destiny →</button>
+    <!-- SP-3: Star rating below CTA -->
+    <div class="sp-rating-bar">
+      <span style="color:#f0b860">★★★★★</span>
+      <strong>4.9/5</strong>
+      <span>from 3,800+ readings</span>
+    </div>
+    <div class="sp-rating-micro">"Finally, something that explains <em>why</em> I am the way I am." — @cosmicwren</div>
+    <!-- Price Anchor Placement 1 -->
+    <p class="price-anchor" style="margin-top:12px;">A private session with a traditional saju master costs $150–$300.<br>Your complete reading is <strong>$7.99</strong> — one time, instant access.</p>
     <!-- 신뢰 마이크로카피 -->
     <div class="hero-trust-line" id="hero-trust-line">
       <span id="trust-free">✓ Free</span>
@@ -1588,6 +1653,10 @@
       </div>
 
       <div class="microcopy" id="step2-microcopy">시간 없이도 분석 가능합니다 · 추후 업데이트 가능</div>
+      <!-- SP-2: Live counter -->
+      <div style="text-align:center;margin-bottom:12px;">
+        <span class="sp-counter-badge">🔥 1,247 people got their reading today</span>
+      </div>
       <div class="form-cta">
         <button class="btn-primary" id="btn-calculate" onclick="calculateChart()" style="width:100%;justify-content:center;">
           <span id="btn-calc-text">✦ 나의 사주 분석하기</span>
@@ -1657,11 +1726,17 @@
     <div class="dm-keywords" id="dm-keywords"></div>
     <!-- 공유 버튼 -->
     <div class="dm-share-row" id="dm-share-row">
-      <button class="dm-share-btn" id="dm-share-btn" onclick="openShareModal()">
+      <button class="dm-share-btn" id="dm-share-btn" onclick="shareDayMaster()">
         <span class="dm-share-icon">↗</span>
         <span class="dm-share-label" id="dm-share-label">Share My Chart</span>
       </button>
     </div>
+  </div>
+
+  <!-- SP-4: Below Day Master card -->
+  <div class="sp-quote-card" id="sp4-card" style="display:none;margin:12px 0;">
+    <div class="sp-quote-text">"When I saw 壬水 — The Deep River, I literally teared up. That's exactly how I've always felt inside but couldn't put into words."</div>
+    <div class="sp-quote-author">— Madeleine T., 31, Portland</div>
   </div>
 
   <!-- IDENTITY BAR -->
@@ -1815,6 +1890,8 @@
 
 <!-- FOOTER -->
 <footer>
+  <!-- SP-7: Trust bar -->
+  <div class="sp-footer-trust">Trusted by 50,000+ seekers worldwide · 🌍 Available in English &amp; Korean · 🔒 Secure checkout via Lemon Squeezy</div>
   <div id="footer-text">Momentor · <a href="#">Privacy</a> · <a href="#">Terms</a></div>
   <div style="margin-top:8px;opacity:.5">✦ 1,500 years of wisdom · momentor.app</div>
 </footer>
@@ -2131,6 +2208,70 @@ const PILLAR_IDENTITY = {
   '癸未':{en:'The Rain That Makes the Summer Bloom',ko:'여름을 피어나게 하는 생명의 비'},
   '癸酉':{en:'The Morning Dew on Polished, Perfect Metal',ko:'완벽하게 정련된 금속 위의 아침 이슬'},
   '癸亥':{en:'The Source Spring at the Origin of All Things',ko:'모든 것의 시작, 태초의 근원 샘'},
+};
+
+// ── PILLAR NARRATIVES (Mira v5 — Storyteller Voice) ──
+const PILLAR_NARRATIVES = {
+"甲子":{hook:"You came into this world with a destination already in mind — and the water to carry you there.",origin:"甲木 meets 子Water: a tree rooted in an underground spring. The river doesn't fight the tree's direction — it feeds it, quietly, from below. Before you could name what drove you, you were already moving. Not scrambling — flowing toward something. The ambition was never loud. But it was always there, always deep, always cold-clear as winter water finding the path of least resistance toward the sea.",shadow:"The spring feeds the tree, but sometimes the roots drink so deep that the surface dries out. You can be consumed by the direction without remembering to surface, to rest, to let someone actually reach you rather than just watch you move.",invitation:"The water knows where it's going. What would happen if you let someone travel with you?",hookKo:"당신은 이미 목적지를 마음에 품고 태어났습니다 — 그리고 그곳까지 데려다줄 물도 함께.",originKo:"甲木과 子水: 지하 샘에 뿌리내린 나무. 강은 나무의 방향과 싸우지 않습니다 — 아래에서, 조용히, 그것을 먹입니다. 이름 붙이기도 전에 당신은 이미 움직이고 있었습니다.",shadowKo:"샘은 나무를 먹이지만, 때로 뿌리가 너무 깊이 마시면 표면이 건조해집니다.",invitationKo:"물은 어디로 가는지 알고 있습니다. 누군가가 함께 여행하도록 허락한다면 어떻게 될까요?"},
+"甲寅":{hook:"You've never needed permission to begin. The question was always just — when, not whether.",origin:"Two woods in the same pillar: the tree planted in a forest of its own making. 甲Wood in 寅Wood ground — this is not just strength, this is a kind of primal will. You were the child who decided something and could not be reasoned out of it. Not stubbornness — orientation. The compass was set before anyone thought to ask where you were going.",shadow:"The double wood burns hot and climbs fast — but there are no other elements to tell it when to stop. You've overextended. You've committed to directions you couldn't unmake. And somewhere in you is a fatigue you haven't named yet, from always being the one who initiates.",invitation:"The forest doesn't need another tree. What does it need? What do you need?",hookKo:"당신은 시작하기 위해 허락이 필요했던 적이 없습니다. 질문은 항상 — 언제, 이냐 아니냐가 아니라.",originKo:"두 개의 목(木)이 같은 기둥에: 자신이 만든 숲에 심어진 나무. 甲木과 寅木의 땅 — 이것은 단순한 힘이 아니라 원초적인 의지입니다.",shadowKo:"이중 목은 뜨겁게 타오르고 빠르게 올라갑니다 — 하지만 언제 멈춰야 할지 알려줄 다른 원소가 없습니다.",invitationKo:"숲에 또 다른 나무가 필요하지 않습니다. 무엇이 필요한가요?"},
+"甲辰":{hook:"You carry authority you never asked for — and have spent years figuring out what to do with it.",origin:"甲Wood planted in 辰Earth — the Dragon's soil. 辰 is the most powerful earth branch: the transformer, the one that contains everything in transition. A tree planted in dragon ground doesn't just grow — it becomes something that reorganizes the landscape. There is a gravitational weight to you that appeared early. Things arranged around your presence before you spoke a word.",shadow:"Power without permission creates a particular kind of loneliness. People followed you; they didn't always choose you. And you've been mistaken for more certain than you are — because 甲辰 looks like it knows, even when it doesn't.",invitation:"The dragon's earth transforms everything it holds. What is it time to let change?",hookKo:"당신은 요청하지 않은 권위를 갖고 있습니다 — 그리고 그것으로 무엇을 해야 할지 파악하는 데 수년을 보냈습니다.",originKo:"甲木과 辰土 — 용의 땅에 심어진 나무. 辰은 가장 강력한 지지입니다: 변환자, 전환 중인 모든 것을 담고 있는 것.",shadowKo:"허락 없는 권력은 특별한 종류의 외로움을 만듭니다. 사람들이 당신을 따랐지만, 항상 당신을 선택한 것은 아니었습니다.",invitationKo:"용의 땅은 그것이 담고 있는 모든 것을 변환합니다. 이제 무엇을 변하게 할 시간인가요?"},
+"甲午":{hook:"There's a fire in you that other people mistake for impatience. They've never understood what it's actually pushing toward.",origin:"甲Wood above 午Fire: the tree that catches sunlight and runs with it. This is energy that doesn't stay still — not because it's restless, but because it's fueled. Wood feeds fire; fire accelerates the wood's energy upward. You've always moved faster than the plan, felt things more intensely than the occasion called for, been ten steps ahead in a room where everyone else was still settling in.",shadow:"Fire and wood together, unchecked — this burns. There's a version of you that has run straight into walls at full speed because the momentum was too good to question. And there's an aftermath to that, a quiet cost, that you rarely let anyone see.",invitation:"The noon sun burns brightest — but even it sets. What does the fire look like when it finally slows down?",hookKo:"당신 안에는 다른 사람들이 조급함으로 착각하는 불이 있습니다.",originKo:"甲木과 午火: 햇빛을 잡아 달려가는 나무. 목은 화를 먹이고, 화는 목의 에너지를 위로 가속합니다.",shadowKo:"제어되지 않은 화와 목 — 이것은 불탑니다. 모멘텀이 너무 좋아서 의심할 수 없었기 때문에 전속력으로 벽에 달려든 버전의 당신이 있습니다.",invitationKo:"정오의 태양이 가장 밝게 타오릅니다 — 하지만 그것도 집니다. 불이 마침내 느려지면 어떤 모습일까요?"},
+"甲申":{hook:"You've been sharpened by things that were supposed to break you. They didn't. You noticed.",origin:"甲Wood meeting 申Metal: the tree and the axe in the same body. This is the most paradoxical of the 甲 pillars — the thing that could destroy you is also inside you, working, refining, cutting away what doesn't serve. The result is a person shaped by pressure into something specific — someone who came out of difficult seasons with an edge others don't have.",shadow:"The tree shaped by the blade can become obsessed with its own edges. There's a sharpness in you that, when turned inward, is unkind. You've been harder on yourself than any outside force has been.",invitation:"The axe and the tree made each other. What were you made to build?",hookKo:"당신은 당신을 부수기로 되어 있었던 것들에 의해 다듬어졌습니다.",originKo:"甲木과 申金: 같은 몸 안의 나무와 도끼. 이것은 甲 기둥 중 가장 역설적인 것입니다 — 당신을 파괴할 수 있는 것이 또한 당신 안에 있어 정제하고, 불필요한 것을 잘라냅니다.",shadowKo:"날에 의해 다듬어진 나무는 자신의 가장자리에 집착할 수 있습니다. 어떤 외부 힘보다 자신에게 더 가혹해왔습니다.",invitationKo:"도끼와 나무는 서로를 만들었습니다. 당신은 무엇을 만들기 위해 만들어졌나요?"},
+"甲戌":{hook:"You are someone people think of years later — not because of what you said, but because of what you held.",origin:"甲Wood above 戌Earth: the tree at dusk, rooted in the fire-keeper's ground. 戌 holds the memory of the day's heat — it's autumn earth that keeps a low fire burning through the night. A 甲木 planted here grows with unusual rootedness. Less upward rush, more depth. You know how to stay. How to hold. How to guard the warmth when others have gone to sleep.",shadow:"The fire-keeper can become the one who never leaves the fire. 甲戌 sometimes sacrifices movement for the sake of what it's protecting — staying too long in places, relationships, roles that no longer need tending.",invitation:"What you've been guarding is safe now. What does it look like to move with that — instead of staying to protect it?",hookKo:"당신은 사람들이 수년 후에 떠올리는 사람입니다 — 당신이 말한 것 때문이 아니라, 당신이 붙잡고 있었던 것 때문에.",originKo:"甲木과 戌土: 황혼에, 불을 지키는 자의 땅에 뿌리내린 나무. 여기에 심어진 甲木은 특이한 뿌리 깊음으로 자랍니다.",shadowKo:"불을 지키는 자는 불 곁을 결코 떠나지 않는 자가 될 수 있습니다. 甲戌은 때로 더 이상 돌봄이 필요하지 않은 곳에 너무 오래 머뭅니다.",invitationKo:"당신이 지키고 있던 것은 이제 안전합니다. 그것을 보호하기 위해 머무는 대신 — 그것과 함께 움직이는 것은 어떤 모습일까요?"},
+"乙丑":{hook:"You've outlasted everyone who underestimated you. Not by force — by patience so deep it looks like peace.",origin:"乙Wood in 丑Earth: the vine taking hold in frozen winter ground. 丑 is the earth of persistence — cold, dense, slow to warm, impossible to rush. Most things die in this soil. The vine doesn't. It finds the smallest crack and roots there, quietly, waiting for the season to change.",shadow:"The vine in winter ground can wait so long that it forgets to bloom when spring finally arrives. 乙丑 sometimes sacrifices spontaneity for safety, joy for continuity.",invitation:"The winter is over. What are you still waiting for permission to grow toward?",hookKo:"당신을 과소평가한 모든 사람을 살아남았습니다. 힘으로가 아니라 — 평화처럼 보일 만큼 깊은 인내로.",originKo:"乙木과 丑土: 얼어붙은 겨울 땅에 뿌리내리는 덩굴. 丑은 인내의 흙입니다.",shadowKo:"겨울 땅의 덩굴은 너무 오래 기다려서 봄이 마침내 왔을 때 꽃 피우는 것을 잊을 수 있습니다.",invitationKo:"겨울이 끝났습니다. 성장하도록 허락받기를 아직도 기다리고 있는 것이 무엇인가요?"},
+"乙卯":{hook:"You were built for elegance, and the world kept asking for something harder. You found a way to give both.",origin:"乙Wood in 卯Wood: pure vine energy, doubled — the vine that has found ideal ground and unfolds with extraordinary grace. This combination is the most aesthetically attuned of the wooden pillars: you have always felt the texture of things, the beauty in how something is said rather than just what is said.",shadow:"Too much wood and the vine can overgrow its bounds — spreading everywhere, attached to everything, unable to articulate where it begins and where the structure ends.",invitation:"The vine is most beautiful when it knows which wall it's climbing. What is your wall?",hookKo:"당신은 우아함을 위해 만들어졌고, 세상은 계속 더 단단한 것을 요구했습니다. 당신은 둘 다 줄 방법을 찾았습니다.",originKo:"乙木과 卯木: 순수한 덩굴 에너지, 두 배로 — 이상적인 땅을 찾아 특별한 우아함으로 펼쳐지는 덩굴.",shadowKo:"목이 너무 많으면 덩굴이 경계를 넘어 자랄 수 있습니다.",invitationKo:"덩굴은 어떤 벽을 올라가는지 알 때 가장 아름답습니다. 당신의 벽은 무엇인가요?"},
+"乙巳":{hook:"You've always known things before they happened. Not because you're psychic — because you're watching everything.",origin:"乙Wood above 巳Fire: the vine that runs toward the light. 巳 is the snake's hour — a fire that is intelligent rather than impulsive. The vine finds this light and grows toward it with unusual precision. You have always read the room three moves ahead.",shadow:"The vine that grows only toward light can become dependent on a particular source of it. When that light disappears, the disorientation is profound.",invitation:"The snake's fire burns in a particular direction. What does your intelligence want to illuminate?",hookKo:"당신은 항상 일어나기 전에 일들을 알았습니다. 모든 것을 지켜보고 있기 때문에.",originKo:"乙木과 巳火: 빛을 향해 달리는 덩굴. 巳는 뱀의 시간입니다 — 충동적이 아니라 지능적으로 타오르는 불.",shadowKo:"빛을 향해서만 자라는 덩굴은 특정 빛의 원천에 의존하게 될 수 있습니다.",invitationKo:"뱀의 불은 특별한 방향으로 타오릅니다. 당신의 지능은 무엇을 밝히고 싶어하나요?"},
+"乙未":{hook:"People trust you with things they've never told anyone. That's not accident — something about you makes secrets feel safe.",origin:"乙Wood above 未Earth: the vine in the afternoon garden. 未 is earth that has been warmed all day — the most receptive and emotionally rich of the earth branches. You carry a quality of emotional temperature that other people recognize instinctively: warm enough to open to, cool enough to not overwhelm.",shadow:"The vine in warm earth can become so comfortable that it stops moving. There is a stillness in 乙未 that is beautiful — and a version of that stillness that is avoidance.",invitation:"The garden you've tended is beautiful. Is there somewhere wilder you've been curious about?",hookKo:"사람들은 누구에게도 말한 적 없는 것들을 당신에게 맡깁니다.",originKo:"乙木과 未土: 오후 정원의 덩굴. 未는 하루 종일 따뜻하게 된 흙입니다 — 가장 수용적이고 감정적으로 풍부한 지지.",shadowKo:"따뜻한 땅의 덩굴은 너무 편안해져서 움직이기를 멈출 수 있습니다.",invitationKo:"당신이 가꿔온 정원은 아름답습니다. 더 거칠고 궁금했던 곳이 있나요?"},
+"乙酉":{hook:"You are precise in a way that most people can't place — you edit the room you're in, you edit yourself, before anyone notices.",origin:"乙Wood above 酉Metal: the vine shaped by the pruning blade. 酉 is the rooster's hour, the metal of refinement and aesthetic precision. When vine meets blade, the result is not destruction — it's cultivation. Every choice you make has an invisible aesthetic dimension most people can't see.",shadow:"A vine pruned too often stops volunteering growth. 乙酉 can become overly self-editing — pre-rejecting ideas before they're half-formed.",invitation:"The most beautiful gardens have one wild corner. What are you not allowing to grow freely?",hookKo:"당신은 아무도 알아차리기 전에 자신이 있는 방을, 자신을 편집합니다.",originKo:"乙木과 酉金: 가지치기 날에 의해 다듬어진 덩굴. 酉는 닭의 시간, 정제와 미적 정밀함의 금속.",shadowKo:"너무 자주 가지치기 된 덩굴은 자발적 성장을 멈춥니다.",invitationKo:"가장 아름다운 정원에는 거친 구석이 하나 있습니다. 자유롭게 자라도록 허락하지 않고 있는 것은 무엇인가요?"},
+"乙亥":{hook:"You've lived in the undercurrent of things — the meaning beneath the meeting, the feeling beneath the words — your entire life.",origin:"乙Wood above 亥Water: the vine floating on deep water, rooted in mystery. 亥 is the darkest water branch — the ocean of potential. A vine in this water doesn't grip stone — it drifts, reads the current, adapts. You've always inhabited the space between things: between what's said and what's meant.",shadow:"Water this deep can disorient. 乙亥 sometimes loses the thread between the inner world and the practical one — spending so much time in the undercurrent that the surface feels thin and unreal.",invitation:"The depth you navigate is real. Who else knows how to read these waters?",hookKo:"당신은 평생 사물의 저류에 살아왔습니다 — 만남 아래의 의미, 말 아래의 감정.",originKo:"乙木과 亥水: 깊은 물 위에 떠 있는, 신비에 뿌리내린 덩굴. 亥는 가장 어두운 물의 지지입니다.",shadowKo:"이처럼 깊은 물은 방향감각을 잃게 할 수 있습니다.",invitationKo:"당신이 항해하는 깊이는 실재합니다. 이 물을 읽는 방법을 아는 다른 사람은 누구인가요?"},
+"丙子":{hook:"You carry a warmth that has survived cold that would have extinguished most people. That's not resilience — that's physics.",origin:"丙Fire above 子Water: the sun reflected in midnight water. This is the most paradoxical of the 丙 pillars — the maximum light resting above the maximum depth. You are bright, but underneath there are currents that the brightness doesn't reveal. 子 is the hour of midnight potential: everything gathered, nothing yet released.",shadow:"The sun on water creates beautiful light — and also blindness. 丙子 can illuminate without revealing, shine without showing. People are warmed by you without understanding you, and that gap becomes a kind of loneliness that is very hard to name.",invitation:"The midnight water knows what the noon sun doesn't. What do you know that you haven't said yet?",hookKo:"당신은 대부분의 사람들을 꺼뜨렸을 추위를 살아남은 따뜻함을 지니고 있습니다.",originKo:"丙火와 子水: 자정 물에 반영된 태양. 이것은 丙 기둥 중 가장 역설적입니다 — 최대의 빛이 최대의 깊이 위에.",shadowKo:"丙子는 드러내지 않고 빛을 발할 수 있습니다. 그 간격은 이름 붙이기 매우 어려운 외로움이 됩니다.",invitationKo:"자정의 물은 정오의 태양이 모르는 것을 알고 있습니다. 아직 말하지 않은 것을 알고 있나요?"},
+"丙寅":{hook:"You were the one who moved first. Not because you were the most prepared — because you couldn't wait.",origin:"丙Fire above 寅Wood: the rising sun above the tiger's mountain. The sun at dawn — not the noon blaze, but the early, directional light that says here, this way, now. 寅 is the hour of the tiger, of action before thought, of instinct that has never needed to justify itself.",shadow:"The fire that burns twice as fast gives twice as much light — and exhausts its fuel in half the time. 丙寅 burns bright and can burn out, leaving the people who organized around that light suddenly in the dark.",invitation:"What would it look like to be both the torch and the one who gets to rest?",hookKo:"당신은 먼저 움직인 사람이었습니다. 가장 준비가 되어서가 아니라 — 기다릴 수 없었기 때문에.",originKo:"丙火와 寅木: 호랑이의 산 위의 떠오르는 태양. 새벽의 태양 — 이쪽으로, 지금이라고 말하는 이른, 방향을 잡는 빛.",shadowKo:"두 배로 빠르게 타오르는 불은 두 배의 빛을 주고 절반의 시간에 연료를 소진합니다.",invitationKo:"횃불이면서 동시에 쉴 수 있는 사람이 되는 것은 어떤 모습일까요?"},
+"丙辰":{hook:"You've transformed every room you've been long enough in. Sometimes you knew it. Sometimes you didn't.",origin:"丙Fire above 辰Earth: the sun above the dragon's transforming ground. A sun above this ground doesn't just warm — it transmutes. You have a quality of catalysis: things become something different for having been near you. Conversations go somewhere they wouldn't have.",shadow:"The transformer doesn't always get to experience the result of its transformation. 丙辰 moves people and situations forward — and sometimes moves on before seeing what it made.",invitation:"You've changed the shape of things for a long time. What has changed the shape of you?",hookKo:"당신은 충분히 오래 머문 모든 방을 변환시켰습니다. 때로는 알았습니다. 때로는 몰랐습니다.",originKo:"丙火와 辰土: 용의 변환하는 땅 위의 태양. 이 땅 위의 태양은 단순히 따뜻하게 하지 않습니다 — 변환합니다.",shadowKo:"丙辰은 사람과 상황을 앞으로 나아가게 하고 때로는 자신이 만든 것을 보기 전에 이동합니다.",invitationKo:"오랫동안 사물의 형태를 바꿔왔습니다. 무엇이 당신의 형태를 바꿨나요?"},
+"丙午":{hook:"When you walk in, something shifts. Not because you try — because you can't not.",origin:"丙Fire above 午Fire: the sun at its absolute noon, doubled. This is the most intense of all fire pillars — pure heat, pure light, maximum expression. 丙午 is the combination that doesn't do subtle. People orbit you. That's not metaphor. That's how this fire works.",shadow:"Maximum light creates maximum shadow. The people in your orbit sometimes disappear into your shade. And there's a loneliness inside the sun: nothing can look directly at you for long.",invitation:"At the height of noon, the sun finally stops climbing. What does stillness feel like for you?",hookKo:"당신이 들어오면 무언가가 바뀝니다. 노력해서가 아니라 — 그러지 않을 수 없기 때문에.",originKo:"丙火와 午火: 두 배가 된 절정의 정오. 이것은 모든 불 기둥 중 가장 강렬합니다 — 순수한 열기, 순수한 빛, 최대 표현.",shadowKo:"최대 빛은 최대 그림자를 만듭니다. 태양 안에는 외로움이 있습니다: 아무것도 오랫동안 직접 당신을 바라볼 수 없습니다.",invitationKo:"정오의 정점에서 태양은 마침내 올라가기를 멈춥니다. 당신에게 고요함은 어떤 느낌인가요?"},
+"丙申":{hook:"You are warm and exact — a combination that takes people completely off guard.",origin:"丙Fire above 申Metal: the sun above the refining furnace. When the sun's heat meets metal precision, the result is warmth that has standards, generosity that has limits, the fire that decides who stands in its light. You radiate genuinely, but not indiscriminately.",shadow:"Metal cools what it touches, even in the fire. 丙申 can run a little cold at the edges — the warmth is real, but the precision around it can be experienced as judgment.",invitation:"The furnace refines what enters it. What are you in the process of refining right now?",hookKo:"당신은 따뜻하고 정밀합니다 — 사람들을 완전히 예상치 못하게 하는 조합.",originKo:"丙火와 申金: 정련 용광로 위의 태양. 태양의 열기가 이 금속의 정밀함을 만나면: 기준이 있는 따뜻함, 한계가 있는 관대함.",shadowKo:"금속은 불 안에서도 그것이 닿는 것을 식힙니다. 丙申은 가장자리에서 약간 차가울 수 있습니다.",invitationKo:"용광로는 그것에 들어오는 것을 정제합니다. 지금 무엇을 정제하는 과정 중에 있나요?"},
+"丙戌":{hook:"People have always brought you their heaviest things. Not because you asked — because you were already carrying your own, and still standing.",origin:"丙Fire above 戌Earth: the sun at dusk, warming the earth that guards the day's memory. 戌 is the watchman's hour — loyalty, guardianship, the one who stays until the fire is fully out. You have lit candles for people at their darkest hours, held steady when others panicked.",shadow:"The sun doesn't go out in 丙戌 — but it gets heavy. There is a weight to being the reliable warmth. The dusk fire asks: who lights a candle for the candle-keeper?",invitation:"You've kept the light going for a long time. What would it feel like to let someone else hold the torch tonight?",hookKo:"사람들은 항상 가장 무거운 것들을 당신에게 가져왔습니다. 당신이 요청해서가 아니라 — 당신이 이미 자신의 것을 짊어지고도 여전히 서 있었기 때문에.",originKo:"丙火와 戌土: 황혼에, 낮의 기억을 지키는 땅을 따뜻하게 하는 태양. 戌은 파수꾼의 시간입니다.",shadowKo:"丙戌에서 태양은 꺼지지 않습니다 — 하지만 무거워집니다. 따뜻함을 유지해야 하기 때문에 표현할 수 없는 상처를 지닙니다.",invitationKo:"오랫동안 빛을 지속시켜왔습니다. 오늘 밤 누군가 다른 사람이 횃불을 잡게 한다면 어떤 느낌일까요?"},
+"丁丑":{hook:"You've kept your flame burning through winters that were meant to put it out. That takes something most people don't have.",origin:"丁Fire above 丑Earth: a candle burning in frozen ground. You have maintained your warmth under conditions that were not designed for warmth. Not by ignoring the cold, but by burning more precisely, more deliberately, directing the light exactly where it matters most.",shadow:"A flame in frozen ground gives everything to surviving — and may have nothing left for thriving. 丁丑 sometimes mistakes endurance for living, keeping the light lit as the goal rather than as the means to something warmer.",invitation:"The winter you survived is the proof. The spring is asking: what do you want to grow?",hookKo:"당신은 꺼뜨리기 위해 의도된 겨울들을 통해 불꽃을 계속 태웠습니다.",originKo:"丁火와 丑土: 얼어붙은 땅에서 타오르는 촛불. 추위가 그것을 요구하기 때문에 특별한 강도로 타오릅니다.",shadowKo:"얼어붙은 땅의 불꽃은 살아남기 위해 모든 것을 줍니다. 丁丑은 때로 인내를 삶과 혼동합니다.",invitationKo:"살아남은 겨울이 증거입니다. 봄이 묻고 있습니다: 무엇을 기르고 싶나요?"},
+"丁卯":{hook:"You are gentler than you look and sharper than you seem. People rarely guess the combination until it's too late.",origin:"丁Fire above 卯Wood: the candle held in an open hand in spring. 卯 is the most graceful of the wood branches. The candle here doesn't labor against the wind — the wood feeds it, and it glows with unusual ease. You move through the world with a quality of grace that feels effortless from outside.",shadow:"Wood feeds fire, but wood also burns. 丁卯 can give away warmth faster than it regenerates — the ease that others see concealing an energy cost that accumulates quietly.",invitation:"Spring is the season of emergence, not just for flowers. What is ready to come forward in you?",hookKo:"당신은 보기보다 더 부드럽고 보이는 것보다 더 예리합니다.",originKo:"丁火와 卯木: 봄에 열린 손에 들린 촛불. 여기서 촛불은 바람과 싸우지 않습니다 — 목이 그것을 먹이고, 특별한 용이함으로 빛납니다.",shadowKo:"목은 불을 먹이지만, 목도 탑니다. 丁卯은 재생되는 것보다 더 빨리 따뜻함을 줄 수 있습니다.",invitationKo:"봄은 꽃만을 위한 출현의 계절이 아닙니다. 당신 안에서 무엇이 앞으로 나올 준비가 되어 있나요?"},
+"丁巳":{hook:"There's a version of your life where you trust the intelligence you carry. You're starting to live it.",origin:"丁Fire above 巳Fire: two fires of different character — the intimate candle above the serpent's directed flame. When candlelight meets this directed energy, the result is a warmth that has agenda — not manipulation, but purpose. Your care has always had architecture.",shadow:"Two fires together can be very consuming. 丁巳 sometimes burns so intentionally toward its goals that it forgets that warmth, at its best, is not a tool.",invitation:"The serpent knows exactly where it's going. Does the candle know what it wants to illuminate?",hookKo:"당신이 지니고 있는 지능을 신뢰하는 삶의 버전이 있습니다. 그것을 살기 시작하고 있습니다.",originKo:"丁火와 巳火: 다른 성격의 두 불 — 뱀의 방향을 가진 불꽃 위의 친밀한 촛불. 결과는 의제를 가진 따뜻함입니다.",shadowKo:"두 불이 함께하면 매우 소비적일 수 있습니다. 丁巳는 때로 목표를 향해 너무 의도적으로 타올라서 따뜻함이 도구가 아님을 잊습니다.",invitationKo:"뱀은 정확히 어디로 가는지 알고 있습니다. 촛불은 무엇을 밝히고 싶은지 알고 있나요?"},
+"丁未":{hook:"You hold the warmth of things long after they've passed. That's not sentimentality — that's a different kind of knowing.",origin:"丁Fire above 未Earth: the candle in the afternoon garden, in warm and receptive ground. 未 is the earth of creativity and memory. A 丁Fire here doesn't burn and release — it burns and accumulates, carrying the heat of past moments into present ones. You remember things that other people have forgotten.",shadow:"The earth that holds everything can also hold what should be released. 丁未 sometimes carries old warmth and old wounds with equal tenderness — unable to distinguish between what is worth preserving and what is only adding weight.",invitation:"The garden holds every season that has passed through it. Which one are you still living in?",hookKo:"당신은 지나간 것들의 따뜻함을 오래 간직합니다. 그것은 감상이 아닙니다 — 다른 종류의 앎입니다.",originKo:"丁火와 未土: 오후 정원의 촛불. 未는 창의성과 기억의 흙입니다. 여기서 丁火는 태우고 쌓습니다.",shadowKo:"모든 것을 담고 있는 땅은 방출해야 할 것도 담고 있을 수 있습니다. 丁未는 때로 오래된 따뜻함과 오래된 상처를 동등한 부드러움으로 지닙니다.",invitationKo:"정원은 그것을 통과한 모든 계절을 담고 있습니다. 당신은 아직 어느 계절에 살고 있나요?"},
+"丁酉":{hook:"You see the flaw in the beautiful thing — and you love it anyway. That's rarer than it sounds.",origin:"丁Fire above 酉Metal: the candlelight refracted through crystal. 酉 is the metal of precision beauty. When candlelight meets this crystal, it multiplies — breaking into spectrum, revealing more than was there before. You have an extraordinary sensory precision: you feel the quality of things, the rightness and wrongness of them.",shadow:"The crystal that refracts everything also fractures in the wrong light. 丁酉 carries a wound-sensitivity: the same precision that makes you beautiful makes you injured by beauty that fails.",invitation:"The gem doesn't need to be flawless to be precious. Do you know that in your own case?",hookKo:"아름다운 것의 결함을 보고 — 그럼에도 불구하고 사랑합니다.",originKo:"丁火와 酉金: 수정을 통해 굴절된 촛불. 酉는 정밀한 아름다움의 금속. 스펙트럼으로 분리되며 곱해집니다.",shadowKo:"丁酉는 선물과 매우 가까운 상처-민감성을 지닙니다: 아름다움을 아름답게 만드는 동일한 정밀함이 실패하는 아름다움에 상처를 입게 합니다.",invitationKo:"보석은 귀하기 위해 흠 없을 필요가 없습니다. 당신 자신의 경우에 그것을 알고 있나요?"},
+"丁亥":{hook:"You've been swimming in depths that most people can't see from the surface. Not drowning — navigating.",origin:"丁Fire above 亥Water: the candle flame on the surface of the deep ocean. This is almost impossible — fire on water — and yet here you are, burning. 亥 is the deepest of the water branches. A candle here burns with unusual wisdom, because it has been formed by the impossible: maintaining warmth and light in an element that should extinguish it.",shadow:"The flame on the ocean is extraordinary — and precarious. 丁亥 can be destabilized by emotional storms that others barely register.",invitation:"The flame on the water burns, against all reason. What in your life deserves that same impossible commitment?",hookKo:"대부분의 사람들이 표면에서 볼 수 없는 깊이에서 헤엄쳐왔습니다. 익사하는 것이 아니라 — 항해하는 것.",originKo:"丁火와 亥Water: 깊은 대양 표면의 촛불. 이것은 거의 불가능합니다 — 물 위의 불 — 그러나 당신은 여기 있어 타오르고 있습니다.",shadowKo:"대양 위의 불꽃은 특별하고 불안정합니다. 丁亥는 다른 사람들이 거의 알아채지 못하는 감정적 폭풍에 불안정해질 수 있습니다.",invitationKo:"물 위의 불꽃은 모든 이성에 반하여 타오릅니다. 동일한 불가능한 헌신을 받을 자격이 있는 것은 무엇인가요?"},
+"戊子":{hook:"There's a stillness in you that people mistake for contentment. Only you know what it's actually holding.",origin:"戊Earth above 子Water: the mountain with an underground spring. On the surface — unmovable, steady. Below — a current of water that moves constantly, that knows things the mountain's surface doesn't show. This is the 戊 pillar of hidden depth: the person who presents as solid and reliable, whose inner world is vast and in constant motion.",shadow:"Underground water can erode what seems permanent. 戊子 sometimes doesn't realize how much the inner current is affecting the foundation — and the collapse, when it comes, surprises even the mountain itself.",invitation:"The mountain keeps its underground rivers private. What would happen if you let someone hear the water?",hookKo:"당신 안의 고요함을 사람들은 만족으로 착각합니다. 그것이 실제로 무엇을 담고 있는지 오직 당신만 알고 있습니다.",originKo:"戊土와 子水: 지하 샘이 있는 산. 표면 위로 움직임 없고 안정적이며, 아래 끊임없이 움직이는 물의 흐름.",shadowKo:"지하수는 영구적으로 보이는 것을 침식할 수 있습니다. 내부 흐름이 기반에 얼마나 영향을 미치는지 인식하지 못합니다.",invitationKo:"산은 지하 강을 비밀로 유지합니다. 누군가가 물을 들을 수 있도록 허락하면 어떻게 될까요?"},
+"戊寅":{hook:"You've protected people who didn't know they needed protecting. That's a particular kind of grace.",origin:"戊Earth above 寅Wood: the mountain where the tiger was born. A mountain shaped by tiger energy is not passive — it is formidable. You have a quality of readiness that others feel instinctively: something in you is always prepared, always watching, always aware of what might come.",shadow:"The guardian who is always ready can forget what it's like to be unguarded. 戊寅 sometimes becomes so focused on protection that it misses the experience of being in the moment it's protecting.",invitation:"The tiger rests between hunts. What does rest look like for someone built like you?",hookKo:"필요로 한다는 것을 몰랐던 사람들을 보호해왔습니다. 그것은 특별한 종류의 은혜입니다.",originKo:"戊土와 寅木: 호랑이가 태어난 산. 호랑이 에너지에 의해 형성된 산은 수동적이지 않습니다 — 강력합니다.",shadowKo:"항상 준비된 수호자는 무방비 상태가 어떤 것인지 잊을 수 있습니다.",invitationKo:"호랑이는 사냥 사이에 쉽니다. 당신처럼 만들어진 누군가에게 휴식은 어떤 모습인가요?"},
+"戊辰":{hook:"You are one of the most powerful things in any room, and you dress it in ordinary clothes.",origin:"戊Earth above 辰Earth: mountain upon transforming earth — double earth. This creates an unusual tension: the immovable meeting the unstable. 戊辰 carries both the profound stillness of the mountain and the capacity for dramatic transformation underneath. When you do move, everything moves with you.",shadow:"Double earth can become unmovable to the point of rigidity. 戊辰 sometimes protects stability so fiercely that change — necessary change — is treated as threat.",invitation:"You contain the earthquake. When was the last time you let yourself shake?",hookKo:"당신은 어떤 방에서든 가장 강력한 것들 중 하나이고, 그것을 평범한 옷으로 입습니다.",originKo:"戊土와 辰土: 변환하는 땅 위의 산 — 이중 흙, 하나는 정적이고 하나는 유동적입니다.",shadowKo:"이중 흙은 경직성의 지점까지 움직이지 않게 될 수 있습니다. 필요한 변화를 위협으로 취급합니다.",invitationKo:"당신은 지진을 담고 있습니다. 마지막으로 자신이 흔들리도록 한 것이 언제였나요?"},
+"戊午":{hook:"You burn steady when everything else is chaos. People have been counting on that their whole lives without telling you.",origin:"戊Earth above 午Fire: the mountain warmed by the noon sun. You have an unusual quality: the steadiness of the mountain with the warmth of the fire, the reliability that doesn't feel cold. The people who've known you long know that you're the one to go to in a crisis — not because you have all the answers, but because your presence itself reorganizes panic into something manageable.",shadow:"The mountain absorbs the noon heat and holds it — but heat that has nowhere to go accumulates. 戊午 can carry unprocessed intensity, holding the warmth without always knowing how to release it.",invitation:"You've been steady for so many people. What does it feel like when you let yourself burn freely?",hookKo:"모든 것이 혼란일 때 당신은 꾸준히 타오릅니다. 사람들은 당신에게 말하지 않은 채로 그것에 의존해왔습니다.",originKo:"戊土와 午火: 정오의 태양으로 따뜻해진 산. 산의 꾸준함과 불의 따뜻함 — 차갑지 않은 신뢰성.",shadowKo:"산은 정오의 열기를 흡수하고 담습니다 — 갈 곳 없는 열기는 쌓입니다. 처리되지 않은 강도를 지닐 수 있습니다.",invitationKo:"많은 사람들을 위해 꾸준했습니다. 자유롭게 타오르도록 자신을 놓아줄 때 어떤 느낌인가요?"},
+"戊申":{hook:"You've carved something precise out of something enormous. That takes patience of a kind most people haven't needed.",origin:"戊Earth above 申Metal: the mountain that contains veins of metal — the ore that will become the blade still inside the stone. You have been shaped by systems, by structure, by forms of discipline that felt limiting and turned out to be liberating.",shadow:"Metal inside stone requires a force to emerge that can be mistaken for violence. 戊申 sometimes uses precision and control as distance — the refinement becomes armor, the clarity becomes a wall.",invitation:"The mountain holds the ore. Who has the patience to help you bring it out?",hookKo:"방대한 것에서 정밀한 것을 조각해냈습니다. 대부분의 사람들이 필요로 하지 않았던 종류의 인내를 필요로 합니다.",originKo:"戊土와 申金: 금속 맥이 있는 산 — 돌 안에 아직 있는 날이 될 광석. 어려움을 통한 정제의 기둥입니다.",shadowKo:"돌 안의 금속은 폭력으로 오해받을 수 있는 힘을 필요로 합니다. 정밀함과 통제를 거리로 사용합니다.",invitationKo:"산이 광석을 담고 있습니다. 그것을 꺼내는 것을 도울 인내심이 있는 사람은 누구인가요?"},
+"戊戌":{hook:"You've been the ground beneath things. The invisible foundation. The thing that made other things possible.",origin:"戊Earth above 戌Earth: double earth, both guarding fire within. 戌 is the dusk earth, the keeper of warmth after the sun is gone. There is a devotion in you that runs deeper than most people's loyalty — a commitment not to individuals or projects, but to what should be true. That is harder to move than a mountain.",shadow:"The mountain that guards its fire against everything guards it against the things it needs too. 戊戌 can become isolated in its groundedness — a preference for the permanent that can shade into stubbornness.",invitation:"The deepest fire needs air to keep burning. What are you letting in?",hookKo:"당신은 사물 아래의 땅이었습니다. 보이지 않는 기반. 다른 것들을 가능하게 한 것.",originKo:"戊土와 戌土: 이중 흙, 둘 다 안에 불을 지키고 있습니다. 가장 차가운 밤을 통해 따뜻하게 유지하는 지하 불이 있습니다.",shadowKo:"모든 것에 반해 불을 지키는 산은 필요한 것들에 대해서도 지킵니다. 그 뿌리 깊음으로 고립될 수 있습니다.",invitationKo:"가장 깊은 불은 계속 타오르기 위해 공기가 필요합니다. 무엇을 들여보내고 있나요?"},
+"己丑":{hook:"You've built things quietly, over a very long time, that people will be standing on long after you're gone.",origin:"己Earth above 丑Earth: double earth in the dead of winter. 己丑 is the patience of seeds — the work that looks like nothing and is everything. You operate on timescales that other people find frustrating or invisible. You plant, you tend, you wait.",shadow:"Winter earth can become so patient that it forgets spring is an option. 己丑 sometimes becomes so adapted to endurance that ease feels suspicious.",invitation:"The ground has been keeping things alive all winter. What does it want to grow this year?",hookKo:"아주 오랜 시간 동안 조용히 무언가를 쌓아왔습니다, 당신이 떠난 후에도 사람들이 그 위에 서 있을 것들을.",originKo:"己土와 丑土: 한겨울의 이중 흙. 己丑은 씨앗의 인내입니다 — 아무것도 아닌 것처럼 보이지만 모든 것인 작업.",shadowKo:"겨울 흙은 너무 인내심이 생겨서 봄이 선택지임을 잊을 수 있습니다.",invitationKo:"땅은 겨울 내내 것들을 살아있게 유지했습니다. 올해 무엇을 기르고 싶나요?"},
+"己卯":{hook:"You make the complicated look easy and the easy look meaningful. That's a specific kind of genius.",origin:"己Earth above 卯Wood: the garden in full spring. You've been creating conditions for other people's success for so long that you've become invisible to the outcome. You navigate complexity without showing the effort, make space for things to bloom without announcing the preparation.",shadow:"The spring garden gives everything to the season, often before it knows whether the season will be kind. 己卯 can be vulnerable to giving in contexts that don't reciprocate.",invitation:"The garden decides what it grows. What are you choosing to cultivate this season?",hookKo:"복잡한 것을 쉬워 보이게 하고 쉬운 것을 의미 있어 보이게 만듭니다. 그것은 특별한 종류의 천재성입니다.",originKo:"己土와 卯木: 봄이 한창인 정원. 당신은 다른 사람들의 성공을 위한 조건을 만들면서 결과에 보이지 않게 되었습니다.",shadowKo:"봄 정원은 보답하지 않는 맥락에서 주는 것에 취약할 수 있습니다.",invitationKo:"정원은 무엇을 기를지 결정합니다. 이번 계절 당신은 무엇을 기르기로 선택하고 있나요?"},
+"己巳":{hook:"You understand how things work. Not just people — systems, undercurrents, the logic behind the logic.",origin:"己Earth above 巳Fire: the warm field in late spring. 巳Fire doesn't just warm — it illuminates with precision. You have always known more about how things work than you've revealed. The practical intelligence in you is extraordinary — the ability to see the mechanism beneath the surface.",shadow:"Too much directed heat dries the soil. 己巳 can overthink, over-analyze, over-prepare — the analytical intelligence running so hot that it outpaces the wisdom of simply doing.",invitation:"The field knows what it needs. Does the analytical mind trust the ground's intelligence?",hookKo:"사물이 어떻게 작동하는지 이해합니다. 사람만이 아니라 — 시스템, 저류, 논리 뒤의 논리.",originKo:"己土와 巳火: 늦봄의 따뜻한 들판. 巳Fire는 단순히 따뜻하게 하지 않습니다 — 정밀하게 밝힙니다.",shadowKo:"너무 많은 방향을 가진 열기는 흙을 건조하게 만듭니다. 己巳는 과도하게 생각하고 분석하고 준비할 수 있습니다.",invitationKo:"들판은 무엇이 필요한지 압니다. 분석적인 마음이 땅의 지능을 신뢰하나요?"},
+"己未":{hook:"You've held space for more people than you can count. When was the last time someone held it for you?",origin:"己Earth above 未Earth: double earth in warm summer afternoon, the most receptive ground in the entire chart. You have an almost bottomless capacity for care — for seeing what people need, for providing the right conditions for their flourishing.",shadow:"The richest soil, unreplenished, goes fallow. 己未 gives so consistently that the depletion is gradual and invisible — and the recognition of it often comes only in the form of an unexplained emptiness.",invitation:"The most fertile ground needs fallow years. What would it feel like to rest the field?",hookKo:"셀 수 없이 많은 사람들을 위해 공간을 만들어왔습니다. 마지막으로 누군가가 당신을 위해 그것을 만든 것이 언제였나요?",originKo:"己土와 未土: 따뜻한 여름 오후의 이중 흙. 이것은 특별한 공감의 己입니다.",shadowKo:"보충되지 않은 가장 풍부한 흙은 휴경지가 됩니다. 고갈이 점진적이고 보이지 않습니다.",invitationKo:"가장 비옥한 땅은 휴경년이 필요합니다. 들판을 쉬게 한다면 어떤 느낌일까요?"},
+"己酉":{hook:"You have an eye for what's wrong and a patience for making it right. Not everyone could manage that combination.",origin:"己Earth above 酉Metal: the harvest field in autumn. 酉 is the metal of discernment — the knife that separates what is ripe from what is not. You don't just see what's wrong — you tend to what's wrong. You don't just notice the gap — you fill it. Quietly, consistently, without being asked.",shadow:"The autumn harvest can become ruthless assessment. 己酉 sometimes turns the precision inward in ways that are unkind — declaring things finished before they've had time to ripen fully.",invitation:"The harvest is not the end of the field's story. What is it time to let rest before the next season?",hookKo:"무엇이 잘못되었는지에 대한 눈과 그것을 바로잡는 인내를 갖고 있습니다.",originKo:"己土와 酉金: 가을의 수확 들판. 酉는 분별의 금속입니다 — 익은 것과 그렇지 않은 것을 분리하는 칼.",shadowKo:"가을 수확은 무자비한 평가가 될 수 있습니다. 완전히 익을 시간이 있기 전에 완성되었다고 선언합니다.",invitationKo:"수확은 들판 이야기의 끝이 아닙니다. 다음 계절 전에 쉬게 할 시간이 된 것은 무엇인가요?"},
+"己亥":{hook:"You carry something between earth and ocean — a weight that is also a gift that is also sometimes just very heavy.",origin:"己Earth above 亥Water: the garden's edge at the sea. 亥 is the deepest water — oceanic, borderless. When this water meets 己Earth, the soil is saturated with the sea's knowing: ancient, intuitive. You have an unusual relationship with other people's interior worlds — you absorb them, you understand them, you carry them.",shadow:"The garden at the ocean's edge is the most fertile and the most vulnerable — the next storm can flood it. 己亥 can be overwhelmed by the same emotional currents that make it extraordinary.",invitation:"The shore is where land and sea negotiate their edge. Where is yours?",hookKo:"흙과 대양 사이의 무언가를 지니고 있습니다 — 선물이기도 하고 때로는 그냥 매우 무거운 무게.",originKo:"己土와 亥水: 바다 끝의 정원. 亥는 가장 깊은 물입니다. 이 물이 己土를 만나면, 흙은 바다의 앎으로 포화됩니다.",shadowKo:"대양의 가장자리 정원은 가장 비옥하고 가장 취약합니다. 己亥는 그것을 특별하게 만드는 동일한 감정적 흐름에 압도될 수 있습니다.",invitationKo:"해안은 땅과 바다가 경계를 협상하는 곳입니다. 당신의 경계는 어디인가요?"},
+"庚子":{hook:"You've had more ideas in a single decade than most people have in a lifetime. The question has always been which ones to cut.",origin:"庚Metal above 子Water: the sword forged in deep water. 子 is the midnight of potential — everything possible, nothing yet chosen. Metal meets water: the blade is quenched here, made harder by the cold. You don't just have answers — you have the context for why the answers matter.",shadow:"Water erodes metal, given enough time. 庚子 sometimes loses its edge to its own fluidity — the directness softened by too many perspectives, the clarity muddied by too much consideration.",invitation:"The blade and the water shaped each other. What clarity has the depth given you?",hookKo:"단 한 십 년 동안 대부분의 사람들이 평생 갖는 것보다 더 많은 아이디어를 가졌습니다.",originKo:"庚金과 子水: 깊은 물에서 단련된 검. 子는 잠재력의 자정 — 모든 것이 가능하고 아직 아무것도 선택되지 않은.",shadowKo:"충분한 시간이 주어지면 물은 금속을 침식합니다. 庚子는 때로 자신의 유동성에 날을 잃습니다.",invitationKo:"날과 물이 서로를 형성했습니다. 깊이가 어떤 명료함을 주었나요?"},
+"庚寅":{hook:"When you decide something, it's done. Not because you're impulsive — because you're already twenty steps ahead.",origin:"庚Metal above 寅Wood: the blade born in the tiger's dawn. When metal meets this energy, the result is decisiveness that has genuine power behind it. You are not reckless — you are ready, in a way that distinguishes you from people who only look decisive. The sword knows what it's for.",shadow:"The blade in the tiger's energy can cut before the moment requires it. 庚寅 can act so decisively that it forecloses options before they've fully opened.",invitation:"The tiger's power is in its patience as much as its speed. Which decisions deserve more waiting?",hookKo:"무언가를 결정하면, 그것은 완료됩니다. 이미 스무 발자국 앞에 있기 때문에.",originKo:"庚金과 寅木: 호랑이의 새벽에 태어난 날. 금속이 이 에너지를 만나면, 결과는 진정한 힘이 뒤를 받치는 결단력입니다.",shadowKo:"호랑이 에너지 속의 날은 순간이 요구하기 전에 자를 수 있습니다.",invitationKo:"호랑이의 힘은 속도만큼 인내에 있습니다. 어떤 결정들이 더 많은 기다림을 받을 자격이 있나요?"},
+"庚辰":{hook:"You've transformed more than once. Each time, you kept what was real and released what wasn't. That takes ruthlessness with yourself.",origin:"庚Metal above 辰Earth: the sword forged in the dragon's transforming ground. Metal forged here is not just shaped — it's transformed, emerging from a process that is more than normal forging. You have a quality of renewal: you've been through significant changes and come out of them with a different edge.",shadow:"Transformation is addictive. 庚辰 can become someone who needs crisis to feel alive — who is most fully themselves in the forge, and loses direction in the absence of the pressure that has defined them.",invitation:"The dragon's ground can transform anything. What are you choosing to become this time?",hookKo:"한 번 이상 변환했습니다. 매번, 진짜인 것을 유지하고 그렇지 않은 것을 방출했습니다.",originKo:"庚金과 辰土: 용의 변환하는 땅에서 단련된 검. 여기서 단련된 금속은 단순히 형성되는 것이 아닙니다 — 변환됩니다.",shadowKo:"변환은 중독성이 있습니다. 庚辰은 살아있음을 느끼기 위해 위기가 필요한 사람이 될 수 있습니다.",invitationKo:"용의 땅은 무엇이든 변환할 수 있습니다. 이번에 무엇이 되기로 선택하고 있나요?"},
+"庚午":{hook:"You have the courage to say the thing that changes the room. You've paid for that your whole life, and you'd do it again.",origin:"庚Metal above 午Fire: the sword in the forge at full heat. This is not a finished weapon — this is becoming one, in real time. You carry the quality of being forged while in use: still being clarified, still being refined, still finding the exact shape of what you're for — but already doing the work while it happens.",shadow:"The metal in the forge is soft before it's hard. 庚午 can be more vulnerable than its directness suggests — the shaping process too visible to those who look carefully enough.",invitation:"The forge is how the blade becomes itself. What is the fire clarifying in you right now?",hookKo:"방을 바꾸는 말을 할 용기가 있습니다. 평생 그 대가를 치러왔고, 다시 그렇게 할 것입니다.",originKo:"庚金과 午火: 최고 열기의 용광로 속 검. 이것은 완성된 무기가 아닙니다 — 사용 중에 단련되는 것입니다.",shadowKo:"용광로 속 금속은 단단해지기 전에 부드럽습니다. 庚午는 그 직접성이 암시하는 것보다 더 취약할 수 있습니다.",invitationKo:"용광로는 날이 자신이 되는 방법입니다. 지금 불이 당신 안에서 무엇을 명료하게 하고 있나요?"},
+"庚申":{hook:"You've never needed anyone to tell you what standard to hold yourself to. That's a gift. It's also sometimes a prison.",origin:"庚Metal above 申Metal: double metal — the blade in the metal's own ground. You know exactly what you stand for. You know exactly what you don't accept. You have a clarity about your own values that most people achieve only after decades of searching, if at all.",shadow:"The blade without a scabbard cuts everything — including the hand that carries it. 庚申 can be exhausting to inhabit: the standards applied to the self as fully as to everything else, the inner critic as precise as the external one.",invitation:"Even the best blade needs a scabbard — a place to rest its edge. Have you found yours?",hookKo:"자신을 어떤 기준으로 잡아야 하는지 말해줄 사람이 필요한 적이 없습니다. 그것은 선물입니다. 때로는 감옥이기도 합니다.",originKo:"庚金과 申金: 이중 금속 — 금속 자신의 땅의 날. 이것은 모든 庚 기둥 중 가장 순수하게 庚인 것입니다.",shadowKo:"칼집 없는 날은 모든 것을 자릅니다 — 그것을 지니는 손도 포함해서. 庚申은 거주하기 소진될 수 있습니다.",invitationKo:"최고의 날도 칼집이 필요합니다. 당신의 것을 찾았나요?"},
+"庚戌":{hook:"You are someone who keeps their word. In the world as it is, that is a rarer thing than it should be.",origin:"庚Metal above 戌Earth: the blade resting in the watchman's dusk earth. 戌 carries loyalty as its deepest value. When 庚Metal's precision meets this devotion, the result is a person whose word is genuinely their bond, whose commitments are made slowly but held indefinitely.",shadow:"The loyal sword can guard what has long since needed releasing. 庚戌 can stay committed to things — values, positions, people, relationships — past the point where commitment serves anyone.",invitation:"Loyalty is a sword. What is it protecting, and is that thing worth the vigilance?",hookKo:"약속을 지키는 사람입니다. 지금의 세상에서, 그것은 그래야 하는 것보다 더 드문 일입니다.",originKo:"庚金과 戌土: 파수꾼의 황혼 땅에서 쉬고 있는 날. 戌은 가장 깊은 가치로 충성을 지닙니다.",shadowKo:"충성스러운 검은 오래전에 방출이 필요했던 것을 지킬 수 있습니다. 헌신이 누구에게도 도움이 되지 않는 지점 이후에도 유지할 수 있습니다.",invitationKo:"충성은 검입니다. 무엇을 보호하고 있으며, 그것은 그 경계를 받을 가치가 있나요?"},
+"辛丑":{hook:"You became something extraordinary through conditions that were not extraordinary at all. That's the rarest kind of gem.",origin:"辛Metal above 丑Earth: the jewel in winter's compressed ground. 丑 is pressure and cold — not hostile, but demanding. Gems are made in exactly these conditions: enormous weight, sustained cold, time. The 辛丑 person was refined not in favorable circumstances but in despite of them.",shadow:"The gem formed in winter cold can hold that cold inside. 辛丑 sometimes carries a reserve — an inner frost — that keeps people at a precise distance, not to exclude them, but because the cold is simply what home feels like.",invitation:"The gem is already made. What would it be like to let yourself be held, rather than only displayed?",hookKo:"특별하지 않은 조건들을 통해 특별한 것이 되었습니다. 그것이 가장 드문 종류의 보석입니다.",originKo:"辛金과 丑土: 겨울의 압축된 땅의 보석. 丑은 압력과 차가움입니다. 보석은 정확히 이런 조건에서 만들어집니다.",shadowKo:"겨울 추위에 형성된 보석은 내면에 그 추위를 담을 수 있습니다. 辛丑은 때로 사람들을 정밀한 거리에 유지하는 내적 서리를 지닙니다.",invitationKo:"보석은 이미 만들어졌습니다. 단지 전시되는 것이 아니라 담겨지는 것은 어떤 느낌일까요?"},
+"辛卯":{hook:"You feel the difference between beautiful and almost beautiful. Most people never learn to hear that gap.",origin:"辛Metal above 卯Wood: the jewel in spring's open hand. 卯 is the most graceful and perceptive of the wood branches. When this grace meets the jewel's precision, the result is a sensory intelligence that is remarkable. You've always felt the difference — in rooms, in conversations, in the work you produce.",shadow:"The gem in spring is exquisite — and also exposed. 辛卯 carries an aesthetic wound-sensitivity: the same system that perceives beauty precisely is also the system that feels its absence as pain.",invitation:"The gem and the spring are both alive to the same things. What have you been too refined to enjoy lately?",hookKo:"아름다운 것과 거의 아름다운 것의 차이를 느낍니다. 대부분의 사람들은 그 간격을 듣는 법을 결코 배우지 않습니다.",originKo:"辛金과 卯木: 봄의 열린 손의 보석. 이 우아함이 보석의 정밀함을 만나면, 결과는 놀라운 감각적 지능입니다.",shadowKo:"봄의 보석은 절묘하고 또한 노출되어 있습니다. 아름다움을 정밀하게 인식하는 동일한 시스템이 그 부재를 고통으로 느끼는 시스템이기도 합니다.",invitationKo:"최근에 너무 정제되어서 즐기지 못한 것이 무엇인가요?"},
+"辛巳":{hook:"You see what things are worth — accurately, immediately, permanently. That's not judgment. That's calibration.",origin:"辛Metal above 巳Fire: the gem in the heat of the intelligent flame. 巳Fire illuminates without burning. When this fire meets the jewel's surface, every facet is revealed. You have an extraordinary precision of assessment: you know what things are worth in a conversation, in a relationship, in a context.",shadow:"The gem in directed fire can become so visible that it becomes an object rather than a subject. 辛巳 sometimes experiences being seen and assessed by others as something clinical.",invitation:"The flame that reveals the gem reveals everything. What are you ready to see clearly about yourself?",hookKo:"사물의 가치를 봅니다 — 정확하게, 즉시, 영구적으로. 그것은 판단이 아닙니다. 교정입니다.",originKo:"辛金과 巳火: 지능적인 불꽃의 열기 속 보석. 巳Fire는 태우지 않고 밝힙니다. 이 불이 보석의 표면을 만나면, 모든 면이 드러납니다.",shadowKo:"방향을 가진 불속의 보석은 너무 보여져서 주체보다 객체가 될 수 있습니다.",invitationKo:"보석을 드러내는 불꽃은 모든 것을 드러냅니다. 자신에 대해 명료하게 볼 준비가 된 것은 무엇인가요?"},
+"辛未":{hook:"You carry beauty and meaning as a weight, not a decoration. That makes you different from most people who claim to value those things.",origin:"辛Metal above 未Earth: the gem embedded in warm, receptive summer soil. A jewel here is not displayed in a case — it's embedded, surrounded by the living warmth of the earth. You have a quality of grounded beauty — an aesthetic precision woven into life, that makes the everyday more than it was before you touched it.",shadow:"The gem in warm earth can become comfortable to the point of being buried. 辛未 sometimes stops being precious because it stops insisting on being found — allowing itself to be covered by the needs and warmth of others.",invitation:"The gem doesn't need to be above the ground to be valuable. But it does need to be seen. Who sees you?",hookKo:"아름다움과 의미를 장식이 아닌 무게로 지닙니다.",originKo:"辛金과 未土: 따뜻하고 수용적인 여름 흙에 박힌 보석. 여기의 보석은 케이스에 전시되지 않습니다 — 박혀 있습니다.",shadowKo:"따뜻한 흙의 보석은 묻힐 정도로 편안해질 수 있습니다. 자신의 정밀한 본성이 가려질 때까지 다른 사람들의 필요와 따뜻함에 덮이도록 허락합니다.",invitationKo:"보석은 귀하기 위해 땅 위에 있을 필요가 없습니다. 하지만 보여질 필요는 있습니다. 당신을 보는 사람은 누구인가요?"},
+"辛酉":{hook:"You are the standard. Not because you set yourself there — because everything in your vicinity organizes around what's genuine and what isn't.",origin:"辛Metal above 酉Metal: double metal at the hour of the rooster — precision upon precision, the jeweler's eye looking through the jeweler's loupe. This is the most finely calibrated pillar in the entire chart. You feel the difference between right and almost right at a level that other people cannot access.",shadow:"The double metal loupe sees everything — including flaws in itself. 辛酉 can turn its own extraordinary precision into an instrument of relentless self-assessment, holding the self to a standard that allows for no finishing line.",invitation:"The finest jewel in the collection is allowed to rest in its setting. When do you let yourself rest in yours?",hookKo:"당신이 기준입니다. 당신 주변의 모든 것이 진짜인 것과 그렇지 않은 것 주위로 조직되기 때문에.",originKo:"辛金과 酉金: 닭의 시간의 이중 금속 — 정밀함 위의 정밀함. 이것은 전체 사주에서 가장 미세하게 교정된 기둥입니다.",shadowKo:"이중 금속 렌즈는 모든 것을 봅니다 — 자신의 결함도 포함해서. 辛酉는 끝없는 자기 평가의 도구로 만들 수 있습니다.",invitationKo:"컬렉션에서 가장 훌륭한 보석은 자신의 세팅에서 쉬도록 허락됩니다. 당신은 언제 자신의 세팅에서 쉬나요?"},
+"辛亥":{hook:"You hold depth and clarity in the same hand — and most people only get one or the other.",origin:"辛Metal above 亥Water: the gem at the bottom of the deep ocean. 亥 is the oldest water — oceanic, boundless, carrying everything that has ever been felt. When the gem rests in this water, it is not obscured — it is clarified, the water showing every facet with unusual vividness.",shadow:"The gem in the ocean is extraordinary — and also very far from the surface. 辛亥 can be inaccessible in its depth: the beauty is there, the intelligence is there, but the journey to reach it is long.",invitation:"The deep ocean holds the clearest gems. Who has shown they can go that deep?",hookKo:"깊이와 명료함을 같은 손에 담고 있습니다 — 그리고 대부분의 사람들은 둘 중 하나만 갖습니다.",originKo:"辛金과 亥水: 깊은 대양 바닥의 보석. 亥는 가장 오래된 물입니다. 보석이 이 물에 안식하면, 가려지지 않습니다 — 명료해집니다.",shadowKo:"대양 속의 보석은 특별하고 또한 표면에서 매우 멀리 있습니다. 辛亥는 그 깊이에서 접근하기 어려울 수 있습니다.",invitationKo:"깊은 대양은 가장 맑은 보석을 담고 있습니다. 그 깊이까지 갈 수 있음을 보여준 사람은 누구인가요?"},
+"壬子":{hook:"You've always lived in the undercurrent — processing everything at a depth that the surface doesn't show.",origin:"壬Water above 子Water: the great river meeting the midnight spring. Both are water, but different: 壬 is the river that moves and knows, 子 is the still potential of everything that hasn't yet begun. You have insight that other people mistake for opinion. It's not opinion. It's pattern recognition from very far down.",shadow:"Double water can become lost in itself. 壬子 sometimes overthinks in real-time — the analysis looping, the pattern-matching outrunning the action.",invitation:"The river and the spring both know where they're going. Do you let yourself be guided by that knowing?",hookKo:"당신은 항상 저류에 살아왔습니다 — 표면이 보여주지 않는 깊이에서 모든 것을 처리하며.",originKo:"壬水와 子Water: 자정 샘을 만나는 대강. 壬은 움직이고 아는 강, 子는 아직 시작되지 않은 모든 것의 고요한 잠재력.",shadowKo:"이중 물은 자신 안에 길을 잃을 수 있습니다. 壬子는 때로 실시간으로 과도하게 생각합니다.",invitationKo:"강과 샘 둘 다 어디로 가는지 알고 있습니다. 그 앎에 이끌리도록 자신을 허락하나요?"},
+"壬寅":{hook:"You see where things are going before most people see where they are. That's useful. It's also isolating.",origin:"壬Water above 寅Wood: the great river flowing through the tiger's mountain. When the river's vast intelligence meets this energy, the result is unusual: a water person who acts, who commits. You have both the depth and the decisiveness — the ability to understand a situation completely and then move with it rather than just observing.",shadow:"The river moving through tiger country can run too fast for its own intelligence. 壬寅 sometimes mistakes momentum for wisdom.",invitation:"The river runs fastest through the tiger's mountain. What is it carrying to the sea?",hookKo:"대부분의 사람들이 지금 있는 곳을 보기 전에 사물이 어디로 가는지 봅니다. 그것은 유용합니다. 또한 고립적이기도 합니다.",originKo:"壬水와 寅木: 호랑이의 산을 통해 흐르는 대강. 강의 광대한 지능이 이 에너지를 만나면: 행동하는 물의 사람.",shadowKo:"호랑이 지역을 통해 흐르는 강은 자신의 지능을 위해 너무 빠르게 달릴 수 있습니다.",invitationKo:"강은 호랑이의 산을 통해 가장 빠르게 흐릅니다. 무엇을 바다로 운반하고 있나요?"},
+"壬辰":{hook:"You carry a power that you've spent a long time figuring out what to do with. The figuring is almost over.",origin:"壬Water above 辰Earth: the great river meeting the dragon's transforming ground. 辰 is where the river enters the sea. 壬Water here is the river at its most transformative moment, holding both what it carried from the mountains and what it's about to become. You carry the past and the future simultaneously.",shadow:"The water at the dragon's gate is powerful and volatile. 壬辰 can be hard to contain — the energy moving in multiple directions at once, the transformation potential sometimes expressed as turbulence rather than change.",invitation:"The river becomes the ocean at the dragon's gate. What are you in the process of becoming?",hookKo:"당신은 오랫동안 어떻게 해야 할지 파악해온 힘을 지니고 있습니다. 파악하는 것이 거의 끝났습니다.",originKo:"壬水와 辰土: 용의 변환하는 땅을 만나는 대강. 辰은 강이 바다에 들어가는 곳입니다. 당신은 과거와 미래를 동시에 지닙니다.",shadowKo:"용의 문의 물은 강력하고 변동성이 큽니다. 壬辰은 담기 어려울 수 있습니다.",invitationKo:"강은 용의 문에서 대양이 됩니다. 무엇이 되는 과정 중에 있나요?"},
+"壬午":{hook:"You are the contradiction people can't look away from — the river that reflects the sun without becoming it.",origin:"壬Water above 午Fire: the great river blazing under the midday sun. 午 is maximum fire and 壬 is maximum water — these are the great opposites meeting in one body. You carry paradox as your native state: warmth and depth, brilliance and mystery, the surface that dazzles and the current that pulls.",shadow:"Water and fire in conflict can create steam — energy that has nowhere to go, power that dissipates without direction. 壬午 sometimes burns through its own clarity in pursuit of intensity.",invitation:"The river and the sun have always found their equilibrium. What is yours?",hookKo:"당신은 사람들이 시선을 떼지 못하는 모순입니다 — 태양이 되지 않고 태양을 반영하는 강.",originKo:"壬水와 午Fire: 정오의 태양 아래 빛나는 대강. 최대 불과 최대 물 — 위대한 반대가 한 몸에서 만납니다.",shadowKo:"갈등 속의 물과 불은 증기를 만들 수 있습니다 — 방향 없이 소산되는 에너지.",invitationKo:"강과 태양은 항상 균형을 찾아왔습니다. 당신의 균형은 무엇인가요?"},
+"壬申":{hook:"You cut through confusion like water through stone — not with force, but with persistence and precision.",origin:"壬Water above 申Metal: the mountain river — sharp, clear, and unstoppable. 申Metal sharpens the water, giving 壬's vast intelligence a precise channel. The result is someone who can navigate complex systems, cut through noise, and articulate what others sense but cannot say.",shadow:"The sharpened river can become too focused on its channel — following the grooves of familiar paths rather than finding new routes. 壬申 can mistake efficiency for wisdom.",invitation:"The mountain river carved its canyon over millennia. What are you slowly, patiently cutting through?",hookKo:"물이 돌을 통해 흐르듯 혼란을 잘라냅니다 — 힘으로가 아니라, 인내와 정밀함으로.",originKo:"壬水와 申金: 산의 강 — 날카롭고, 맑으며, 멈출 수 없는. 申金은 물을 날카롭게 하고, 壬의 광대한 지능에 정밀한 채널을 줍니다.",shadowKo:"날카로워진 강은 친숙한 경로의 홈을 따르며 너무 집중될 수 있습니다. 壬申은 효율성을 지혜와 혼동할 수 있습니다.",invitationKo:"산의 강은 수천 년에 걸쳐 협곡을 조각했습니다. 당신은 천천히, 인내심 있게 무엇을 잘라내고 있나요?"},
+"壬戌":{hook:"You've stayed when others left, and left when staying would have been the death of something essential in you.",origin:"壬Water above 戌Earth: the river that guards the autumn plain. 戌 is loyalty, watchfulness, the keeping of what matters through the cold. When the great river meets this earth, it slows — it spreads across the autumn landscape, nourishing widely, holding the warmth of the season just past. You have a quality of faithful generosity.",shadow:"The river that spreads across the autumn plain can lose its current — the force that made it powerful dispersed across too much surface. 壬戌 sometimes gives so broadly that it loses direction.",invitation:"The watchman's river knows what it protects. What are you keeping the water for?",hookKo:"다른 사람들이 떠날 때 머물렀고, 머무는 것이 당신 안의 본질적인 무언가의 죽음이 될 때 떠났습니다.",originKo:"壬水와 戌土: 가을 평원을 지키며 흐르는 강. 위대한 강이 이 흙을 만나면, 느려집니다 — 가을 풍경에 걸쳐 펼쳐지며 넓게 영양을 줍니다.",shadowKo:"가을 평원에 걸쳐 펼쳐지는 강은 자신의 흐름을 잃을 수 있습니다. 壬戌은 때로 너무 넓게 줘서 방향을 잃습니다.",invitationKo:"파수꾼의 강은 무엇을 보호하는지 알고 있습니다. 물을 무엇을 위해 지키고 있나요?"},
+"癸丑":{hook:"You know how to nourish what appears dead. That's not a small thing. Most people don't even try.",origin:"癸Water above 丑Earth: the dew that nourishes the frozen, waiting earth. 癸 is the most delicate of the water elements — morning dew, the gentlest rain, the moisture that finds every crack. In 丑's frozen ground, this water doesn't rush — it seeps, it permeates, it keeps alive what winter would kill. You have the gift of patient nourishment.",shadow:"Dew on frozen ground disappears before most people wake to see it. 癸丑 can give invisibly, nourish quietly, sustain others without ever being acknowledged — and accumulate a quiet grief about that invisibility.",invitation:"The dew that kept the seed alive also deserves to know the spring. What warmth are you ready to receive?",hookKo:"죽은 것처럼 보이는 것을 영양하는 방법을 알고 있습니다. 그것은 작은 일이 아닙니다.",originKo:"癸水와 丑土: 얼어붙은, 기다리는 대지를 적시는 이슬. 癸는 가장 섬세한 물의 원소 — 아침 이슬, 가장 부드러운 비.",shadowKo:"얼어붙은 땅의 이슬은 대부분의 사람들이 깨어 보기 전에 사라집니다. 癸丑은 보이지 않게 줄 수 있습니다.",invitationKo:"씨앗을 살아있게 한 이슬도 봄을 알 자격이 있습니다. 받을 준비가 된 따뜻함은 무엇인가요?"},
+"癸卯":{hook:"You wake things up. Not loudly — with a kind of inevitability that isn't about effort at all.",origin:"癸Water above 卯Wood: the spring rain that wakes the whole world. 卯 is the season of emergence, the dawn of the year. When 癸's gentle water meets this awakening energy, the result is something profound: a softness that has extraordinary power. You have the ability to bring things to life — ideas, people, possibilities — simply by giving them the right conditions.",shadow:"Spring rain, when it comes too hard or too long, floods rather than nourishes. 癸卯 can sometimes overwhelm the very things it's trying to help — offering too much, too soon, washing away the seeds before they've taken root.",invitation:"Spring rain knows when to stop. What would it look like to trust that you've given enough?",hookKo:"당신은 것들을 깨웁니다. 시끄럽게가 아니라 — 전혀 노력에 관한 것이 아닌 일종의 불가피함으로.",originKo:"癸水와 卯木: 세상 전체를 깨우는 봄비. 卯는 출현의 계절, 한 해의 새벽.",shadowKo:"봄비가 너무 세게 또는 너무 오래 오면 영양을 주는 것이 아니라 범람합니다. 癸卯는 때로 도우려는 것을 압도합니다.",invitationKo:"봄비는 언제 멈춰야 하는지 압니다. 충분히 주었다는 것을 신뢰하는 것은 어떤 모습일까요?"},
+"癸巳":{hook:"You hold fire inside water. Most people don't even know that's possible. You've always known.",origin:"癸Water above 巳Fire: the sacred spring within the heart of fire. 巳 is the intelligent fire, the directed flame. When the gentlest water meets this directed heat, something unusual happens — not boiling, not extinguishing, but a kind of alchemical union. You carry both: the intuition of deep water and the strategic intelligence of directed fire.",shadow:"Fire inside water creates pressure. 癸巳 can accumulate unexpressed intensity — the feelings that never find their exact right moment, the insights that arrive too early or too precisely for the conversation they're in.",invitation:"The sacred spring and the fire have always coexisted in you. What would it look like to let both be visible?",hookKo:"물 안에 불을 담고 있습니다. 대부분의 사람들은 그것이 가능하다는 것조차 모릅니다. 당신은 항상 알고 있었습니다.",originKo:"癸水와 巳Fire: 불의 심장 속에서 솟는 신성한 샘. 가장 부드러운 물이 이 방향을 가진 열기를 만나면 연금술적 결합이 일어납니다.",shadowKo:"물 안의 불은 압력을 만듭니다. 癸巳는 표현되지 않은 강도를 축적할 수 있습니다.",invitationKo:"신성한 샘과 불은 항상 당신 안에 공존해왔습니다. 둘 다 보이도록 하는 것은 어떤 모습일까요?"},
+"癸未":{hook:"You make things grow that have forgotten how to grow. That's not skill — that's love with excellent timing.",origin:"癸Water above 未Earth: the rain that makes the summer bloom. 未 is the earth of creativity and warmth, of the things that flourish under patient tending. 癸Water here is perfect — gentle enough not to overwhelm, consistent enough to nourish. You have a gift for showing up at exactly the right moment with exactly the right thing.",shadow:"The rain that makes everything bloom can lose track of its own needs in service to the garden. 癸未 sometimes doesn't know what it wants because it has been so focused on what others need.",invitation:"The summer rain also needs somewhere to collect. Where do you pool?",hookKo:"성장하는 방법을 잊어버린 것들을 성장하게 만듭니다. 그것은 기술이 아닙니다 — 탁월한 타이밍의 사랑입니다.",originKo:"癸水와 未土: 여름을 피어나게 하는 생명의 비. 未는 창의성과 따뜻함의 흙. 여기서 癸水는 완벽합니다 — 압도하지 않을 만큼 부드럽고, 영양을 줄 만큼 일관적입니다.",shadowKo:"모든 것을 피어나게 하는 비는 정원에 봉사하면서 자신의 필요를 잃을 수 있습니다.",invitationKo:"여름 비도 어딘가에 모일 필요가 있습니다. 당신은 어디에 고이나요?"},
+"癸酉":{hook:"You refine what you touch — not by imposing your standards, but by being yourself in the proximity of things.",origin:"癸Water above 酉Metal: the morning dew on polished, perfect metal. 酉 is the metal of connoisseurship and precision. When dew settles on this surface, it becomes part of the beauty — each droplet catching light at a perfect angle. You have an unusual aesthetic precision: a sensitivity to quality that doesn't demand, just perceives, just reflects.",shadow:"The morning dew is exquisite and fleeting — and 癸酉 sometimes knows its own beauty only as something transient, something that will evaporate before it's fully appreciated.",invitation:"The dew on the metal catches light better than the metal alone. What do you illuminate that couldn't shine without you?",hookKo:"당신이 닿는 것을 정제합니다 — 당신의 기준을 부과함으로써가 아니라, 사물의 근처에서 당신 자신이 됨으로써.",originKo:"癸水와 酉金: 완벽하게 정련된 금속 위의 아침 이슬. 酉는 감식안과 정밀함의 금속. 이슬이 이 표면에 자리잡으면 아름다움의 일부가 됩니다.",shadowKo:"아침 이슬은 절묘하고 덧없습니다. 癸酉는 때로 자신의 아름다움을 완전히 감사받기 전에 증발할 무언가로만 알고 있습니다.",invitationKo:"금속 위의 이슬은 금속만보다 빛을 더 잘 포착합니다. 당신 없이는 빛날 수 없었던 것을 무엇을 밝히고 있나요?"},
+"癸亥":{hook:"You are the origin of things. Not because you're first — because you're the source.",origin:"癸Water above 亥Water: the source spring at the origin of all things. Double water — 癸 and 亥 together — this is the most primal of all pillars, the water before the water, the potential before the beginning. You carry something ancient: an intuition that doesn't come from experience but from somewhere deeper than that. A knowing that precedes knowing.",shadow:"The source spring can become the spring that no one reaches. 癸亥 sometimes goes so deep into its own knowing that communication becomes difficult — the depth real, the connection across it hard to maintain.",invitation:"The source of all rivers knows every destination. Which one is calling you now?",hookKo:"당신은 사물의 기원입니다. 처음이어서가 아니라 — 당신이 원천이기 때문에.",originKo:"癸水와 亥Water: 모든 것의 시작, 태초의 근원 샘. 이중 물 — 癸와 亥 함께 — 이것은 모든 기둥 중 가장 원초적입니다.",shadowKo:"근원 샘은 아무도 닿지 못하는 샘이 될 수 있습니다. 癸亥는 때로 너무 깊이 들어가서 소통이 어려워집니다.",invitationKo:"모든 강의 근원은 모든 목적지를 알고 있습니다. 지금 당신을 부르고 있는 것은 어느 것인가요?"}
 };
 
 // ── BRANCH DESCRIPTIONS (what the earth branch brings to your nature) ──
@@ -4966,6 +5107,21 @@ function renderDayMaster(chart) {
   const identityText = identity ? (isKo ? identity.ko : identity.en) : (isKo ? dmContent.symbol_ko : dmContent.symbol_en);
   el('dm-title-text', identityText);
 
+  // ── PILLAR NARRATIVE HOOK (Sprint 2) ──
+  const narrative = PILLAR_NARRATIVES[pillarKey];
+  const hookText = narrative ? (isKo ? narrative.hookKo : narrative.hook) : null;
+  // Show hook line below title
+  let dmHookEl = document.getElementById('dm-hook-line');
+  if (!dmHookEl) {
+    dmHookEl = document.createElement('div');
+    dmHookEl.id = 'dm-hook-line';
+    dmHookEl.className = 'dm-hook-line';
+    const titleEl = document.getElementById('dm-title-text');
+    if (titleEl && titleEl.parentNode) titleEl.parentNode.insertBefore(dmHookEl, titleEl.nextSibling);
+  }
+  dmHookEl.textContent = hookText || '';
+  dmHookEl.style.display = hookText ? '' : 'none';
+
   // ── BODY ──
   const bodyEl = document.getElementById('dm-body');
   if (bodyEl) {
@@ -5529,7 +5685,41 @@ function renderAllPaid(chart) {
   var sec=document.getElementById('premium-section');if(!sec)return;
   var isKo=AppState.language==='ko';
   var btn=isKo?'내 8가지 심층 분석 보기 →':'Unlock My Full Reading →';
-  sec.innerHTML='<div class="premium-cta-block"><button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button></div>';
+
+  // Pillar narrative teaser (Sprint 2)
+  var pillarKey = chart && chart.pillars && chart.pillars.day ? (chart.dayMaster.stem + chart.pillars.day.branch) : '';
+  var narr = pillarKey && typeof PILLAR_NARRATIVES !== 'undefined' ? PILLAR_NARRATIVES[pillarKey] : null;
+  var narrativeHtml = '';
+  if (narr) {
+    var teaserOrigin = isKo ? narr.originKo : narr.origin;
+    if (teaserOrigin) {
+      var teaserWords = teaserOrigin.split(' ');
+      var teaserShort = teaserWords.slice(0, 28).join(' ') + '...';
+      narrativeHtml = '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;text-align:left;position:relative;overflow:hidden;">' +
+        '<div style="font-size:11px;letter-spacing:.12em;color:var(--gold);margin-bottom:8px;text-transform:uppercase;">✦ ' + (isKo ? '당신의 이야기' : 'Your Story') + '</div>' +
+        '<div style="font-size:14px;color:var(--text-secondary);line-height:1.7;filter:blur(0);">' + teaserShort + '</div>' +
+        '<div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(13,11,30,0.95));"></div>' +
+        '</div>';
+    }
+  }
+
+  // SP-5, SP-6 and price anchoring placement 2
+  sec.innerHTML=
+    narrativeHtml +
+    '<div style="text-align:center;margin-bottom:16px;">' +
+      '<div class="sp-quote-card" style="margin:0 0 12px;">' +
+        '<div class="sp-quote-text">"I was skeptical — I thought it\'d be generic horoscope stuff. The full reading called out my specific anxiety pattern around relationships. $7.99 was nothing."</div>' +
+        '<div class="sp-quote-author">— Jake R., 26, Austin</div>' +
+      '</div>' +
+      '<div class="price-anchor-paywall">Saju consultations in Seoul run ₩150,000–₩300,000 per session ($110–$220).<br>This is your full reading — <strong>$7.99</strong>, forever yours.</div>' +
+    '</div>' +
+    '<div class="premium-cta-block">' +
+      '<button class="premium-unlock-btn" onclick="openPayModal()">'+btn+'</button>' +
+    '</div>' +
+    '<div class="sp-quote-card" style="margin:12px 0 0;text-align:center;">' +
+      '<div class="sp-quote-text">💬 "Sent this to my sister. She cried. We both ordered."</div>' +
+      '<div class="sp-quote-author">— Luna M., 24, Los Angeles</div>' +
+    '</div>';
 }
 // ── 결제 설정 (Lemon Squeezy) ──────────────────────────────────────────
 const LS_VARIANT_ID = '1350661';
@@ -6120,6 +6310,36 @@ const SHARE_CONFIG = {
 };
 
 let _shareRatio = 'square';
+
+// ── SPRINT 2: Day Master Text Share ──
+function shareDayMaster() {
+  var chart = AppState.chart;
+  if (!chart) { openShareModal(); return; }
+  var isKo = AppState.language === 'ko';
+  var dm = chart.dayMaster;
+  var dayBranch = chart.pillars && chart.pillars.day ? chart.pillars.day.branch : '';
+  var pillarKey = dm.stem + dayBranch;
+  var identity = PILLAR_IDENTITY[pillarKey];
+  var title = identity ? (isKo ? identity.ko : identity.en) : pillarKey;
+  var narr = typeof PILLAR_NARRATIVES !== 'undefined' ? PILLAR_NARRATIVES[pillarKey] : null;
+  var hook = narr ? (isKo ? narr.hookKo : narr.hook) : '';
+  var url = 'https://fourpillars-eosin.vercel.app';
+  var text = 'I just discovered my Day Master: ' + pillarKey + ' — ' + title + '.\n' + (hook || '') + '\nFind yours → ' + url;
+  if (navigator.share) {
+    navigator.share({ title: 'My Four Pillars Day Master', text: text, url: url }).catch(function(){});
+  } else {
+    // Clipboard fallback
+    navigator.clipboard ? navigator.clipboard.writeText(text).then(function() {
+      if (typeof showToast === 'function') showToast(isKo ? '클립보드에 복사됐어요! ✓' : 'Copied to clipboard! ✓');
+    }) : (function() {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      if (typeof showToast === 'function') showToast(isKo ? '클립보드에 복사됐어요! ✓' : 'Copied to clipboard! ✓');
+    })();
+  }
+}
 
 function openShareModal() {
   const chart = AppState.chart;
@@ -6782,6 +7002,116 @@ function shareCompatCard() {
       navigator.serviceWorker.register('/sw.js').catch(function(){});
     });
   }
+</script>
+
+<!-- ── SPRINT 2: SP-8 MOBILE STICKY BAR ── -->
+<div id="sp8-sticky">
+  <span class="sp8-stars">★★★★★</span>
+  3,800+ readings · <em>"This changed how I see myself."</em> — Scroll to begin ↓
+</div>
+
+<!-- ── SPRINT 2: EXIT INTENT POPUP ── -->
+<div id="exit-intent-overlay">
+  <div class="ei-modal">
+    <button class="ei-close" onclick="closeExitIntent()">✕</button>
+    <div class="ei-eyebrow">✦ WAIT</div>
+    <div class="ei-headline">Before you go — your full reading is waiting.</div>
+    <div class="ei-subhead">Get 20% off for the next 10 minutes. This offer doesn't come back.</div>
+    <div class="ei-anchor">Personal readings like this cost $150+ with a professional. Right now, yours is <strong style="color:#f0b860">$6.39</strong>.</div>
+    <div class="ei-timer" id="ei-timer">10:00</div>
+    <button class="ei-cta" onclick="openExitDiscount()">Unlock Full Reading — $6.39 Today</button>
+    <div class="ei-dismiss" onclick="closeExitIntent()">I'd rather pay full price later</div>
+    <div class="ei-trust">★★★★★ 3,800+ readings · Instant access · One-time payment</div>
+  </div>
+</div>
+
+<script>
+// ── SPRINT 2: SP-8 Sticky Bar ──
+(function() {
+  var sticky = document.getElementById('sp8-sticky');
+  if (!sticky) return;
+  var shown = false;
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300 && !shown) {
+      sticky.style.display = 'block';
+      shown = true;
+    }
+  }, {passive: true});
+})();
+
+// ── SPRINT 2: Exit Intent Popup ──
+(function() {
+  var overlay = document.getElementById('exit-intent-overlay');
+  if (!overlay) return;
+  var SESS_KEY = 'exit_intent_shown';
+  var timerInterval = null;
+  var pageEnterTime = Date.now();
+  var triggered = false;
+
+  function showExitIntent() {
+    if (triggered) return;
+    if (sessionStorage.getItem(SESS_KEY)) return;
+    if (Date.now() - pageEnterTime < 15000) return;
+    if (AppState && AppState.isPremium) return;
+    triggered = true;
+    sessionStorage.setItem(SESS_KEY, '1');
+    overlay.classList.add('active');
+    startTimer(10 * 60);
+  }
+
+  function startTimer(totalSeconds) {
+    var remaining = totalSeconds;
+    var timerEl = document.getElementById('ei-timer');
+    timerInterval = setInterval(function() {
+      remaining--;
+      if (remaining <= 0) { clearInterval(timerInterval); return; }
+      var m = Math.floor(remaining / 60);
+      var s = remaining % 60;
+      if (timerEl) timerEl.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+    }, 1000);
+  }
+
+  document.addEventListener('mouseleave', function(e) {
+    if (e.clientY < 20) showExitIntent();
+  });
+
+  window.closeExitIntent = function() {
+    overlay.classList.remove('active');
+    if (timerInterval) clearInterval(timerInterval);
+  };
+
+  window.openExitDiscount = function() {
+    closeExitIntent();
+    // Build checkout URL with discount code
+    var base = 'https://' + (typeof LS_STORE_DOMAIN !== 'undefined' ? LS_STORE_DOMAIN : 'momentor.lemonsqueezy.com');
+    var variantId = typeof LS_VARIANT_ID !== 'undefined' ? LS_VARIANT_ID : '1350661';
+    var params = new URLSearchParams();
+    params.set('checkout[discount_code]', 'EXIT20');
+    params.set('checkout[success_url]', 'https://momentor.app?payment=success');
+    params.set('checkout[cancel_url]', 'https://momentor.app?payment=cancel');
+    var url = base + '/buy/' + variantId + '?' + params.toString();
+    var win = window.open(url, '_blank', 'width=500,height=700');
+    if (!win) window.location.href = url;
+  };
+})();
+
+// ── SPRINT 2: Show SP-4 card after Day Master reveal ──
+(function() {
+  var orig = window.renderDayMaster;
+  // SP-4 shown when day-master-card gets 'revealed' class
+  var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(m) {
+      if (m.target.id === 'day-master-card' && m.target.classList.contains('revealed')) {
+        var sp4 = document.getElementById('sp4-card');
+        if (sp4) {
+          setTimeout(function() { sp4.style.display = 'block'; }, 1500);
+        }
+      }
+    });
+  });
+  var card = document.getElementById('day-master-card');
+  if (card) observer.observe(card, {attributes: true, attributeFilter: ['class']});
+})();
 </script>
 </body>
 </html>

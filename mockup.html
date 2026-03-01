@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Momentor — UX Mockup v2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS (실제 앱 동일) ─── */
+    :root {
+      --bg-gradient: linear-gradient(145deg, #0d0b1e 0%, #130d2e 40%, #1a0d2e 70%, #0f1526 100%);
+      --card-bg: rgba(255,255,255,0.04);
+      --card-border: rgba(255,255,255,0.08);
+      --gold: #e8c547; --gold-soft: #c9a84c;
+      --violet: #9b7fd4; --rose: #e8748a;
+      --wood: #5de8a0; --fire: #ff7eb3;
+      --earth: #f0b860; --metal: #c8d8f0; --water: #60b4fa;
+      --text-primary: #f0eefc; --text-secondary: #a8a0c8; --text-muted: #6b6488;
+      --font-serif: 'Cormorant Garamond','Noto Serif KR',Georgia,serif;
+      --font-sans: 'Noto Sans KR',-apple-system,sans-serif;
+      --radius-sm:8px; --radius-md:16px; --radius-lg:24px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      color: var(--text-primary);
+      overflow-x: hidden;
+      line-height: 1.7;
+      font-size: 16px;
+    }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:0;
+      background-image:
+        radial-gradient(1px 1px at 5% 8%,rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 20% 5%,rgba(255,255,255,.35) 0%,transparent 100%),
+        radial-gradient(1px 1px at 35% 15%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 50% 30%,rgba(255,255,255,.35) 0%,transparent 100%),
+        radial-gradient(1.5px 1.5px at 63% 12%,rgba(255,255,255,.4) 0%,transparent 100%),
+        radial-gradient(1px 1px at 77% 38%,rgba(255,255,255,.3) 0%,transparent 100%),
+        radial-gradient(1px 1px at 93% 48%,rgba(255,255,255,.25) 0%,transparent 100%),
+        radial-gradient(2px 2px at 33% 33%,rgba(232,197,71,.15) 0%,transparent 100%),
+        radial-gradient(2px 2px at 66% 66%,rgba(155,127,212,.12) 0%,transparent 100%);
+      pointer-events:none;
+    }
+    #app { position:relative; z-index:1; max-width:390px; margin:0 auto; min-height:100vh; }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      position:sticky; top:0; z-index:100;
+      background:rgba(13,11,30,.88); backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(255,255,255,.06);
+      padding:10px 16px;
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .logo-area { display:flex; align-items:center; gap:8px; }
+    .logo-mark { font-size:20px; }
+    .logo-name {
+      font-family:var(--font-serif); font-size:18px; font-weight:600;
+      color:var(--gold); letter-spacing:.04em;
+    }
+    .logo-sub { font-size:10px; color:var(--text-muted); letter-spacing:.08em; margin-top:-2px; }
+    .mockup-badge {
+      font-size:9px; font-weight:700; letter-spacing:.1em;
+      padding:3px 8px; border-radius:4px;
+      background:rgba(232,197,71,.15); color:var(--gold);
+      text-transform:uppercase;
+    }
+
+    /* ─── SCREEN CONTROLLER ─── */
+    .screen { display:none; }
+    .screen.active { display:block; }
+
+    /* ─── SCREEN NAV (dev only) ─── */
+    .screen-nav {
+      position:fixed; bottom:80px; right:12px; z-index:200;
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .screen-nav-btn {
+      font-size:10px; font-weight:700; letter-spacing:.06em;
+      padding:6px 10px; border-radius:8px;
+      background:rgba(20,16,40,.9); border:1px solid rgba(232,197,71,.4);
+      color:var(--gold); cursor:pointer; transition:all .2s;
+      font-family:var(--font-sans);
+    }
+    .screen-nav-btn.active-screen { background:rgba(232,197,71,.2); }
+    .screen-nav-btn:hover { background:rgba(232,197,71,.15); }
+
+    /* ─── STEP INDICATOR ─── */
+    .step-indicator {
+      display:flex; align-items:center; justify-content:center;
+      gap:0; padding:20px 20px 0;
+    }
+    .step-dot {
+      width:28px; height:28px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-size:11px; font-weight:700;
+      border:1.5px solid rgba(255,255,255,.15);
+      color:var(--text-muted);
+      transition:all .3s;
+    }
+    .step-dot.active {
+      border-color:var(--gold); background:rgba(232,197,71,.15);
+      color:var(--gold);
+    }
+    .step-dot.done {
+      border-color:rgba(93,232,160,.5); background:rgba(93,232,160,.12);
+      color:var(--wood);
+    }
+    .step-line {
+      flex:1; height:1px; max-width:48px;
+      background:rgba(255,255,255,.1); margin:0 4px;
+    }
+    .step-line.done { background:rgba(93,232,160,.4); }
+
+    /* ─── INPUT FORM ─── */
+    .form-section { padding:0 16px 100px; }
+    .form-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--radius-lg); backdrop-filter:blur(20px);
+      padding:28px 20px; margin-top:20px;
+    }
+    .form-header { margin-bottom:24px; }
+    .form-eyebrow {
+      font-size:10px; letter-spacing:.18em; color:var(--text-muted);
+      text-transform:uppercase; margin-bottom:8px;
+    }
+    .form-title {
+      font-family:var(--font-serif); font-size:22px; font-weight:600;
+      color:var(--text-primary); line-height:1.3;
+    }
+    .form-subtitle { font-size:13px; color:var(--text-muted); margin-top:4px; }
+    .form-group { margin-bottom:18px; }
+    .form-label {
+      display:block; font-size:11px; font-weight:700;
+      color:var(--text-secondary); letter-spacing:.08em;
+      text-transform:uppercase; margin-bottom:8px;
+    }
+    .form-control {
+      width:100%; background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:10px; color:var(--text-primary);
+      font-size:16px; padding:12px 14px;
+      font-family:var(--font-sans);
+      transition:border-color .2s;
+      -webkit-appearance:none; appearance:none;
+    }
+    .form-control:focus { outline:none; border-color:rgba(232,197,71,.5); }
+    .form-control::placeholder { color:var(--text-muted); font-size:14px; }
+    .date-row { display:grid; grid-template-columns:2fr 1.2fr 1.2fr; gap:8px; }
+    .date-row .form-control { text-align:center; }
+
+    /* ─── GENDER BUTTONS ─── */
+    .gender-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .gender-btn {
+      padding:14px 10px; border-radius:12px;
+      border:1.5px solid rgba(255,255,255,.1);
+      background:rgba(255,255,255,.04);
+      color:var(--text-secondary);
+      cursor:pointer; transition:all .25s;
+      font-family:var(--font-sans); text-align:center;
+    }
+    .gender-btn:hover { background:rgba(255,255,255,.07); }
+    .gender-btn.active {
+      border-color:rgba(232,197,71,.5);
+      background:rgba(232,197,71,.08);
+      color:var(--text-primary);
+    }
+    .gender-emoji { font-size:22px; display:block; margin-bottom:4px; }
+    .gender-label { font-size:13px; font-weight:700; display:block; }
+    .gender-sublabel { font-size:11px; color:var(--text-muted); display:block; margin-top:2px; }
+
+    /* ─── TIME SECTION ─── */
+    .time-unknown-row {
+      display:flex; align-items:center; gap:10px;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+      border-radius:10px; padding:12px 14px;
+      cursor:pointer; margin-top:6px;
+    }
+    .time-unknown-row input[type=checkbox] {
+      width:16px; height:16px; accent-color:var(--gold); cursor:pointer;
+    }
+    .time-unknown-label { font-size:13px; color:var(--text-secondary); }
+
+    /* ─── MICRO-COPY ─── */
+    .microcopy {
+      text-align:center; font-size:12px;
+      color:var(--text-muted); margin-bottom:12px;
+      display:flex; align-items:center; justify-content:center; gap:6px;
+    }
+    .microcopy::before, .microcopy::after {
+      content:''; display:block; width:20px; height:1px;
+      background:rgba(255,255,255,.1);
+    }
+
+    /* ─── CTA BUTTON ─── */
+    .btn-primary {
+      display:flex; align-items:center; justify-content:center; gap:8px;
+      width:100%; background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      color:#1a1020; font-weight:700;
+      border:none; border-radius:14px;
+      padding:16px 32px; font-size:16px;
+      box-shadow:0 4px 20px rgba(232,197,71,.3);
+      cursor:pointer; transition:all .2s;
+      font-family:var(--font-sans);
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(232,197,71,.4); }
+    .btn-ghost {
+      display:flex; align-items:center; justify-content:center; gap:6px;
+      width:100%; background:transparent;
+      border:1px solid rgba(255,255,255,.15);
+      color:var(--text-secondary); border-radius:14px;
+      padding:13px 28px; font-size:14px;
+      cursor:pointer; transition:all .2s;
+      font-family:var(--font-sans); font-weight:600; margin-top:10px;
+    }
+    .btn-ghost:hover { background:rgba(255,255,255,.05); }
+
+    /* ─── RESULTS SCREEN ─── */
+    .results-section { padding:0 0 100px; }
+
+    /* Day Master Hero */
+    .dm-hero {
+      position:relative; overflow:hidden;
+      padding:32px 20px 28px;
+      background:linear-gradient(160deg,rgba(240,184,96,.08) 0%,rgba(200,216,240,.05) 100%);
+      border-bottom:1px solid rgba(255,255,255,.07);
+    }
+    .dm-hero-bg-char {
+      position:absolute; right:-16px; top:50%; transform:translateY(-50%);
+      font-family:var(--font-serif); font-size:14rem; font-weight:300;
+      opacity:.05; line-height:1; pointer-events:none; color:var(--metal);
+    }
+    .dm-hero-eyebrow {
+      font-size:9px; letter-spacing:.22em; color:var(--text-muted);
+      text-transform:uppercase; margin-bottom:16px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .dm-hero-eyebrow::before {
+      content:''; width:20px; height:1px;
+      background:linear-gradient(90deg,transparent,var(--text-muted));
+    }
+    .dm-hero-char-row { display:flex; align-items:flex-start; gap:20px; margin-bottom:16px; }
+    .dm-hero-chars {
+      display:flex; gap:0; flex-direction:column; align-items:center;
+    }
+    .dm-hero-stem {
+      font-family:var(--font-serif); font-size:5.5rem; font-weight:300; line-height:1;
+      color:var(--metal); text-shadow:0 0 40px rgba(200,216,240,.5);
+    }
+    .dm-hero-branch {
+      font-family:var(--font-serif); font-size:3.8rem; font-weight:300; line-height:1;
+      color:rgba(200,216,240,.7); text-shadow:0 0 30px rgba(200,216,240,.3);
+    }
+    .dm-hero-info { flex:1; padding-top:8px; }
+    .dm-hero-title {
+      font-family:var(--font-serif); font-size:20px; font-weight:600;
+      color:var(--text-primary); margin-bottom:4px;
+    }
+    .dm-hero-element {
+      font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+      color:var(--metal); font-weight:700; margin-bottom:10px;
+    }
+    .dm-hero-hook {
+      font-size:15px; color:var(--text-secondary); line-height:1.7;
+      font-style:italic; font-family:var(--font-serif);
+    }
+    .dm-keywords { display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; }
+    .dm-keyword {
+      font-size:10px; font-weight:700; letter-spacing:.1em;
+      padding:4px 10px; border-radius:999px;
+      background:rgba(200,216,240,.1); border:1px solid rgba(200,216,240,.25);
+      color:var(--metal); text-transform:uppercase;
+    }
+
+    /* Identity Bar */
+    .identity-bar-wrap { padding:16px 16px 0; }
+    .identity-bar-label {
+      font-size:10px; letter-spacing:.14em; color:var(--text-muted);
+      text-transform:uppercase; margin-bottom:10px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .identity-bar-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.06); }
+    .identity-bar {
+      display:flex; flex-direction:column; gap:8px;
+    }
+    .identity-row { display:flex; gap:8px; }
+    .identity-card {
+      flex:1; background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; padding:12px 8px; text-align:center;
+      backdrop-filter:blur(10px); position:relative;
+    }
+    .identity-card.you {
+      border-color:rgba(200,216,240,.4);
+      box-shadow:0 0 16px rgba(200,216,240,.08);
+    }
+    .identity-you-badge {
+      position:absolute; top:6px; right:6px;
+      background:rgba(232,197,71,.2); color:var(--gold);
+      font-size:8px; font-weight:700; letter-spacing:.1em;
+      padding:2px 5px; border-radius:3px;
+    }
+    .identity-icon {
+      width:44px; height:44px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      margin:0 auto 6px; font-size:18px; font-weight:700;
+    }
+    .metal-el { background:rgba(200,216,240,.18); color:var(--metal); }
+    .earth-el { background:rgba(240,184,96,.18); color:var(--earth); }
+    .identity-label { font-size:13px; font-weight:600; color:#f0e8d0; margin-bottom:2px; }
+    .identity-sub { font-size:10px; color:rgba(255,255,255,.35); }
+
+    /* Results content */
+    .results-content { padding:16px 16px 0; }
+
+    /* Section label */
+    .section-label {
+      font-size:10px; letter-spacing:.14em; color:var(--text-muted);
+      text-transform:uppercase; margin-bottom:12px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .section-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.06); }
+
+    /* Pillar Cards */
+    .pillar-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:8px;
+      margin-bottom:20px;
+    }
+    .pillar-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--radius-md); backdrop-filter:blur(20px);
+      padding:14px 8px 16px; text-align:center; position:relative;
+    }
+    .pillar-card.day-pillar {
+      border-color:rgba(200,216,240,.45);
+      box-shadow:0 0 20px rgba(200,216,240,.1);
+    }
+    .you-badge {
+      position:absolute; top:6px; right:6px;
+      background:rgba(232,197,71,.2); color:var(--gold);
+      font-size:7px; font-weight:700; letter-spacing:.1em;
+      padding:2px 4px; border-radius:3px;
+    }
+    .pillar-label {
+      font-size:8px; letter-spacing:.12em; color:var(--text-muted);
+      text-transform:uppercase; margin-bottom:8px;
+    }
+    .pillar-stem {
+      font-family:var(--font-serif); font-size:2.4rem; font-weight:300;
+      line-height:1; margin-bottom:2px;
+    }
+    .pillar-stem-name { font-size:9px; color:var(--text-secondary); margin-bottom:10px; }
+    .pillar-branch {
+      font-family:var(--font-serif); font-size:1.7rem; font-weight:300;
+      line-height:1; margin-bottom:2px;
+    }
+    .pillar-branch-name { font-size:9px; color:var(--text-muted); }
+    [data-element="Metal"] .pillar-stem { color:var(--metal); text-shadow:0 0 20px rgba(200,216,240,.4); }
+    [data-element="Earth"] .pillar-stem { color:var(--earth); text-shadow:0 0 20px rgba(240,184,96,.4); }
+    [data-element="Wood"] .pillar-stem { color:var(--wood); text-shadow:0 0 20px rgba(93,232,160,.4); }
+    [data-element="Fire"] .pillar-stem { color:var(--fire); text-shadow:0 0 20px rgba(255,126,179,.4); }
+    [data-element="Water"] .pillar-stem { color:var(--water); text-shadow:0 0 20px rgba(96,180,250,.4); }
+    [data-element="Metal"] .pillar-branch { color:rgba(200,216,240,.75); }
+    [data-element="Earth"] .pillar-branch { color:rgba(240,184,96,.75); }
+    [data-element="Wood"] .pillar-branch { color:rgba(93,232,160,.75); }
+    [data-element="Fire"] .pillar-branch { color:rgba(255,126,179,.75); }
+    [data-element="Water"] .pillar-branch { color:rgba(96,180,250,.75); }
+
+    /* Elements Section */
+    .elements-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--radius-lg); backdrop-filter:blur(20px);
+      padding:20px; margin-bottom:16px;
+    }
+    .elements-title {
+      font-family:var(--font-serif); font-size:18px; font-weight:600;
+      color:var(--text-primary); margin-bottom:16px;
+    }
+    .elem-bar-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .elem-bar-label { font-size:12px; font-weight:700; min-width:40px; }
+    .elem-bar-track {
+      flex:1; height:7px; background:rgba(255,255,255,.06);
+      border-radius:999px; overflow:hidden;
+    }
+    .elem-bar-fill { height:100%; border-radius:999px; transition:width .8s ease; }
+    .elem-bar-pct { font-size:11px; color:var(--text-muted); min-width:28px; text-align:right; }
+    .elem-wood .elem-bar-label { color:var(--wood); }
+    .elem-fire .elem-bar-label { color:var(--fire); }
+    .elem-earth .elem-bar-label { color:var(--earth); }
+    .elem-metal .elem-bar-label { color:var(--metal); }
+    .elem-water .elem-bar-label { color:var(--water); }
+    .elem-wood .elem-bar-fill { background:var(--wood); }
+    .elem-fire .elem-bar-fill { background:var(--fire); }
+    .elem-earth .elem-bar-fill { background:var(--earth); }
+    .elem-metal .elem-bar-fill { background:var(--metal); }
+    .elem-water .elem-bar-fill { background:var(--water); }
+
+    /* Analysis Card (free) */
+    .analysis-card {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--radius-lg); backdrop-filter:blur(20px);
+      padding:20px; margin-bottom:16px;
+    }
+    .analysis-card-title {
+      font-family:var(--font-serif); font-size:18px; font-weight:600;
+      color:var(--text-primary); margin-bottom:12px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .free-badge {
+      font-size:8px; font-weight:700; letter-spacing:.1em;
+      padding:3px 7px; border-radius:4px;
+      background:rgba(93,232,160,.15); color:var(--wood);
+      text-transform:uppercase;
+    }
+    .analysis-body { font-size:14px; color:var(--text-secondary); line-height:1.9; }
+    .analysis-body p { margin-bottom:10px; }
+    .analysis-body p:last-child { margin-bottom:0; }
+
+    /* ─── PAYWALL SECTION ─── */
+    .paywall-section { position:relative; margin-bottom:16px; }
+    .paywall-content {
+      background:var(--card-bg); border:1px solid var(--card-border);
+      border-radius:var(--radius-lg); backdrop-filter:blur(20px);
+      padding:20px;
+      -webkit-mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 90%);
+      mask-image: linear-gradient(to bottom, black 0%, black 40%, transparent 90%);
+      pointer-events:none; user-select:none;
+    }
+    .paywall-content-title {
+      font-family:var(--font-serif); font-size:18px; font-weight:600;
+      color:var(--text-primary); margin-bottom:12px;
+      display:flex; align-items:center; gap:8px;
+    }
+    .paid-badge {
+      font-size:8px; font-weight:700; letter-spacing:.1em;
+      padding:3px 7px; border-radius:4px;
+      background:rgba(232,197,71,.15); color:var(--gold);
+      text-transform:uppercase;
+    }
+    .paywall-text { font-size:14px; color:var(--text-secondary); line-height:1.9; }
+    .paywall-text p { margin-bottom:10px; }
+
+    /* ─── STICKY CTA ─── */
+    #sticky-cta {
+      position:fixed; bottom:0; left:50%; transform:translateX(-50%);
+      width:100%; max-width:390px;
+      padding:12px 16px 20px;
+      background:linear-gradient(to top, rgba(13,11,30,.98) 60%, transparent);
+      z-index:150;
+      display:none; /* shown via JS */
+    }
+    #sticky-cta.visible { display:block; }
+    .sticky-cta-inner {
+      background:linear-gradient(135deg,rgba(240,184,96,.12),rgba(155,127,212,.08));
+      border:1px solid rgba(232,197,71,.35);
+      border-radius:var(--radius-md); padding:14px 16px;
+    }
+    .sticky-cta-hook {
+      font-family:var(--font-serif); font-size:15px; font-weight:600;
+      color:var(--text-primary); margin-bottom:4px; text-align:center;
+    }
+    .sticky-cta-sub {
+      font-size:11px; color:var(--text-muted); text-align:center; margin-bottom:12px;
+    }
+    .sticky-cta-btn {
+      width:100%; padding:14px;
+      background:linear-gradient(135deg,#f0b860,#e8a840,#ffd080,#ff7eb3,#f0b860);
+      background-size:200% auto;
+      animation:shimmer 3.2s linear infinite;
+      border:none; border-radius:12px;
+      color:#1a1020; font-weight:700; font-size:15px;
+      cursor:pointer; font-family:var(--font-sans);
+      box-shadow:0 4px 20px rgba(232,197,71,.3);
+    }
+    .sticky-cta-dismiss {
+      display:block; text-align:center; margin-top:8px;
+      font-size:11px; color:var(--text-muted); cursor:pointer;
+      background:none; border:none; font-family:var(--font-sans); width:100%;
+    }
+    .sticky-cta-dismiss:hover { color:var(--text-secondary); }
+    @keyframes shimmer { 0%{background-position:-200% center} 100%{background-position:200% center} }
+
+    /* ─── WAITLIST SECTION (분리된) ─── */
+    .waitlist-section {
+      background:linear-gradient(135deg,rgba(240,184,96,.06) 0%,rgba(155,127,212,.04) 100%);
+      border:1px solid rgba(232,197,71,.25);
+      border-radius:var(--radius-lg); padding:24px 20px;
+      margin-bottom:24px; text-align:center;
+    }
+    .waitlist-icon { font-size:32px; margin-bottom:10px; }
+    .waitlist-title {
+      font-family:var(--font-serif); font-size:20px; font-weight:600;
+      color:var(--text-primary); margin-bottom:6px;
+    }
+    .waitlist-sub { font-size:13px; color:var(--text-secondary); line-height:1.6; margin-bottom:16px; }
+    .waitlist-form { display:flex; gap:8px; }
+    .waitlist-input {
+      flex:1; background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:10px; color:var(--text-primary);
+      font-size:15px; padding:11px 14px;
+      font-family:var(--font-sans);
+    }
+    .waitlist-input:focus { outline:none; border-color:rgba(232,197,71,.4); }
+    .waitlist-input::placeholder { color:var(--text-muted); }
+    .waitlist-submit {
+      padding:11px 18px; background:linear-gradient(135deg,var(--gold),var(--gold-soft));
+      border:none; border-radius:10px; color:#1a1020;
+      font-weight:700; font-size:14px; cursor:pointer;
+      font-family:var(--font-sans); white-space:nowrap;
+    }
+    .waitlist-note { font-size:11px; color:var(--text-muted); margin-top:10px; }
+
+    /* ─── TOAST ─── */
+    #toast-container {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+      z-index:300; display:flex; flex-direction:column-reverse; gap:8px;
+      pointer-events:none; width:calc(100% - 40px); max-width:360px;
+    }
+    .toast {
+      background:rgba(20,18,40,.96); backdrop-filter:blur(20px);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; padding:12px 16px;
+      display:flex; align-items:center; gap:10px;
+      font-size:14px; color:var(--text-primary);
+      pointer-events:auto;
+      transform:translateY(16px); opacity:0;
+      animation:toastIn .3s ease forwards;
+    }
+    .toast.success { border-color:rgba(93,232,160,.3); }
+    @keyframes toastIn { from{transform:translateY(16px);opacity:0} to{transform:translateY(0);opacity:1} }
+    @keyframes toastOut { from{transform:translateY(0);opacity:1} to{transform:translateY(8px);opacity:0} }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+    .anim-fadeup { animation:fadeUp .5s ease forwards; }
+    .stagger-1{animation-delay:.1s;opacity:0;}
+    .stagger-2{animation-delay:.2s;opacity:0;}
+    .stagger-3{animation-delay:.3s;opacity:0;}
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo-area">
+      <span class="logo-mark">✦</span>
+      <div>
+        <div class="logo-name">Momentor</div>
+        <div class="logo-sub">YOUR DESTINY, DECODED</div>
+      </div>
+    </div>
+    <span class="mockup-badge">MOCKUP v2</span>
+  </header>
+
+  <!-- ══════════════════════════════════
+       SCREEN 1: 입력 화면 (2-step)
+  ══════════════════════════════════ -->
+  <section id="screen-input" class="screen active">
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-dot active" id="dot-1">1</div>
+      <div class="step-line" id="line-1"></div>
+      <div class="step-dot" id="dot-2">2</div>
+    </div>
+
+    <!-- STEP 1: 생년월일 + 성별 -->
+    <div id="step-1" class="form-section">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="form-eyebrow">STEP 1 OF 2</div>
+          <h2 class="form-title">언제 태어나셨나요?</h2>
+          <p class="form-subtitle">생년월일과 성별을 입력해주세요</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">생년월일</label>
+          <div class="date-row">
+            <input
+              type="number"
+              inputmode="numeric"
+              class="form-control"
+              id="input-year"
+              placeholder="1999"
+              min="1900" max="2025"
+            >
+            <input
+              type="number"
+              inputmode="numeric"
+              class="form-control"
+              id="input-month"
+              placeholder="월"
+              min="1" max="12"
+            >
+            <input
+              type="number"
+              inputmode="numeric"
+              class="form-control"
+              id="input-day"
+              placeholder="일"
+              min="1" max="31"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">음양의 기운</label>
+          <div class="gender-grid">
+            <button class="gender-btn active" id="gender-m" onclick="selectGender('m')">
+              <span class="gender-emoji">☀️</span>
+              <span class="gender-label">양 (陽)</span>
+              <span class="gender-sublabel">남성의 에너지</span>
+            </button>
+            <button class="gender-btn" id="gender-f" onclick="selectGender('f')">
+              <span class="gender-emoji">🌙</span>
+              <span class="gender-label">음 (陰)</span>
+              <span class="gender-sublabel">여성의 에너지</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="microcopy">518,400가지 운명 중 당신의 것을 찾아드립니다</div>
+        <button class="btn-primary" onclick="goStep2()">
+          다음 단계로 <span>→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2: 출생시간 + 확인 -->
+    <div id="step-2" class="form-section" style="display:none;">
+      <div class="form-card">
+        <div class="form-header">
+          <div class="form-eyebrow">STEP 2 OF 2</div>
+          <h2 class="form-title">태어난 시간을 알고 계신가요?</h2>
+          <p class="form-subtitle">시간을 알수록 더 정확한 분석이 가능합니다</p>
+        </div>
+
+        <div class="form-group" id="time-input-group">
+          <label class="form-label">출생 시간</label>
+          <div class="date-row" style="grid-template-columns:1fr 1fr;">
+            <input
+              type="number"
+              inputmode="numeric"
+              class="form-control"
+              id="input-hour"
+              placeholder="시 (0~23)"
+              min="0" max="23"
+            >
+            <input
+              type="number"
+              inputmode="numeric"
+              class="form-control"
+              id="input-minute"
+              placeholder="분 (0~59)"
+              min="0" max="59"
+            >
+          </div>
+        </div>
+
+        <label class="time-unknown-row" for="time-unknown">
+          <input type="checkbox" id="time-unknown" onchange="toggleTimeUnknown()">
+          <span class="time-unknown-label">⏱ 출생 시간을 모릅니다</span>
+        </label>
+
+        <div style="height:20px;"></div>
+
+        <div class="microcopy">시간 없이도 분석 가능합니다 · 추후 업데이트 가능</div>
+        <button class="btn-primary" onclick="goToResults()">
+          ✦ 나의 사주 분석하기
+        </button>
+        <button class="btn-ghost" onclick="goStep1()">
+          ← 이전으로
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════
+       SCREEN 2: 결과 요약 화면
+  ══════════════════════════════════ -->
+  <section id="screen-results" class="screen">
+    <div class="results-section">
+
+      <!-- 1. DAY MASTER HERO -->
+      <div class="dm-hero">
+        <div class="dm-hero-bg-char">酉</div>
+        <div class="dm-hero-eyebrow">DAY MASTER · 일주</div>
+        <div class="dm-hero-char-row">
+          <div class="dm-hero-chars">
+            <div class="dm-hero-stem">己</div>
+            <div class="dm-hero-branch">酉</div>
+          </div>
+          <div class="dm-hero-info">
+            <div class="dm-hero-element">土 — EARTH · 음기</div>
+            <div class="dm-hero-title">己酉 · 음의 대지</div>
+            <div class="dm-hero-hook">
+              "땅속 깊이 감춰진 보석처럼 —<br>
+              진가를 아는 이만이 당신을 알아본다"
+            </div>
+          </div>
+        </div>
+        <div class="dm-keywords">
+          <span class="dm-keyword">직관</span>
+          <span class="dm-keyword">예민함</span>
+          <span class="dm-keyword">완벽주의</span>
+          <span class="dm-keyword">내면의 힘</span>
+          <span class="dm-keyword">정제된 미</span>
+        </div>
+      </div>
+
+      <!-- 2. IDENTITY BAR -->
+      <div class="identity-bar-wrap">
+        <div class="identity-bar-label">나의 사주 정체성</div>
+        <div class="identity-bar">
+          <div class="identity-row">
+            <div class="identity-card you">
+              <span class="identity-you-badge">YOU</span>
+              <div class="identity-icon metal-el">金</div>
+              <div class="identity-label">酉 · 닭</div>
+              <div class="identity-sub">지지 동물</div>
+            </div>
+            <div class="identity-card">
+              <div class="identity-icon earth-el">土</div>
+              <div class="identity-label">己 · 음토</div>
+              <div class="identity-sub">일간 오행</div>
+            </div>
+            <div class="identity-card">
+              <div class="identity-icon" style="background:rgba(155,127,212,.2);color:var(--violet);font-size:16px;font-weight:700;">偏</div>
+              <div class="identity-label">편인</div>
+              <div class="identity-sub">십신</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. 4주 카드 -->
+      <div class="results-content">
+        <div class="section-label">사주 四柱</div>
+        <div class="pillar-grid">
+          <div class="pillar-card" data-element="Wood">
+            <div class="pillar-label">년주 年</div>
+            <div class="pillar-stem">甲</div>
+            <div class="pillar-stem-name">갑 · 木</div>
+            <div class="pillar-branch">寅</div>
+            <div class="pillar-branch-name">인 · 호랑이</div>
+          </div>
+          <div class="pillar-card" data-element="Fire">
+            <div class="pillar-label">월주 月</div>
+            <div class="pillar-stem">丙</div>
+            <div class="pillar-stem-name">병 · 火</div>
+            <div class="pillar-branch">午</div>
+            <div class="pillar-branch-name">오 · 말</div>
+          </div>
+          <div class="pillar-card day-pillar" data-element="Earth">
+            <span class="you-badge">YOU</span>
+            <div class="pillar-label">일주 日</div>
+            <div class="pillar-stem">己</div>
+            <div class="pillar-stem-name">기 · 土</div>
+            <div class="pillar-branch">酉</div>
+            <div class="pillar-branch-name">유 · 닭</div>
+          </div>
+          <div class="pillar-card" data-element="Water">
+            <div class="pillar-label">시주 時</div>
+            <div class="pillar-stem">壬</div>
+            <div class="pillar-stem-name">임 · 水</div>
+            <div class="pillar-branch">子</div>
+            <div class="pillar-branch-name">자 · 쥐</div>
+          </div>
+        </div>
+
+        <!-- 4. 오행 -->
+        <div class="section-label">오행 균형</div>
+        <div class="elements-card">
+          <div class="elements-title">✦ 五行 분포</div>
+          <div class="elem-bar-row elem-wood">
+            <span class="elem-bar-label">木</span>
+            <div class="elem-bar-track"><div class="elem-bar-fill" style="width:30%"></div></div>
+            <span class="elem-bar-pct">30%</span>
+          </div>
+          <div class="elem-bar-row elem-fire">
+            <span class="elem-bar-label">火</span>
+            <div class="elem-bar-track"><div class="elem-bar-fill" style="width:20%"></div></div>
+            <span class="elem-bar-pct">20%</span>
+          </div>
+          <div class="elem-bar-row elem-earth">
+            <span class="elem-bar-label">土</span>
+            <div class="elem-bar-track"><div class="elem-bar-fill" style="width:25%"></div></div>
+            <span class="elem-bar-pct">25%</span>
+          </div>
+          <div class="elem-bar-row elem-metal">
+            <span class="elem-bar-label">金</span>
+            <div class="elem-bar-track"><div class="elem-bar-fill" style="width:15%"></div></div>
+            <span class="elem-bar-pct">15%</span>
+          </div>
+          <div class="elem-bar-row elem-water">
+            <span class="elem-bar-label">水</span>
+            <div class="elem-bar-track"><div class="elem-bar-fill" style="width:10%"></div></div>
+            <span class="elem-bar-pct">10%</span>
+          </div>
+        </div>
+
+        <!-- 5. 성격 분석 (FREE) -->
+        <div class="section-label">성격 분석 <span style="margin-left:6px;" class="free-badge">FREE</span></div>
+        <div class="analysis-card anim-fadeup stagger-1">
+          <div class="analysis-card-title">
+            己土의 내면 세계
+            <span class="free-badge">FREE</span>
+          </div>
+          <div class="analysis-body">
+            <p>己土는 부드럽고 촉촉한 대지의 기운입니다. 겉으로는 조용하고 수줍어 보이지만, 내면에는 놀라운 수용력과 깊은 직관이 자리잡고 있습니다.</p>
+            <p>酉金을 품은 己土는 정제된 아름다움을 추구합니다. 무질서를 견디지 못하며, 자신만의 기준으로 세상을 정돈하려는 성향이 강합니다.</p>
+          </div>
+        </div>
+
+        <!-- PAYWALL SECTION 1 -->
+        <div class="section-label">연애운 · 관계 <span style="margin-left:6px;" class="paid-badge">PREMIUM</span></div>
+        <div class="paywall-section">
+          <div class="paywall-content">
+            <div class="paywall-content-title">
+              己酉의 사랑 방식
+              <span class="paid-badge">PREMIUM</span>
+            </div>
+            <div class="paywall-text">
+              <p>己酉 일주는 사랑에서도 완벽주의적 성향이 드러납니다. 상대방을 꼼꼼히 관찰하고 오랜 시간 신뢰를 쌓은 후에야 마음을 열기 시작합니다.</p>
+              <p>酉金의 날카로운 심미안은 파트너 선택에도 그대로 적용됩니다. 외면적 매력뿐 아니라 품격과 지성을 중시하며, 관계에서 정서적 안정을 최우선으로...</p>
+              <p>운명적 인연이 찾아오는 시기는 바로 지금 대운(대운 乙卯)에 집중되어 있습니다. 특히 2025~2026년 사이...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAYWALL SECTION 2 -->
+        <div class="section-label">재물운 · 커리어 <span style="margin-left:6px;" class="paid-badge">PREMIUM</span></div>
+        <div class="paywall-section">
+          <div class="paywall-content">
+            <div class="paywall-content-title">
+              己酉의 재물 흐름
+              <span class="paid-badge">PREMIUM</span>
+            </div>
+            <div class="paywall-text">
+              <p>己土는 재성(財星)으로서 水 기운을 관장합니다. 현재 사주에서 壬子 시주의 강한 水 기운이 재물 흐름에 직접적인 영향을...</p>
+              <p>직업적 방향으로는 심미적 감각이 요구되는 분야 — 디자인, 금융, 의료, 교육 — 에서 특출난 성과를 냅니다...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- WAITLIST SECTION (모달에서 분리) -->
+        <div class="waitlist-section anim-fadeup stagger-2">
+          <div class="waitlist-icon">🌙</div>
+          <div class="waitlist-title">전체 분석 리포트 예약</div>
+          <div class="waitlist-sub">
+            연애운, 재물운, 직업운, 10년 대운 전체 분석<br>
+            얼리버드 50% 할인 · 지금 예약하세요
+          </div>
+          <div class="waitlist-form">
+            <input
+              type="email"
+              class="waitlist-input"
+              placeholder="이메일을 입력하세요"
+              id="waitlist-email"
+            >
+            <button class="waitlist-submit" onclick="submitWaitlist()">예약</button>
+          </div>
+          <div class="waitlist-note">🔒 스팸 없음 · 언제든 구독 취소 가능</div>
+        </div>
+
+      </div><!-- /results-content -->
+    </div><!-- /results-section -->
+  </section>
+
+
+  <!-- Screen Nav (dev overlay) -->
+  <div class="screen-nav">
+    <button class="screen-nav-btn active-screen" id="nav-input" onclick="showScreen('input')">① 입력</button>
+    <button class="screen-nav-btn" id="nav-results" onclick="showScreen('results')">② 결과</button>
+  </div>
+
+  <!-- Sticky CTA -->
+  <div id="sticky-cta">
+    <div class="sticky-cta-inner">
+      <div class="sticky-cta-hook">己酉 · 당신의 운명이 기다립니다</div>
+      <div class="sticky-cta-sub">연애운 · 재물운 · 10년 대운 전체 분석</div>
+      <button class="sticky-cta-btn" onclick="openWaitlist()">
+        ✦ 전체 리포트 예약하기 — 50% 할인
+      </button>
+      <button class="sticky-cta-dismiss" onclick="dismissStickyCTA()">나중에 할게요</button>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+</div><!-- /app -->
+
+<script>
+  // ─── STATE ───
+  let currentScreen = 'input';
+  let stickyCTAShown = false;
+  let stickyCTADismissed = false;
+  let stickyTimer = null;
+
+  // ─── SCREEN MANAGER ───
+  function showScreen(name) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.screen-nav-btn').forEach(b => b.classList.remove('active-screen'));
+
+    const screen = document.getElementById('screen-' + name);
+    const navBtn = document.getElementById('nav-' + name);
+    if (screen) screen.classList.add('active');
+    if (navBtn) navBtn.classList.add('active-screen');
+
+    currentScreen = name;
+    window.scrollTo(0, 0);
+
+    if (name === 'results') {
+      initResultsScreen();
+    }
+  }
+
+  // ─── STEP 1 → 2 ───
+  function goStep2() {
+    const year = document.getElementById('input-year').value;
+    const month = document.getElementById('input-month').value;
+    const day = document.getElementById('input-day').value;
+
+    if (!year || !month || !day) {
+      showToast('생년월일을 모두 입력해주세요 📅', 'error');
+      return;
+    }
+
+    document.getElementById('step-1').style.display = 'none';
+    document.getElementById('step-2').style.display = 'block';
+    document.getElementById('dot-1').classList.remove('active');
+    document.getElementById('dot-1').classList.add('done');
+    document.getElementById('dot-1').textContent = '✓';
+    document.getElementById('line-1').classList.add('done');
+    document.getElementById('dot-2').classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  function goStep1() {
+    document.getElementById('step-2').style.display = 'none';
+    document.getElementById('step-1').style.display = 'block';
+    document.getElementById('dot-1').classList.add('active');
+    document.getElementById('dot-1').classList.remove('done');
+    document.getElementById('dot-1').textContent = '1';
+    document.getElementById('line-1').classList.remove('done');
+    document.getElementById('dot-2').classList.remove('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ─── GENDER ───
+  function selectGender(g) {
+    document.getElementById('gender-m').classList.toggle('active', g === 'm');
+    document.getElementById('gender-f').classList.toggle('active', g === 'f');
+  }
+
+  // ─── TIME UNKNOWN ───
+  function toggleTimeUnknown() {
+    const checked = document.getElementById('time-unknown').checked;
+    const grp = document.getElementById('time-input-group');
+    grp.style.opacity = checked ? '0.35' : '1';
+    grp.style.pointerEvents = checked ? 'none' : 'auto';
+  }
+
+  // ─── GO TO RESULTS ───
+  function goToResults() {
+    showToast('✦ 사주 분석 중...', 'info');
+    setTimeout(() => showScreen('results'), 600);
+  }
+
+  // ─── RESULTS INIT ───
+  function initResultsScreen() {
+    // Sticky CTA: scroll 40% OR 15s
+    if (!stickyCTADismissed) {
+      stickyTimer = setTimeout(showStickyCTA, 15000);
+      window.addEventListener('scroll', onScrollResults, { passive: true });
+    }
+  }
+
+  function onScrollResults() {
+    if (stickyCTAShown || stickyCTADismissed) return;
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    if (total > 0 && scrolled / total >= 0.4) {
+      showStickyCTA();
+    }
+  }
+
+  function showStickyCTA() {
+    if (stickyCTAShown || stickyCTADismissed) return;
+    stickyCTAShown = true;
+    clearTimeout(stickyTimer);
+    document.getElementById('sticky-cta').classList.add('visible');
+  }
+
+  function dismissStickyCTA() {
+    stickyCTADismissed = true;
+    document.getElementById('sticky-cta').classList.remove('visible');
+    window.removeEventListener('scroll', onScrollResults);
+  }
+
+  function openWaitlist() {
+    dismissStickyCTA();
+    // 페이지 내 waitlist section으로 스크롤
+    const ws = document.querySelector('.waitlist-section');
+    if (ws) {
+      ws.scrollIntoView({ behavior:'smooth', block:'center' });
+      setTimeout(() => {
+        document.getElementById('waitlist-email').focus();
+      }, 600);
+    }
+  }
+
+  // ─── WAITLIST SUBMIT ───
+  function submitWaitlist() {
+    const email = document.getElementById('waitlist-email').value.trim();
+    if (!email || !email.includes('@')) {
+      showToast('올바른 이메일을 입력해주세요', 'error');
+      return;
+    }
+    showToast('🌙 예약 완료! 오픈 시 알려드릴게요', 'success');
+    document.getElementById('waitlist-email').value = '';
+  }
+
+  // ─── TOAST ───
+  function showToast(msg, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast ' + type;
+    toast.innerHTML = `<span class="toast-icon">${type === 'success' ? '✓' : type === 'error' ? '✕' : '✦'}</span><span>${msg}</span>`;
+    container.appendChild(toast);
+    setTimeout(() => {
+      toast.style.animation = 'toastOut .3s ease forwards';
+      setTimeout(() => toast.remove(), 350);
+    }, 3000);
+  }
+</script>
+</body>
+</html>
