@@ -739,6 +739,17 @@
     .hero-trust-line{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;}
     .trust-dot{opacity:.4;}
 
+    /* ── FIX 4: MOBILE HERO CTA VISIBILITY (≤480px) ── */
+    /* Hide elements above CTA that push it below the fold on small screens */
+    @media(max-width:480px){
+      .sp-quote-card{display:none;}      /* SP-1 hero quote */
+      .sp-rating-bar,.sp-rating-micro{display:none;}  /* SP-3 star rating */
+      .price-anchor{display:none;}       /* price-anchor */
+      #hero-trust-line{display:none;}    /* trust-line */
+      .hero-steps{margin-bottom:8px;}   /* tighten step flow */
+      #hero-cta{margin-top:8px;}        /* tighten CTA gap */
+    }
+
     /* ── ACCORDION EXPAND MORE ── */
     .acc-expand-row{margin:8px 0;}
     .acc-expand-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;background:rgba(255,255,255,.03);border:1px dashed rgba(232,197,71,.3);border-radius:14px;cursor:pointer;transition:all .2s ease;font-family:var(--font-sans);}
@@ -1428,7 +1439,7 @@
   .price-anchor-paywall strong{color:var(--gold);font-size:15px;}
 
   /* ── SPRINT 2: SP-8 MOBILE STICKY BAR ── */
-  #sp8-sticky{display:none;position:fixed;bottom:0;left:0;right:0;z-index:900;background:rgba(13,11,30,0.96);border-top:1px solid rgba(240,184,96,0.25);padding:10px 16px;text-align:center;font-size:12px;color:var(--text-secondary);backdrop-filter:blur(12px);}
+  #sp8-sticky{display:none;position:fixed;bottom:0;left:0;right:0;z-index:850;background:rgba(13,11,30,0.96);border-top:1px solid rgba(240,184,96,0.25);padding:10px 16px;text-align:center;font-size:12px;color:var(--text-secondary);backdrop-filter:blur(12px);}
   #sp8-sticky .sp8-stars{color:#f0b860;font-size:12px;margin-right:6px;}
   @media(orientation:landscape) and (max-width:900px){#sp8-sticky{display:none!important;}}
 
@@ -1442,7 +1453,7 @@
   .ei-headline{font-family:var(--font-serif);font-size:24px;color:var(--text-primary);margin-bottom:8px;line-height:1.2;}
   .ei-subhead{font-size:14px;color:var(--text-secondary);margin-bottom:16px;line-height:1.5;}
   .ei-anchor{font-size:12px;color:rgba(255,255,255,0.4);font-style:italic;margin-bottom:16px;}
-  .ei-timer{font-family:var(--font-serif);font-size:36px;color:#e06050;text-shadow:0 0 20px rgba(220,80,60,0.5);margin:8px 0 16px;font-weight:600;letter-spacing:.04em;}
+  .ei-timer{font-family:var(--font-serif);font-size:36px;color:var(--gold);text-shadow:0 0 20px rgba(240,184,96,0.5);margin:8px 0 16px;font-weight:600;letter-spacing:.04em;}
   .ei-cta{width:100%;padding:16px;background:linear-gradient(135deg,#f0b860,#e8a840);border:none;border-radius:12px;color:#1a1020;font-size:16px;font-weight:800;cursor:pointer;font-family:var(--font-sans);transition:transform .2s,box-shadow .2s;}
   .ei-cta:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(240,184,96,0.4);}
   .ei-dismiss{margin-top:12px;font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:underline;text-underline-offset:3px;}
@@ -5697,7 +5708,7 @@ function renderAllPaid(chart) {
       var teaserShort = teaserWords.slice(0, 28).join(' ') + '...';
       narrativeHtml = '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px;margin-bottom:16px;text-align:left;position:relative;overflow:hidden;">' +
         '<div style="font-size:11px;letter-spacing:.12em;color:var(--gold);margin-bottom:8px;text-transform:uppercase;">✦ ' + (isKo ? '당신의 이야기' : 'Your Story') + '</div>' +
-        '<div style="font-size:14px;color:var(--text-secondary);line-height:1.7;filter:blur(0);">' + teaserShort + '</div>' +
+        '<div style="font-size:14px;color:var(--text-secondary);line-height:1.7;filter:blur(3px);user-select:none;">' + teaserShort + '</div>' +
         '<div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:linear-gradient(transparent,rgba(13,11,30,0.95));"></div>' +
         '</div>';
     }
@@ -7008,6 +7019,7 @@ function shareCompatCard() {
 <div id="sp8-sticky">
   <span class="sp8-stars">★★★★★</span>
   3,800+ readings · <em>"This changed how I see myself."</em> — Scroll to begin ↓
+  <button onclick="dismissSp8Sticky()" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);font-size:16px;cursor:pointer;line-height:1;padding:4px 6px;" title="Dismiss">✕</button>
 </div>
 
 <!-- ── SPRINT 2: EXIT INTENT POPUP ── -->
@@ -7027,14 +7039,34 @@ function shareCompatCard() {
 
 <script>
 // ── SPRINT 2: SP-8 Sticky Bar ──
+function dismissSp8Sticky() {
+  var sticky = document.getElementById('sp8-sticky');
+  if (sticky) sticky.style.display = 'none';
+  sessionStorage.setItem('sp8_dismissed', '1');
+  // Show .sticky-cta-bar if it was deferred
+  var ctaBar = document.getElementById('sticky-cta-bar');
+  if (ctaBar && ctaBar.dataset.sp8Deferred) {
+    ctaBar.style.display = '';
+    delete ctaBar.dataset.sp8Deferred;
+  }
+}
 (function() {
   var sticky = document.getElementById('sp8-sticky');
   if (!sticky) return;
+  // Don't show if already dismissed this session
+  if (sessionStorage.getItem('sp8_dismissed')) return;
   var shown = false;
   window.addEventListener('scroll', function() {
     if (window.scrollY > 300 && !shown) {
-      sticky.style.display = 'block';
       shown = true;
+      if (sessionStorage.getItem('sp8_dismissed')) return;
+      sticky.style.display = 'block';
+      // Mutual exclusion: hide .sticky-cta-bar while SP-8 is visible
+      var ctaBar = document.getElementById('sticky-cta-bar');
+      if (ctaBar && ctaBar.style.display !== 'none') {
+        ctaBar.style.display = 'none';
+        ctaBar.dataset.sp8Deferred = '1';
+      }
     }
   }, {passive: true});
 })();
