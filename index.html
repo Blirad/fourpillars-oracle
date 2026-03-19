@@ -618,7 +618,7 @@
     .stagger-4{animation-delay:.4s;opacity:0;}
 
     /* HERO ENTRANCE */
-    @keyframes heroFadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes heroFadeIn{from{transform:translateY(18px)}to{transform:translateY(0)}}
     .hero{animation:heroFadeIn .85s ease forwards;}
 
     /* HERO CTA PULSE */
@@ -830,8 +830,6 @@
     .dm-element-name{font-size:12px;letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--text-muted);}
     .dm-title{font-family:var(--font-serif);font-size:20px;font-weight:600;color:var(--text-primary);}
     .dm-body{font-size:14px;color:var(--text-secondary);line-height:1.9;margin-bottom:20px;}
-    .dm-strengths-shadows{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
-    @media(max-width:480px){.dm-strengths-shadows{grid-template-columns:1fr;}}
     .dm-keywords{display:flex;flex-wrap:wrap;gap:8px;}
     .dm-keyword{
       font-size:11px;font-weight:700;letter-spacing:.12em;
@@ -1479,8 +1477,8 @@
   </a>
   <div class="header-right">
     <div class="lang-tabs">
-      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
-      <button class="lang-btn" data-lang="ko" onclick="setLang('ko')">한</button>
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')" aria-label="Switch to English">EN</button>
+      <button class="lang-btn" data-lang="ko" onclick="setLang('ko')" aria-label="한국어로 전환">한</button>
 
 
     </div>
@@ -1608,9 +1606,9 @@
       <div class="form-group">
         <label class="form-label" id="lbl-birthdate">DATE OF BIRTH</label>
         <div class="form-row form-row-3">
-          <input type="number" inputmode="numeric" id="inp-year" class="form-control" placeholder="Year" min="1900" max="2025" style="text-align:center;">
-          <input type="number" inputmode="numeric" id="inp-month" class="form-control" placeholder="MM" min="1" max="12" style="text-align:center;">
-          <input type="number" inputmode="numeric" id="inp-day" class="form-control" placeholder="DD" min="1" max="31" style="text-align:center;">
+          <input type="number" inputmode="numeric" id="inp-year" class="form-control" placeholder="Year" min="1900" max="2025" style="text-align:center;" aria-label="Birth year">
+          <input type="number" inputmode="numeric" id="inp-month" class="form-control" placeholder="MM" min="1" max="12" style="text-align:center;" aria-label="Birth month">
+          <input type="number" inputmode="numeric" id="inp-day" class="form-control" placeholder="DD" min="1" max="31" style="text-align:center;" aria-label="Birth day">
         </div>
         <div class="form-error" id="err-date"></div>
       </div>
@@ -1653,8 +1651,8 @@
       <div class="form-group" id="time-group">
         <label class="form-label" id="lbl-birthtime">BIRTH TIME</label>
         <div class="form-row" style="display:flex;align-items:center;gap:8px;" id="time-inputs">
-          <input type="number" inputmode="numeric" id="inp-hour" class="form-control" placeholder="HH (0-23)" min="0" max="23" style="flex:1;text-align:center;">
-          <input type="number" inputmode="numeric" id="inp-minute" class="form-control" placeholder="MM (0-59)" min="0" max="59" style="flex:1;text-align:center;">
+          <input type="number" inputmode="numeric" id="inp-hour" class="form-control" placeholder="HH (0-23)" min="0" max="23" style="flex:1;text-align:center;" aria-label="Birth hour">
+          <input type="number" inputmode="numeric" id="inp-minute" class="form-control" placeholder="MM (0-59)" min="0" max="59" style="flex:1;text-align:center;" aria-label="Birth minute">
           <label style="display:flex;align-items:center;gap:5px;cursor:pointer;white-space:nowrap;color:var(--text-secondary);font-size:13px;flex-shrink:0">
             <input type="checkbox" id="chk-notime" onchange="toggleUnknownTime(this.checked)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--gold)">
             <span id="lbl-notime">모름</span>
