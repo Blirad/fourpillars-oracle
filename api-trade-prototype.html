@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bithumb · 손쉬운 API 거래 — AI 자동투자 인터랙티브 프로토타입</title>
+<style>
+:root{
+  --bg:#0b0e14; --panel:#10141d; --ink:#e9edf5; --sub:#8b94a7;
+  --line:#1e2430; --bubble-bot:#161c28; --bubble-me:#f7a600; --me-ink:#1a1205;
+  --gold:#f7a600; --gold-soft:#3a2c08; --up:#21c17a; --down:#ff5a5f;
+  --chip:#1a2130; --pathA:#f7a600; --pathB:#a06bff;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:#111;display:flex;justify-content:center;align-items:center;min-height:100vh;
+  font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;color:var(--ink);padding:24px;
+  background-image:radial-gradient(circle at 50% 0%,#1c1c22,#0c0c0e 70%);
+}
+
+/* ===== phone shell ===== */
+.phone-bezel{
+  width:390px;border-radius:48px;background:#1a1a1a;padding:15px;flex:none;
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.9), inset 0 0 0 2px #2a2a2e;
+  position:relative;
+}
+.screen{
+  width:360px;height:800px;overflow:hidden;position:relative;background:var(--bg);
+  border-radius:36px;display:flex;flex-direction:column;
+}
+
+/* status + app bar */
+.statusbar{display:flex;justify-content:space-between;align-items:center;padding:14px 24px 6px;
+  font-size:12px;color:var(--ink);font-weight:600;flex:none}
+.statusbar .dots{letter-spacing:1px;font-size:11px;color:#cfd6e3}
+.appbar{display:flex;align-items:center;gap:10px;padding:6px 18px 12px;border-bottom:1px solid var(--line);flex:none}
+.appbar .back{color:var(--sub);font-size:22px;width:24px;cursor:pointer;line-height:1;user-select:none}
+.appbar .back:active{color:var(--ink)}
+.appbar .h{font-size:14px;font-weight:700;line-height:1.25}
+.appbar .h small{display:block;color:var(--gold);font-size:10.5px;font-weight:600;margin-top:1px}
+.appbar .pp{margin-left:auto;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:20px}
+.pp.a{background:var(--gold-soft);color:var(--pathA)}
+.pp.b{background:#221a33;color:var(--pathB)}
+.pp.c{background:#15202e;color:#7fa8cc}
+
+/* progress dots */
+.flowdots{display:flex;gap:5px;justify-content:center;padding:9px 0 4px;flex:none}
+.flowdots i{width:6px;height:6px;border-radius:50%;background:#2a3445;transition:.3s}
+.flowdots i.on{background:var(--gold);width:18px;border-radius:4px}
+.flowdots i.ona{background:var(--pathA);width:18px;border-radius:4px}
+.flowdots i.onb{background:var(--pathB);width:18px;border-radius:4px}
+
+/* body scroll */
+.body{flex:1;overflow-y:auto;padding:16px 16px 20px;scrollbar-width:thin}
+.body::-webkit-scrollbar{width:4px}
+.body::-webkit-scrollbar-thumb{background:#222a38;border-radius:4px}
+
+/* footer area (chips / cta) */
+.foot{flex:none;padding:10px 16px 18px;border-top:1px solid var(--line);background:linear-gradient(0deg,#0b0e14,#0d111a)}
+
+/* ===== chat ===== */
+.avatar{display:flex;align-items:center;gap:7px;margin:2px 0 8px}
+.avatar i{width:26px;height:26px;border-radius:9px;background:linear-gradient(135deg,#f7a600,#ffcf66);
+  display:grid;place-items:center;font-style:normal;font-size:14px;font-weight:800;color:#1a1205}
+.avatar em{font-style:normal;font-size:11.5px;color:var(--sub);font-weight:600}
+.msg{max-width:86%;font-size:13px;line-height:1.6;padding:11px 14px;border-radius:17px;margin-bottom:9px}
+.msg b{font-weight:700}
+.bot{background:var(--bubble-bot);border:1px solid var(--line);border-bottom-left-radius:5px;color:#dde3ee}
+.me{background:var(--bubble-me);color:var(--me-ink);margin-left:auto;border-bottom-right-radius:5px;font-weight:600}
+.tip{font-size:11px;color:var(--sub);margin:2px 0 10px 4px;line-height:1.5}
+.reveal{animation:pop .42s cubic-bezier(.2,.7,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* chips */
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin:2px 0 12px}
+.chip{font-size:12px;border:1px solid #2c374a;background:var(--chip);color:#d2d9e6;
+  padding:9px 13px;border-radius:18px;font-weight:600;cursor:pointer;transition:.16s;user-select:none}
+.chip:active{transform:scale(.96)}
+.chip.sel{background:var(--gold);color:#1a1205;border-color:var(--gold)}
+.chip.selb{background:var(--pathB);color:#160d24;border-color:var(--pathB)}
+.qlabel{font-size:11px;font-weight:700;color:var(--sub);margin:4px 0 7px 2px}
+
+/* route cards */
+.routecard{border-radius:15px;padding:14px;margin-bottom:10px;border:1px solid var(--line);background:#131925;cursor:pointer;transition:.18s}
+.routecard:active{transform:scale(.985)}
+.routecard.a{border-color:#4a3a10;background:linear-gradient(150deg,#1c1604,#12131a)}
+.routecard.b{border-color:#3a2c5a;background:linear-gradient(150deg,#14101f,#12131a)}
+.routecard.dim{opacity:.55}
+.routecard .rt{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:800;margin-bottom:6px}
+.routecard .rt .badge2{font-size:9.5px;font-weight:800;padding:3px 8px;border-radius:9px;margin-left:auto}
+.routecard.a .rt .badge2{background:var(--pathA);color:#1a1205}
+.routecard.b .rt .badge2{background:var(--pathB);color:#160d24}
+.routecard .rd{font-size:11.5px;color:var(--sub);line-height:1.6}
+.routecard .rd b{color:#cfd6e3;font-weight:700}
+
+/* strategy cards */
+.stratcard{background:#131925;border:1px solid var(--line);border-radius:14px;padding:12px 13px;margin-bottom:9px;cursor:pointer;transition:.16s}
+.stratcard:active{transform:scale(.985)}
+.stratcard.sel{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.stratcard .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.stratcard .nm{font-size:13.5px;font-weight:700}
+.risk{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:10px}
+.risk.hi{background:#3a1414;color:#ff8a8d}.risk.mid{background:#3a3014;color:#ffd166}.risk.lo{background:#13321f;color:#5fe0a0}
+.stratcard .desc{font-size:11.5px;color:var(--sub);line-height:1.55}
+.stratcard .alg{font-size:10px;color:#7d889b;margin-top:6px;border-top:1px dashed #232b39;padding-top:6px}
+
+/* param groups */
+.pgroup{background:#131925;border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:10px}
+.pgroup .lab{font-size:11.5px;color:var(--sub);font-weight:600;margin-bottom:9px;display:flex;justify-content:space-between}
+.pgroup .val{color:var(--gold);font-weight:800}
+.track{height:6px;background:#222a38;border-radius:4px;position:relative;cursor:pointer;touch-action:none}
+.track .fill{position:absolute;left:0;top:0;height:100%;background:var(--gold);border-radius:4px}
+.track .knob{position:absolute;top:50%;width:18px;height:18px;border-radius:50%;background:#fff;
+  transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.6);cursor:grab}
+.track .knob:active{cursor:grabbing;transform:translate(-50%,-50%) scale(1.15)}
+.amount{font-size:24px;font-weight:800;text-align:center;padding:6px 0 2px}
+.amount small{font-size:14px;color:var(--sub);font-weight:600}
+.amthint{font-size:10px;color:var(--sub);text-align:center;margin-bottom:6px}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px}
+.keypad b{background:#161c28;border:1px solid var(--line);border-radius:10px;text-align:center;
+  padding:13px 0;font-size:16px;font-weight:600;color:#dde3ee;cursor:pointer;user-select:none;transition:.1s}
+.keypad b:active{background:var(--gold);color:#1a1205}
+
+/* CTA */
+.cta{display:block;width:100%;text-align:center;background:var(--gold);color:#1a1205;
+  font-weight:800;font-size:14px;padding:15px;border-radius:14px;cursor:pointer;border:none;transition:.15s;user-select:none}
+.cta:active{transform:scale(.985);filter:brightness(.95)}
+.cta.ghost{background:transparent;border:1px solid #2c374a;color:#cfd6e3}
+.cta.purp{background:var(--pathB);color:#160d24}
+.cta.dim{background:#222a38;color:#6b7587;pointer-events:none}
+.cta+.cta{margin-top:8px}
+
+/* agree */
+.agree{background:#131925;border:1px solid var(--line);border-radius:13px;padding:13px;margin-bottom:10px}
+.agree .hd{font-size:12.5px;font-weight:700;margin-bottom:8px}
+.agree .row{display:flex;align-items:center;gap:10px;font-size:12px;padding:7px 0;color:#cfd6e3;cursor:pointer}
+.agree .row .ck{width:20px;height:20px;border-radius:7px;background:var(--gold);color:#1a1205;
+  display:grid;place-items:center;font-size:12px;font-weight:800;flex:none;transition:.15s}
+.agree .row .ck.off{background:#222a38;color:#222a38}
+.agree .small{font-size:10px;color:var(--sub);margin-top:8px;line-height:1.55}
+
+/* builder / ranges */
+.builder{background:#131925;border:1px solid var(--line);border-radius:13px;padding:12px 13px;margin-bottom:10px}
+.builder .lab{font-size:11.5px;color:var(--sub);font-weight:600;margin-bottom:9px}
+.range-row{display:flex;align-items:center;gap:10px;margin:6px 0 2px}
+.range-row .mn,.range-row .mx{font-size:10px;color:var(--sub);width:40px;flex:none}
+.range-row .mx{text-align:right}
+.rangehint{font-size:10.5px;color:#7db8ff;margin-top:9px;background:#0e1a2a;border-radius:8px;padding:7px 9px;line-height:1.55}
+.rangehint b{color:#9fccff;font-weight:700}
+
+/* formula tokens */
+.formula{display:flex;flex-wrap:wrap;gap:5px;align-items:center;font-size:11px;
+  background:#0e141d;border:1px dashed #2a3445;border-radius:9px;padding:10px;line-height:1.8}
+.tok{padding:3px 8px;border-radius:7px;font-weight:700}
+.tok.fn{background:#1f2b3a;color:#7db8ff}.tok.op{background:#3a2c08;color:#ffcf66}
+.tok.num{background:#13321f;color:#5fe0a0}.tok.var{background:#2a2336;color:#c9a3ff}
+
+/* research */
+.research{background:linear-gradient(160deg,#1a1726,#0f1320);border:1px solid #2e2748;border-radius:15px;padding:15px;margin-bottom:10px}
+.research .badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:#c9a3ff;
+  background:#221a33;padding:5px 10px;border-radius:12px;margin-bottom:12px}
+.research .badge .dot{width:8px;height:8px;border-radius:50%;background:#a06bff;animation:pulse2 1.4s infinite}
+@keyframes pulse2{0%{box-shadow:0 0 0 0 rgba(160,107,255,.6)}70%{box-shadow:0 0 0 9px rgba(160,107,255,0)}100%{box-shadow:0 0 0 0 rgba(160,107,255,0)}}
+.research h4{font-size:15px;font-weight:800;margin-bottom:3px}
+.research .sub2{font-size:11px;color:var(--sub);margin-bottom:13px}
+.ringwrap{display:flex;justify-content:center;margin:4px 0 14px}
+.ringtxt{font-size:22px;font-weight:800;fill:#c9a3ff}
+.steps{display:flex;flex-direction:column}
+.stp{display:flex;gap:11px;font-size:11.5px;padding:6px 0;position:relative}
+.stp .ic{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:10px;font-weight:800;z-index:2}
+.stp .ic.done{background:#5fe0a0;color:#0c1f15}.stp .ic.now{background:#a06bff;color:#160d24}.stp .ic.wait{background:#222a38;color:#56607a}
+.stp .tx{color:#cfd6e3}.stp.waitc .tx{color:#6b7587}
+.stp .tx b{display:block;font-size:9.5px;color:var(--sub);font-weight:500;margin-top:1px}
+.stp::before{content:'';position:absolute;left:9.5px;top:16px;bottom:-8px;width:1px;background:#2a3445}
+.stp:last-child::before{display:none}
+.combo{font-size:11px;color:#c9a3ff;font-weight:700;background:#1c1430;border-radius:9px;padding:9px 11px;margin-top:10px;
+  display:flex;justify-content:space-between;align-items:center}
+.combo .n{font-variant-numeric:tabular-nums;font-size:13px}
+
+/* candidate cards */
+.cand{background:#0f1722;border:1px solid #1c2a3a;border-radius:14px;padding:13px;margin-bottom:10px;position:relative;cursor:pointer;transition:.16s}
+.cand:active{transform:scale(.985)}
+.cand.best{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+.cand .rk{position:absolute;top:-9px;left:12px;font-size:9.5px;font-weight:800;padding:3px 9px;border-radius:10px}
+.cand .rk.b{background:var(--gold);color:#1a1205}.cand .rk.o{background:#222a38;color:#9aa4b6}
+.cand .nm{font-size:13.5px;font-weight:700;margin:4px 0 8px}
+.cand .ret{font-size:21px;font-weight:800;color:var(--up)}
+.cand .ret small{font-size:10px;color:var(--sub);font-weight:600;display:block}
+.cand .fchips{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.cand .fc{font-size:9px;background:#161c28;border:1px solid var(--line);border-radius:6px;padding:3px 7px;color:#aeb7c7;font-weight:600}
+.cand .row3{display:flex;gap:14px;margin-top:9px;font-size:9.5px;color:var(--sub)}
+.cand .row3 b{color:#dde3ee;display:block;font-size:12.5px;font-weight:700}
+
+/* result card */
+.resultcard{background:#0f1722;border:1px solid #1c2a3a;border-radius:15px;padding:14px;margin-bottom:10px}
+.bigret{font-size:32px;font-weight:800;color:var(--up);letter-spacing:-1px}
+.bigret small{font-size:13px;color:var(--sub);font-weight:600;display:block;margin-bottom:2px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}
+.kpi{background:#131925;border:1px solid var(--line);border-radius:11px;padding:9px 6px;text-align:center}
+.kpi .k{font-size:9.5px;color:var(--sub);font-weight:600}
+.kpi .v{font-size:15px;font-weight:800;margin-top:3px}
+
+/* live card */
+.livecard{background:linear-gradient(160deg,#13251c,#0f1722);border:1px solid #1e3d2b;border-radius:15px;padding:15px;margin-bottom:10px}
+.livecard .badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;color:var(--up);
+  background:#0f2417;padding:5px 10px;border-radius:12px;margin-bottom:11px}
+.livecard .badge .dot{width:8px;height:8px;border-radius:50%;background:var(--up);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(33,193,122,.6)}70%{box-shadow:0 0 0 9px rgba(33,193,122,0)}100%{box-shadow:0 0 0 0 rgba(33,193,122,0)}}
+.livecard .pnl{font-size:26px;font-weight:800;color:var(--up)}
+.livecard .meta2{display:flex;gap:16px;margin-top:10px;font-size:10.5px;color:var(--sub)}
+.livecard .meta2 b{color:#dde3ee;display:block;font-size:13px;font-weight:700;margin-top:2px}
+
+/* misc */
+.center{display:grid;place-items:center;height:100%;text-align:center;padding:30px}
+.center .big{font-size:46px;margin-bottom:14px}
+.center h2{font-size:19px;font-weight:800;margin-bottom:8px}
+.center p{font-size:12.5px;color:var(--sub);line-height:1.7;max-width:240px}
+.restart{position:absolute;top:16px;right:18px;font-size:10px;color:var(--sub);background:#161c28;
+  border:1px solid var(--line);padding:5px 10px;border-radius:14px;cursor:pointer;z-index:20}
+.restart:active{color:var(--ink)}
+.note-inline{font-size:10px;color:#5b6678;text-align:center;margin-top:10px;line-height:1.5}
+</style>
+</head>
+<body>
+<div class="phone-bezel">
+  <div class="screen">
+    <div class="restart" id="restart">↻ 처음부터</div>
+    <div class="statusbar"><span>9:41</span><span class="dots">5G&nbsp;&nbsp;▦&nbsp;&nbsp;100%</span></div>
+    <div class="appbar">
+      <span class="back" id="backBtn">‹</span>
+      <div class="h" id="appTitle">손쉬운 API 거래<small>AI 전략 도우미</small></div>
+      <span class="pp c" id="pathPill" style="display:none">공통</span>
+    </div>
+    <div class="flowdots" id="flowdots"></div>
+    <div class="body" id="body"></div>
+    <div class="foot" id="foot"></div>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   상태
+============================================================ */
+const S = {
+  path:null, exp:null, pref:null, risk:null, strategy:null,
+  intentBuy:[], intentSell:[], coin:null,
+  amount:1000000, target:3.0, stop:-10.0,
+  researchDone:false, candidate:null,
+  agreedTerms:false, agreedLive:false,
+};
+const history = [];
+
+const body = document.getElementById('body');
+const foot = document.getElementById('foot');
+const appTitle = document.getElementById('appTitle');
+const pathPill = document.getElementById('pathPill');
+const flowdots = document.getElementById('flowdots');
+const backBtn = document.getElementById('backBtn');
+
+/* ============================================================ 유틸 ============================================================ */
+function won(n){return n.toLocaleString('ko-KR');}
+const SVG_LINE = (pts,color)=>`<svg width="100%" height="100%" viewBox="0 0 90 34" preserveAspectRatio="none"><path d="${pts}" fill="none" stroke="${color}" stroke-width="2"/></svg>`;
+
+let timers = [];
+function clearTimers(){timers.forEach(t=>{clearTimeout(t);cancelAnimationFrame(t);});timers=[];}
+
+function stagger(scope, step=120){
+  const els = scope.querySelectorAll('[data-seq]');
+  els.forEach((el,i)=>{el.style.animationDelay=(i*step)+'ms';el.classList.add('reveal');});
+}
+function setDots(stage, idx, total, kind){
+  let html='';
+  for(let i=0;i<total;i++){
+    let cls=''; if(i===idx) cls = kind==='A'?'ona':kind==='B'?'onb':'on';
+    html+=`<i class="${cls}"></i>`;
+  }
+  flowdots.innerHTML=html;
+}
+function setPill(kind){
+  if(!kind){pathPill.style.display='none';return;}
+  pathPill.style.display='inline-block';
+  pathPill.className='pp '+(kind==='A'?'a':kind==='B'?'b':'c');
+  pathPill.textContent = kind==='A'?'경로 A · 간편':kind==='B'?'경로 B · 탐구':'공통';
+}
+function setTitle(main, sub){ appTitle.innerHTML = main + (sub?`<small>${sub}</small>`:''); }
+
+/* ============================================================ 네비게이션 ============================================================ */
+let current=null;
+function go(id, push=true){
+  clearTimers();
+  if(push && current) history.push(current);
+  current = id;
+  backBtn.style.visibility = history.length? 'visible':'hidden';
+  SCREENS[id]();
+  body.scrollTop=0;
+}
+function back(){
+  if(!history.length) return;
+  clearTimers();
+  current = history.pop();
+  backBtn.style.visibility = history.length? 'visible':'hidden';
+  SCREENS[current]();
+  body.scrollTop=0;
+}
+backBtn.onclick = back;
+document.getElementById('restart').onclick=()=>{
+  Object.assign(S,{path:null,exp:null,pref:null,risk:null,strategy:null,intentBuy:[],intentSell:[],coin:null,amount:1000000,target:3.0,stop:-10.0,researchDone:false,candidate:null,agreedTerms:false,agreedLive:false});
+  history.length=0; go('onboard',false);
+};
+
+/* ============================================================ 슬라이더 ============================================================ */
+function makeSlider(el, opts){
+  const fill=el.querySelector('.fill'), knob=el.querySelector('.knob');
+  let val=opts.value;
+  function setPct(){
+    const pct=(val-opts.min)/(opts.max-opts.min)*100;
+    fill.style.width=pct+'%'; knob.style.left=pct+'%';
+  }
+  setPct();
+  function fromX(clientX){
+    const r=el.getBoundingClientRect();
+    let p=(clientX-r.left)/r.width; p=Math.max(0,Math.min(1,p));
+    let raw=opts.min+p*(opts.max-opts.min);
+    val=Math.round(raw/opts.step)*opts.step;
+    val=Math.max(opts.min,Math.min(opts.max,val));
+    setPct(); opts.onChange(val);
+  }
+  let dragging=false;
+  const down=e=>{dragging=true;fromX((e.touches?e.touches[0]:e).clientX);e.preventDefault();};
+  const move=e=>{if(dragging)fromX((e.touches?e.touches[0]:e).clientX);};
+  const up=()=>{dragging=false;};
+  el.addEventListener('mousedown',down); el.addEventListener('touchstart',down,{passive:false});
+  window.addEventListener('mousemove',move); window.addEventListener('touchmove',move,{passive:false});
+  window.addEventListener('mouseup',up); window.addEventListener('touchend',up);
+}
+
+/* ============================================================ 화면 ============================================================ */
+const SCREENS = {};
+
+/* ---------- 00 온보딩 ---------- */
+SCREENS.onboard = ()=>{
+  setPill(null); setTitle('손쉬운 API 거래','AI 전략 도우미'); setDots(0,0,3,'C');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>안녕하세요 👋 복잡한 설정 없이 <b>대화만으로</b> 나만의 자동매매 전략을 만들어 드려요.</div>
+    <div class="msg bot" data-seq style="max-width:94%">시작 전, 어떤 방식이 편하실지 <b>몇 가지만</b> 여쭤볼게요. 두 가지 길이 있어요 — <b>추천을 받아 빠르게</b> 시작하거나, <b>AI에게 직접 연구를 맡기</b>거나요.</div>`;
+  stagger(body);
+  foot.innerHTML = `
+    <div class="chips">
+      <span class="chip" data-v="네, 좋아요">네, 좋아요</span>
+      <span class="chip" data-v="바로 둘러볼래요">바로 둘러볼래요</span>
+    </div>
+    <div class="tip">선택에 따라 자동으로 가장 맞는 흐름으로 안내해 드려요</div>`;
+  foot.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{c.classList.add('sel');timers.push(setTimeout(()=>go('q1'),180));});
+  backBtn.style.visibility = history.length?'visible':'hidden';
+};
+
+/* ---------- 01 지식·적극성 ---------- */
+SCREENS.q1 = ()=>{
+  setPill(null); setTitle('간단한 질문','1/2 · 경험 수준'); setDots(0,1,3,'C');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>자동매매나 퀀트 투자, 얼마나 익숙하세요?</div>
+    <div id="q1area"></div>`;
+  stagger(body);
+  foot.innerHTML = `
+    <div class="qlabel">경험 수준을 골라주세요</div>
+    <div class="chips" id="expChips">
+      <span class="chip" data-v="처음이에요 / 잘 몰라요">처음이에요 / 잘 몰라요</span>
+      <span class="chip" data-v="조금 해봤어요">조금 해봤어요</span>
+      <span class="chip" data-v="조건식·지표도 익숙해요">조건식·지표도 익숙해요</span>
+    </div>`;
+  foot.querySelectorAll('#expChips .chip').forEach(c=>c.onclick=()=>{
+    S.exp=c.dataset.v;
+    foot.querySelectorAll('#expChips .chip').forEach(x=>x.classList.remove('sel'));
+    c.classList.add('sel');
+    document.getElementById('q1area').innerHTML = `
+      <div class="msg me reveal">${S.exp}</div>
+      <div class="avatar reveal"><i>B</i><em>전략 도우미</em></div>
+      <div class="msg bot reveal" style="max-width:94%">좋아요! 그럼 전략은 어떻게 만드는 게 좋으세요?</div>`;
+    foot.innerHTML = `
+      <div class="qlabel">전략 생성 방식</div>
+      <div class="chips" id="prefChips">
+        <span class="chip" data-v="검증된 전략을 추천받고 싶어요">검증된 전략을 추천받고 싶어요</span>
+        <span class="chip" data-v="내 생각대로 직접 만들고 싶어요">내 생각대로 직접 만들고 싶어요</span>
+        <span class="chip" data-v="잘 모르겠어요, 알아서 추천">잘 모르겠어요, 알아서 추천</span>
+      </div>`;
+    foot.querySelectorAll('#prefChips .chip').forEach(p=>p.onclick=()=>{
+      S.pref=p.dataset.v; p.classList.add('sel');
+      timers.push(setTimeout(()=>go('branch'),200));
+    });
+    body.scrollTop=body.scrollHeight;
+  });
+};
+
+/* ---------- 02 분기 ---------- */
+function recommendPath(){
+  let score=0;
+  if(S.exp==='조건식·지표도 익숙해요') score+=2;
+  else if(S.exp==='조금 해봤어요') score+=1;
+  if(S.pref==='내 생각대로 직접 만들고 싶어요') score+=2;
+  else if(S.pref==='검증된 전략을 추천받고 싶어요') score-=1;
+  return score>=3 ? 'B' : 'A';
+}
+SCREENS.branch = ()=>{
+  setPill(null); setTitle('맞춤 경로 안내','2가지 방식'); setDots(0,2,3,'C');
+  const rec = recommendPath();
+  const recMsg = rec==='A'
+    ? `말씀 주신 내용을 보니, <b>추천 전략으로 빠르게 시작</b>하는 방식이 잘 맞을 것 같아요. 물론 직접 만드는 길도 열려 있어요 👇`
+    : `조건식에 익숙하고 직접 만들고 싶어 하시니, <b>AI 자율 리서치</b>가 잘 맞을 것 같아요. 간편한 추천 경로도 가능해요 👇`;
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq style="max-width:94%">${recMsg}</div>
+    <div class="routecard a ${rec==='B'?'dim':''}" id="routeA" data-seq>
+      <div class="rt">🎯 추천 전략으로 시작 ${rec==='A'?'<span class="badge2">추천 · A</span>':'<span class="badge2">A</span>'}</div>
+      <div class="rd"><b>검증된 7종 전략</b> 중 성향에 맞는 걸 추천받아 몇 번의 탭으로 바로 시작. 가장 간편해요.</div>
+    </div>
+    <div class="routecard b ${rec==='A'?'dim':''}" id="routeB" data-seq>
+      <div class="rt">🤖 AI에게 연구 맡기기 ${rec==='B'?'<span class="badge2">추천 · B</span>':'<span class="badge2">B</span>'}</div>
+      <div class="rd"><b>"이렇게 사고팔고 싶다"</b>는 의도만 고르면, AI가 수많은 조합을 직접 연구해 최적 전략을 찾아줘요. 시간이 더 걸려요(60분+).</div>
+    </div>
+    <div class="tip" data-seq>고민되면 추천(A)으로 시작해도, 나중에 AI 리서치(B)로 언제든 전환할 수 있어요</div>`;
+  stagger(body);
+  foot.innerHTML='';
+  document.getElementById('routeA').onclick=()=>{S.path='A';go('a1');};
+  document.getElementById('routeB').onclick=()=>{S.path='B';go('b1');};
+};
+
+/* ============================================================ 경로 A ============================================================ */
+const STRATS = [
+  {n:'🐂 야수의 심장', r:'hi', rl:'공격형', d:'비트코인이 강하게 상승하다 조정받을 때 매수, 1봉(15분) 후 매도. 상승 추세 속 단기 눌림을 노려요.', a:'역추세 · 단기 · BTC 추세 추종'},
+  {n:'⚡ 틱띠기', r:'lo', rl:'초단타', d:'변동성 낮은 코인을 매수해 목표가 +1% 도달 시 매도. 작은 수익을 여러 번 쌓는 전략.', a:'스캘핑 · 초단타'},
+  {n:'🚀 상승추세 올라타기', r:'mid', rl:'중립형', d:'BTC 상승 시 추세 강한 코인 매수, -5% 또는 1봉 후 매도. 대장주 따라 오르는 코인 포착.', a:'추세 추종 · 단기'},
+];
+SCREENS.a1 = ()=>{
+  setPill('A'); setTitle('전략 추천','성향 기반'); setDots('A',0,3,'A');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>마지막으로 하나만요! 손실 위험은 있어도 수익을 노리는 편인가요?</div>
+    <div id="a1area"></div>`;
+  stagger(body);
+  foot.innerHTML = `
+    <div class="chips" id="riskChips">
+      <span class="chip" data-v="안정적으로">안정적으로</span>
+      <span class="chip" data-v="균형">균형</span>
+      <span class="chip" data-v="위험 감수, 높은 수익">위험 감수, 높은 수익</span>
+    </div>`;
+  foot.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{
+    S.risk=c.dataset.v; c.classList.add('sel');
+    foot.innerHTML='';
+    const cards = STRATS.map((s,i)=>`
+      <div class="stratcard ${i===0?'sel':''}" data-i="${i}">
+        <div class="top"><span class="nm">${s.n}</span><span class="risk ${s.r}">${s.rl}</span></div>
+        <div class="desc">${s.d}</div>
+        <div class="alg">${s.a}</div>
+      </div>`).join('');
+    document.getElementById('a1area').innerHTML = `
+      <div class="msg me reveal">${S.risk}</div>
+      <div class="avatar reveal"><i>B</i><em>전략 도우미</em></div>
+      <div class="msg bot reveal" style="max-width:92%">잘 맞을 만한 전략 <b>3가지</b>를 골라봤어요. 탭해서 골라주세요 👇</div>
+      ${cards}
+      <div class="tip reveal">전체 7종 전략 다시 보기 →</div>`;
+    document.querySelectorAll('#a1area .stratcard').forEach(card=>card.onclick=()=>{
+      S.strategy=STRATS[+card.dataset.i]; go('a2');
+    });
+    body.scrollTop=body.scrollHeight;
+  });
+};
+SCREENS.a2 = ()=>{
+  setPill('A'); setTitle(S.strategy.n.replace(/^\S+\s/,''),'전략 상세'); setDots('A',1,3,'A');
+  body.innerHTML = `
+    <div class="msg me" data-seq>${S.strategy.n} 자세히 알려줘</div>
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq style="max-width:92%"><b>${S.strategy.n}</b>은 이렇게 동작해요.</div>
+    <div class="pgroup" data-seq>
+      <div class="lab" style="color:#ffd166">📈 매수 조건</div>
+      <div style="font-size:11.5px;color:#cfd6e3;line-height:1.7">· BTC가 강한 상승 후 단기 조정(눌림)을 보일 때<br>· 추세 강도(ADX)가 기준 이상인 코인 선별</div>
+    </div>
+    <div class="pgroup" data-seq>
+      <div class="lab" style="color:#ff8a8d">📉 매도 조건</div>
+      <div style="font-size:11.5px;color:#cfd6e3;line-height:1.7">· 매수 후 1봉(15분) 경과 시 시장가 매도<br>· 목표가 / 손절가 도달 시 즉시 청산</div>
+    </div>
+    <div class="msg bot" data-seq>큰 흐름의 상승 가능성을 보고 들어가는 전략이라, 변동성이 큰 편이에요. 진행해 볼까요?</div>`;
+  stagger(body);
+  foot.innerHTML = `
+    <div class="chips">
+      <span class="chip" id="pick">이 전략으로 할게요</span>
+      <span class="chip" id="other">다른 전략 볼래요</span>
+      <span class="chip selb" id="toB">조건 직접 수정 → AI 리서치(B)</span>
+    </div>`;
+  document.getElementById('pick').onclick=()=>go('a3');
+  document.getElementById('other').onclick=()=>back();
+  document.getElementById('toB').onclick=()=>{S.path='B';go('b1');};
+};
+SCREENS.a3 = ()=>{
+  setPill('A'); setTitle('전략 설정',S.strategy.n.replace(/^\S+\s/,'')); setDots('A',2,3,'A');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>시뮬레이션에 쓸 금액을 알려주세요. <b>실제 원화는 사용되지 않아요.</b></div>
+    <div class="pgroup" data-seq>
+      <div class="amount" id="amt">${won(S.amount)}<small> 원</small></div>
+      <div class="amthint">최소 운용자금 100,000원 이상</div>
+      <div class="keypad" id="keypad">
+        ${'123456789'.split('').map(k=>`<b data-k="${k}">${k}</b>`).join('')}
+        <b data-k="00">00</b><b data-k="0">0</b><b data-k="del">⌫</b>
+      </div>
+    </div>
+    <div class="msg bot" data-seq>목표 수익률과 손절선도 살짝 조정할 수 있어요.</div>
+    <div class="pgroup" data-seq>
+      <div class="lab">목표 수익률 <span class="val" id="tv">+${S.target.toFixed(1)}%</span></div>
+      <div class="track" id="trackT"><div class="fill"></div><div class="knob"></div></div>
+    </div>
+    <div class="pgroup" data-seq>
+      <div class="lab">손절 라인 <span class="val" id="sv" style="color:#ff8a8d">${S.stop.toFixed(1)}%</span></div>
+      <div class="track" id="trackS"><div class="fill" style="background:#ff5a5f"></div><div class="knob"></div></div>
+    </div>`;
+  stagger(body);
+  let amtStr=String(S.amount);
+  const amtEl=document.getElementById('amt');
+  document.querySelectorAll('#keypad b').forEach(k=>k.onclick=()=>{
+    const key=k.dataset.k;
+    if(key==='del') amtStr=amtStr.slice(0,-1)||'0';
+    else if(key==='00') amtStr=(amtStr==='0'?'0':amtStr)+'00';
+    else amtStr=(amtStr==='0'?'':amtStr)+key;
+    if(amtStr.length>10) amtStr=amtStr.slice(0,10);
+    S.amount=parseInt(amtStr||'0',10);
+    amtEl.innerHTML=won(S.amount)+'<small> 원</small>';
+  });
+  makeSlider(document.getElementById('trackT'),{min:1,max:10,step:0.5,value:S.target,onChange:v=>{S.target=v;document.getElementById('tv').textContent='+'+v.toFixed(1)+'%';}});
+  makeSlider(document.getElementById('trackS'),{min:-20,max:-3,step:0.5,value:S.stop,onChange:v=>{S.stop=v;document.getElementById('sv').textContent=v.toFixed(1)+'%';}});
+  foot.innerHTML=`<button class="cta" id="next">이대로 검증 단계로 →</button>`;
+  document.getElementById('next').onclick=()=>go('c1');
+};
+
+/* ============================================================ 경로 B ============================================================ */
+SCREENS.b1 = ()=>{
+  setPill('B'); setTitle('매매 의도 파악','1/3 · 무엇을 매매할까요'); setDots('B',0,5,'B');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq style="max-width:94%">어려운 함수나 숫자를 직접 정하실 필요 없어요. <b>"이런 코인을, 이렇게 사고팔고 싶다"</b>는 생각만 알려주시면 AI가 연구해 드려요.</div>
+    <div class="msg bot" data-seq>어떤 코인을 주로 사고 싶으세요?</div>
+    <div class="chips" data-seq id="coinChips">
+      <span class="chip" data-v="거래가 활발한 인기 코인">거래가 활발한 인기 코인</span>
+      <span class="chip" data-v="최근 급등한 코인">최근 급등한 코인</span>
+      <span class="chip" data-v="변동성 낮고 안정적인 코인">변동성 낮고 안정적인 코인</span>
+      <span class="chip" data-v="아무거나 (AI가 판단)">아무거나 (AI가 판단)</span>
+    </div>
+    <div class="msg bot" data-seq>언제 <b>매수</b>하는 게 좋을까요? <span style="color:var(--sub);font-size:11px">(여러 개 선택 가능)</span></div>
+    <div class="chips" data-seq id="buyChips">
+      <span class="chip" data-v="거래대금이 상위권일 때">거래대금이 상위권일 때</span>
+      <span class="chip" data-v="단기 상승 추세일 때">단기 상승 추세일 때</span>
+      <span class="chip" data-v="과매도(저점) 구간일 때">과매도(저점) 구간일 때</span>
+      <span class="chip" data-v="이평선 골든크로스">이평선 골든크로스</span>
+    </div>
+    <div class="msg bot" data-seq>언제 <b>매도</b>할까요? <span style="color:var(--sub);font-size:11px">(여러 개 선택 가능)</span></div>
+    <div class="chips" data-seq id="sellChips">
+      <span class="chip" data-v="목표 수익 도달 시">목표 수익 도달 시</span>
+      <span class="chip" data-v="손절선 이탈 시">손절선 이탈 시</span>
+      <span class="chip" data-v="일정 시간 경과 시">일정 시간 경과 시</span>
+    </div>`;
+  stagger(body,90);
+  body.querySelectorAll('#coinChips .chip').forEach(c=>c.onclick=()=>{
+    body.querySelectorAll('#coinChips .chip').forEach(x=>x.classList.remove('selb'));
+    c.classList.add('selb'); S.coin=c.dataset.v; updateNext();
+  });
+  function multi(sel, arr){
+    body.querySelectorAll(sel+' .chip').forEach(c=>c.onclick=()=>{
+      c.classList.toggle('selb');
+      const v=c.dataset.v; const i=arr.indexOf(v);
+      if(i>=0) arr.splice(i,1); else arr.push(v);
+      updateNext();
+    });
+  }
+  S.intentBuy=[]; S.intentSell=[];
+  multi('#buyChips',S.intentBuy); multi('#sellChips',S.intentSell);
+  foot.innerHTML=`<button class="cta purp dim" id="next">코인 · 매수 · 매도를 골라주세요</button>`;
+  function updateNext(){
+    const ok = S.coin && S.intentBuy.length && S.intentSell.length;
+    const btn=document.getElementById('next');
+    btn.classList.toggle('dim',!ok);
+    btn.textContent = ok? '범위 제안 받기 →':'코인 · 매수 · 매도를 골라주세요';
+    if(ok) btn.onclick=()=>go('b2');
+  }
+};
+SCREENS.b2 = ()=>{
+  setPill('B'); setTitle('탐색 범위 설정','2/3 · 범위는 AI가 제안'); setDots('B',1,5,'B');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq style="max-width:94%">고른 의도를 바탕으로 <b>탐색할 범위</b>를 제안해 드릴게요. 그대로 두셔도 되고, 좁히거나 넓혀도 돼요.</div>
+    <div class="builder" data-seq>
+      <div class="lab">📊 거래대금 상위 기준 (매수 필터)</div>
+      <div class="range-row"><span class="mn">상위5%</span>
+        <div class="track" id="t1" style="flex:1"><div class="fill" style="width:55%"></div><div class="knob" style="left:55%"></div></div>
+        <span class="mx">상위40%</span></div>
+      <div class="rangehint">AI 매핑: <b id="h1">비율내림차순(거래대금) ≥ 60 ~ 95</b> 구간을 탐색</div>
+    </div>
+    <div class="builder" data-seq>
+      <div class="lab">🎯 목표 수익률 (매도)</div>
+      <div class="range-row"><span class="mn">+1%</span>
+        <div class="track" id="t2" style="flex:1"><div class="fill" style="width:50%"></div><div class="knob" style="left:50%"></div></div>
+        <span class="mx">+10%</span></div>
+      <div class="rangehint" id="h2">+1% ~ +5.5% 사이를 0.5% 단위로 탐색</div>
+    </div>
+    <div class="builder" data-seq>
+      <div class="lab">🛑 손절선 (매도)</div>
+      <div class="range-row"><span class="mn">-3%</span>
+        <div class="track" id="t3" style="flex:1"><div class="fill" style="width:50%;background:#ff5a5f"></div><div class="knob" style="left:50%"></div></div>
+        <span class="mx">-20%</span></div>
+      <div class="rangehint" id="h3" style="color:#ff8a8d;background:#2a1416">-5% ~ -13% 사이 탐색</div>
+    </div>`;
+  stagger(body);
+  makeSlider(document.getElementById('t1'),{min:40,max:95,step:5,value:78,onChange:v=>{document.getElementById('h1').textContent=`비율내림차순(거래대금) ≥ ${v} ~ 95`;}});
+  makeSlider(document.getElementById('t2'),{min:1,max:10,step:0.5,value:5.5,onChange:v=>{document.getElementById('h2').textContent=`+1% ~ +${v.toFixed(1)}% 사이를 0.5% 단위로 탐색`;}});
+  makeSlider(document.getElementById('t3'),{min:-20,max:-3,step:1,value:-13,onChange:v=>{document.getElementById('h3').textContent=`-5% ~ ${v}% 사이 탐색`;}});
+  foot.innerHTML=`<button class="cta purp" id="next">이 범위로 다음 단계 →</button>`;
+  document.getElementById('next').onclick=()=>go('b3');
+};
+SCREENS.b3 = ()=>{
+  setPill('B'); setTitle('리서치 준비','탐색 공간 요약'); setDots('B',2,5,'B');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>입력하신 의도를 이렇게 정리했어요. 이 범위 안에서 조합을 탐색합니다 👇</div>
+    <div class="research" data-seq style="background:linear-gradient(160deg,#13251c,#0f1722);border-color:#1e3d2b">
+      <span class="badge" style="color:#5fe0a0;background:#0f2417"><span class="dot" style="background:#5fe0a0;animation:none"></span>탐색 공간 확정</span>
+      <div class="formula">
+        <span class="tok fn">비율내림차순</span><span class="tok var">(거래대금)</span><span class="tok op">≥</span><span class="tok num">60~95</span>
+        <span class="tok op">AND</span><span class="tok fn">변화율_기간</span><span class="tok var">(5봉)</span><span class="tok op">&gt;</span><span class="tok num">0</span>
+      </div>
+      <div class="combo"><span class="n">매수 조건 조합</span><span class="n">~ 1,240</span></div>
+      <div class="combo" style="margin-top:6px"><span class="n">매도(목표·손절) 조합</span><span class="n">~ 180</span></div>
+      <div class="combo" style="margin-top:6px;background:#1c2430;color:#ffcf66"><span class="n">총 탐색 조합</span><span class="n">≈ 223,200</span></div>
+    </div>
+    <div class="msg bot" data-seq style="max-width:92%">정밀하게 볼수록 시간이 더 걸려요. 어떻게 할까요?</div>
+    <div class="chips" data-seq id="spd">
+      <span class="chip" data-v="빠르게 (약 15분)">빠르게 (약 15분)</span>
+      <span class="chip selb" data-v="균형 (약 60분)">균형 (약 60분)</span>
+      <span class="chip" data-v="정밀 (약 3시간)">정밀 (약 3시간)</span>
+    </div>`;
+  stagger(body);
+  body.querySelectorAll('#spd .chip').forEach(c=>c.onclick=()=>{
+    body.querySelectorAll('#spd .chip').forEach(x=>x.classList.remove('selb'));
+    c.classList.add('selb');
+  });
+  foot.innerHTML=`<button class="cta purp" id="next">약관 동의하고 리서치 →</button>`;
+  document.getElementById('next').onclick=()=>{S.agreedTerms=true;go('b4');};
+};
+SCREENS.b4 = ()=>{
+  setPill('B'); setTitle('AI 리서치 중','약 60분 · 백그라운드'); setDots('B',3,5,'B');
+  const TOTAL=223200;
+  body.innerHTML = `
+    <div class="research">
+      <span class="badge"><span class="dot"></span>AI가 전략을 연구하고 있어요</span>
+      <div class="ringwrap">
+        <svg width="120" height="120" viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="50" fill="none" stroke="#2a2440" stroke-width="9"/>
+          <circle id="ring" cx="60" cy="60" r="50" fill="none" stroke="#a06bff" stroke-width="9"
+            stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"/>
+          <text id="ringpct" class="ringtxt" x="60" y="68" text-anchor="middle">0%</text>
+        </svg>
+      </div>
+      <h4 id="evalcnt">0 / ${won(TOTAL)} 조합 평가 중</h4>
+      <div class="sub2" id="eta">예상 잔여 약 60분 · 화면을 닫아도 계속 진행돼요</div>
+      <div class="steps" id="steps">
+        <div class="stp"><span class="ic wait">1</span><span class="tx">매수 후보 종목군 선별<b>거래대금 상위 코인 필터링</b></span></div>
+        <div class="stp"><span class="ic wait">2</span><span class="tx">조건식 조합 생성<b>매수 조합 구성</b></span></div>
+        <div class="stp"><span class="ic wait">3</span><span class="tx">파라미터 조합 백테스트<b>목표/손절 × 기간 평가</b></span></div>
+        <div class="stp waitc"><span class="ic wait">4</span><span class="tx">과최적화 검증 (워크포워드)<b>대기 중</b></span></div>
+        <div class="stp waitc"><span class="ic wait">5</span><span class="tx">의도 적합도 순위화<b>대기 중</b></span></div>
+      </div>
+      <div class="combo" style="margin-top:12px"><span class="n">현재 1위 후보 수익률</span><span class="n" id="bestret" style="color:#5fe0a0">—</span></div>
+    </div>
+    <div class="avatar"><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot">끝나면 알림으로 알려드릴게요. 다른 일 보셔도 돼요 ☕<br><span style="font-size:11px;color:var(--sub)">(프로토타입에서는 빠르게 시뮬레이션됩니다)</span></div>`;
+  foot.innerHTML=`<button class="cta purp" id="next">🔔 진행 상황 알림 받기 (지금 결과 보기)</button>`;
+  document.getElementById('next').onclick=()=>go('b5');
+
+  const ring=document.getElementById('ring'), ringpct=document.getElementById('ringpct');
+  const evalcnt=document.getElementById('evalcnt'), eta=document.getElementById('eta');
+  const bestret=document.getElementById('bestret');
+  const ics=document.querySelectorAll('#steps .ic');
+  const stps=document.querySelectorAll('#steps .stp');
+  const DUR=7000; const start=performance.now();
+  const stepThresh=[0.05,0.22,0.78,0.92,1.0];
+  function frame(now){
+    let p=Math.min(1,(now-start)/DUR);
+    const ease=1-Math.pow(1-p,2);
+    ring.style.strokeDashoffset=String(314*(1-ease));
+    ringpct.textContent=Math.round(ease*100)+'%';
+    evalcnt.textContent=won(Math.round(ease*TOTAL))+' / '+won(TOTAL)+' 조합 평가 중';
+    eta.textContent='예상 잔여 약 '+Math.max(0,Math.round((1-ease)*60))+'분 · 화면을 닫아도 계속 진행돼요';
+    if(ease>0.08){bestret.textContent='+'+(21.3*Math.min(1,(ease-0.08)/0.7)).toFixed(1)+'%';}
+    ics.forEach((ic,i)=>{
+      if(p>=stepThresh[i]){ic.className='ic done';ic.textContent='✓';stps[i].classList.remove('waitc');
+        const b=stps[i].querySelector('b'); if(b&&b.textContent==='대기 중') b.textContent='완료';}
+      else if(i===0||p>=(stepThresh[i-1]||0)){if(!ic.classList.contains('done')){ic.className='ic now';ic.textContent='●';stps[i].classList.remove('waitc');}}
+    });
+    if(p<1){timers.push(requestAnimationFrame(frame));}
+    else finish();
+  }
+  function finish(){
+    S.researchDone=true;
+    eta.textContent='리서치 완료! 결과를 확인하세요 🎉';
+    const btn=document.getElementById('next');
+    btn.className='cta purp'; btn.textContent='결과 보기 →';
+    btn.onclick=()=>go('b5');
+    // 알림 뱃지 잠깐 표시
+    const banner=document.createElement('div');
+    banner.style.cssText='position:absolute;top:56px;left:50%;transform:translateX(-50%);background:#a06bff;color:#160d24;padding:7px 14px;border-radius:20px;font-size:11.5px;font-weight:800;box-shadow:0 6px 20px rgba(160,107,255,.35);z-index:30;animation:pop .35s cubic-bezier(.2,.7,.3,1)';
+    banner.textContent='🔔 리서치 완료! 결과를 확인하세요';
+    document.querySelector('.screen').appendChild(banner);
+    timers.push(setTimeout(()=>banner.remove(),2600));
+  }
+  timers.push(requestAnimationFrame(frame));
+};
+SCREENS.b5 = ()=>{
+  setPill('B'); setTitle('리서치 완료','추천 후보 3종'); setDots('B',4,5,'B');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>연구 끝났어요! 🎉 의도에 가장 잘 맞는 전략 <b>3가지</b>를 추렸어요.</div>
+    <div class="cand best" data-seq data-c="best">
+      <span class="rk b">★ AI 최적 추천</span>
+      <div class="nm">활발한 인기코인 · 단기추세 추종형</div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end">
+        <div class="ret"><small>누적 수익률</small>+19.8%</div>
+        <div style="width:90px;height:34px">${SVG_LINE('M0,28 L18,24 L36,26 L54,16 L72,12 L90,5','#21c17a')}</div>
+      </div>
+      <div class="row3"><div>승률<b style="color:#21c17a">64%</b></div><div>MDD<b style="color:#ff8a8d">-6.4%</b></div><div>과최적화<b>낮음</b></div></div>
+      <div class="fchips"><span class="fc">거래대금 상위25%</span><span class="fc">5봉 변화율&gt;0</span><span class="fc">목표 +3.5%</span><span class="fc">손절 -8%</span></div>
+    </div>
+    <div class="cand" data-seq data-c="high">
+      <span class="rk o">2위 · 고수익형</span>
+      <div class="nm">급등 모멘텀 추종형</div>
+      <div class="ret"><small>누적 수익률</small>+26.1%</div>
+      <div class="row3"><div>승률<b>57%</b></div><div>MDD<b style="color:#ff8a8d">-14.2%</b></div><div>과최적화<b style="color:#ffd166">보통</b></div></div>
+    </div>
+    <div class="cand" data-seq data-c="safe">
+      <span class="rk o">3위 · 안정형</span>
+      <div class="nm">박스권 안정 매매형</div>
+      <div class="ret"><small>누적 수익률</small>+11.2%</div>
+      <div class="row3"><div>승률<b style="color:#21c17a">71%</b></div><div>MDD<b>-3.8%</b></div><div>과최적화<b>낮음</b></div></div>
+    </div>
+    <div class="tip" data-seq>카드를 탭하면 실제 적용될 조건식까지 볼 수 있어요</div>`;
+  stagger(body);
+  body.querySelectorAll('.cand').forEach(c=>c.onclick=()=>{S.candidate=c.dataset.c;go('b6');});
+  foot.innerHTML='';
+};
+SCREENS.b6 = ()=>{
+  setPill('B'); setTitle('최적 추천 상세','단기추세 추종형'); setDots('B',4,5,'B');
+  body.innerHTML = `
+    <div class="msg me" data-seq>1위 전략 자세히 보여줘</div>
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>AI가 찾은 최적 조합이에요. 실제 적용될 조건식까지 그대로 보여드릴게요.</div>
+    <div class="builder" data-seq>
+      <div class="lab" style="color:#ffd166">📈 매수 조건 (A and B)</div>
+      <div class="formula"><span class="tok fn">비율내림차순</span><span class="tok var">(거래대금)</span><span class="tok op">≥</span><span class="tok num">75</span></div>
+      <div class="formula" style="margin-top:6px"><span class="tok fn">변화율_기간</span><span class="tok var">(5봉)</span><span class="tok op">&gt;</span><span class="tok num">0</span></div>
+      <div class="rangehint">거래대금 상위 25% 이내이면서, 최근 5봉간 상승 중인 코인을 매수</div>
+    </div>
+    <div class="builder" data-seq>
+      <div class="lab" style="color:#ff8a8d">📉 매도 조건</div>
+      <div class="formula"><span class="tok op">목표가</span><span class="tok num">+3.5%</span><span class="tok op">·</span><span class="tok op">손절가</span><span class="tok num">-8%</span><span class="tok op">·</span><span class="tok op">만기</span><span class="tok num">12봉</span></div>
+    </div>
+    <div class="msg bot" data-seq>이 전략으로 진행할까요?</div>`;
+  stagger(body);
+  S.target=3.5; S.stop=-8.0;
+  foot.innerHTML=`
+    <div class="chips">
+      <span class="chip selb" id="confirm">이걸로 확정</span>
+      <span class="chip" id="retune">조건 조금 수정</span>
+      <span class="chip" id="reresearch">범위 바꿔 재리서치</span>
+    </div>`;
+  document.getElementById('confirm').onclick=()=>go('c1');
+  document.getElementById('retune').onclick=()=>go('c1');
+  document.getElementById('reresearch').onclick=()=>go('b1');
+};
+
+/* ============================================================ 공통 C ============================================================ */
+SCREENS.c1 = ()=>{
+  setPill('C'); setTitle('이용약관 동의','검증 시작 전'); setDots('C',0,4,'C');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>검증을 시작하기 전에, 서비스 이용약관 동의가 필요해요. 잠깐만 확인 부탁드려요 🙏</div>
+    <div class="agree" data-seq>
+      <div class="hd">서비스 이용약관 동의</div>
+      <div class="row" data-r="r1"><span class="ck off">✓</span> (필수) 손쉬운 API 거래 서비스 이용약관</div>
+      <div class="row" data-r="r2"><span class="ck off">✓</span> (필수) 데이터 활용·성과분석 동의</div>
+      <div class="row" data-r="r3"><span class="ck off">✓</span> (선택) 마케팅 정보 수신 동의</div>
+      <div class="small">※ 이 단계에서는 <b>API Key 발급이나 실제 거래가 일어나지 않습니다.</b> 시뮬레이션(백테스트)만 진행됩니다.</div>
+    </div>
+    <div class="msg bot" data-seq>실전 매매 연동을 위한 별도 동의(API Key·거래위임)는 나중에 실전 연동을 결정하실 때 받을게요.</div>`;
+  stagger(body);
+  const req={r1:false,r2:false};
+  body.querySelectorAll('.row').forEach(r=>r.onclick=()=>{
+    const ck=r.querySelector('.ck'); const on=ck.classList.toggle('off')===false;
+    if(r.dataset.r!=='r3') req[r.dataset.r]=on;
+    const ok=req.r1&&req.r2; document.getElementById('next').classList.toggle('dim',!ok); S.agreedTerms=ok;
+  });
+  foot.innerHTML=`<button class="cta dim" id="next">동의하고 계속</button>`;
+  document.getElementById('next').onclick=()=>{
+    if(!S.agreedTerms) return;
+    go('c2');
+  };
+};
+SCREENS.c2 = ()=>{
+  setPill('C'); setTitle('시뮬레이션 결과','선택한 전략'); setDots('C',1,4,'C');
+  const nm = S.path==='A' ? (S.strategy?S.strategy.n:'추천 전략') : '활발한 인기코인 · 단기추세 추종형';
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>검증 완료! 이 기간 동안 <b>${nm}</b> 전략 성과는 이랬어요 📊</div>
+    <div class="resultcard" data-seq>
+      <div class="bigret"><small>누적 수익률</small><span id="bigret">+0.00%</span></div>
+      <svg width="100%" height="62" viewBox="0 0 240 62" preserveAspectRatio="none" style="margin:8px 0">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#21c17a" stop-opacity=".35"/><stop offset="1" stop-color="#21c17a" stop-opacity="0"/>
+        </linearGradient></defs>
+        <path d="M0,50 L30,46 L60,48 L90,38 L120,40 L150,28 L180,30 L210,16 L240,10 L240,62 L0,62 Z" fill="url(#g)"/>
+        <path d="M0,50 L30,46 L60,48 L90,38 L120,40 L150,28 L180,30 L210,16 L240,10" fill="none" stroke="#21c17a" stroke-width="2"/>
+      </svg>
+      <div class="kpis">
+        <div class="kpi"><div class="k">승률</div><div class="v" style="color:#21c17a">62%</div></div>
+        <div class="kpi"><div class="k">최대낙폭(MDD)</div><div class="v" style="color:#ff8a8d">-7.1%</div></div>
+        <div class="kpi"><div class="k">매매횟수</div><div class="v">214</div></div>
+      </div>
+    </div>
+    <div class="msg bot" data-seq style="max-width:92%">상승장에서 꾸준히 수익을 낸 전략이에요. 낙폭도 −7% 수준으로 안정적이었어요. 실제로 운영해 볼까요?</div>`;
+  stagger(body);
+  const el=document.getElementById('bigret'); const target=18.42; const t0=performance.now();
+  function up(now){let p=Math.min(1,(now-t0)/900);el.textContent='+'+(target*(1-Math.pow(1-p,2))).toFixed(2)+'%';if(p<1)timers.push(requestAnimationFrame(up));}
+  timers.push(requestAnimationFrame(up));
+  foot.innerHTML=`
+    <div class="chips">
+      <span class="chip" id="live">실전으로 시작하기</span>
+      <span class="chip" id="period">다른 기간도 검증</span>
+      <span class="chip" id="re">파라미터 조정</span>
+    </div>`;
+  document.getElementById('live').onclick=()=>{document.getElementById('live').classList.add('sel');timers.push(setTimeout(()=>go('c3'),160));};
+  document.getElementById('period').onclick=()=>go('c2');
+  // 파라미터 조정 → PPT 11번 화면(매매 의도 파악·b1)으로 이동, 이후 12~16(b2~b6)로 순서대로 이어짐
+  document.getElementById('re').onclick=()=>go('b1');
+};
+SCREENS.c3 = ()=>{
+  setPill('C'); setTitle('실전 연동 확인','선택한 전략'); setDots('C',2,4,'C');
+  body.innerHTML = `
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>실제 매매를 시작하기 전 <b>마지막 확인</b>이에요. 아래 동의 후 연동돼요. API Key는 자동 발급·관리되니 입력하실 건 없어요.</div>
+    <div class="agree" data-seq>
+      <div class="hd">실전 연동 필수 동의 <span style="color:var(--sub);font-weight:500;font-size:10px">(서비스 약관과 별도)</span></div>
+      <div class="row" data-r="r1"><span class="ck off">✓</span> API Key 생성 및 자동 등록 동의</div>
+      <div class="row" data-r="r2"><span class="ck off">✓</span> 알고리즘 매매 거래 권한 위임 동의</div>
+      <div class="small">· 유효기간 1년 (매년 오전 9시 만료) · 발급 Key는 암호화 저장되어 화면에 노출되지 않습니다.<br>· 실전 연동 전략은 1개만 운영 가능합니다.</div>
+    </div>
+    <div class="pgroup" data-seq>
+      <div class="lab">실전 운용자금 <span class="val">${won(S.amount)}원</span></div>
+      <div style="font-size:10.5px;color:var(--sub)">최소 100,000원 · 원화마켓</div>
+    </div>`;
+  stagger(body);
+  const req={r1:false,r2:false};
+  body.querySelectorAll('.row').forEach(r=>r.onclick=()=>{
+    const ck=r.querySelector('.ck'); const on=ck.classList.toggle('off')===false;
+    req[r.dataset.r]=on;
+    const ok=req.r1&&req.r2; document.getElementById('next').classList.toggle('dim',!ok); S.agreedLive=ok;
+  });
+  foot.innerHTML=`<button class="cta dim" id="next">동의하고 실전 연동 시작</button>`;
+  document.getElementById('next').onclick=()=>{if(S.agreedLive)go('connecting');};
+};
+SCREENS.connecting = ()=>{
+  setPill('C'); setTitle('실전 연동 중',''); setDots('C',2,4,'C');
+  body.innerHTML=`
+    <div class="center">
+      <div>
+        <div class="big">🔐</div>
+        <h2>실전 연동 중…</h2>
+        <p>API Key 자동 발급 및 거래 권한을 안전하게 등록하고 있어요.</p>
+        <div style="margin-top:18px"><svg width="120" height="6"><rect width="120" height="6" rx="3" fill="#222a38"/><rect id="pb" width="0" height="6" rx="3" fill="#f7a600"/></svg></div>
+      </div>
+    </div>`;
+  foot.innerHTML='';
+  const pb=document.getElementById('pb'); const t0=performance.now();
+  function up(now){let p=Math.min(1,(now-t0)/1600);pb.setAttribute('width',String(120*p));if(p<1)timers.push(requestAnimationFrame(up));else timers.push(setTimeout(()=>go('c4',false),300));}
+  timers.push(requestAnimationFrame(up));
+};
+SCREENS.c4 = ()=>{
+  setPill('C'); setTitle('나의 전략 현황','운영중'); setDots('C',3,4,'C');
+  body.innerHTML = `
+    <div class="livecard" data-seq>
+      <span class="badge"><span class="dot"></span>실전 연동 중</span>
+      <div style="font-size:10.5px;color:var(--sub)">평가 손익</div>
+      <div class="pnl" id="pnl">+0원 <span style="font-size:13px">(+0.0%)</span></div>
+      <div class="meta2">
+        <div>운용자금<b>${won(S.amount)}원</b></div>
+        <div>오늘 체결<b>8건</b></div>
+        <div>연동일<b>D+3</b></div>
+      </div>
+    </div>
+    <div class="avatar" data-seq><i>B</i><em>전략 도우미</em></div>
+    <div class="msg bot" data-seq>잘 돌아가고 있어요 ✅ 방금 ETH를 +1.8%에 익절했어요.</div>
+    <div class="msg me" data-seq>지금 보유 코인 뭐야?</div>
+    <div class="msg bot" data-seq style="max-width:90%">현재 <b>XRP · SOL</b> 2종 보유 중이에요. 평균 보유 시간은 약 22분이에요.</div>`;
+  stagger(body);
+  const base=Math.round(S.amount*0.042); const pnl=document.getElementById('pnl'); const t0=performance.now();
+  function up(now){let p=Math.min(1,(now-t0)/1000);const e=1-Math.pow(1-p,2);pnl.innerHTML='+'+won(Math.round(base*e))+'원 <span style="font-size:13px">(+'+(4.2*e).toFixed(1)+'%)</span>';if(p<1)timers.push(requestAnimationFrame(up));}
+  timers.push(requestAnimationFrame(up));
+  foot.innerHTML=`
+    <div class="chips">
+      <span class="chip" id="hist">거래내역 보기</span>
+      <span class="chip" id="pause">잠시 중지</span>
+      <span class="chip" id="done">🏁 전략 종료</span>
+    </div>`;
+  // 10-1 전략 종료 → 3(유형 분류)로 이동. onboard/q1 답변은 유지, 전략·리서치·동의 상태만 초기화
+  document.getElementById('done').onclick=()=>{
+    Object.assign(S,{
+      path:null, strategy:null,
+      intentBuy:[], intentSell:[], coin:null,
+      amount:1000000, target:3.0, stop:-10.0,
+      researchDone:false, candidate:null,
+      agreedTerms:false, agreedLive:false,
+    });
+    // history를 유형 분류까지의 흐름만 남김
+    const keep=['onboard','q1'];
+    history.length=0; keep.forEach(k=>history.push(k));
+    go('branch');
+  };
+  document.getElementById('pause').onclick=()=>{document.getElementById('pause').textContent='⏸ 중지됨';};
+  document.getElementById('hist').onclick=()=>{
+    // 간단한 인라인 토스트
+    const t=document.createElement('div');
+    t.style.cssText='position:absolute;bottom:110px;left:50%;transform:translateX(-50%);background:#161c28;border:1px solid #2c374a;color:#dde3ee;padding:9px 14px;border-radius:16px;font-size:11.5px;font-weight:600;z-index:30;animation:pop .3s cubic-bezier(.2,.7,.3,1)';
+    t.textContent='📒 거래내역: 오늘 체결 8건 · 승률 62%';
+    document.querySelector('.screen').appendChild(t);
+    setTimeout(()=>t.remove(),1800);
+  };
+};
+
+/* ============================================================ 시작 ============================================================ */
+go('onboard',false);
+backBtn.style.visibility='hidden';
+</script>
+</body>
+</html>
